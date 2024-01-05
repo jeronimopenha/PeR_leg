@@ -1,5 +1,7 @@
 from veriloggen import *
 from math import ceil, log2, sqrt
+from src.util.sagraph import SaGraph
+from src.hw.sa_components import SAComponents
 
 
 def initialize_regs(module: Module, values=None):
@@ -32,92 +34,66 @@ def initialize_regs(module: Module, values=None):
                 s.add(r[1](value))
 
 
-def create_rom_files(sa_comp, path: str):
-    sa_graph = sa_comp.sa_graph
-    n_cells = sa_comp.sa_graph.n_cells
+def create_rom_files(sa_graph: SaGraph, sa_comp: SAComponents, path: str):
+    sa_graph = sa_graph
+    n_cells = sa_comp.n_cells
+    n_cells_sqrt = sa_comp.n_cells_sqrt
     n_neighbors = sa_comp.n_neighbors
-    align_bits = sa_comp.align_bits
-    n_threads = sa_comp.n_threads
+    total_cells = pow(n_cells_sqrt, 2)
 
-    c_bits = ceil(log2(n_cells))
-    t_bits = ceil(log2(n_threads))
-    t_bits = 1 if t_bits == 0 else t_bits
-    node_bits = c_bits
-    lines = columns = int(sqrt(n_cells))
-    w_bits = t_bits + c_bits + node_bits + 1
-    dist_bits = c_bits + ceil(log2(n_neighbors * 2))
+    cell_bits = sa_comp.cell_bits
+    node_bits = sa_comp.node_bits
 
     sa_graph.reset_random()
 
-    c_n = []
-    n_c = []
-    for i in range(n_threads):
-        c_n_i, n_c_i = sa_graph.get_initial_grid()
-        c_n.append(c_n_i)
-        n_c.append(n_c_i)
+    # create the initial grid to be placed
+    c_n, n_c = sa_graph.get_initial_grid()
 
+    # some format variables
     cn_str_f = '{:0%db}' % (node_bits + 1)
-    nc_str_f = '{:0%db}' % (c_bits)
+    nc_str_f = '{:0%db}' % cell_bits
     n_str_f = '{:0%db}' % (node_bits + 1)
-    t_str = '{:0%db}' % (t_bits)
 
-    cn_w = []  # [cn_str_f.format(0) for i in range(n_cells)]
-    nc_w = []  # [nc_str_f.format(0) for i in range(n_cells)]
-    p_w = []  # [p_str_f.format(0) for i in range(n_cells)]
     n_w = []
-    for t in range(pow(2, ceil(sqrt(n_threads)))):
-        cn_w.append([cn_str_f.format(0)
-                     for i in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
-        nc_w.append([nc_str_f.format(0)
-                     for i in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
+    # cell to node vector
+    cn_w = [cn_str_f.format(0)
+            for i in range(total_cells)]
+    # node to cell vector
+    nc_w = [nc_str_f.format(0)
+            for i in range(total_cells)]
 
-    for c in range(pow(2, ceil(sqrt(n_cells)))):
+    # Initializing the adjacency array
+    for c in range(total_cells):
         n_w.append([n_str_f.format(0) for i in range(n_neighbors)])
+    # Filling the adjacency array
     for k in sa_graph.neighbors.keys():
         idx = 0
         for n in sa_graph.neighbors[k]:
             n_w[k][idx] = n_str_f.format((1 << node_bits) | n)
             idx += 1
 
-    for t in range(len(c_n)):
-        for cni in range(len(c_n[t])):
-            if c_n[t][cni] is not None:
-                cn_w[t][cni] = cn_str_f.format((1 << node_bits) | c_n[t][cni])
+    # set the valid bit for every filled cell
+    for cni in range(total_cells):
+        if c_n[cni] is not None:
+            cn_w[cni] = cn_str_f.format((1 << node_bits) | c_n[cni])
 
-    for t in range(len(n_c)):
-        for nci in range(len(n_c[t])):
-            if n_c[t][nci] is not None:
-                nc_w[t][nci] = nc_str_f.format(n_c[t][nci])
+    for nci in range(total_cells):
+        if n_c[nci] is not None:
+            nc_w[nci] = nc_str_f.format(n_c[nci])
 
-    with open(path + '/th.rom', 'w') as f:
-        for i in range(pow(2, ceil(sqrt(n_threads)))):
-            f.write(t_str.format(0))
+    with open(path + '_n_c.rom', 'w') as f:
+        for d in nc_w:
+            f.write(d)
+            f.write('\n')
+        f.close()
+    with open(path + '_c_n.rom', 'w') as f:
+        for d in cn_w:
+            f.write(d)
             f.write('\n')
         f.close()
 
-    with open(path + '/n_c.rom', 'w') as f:
-        for t in nc_w:
-            for d in t:
-                f.write(d)
-                f.write('\n')
-        if n_threads == 1:
-            for d in range(n_cells):
-                f.write(nc_str_f.format(0))
-                f.write('\n')
-        f.close()
-    with open(path + '/c_n.rom', 'w') as f:
-        for t in cn_w:
-            for d in t:
-                f.write(d)
-                f.write('\n')
-        if n_threads == 1:
-            for d in range(n_cells):
-                f.write(cn_str_f.format(0))
-                f.write('\n')
-        f.close()
-
     for i in range(n_neighbors):
-        with open(path + '/n%d.rom' % i, 'w') as f:
+        with open(path + '_n%d.rom' % i, 'w') as f:
             for c in range(n_cells):
                 f.write(n_w[c][i])
                 f.write('\n')

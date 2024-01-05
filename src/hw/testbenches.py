@@ -6,30 +6,14 @@ from src.hw.sa_components import SAComponents
 
 
 def create_sa_single_test_bench(base_path: str, sa_graph: SaGraph, test_number: int = 0) -> str:
-    # create_rom_files(comp, os.getcwd() + "/verilog")
-
-    bus_width = 16
-    sa_graph = sa_graph
-    sa_comp = SAComponents(sa_graph)
-
-    # sa_graph = comp.sa_graph
-    # n_cells = comp.n_cells
-    # n_neighbors = comp.n_neighbors
-    # align_bits = comp.align_bits
-    # n_threads = comp.n_threads
-
-    # c_bits = ceil(log2(n_cells))
-    # t_bits = ceil(log2(n_threads))
-    # t_bits = 1 if t_bits == 0 else t_bits
-    # node_bits = c_bits
-    # lines = columns = int(sqrt(n_cells))
-    # w_bits = t_bits + c_bits + node_bits + 1
-    # dist_bits = c_bits + ceil(log2(n_neighbors * 2))
-    # lc_bits = ceil(log2(lines)) * 2
     name = 'test_bench_sa_single_%d' % test_number
     dumpfile = base_path + "/verilog/%s.vcd" % name
     verilog_file = base_path + "/verilog/%s.v" % name
     output_file = base_path + "/verilog/a.out"
+    sa_graph = sa_graph
+
+    sa_comp = SAComponents(sa_graph, base_path, name)
+    create_rom_files(sa_graph, sa_comp, base_path + "/verilog/" + name)
 
     m = Module(name)
 

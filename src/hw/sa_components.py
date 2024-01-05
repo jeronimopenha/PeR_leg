@@ -1,6 +1,8 @@
 from math import ceil, dist, log2, sqrt
+
+from numpy import base_repr
 from veriloggen import *
-from src.util.util import initialize_regs
+import src.util.util as _u
 from src.util.sagraph import SaGraph
 
 
@@ -10,18 +12,23 @@ class SAComponents:
     def __init__(
             self,
             sa_graph: SaGraph,
+            base_path: str,
+            parent_name: str,
             n_neighbors: int = 4,
             align_bits: int = 8,
     ):
         self.sa_graph = sa_graph
+        self.base_path = base_path
+        self.parent_name = parent_name
         self.n_cells = sa_graph.n_cells
         self.n_cells_sqrt = sa_graph.n_cells_sqrt
         self.n_neighbors = n_neighbors
         self.align_bits = align_bits
 
-        self.c_bits = ceil(log2(self.n_cells))
+        self.cell_bits = ceil(log2(self.n_cells))
+        self.node_bits = self.cell_bits
         self.lines = self.columns = int(sqrt(self.n_cells))
-        self.dist_bits = self.c_bits + ceil(log2(self.n_neighbors * 2))
+        self.dist_bits = self.cell_bits + ceil(log2(self.n_neighbors * 2))
 
         self.cache = {}
 
@@ -143,10 +150,10 @@ class SAComponents:
             return self.cache[name]
 
         m = Module(name)
-        read_f = m.Parameter('read_f', 0)
-        init_file = m.Parameter('init_file', 'mem_file.txt')
-        write_f = m.Parameter('write_f', 0)
-        output_file = m.Parameter('output_file', 'mem_out_file.txt')
+        READ_F = m.Parameter('READ_F', 0)
+        INIT_FILE = m.Parameter('INIT_FILE', 'mem_file.txt')
+        WRITE_F = m.Parameter('WRITE_F', 0)
+        OUTPUT_FILE = m.Parameter('OUTPUT_FILE', 'mem_out_file.txt')
 
         clk = m.Input('clk')
         rd = m.Input('rd')
@@ -166,7 +173,7 @@ class SAComponents:
         # m.EmbeddedCode('*/')
 
         out0.assign(Mux(rd, mem[rd_addr0], Int(0, width, 10)))
-        out1.assign(Mux(rd, mem[rd_addr0], Int(0, width, 10)))
+        out1.assign(Mux(rd, mem[rd_addr1], Int(0, width, 10)))
 
         m.Always(Posedge(clk))(
             If(wr)(
@@ -176,15 +183,15 @@ class SAComponents:
 
         m.EmbeddedCode('//synthesis translate_off')
         m.Always(Posedge(clk))(
-            If(AndList(wr, write_f))(
-                Systask('writememb', output_file, mem)
+            If(AndList(wr, WRITE_F))(
+                Systask('writememb', OUTPUT_FILE, mem)
             ),
         )
         m.EmbeddedCode('//synthesis translate_on')
 
         m.Initial(
-            If(read_f)(
-                Systask('readmemb', init_file, mem),
+            If(READ_F)(
+                Systask('readmemb', INIT_FILE, mem),
             )
         )
         self.cache[name] = m
@@ -392,98 +399,6 @@ class SAComponents:
                 dist_table[(i << w) | j].assign(abs(i - j))
 
         _u.initialize_regs(m)
-        self.cache[name] = m
-        return m
-
-    def create_threads_controller(self) -> Module:
-        sa_graph = self.sa_graph
-        n_cells = self.sa_graph.n_cells
-        n_neighbors = self.n_neighbors
-        align_bits = self.align_bits
-        n_threads = self.n_threads
-
-        name = 'th_controller_%dth_%dcells' % (n_threads, n_cells)
-        if name in self.cache.keys():
-            return self.cache[name]
-
-        c_bits = ceil(log2(n_cells))
-        t_bits = ceil(log2(n_threads))
-        t_bits = 1 if t_bits == 0 else t_bits
-        node_bits = c_bits
-        lines = columns = int(sqrt(n_cells))
-        w_bits = t_bits + c_bits + node_bits + 1
-        dist_bits = c_bits + ceil(log2(n_neighbors * 2))
-
-        m = Module(name)
-
-        clk = m.Input('clk')
-        rst = m.Input('rst')
-        start = m.Input('start')
-        done = m.Input('done')
-
-        idx_out = m.OutputReg('idx_out', t_bits)
-        v_out = m.OutputReg('v_out')
-        ca_out = m.OutputReg('ca_out', c_bits)
-        cb_out = m.OutputReg('cb_out', c_bits)
-
-        flag_f_exec = m.Reg('flag_f_exec', n_threads)
-        v_r = m.Reg('v_r', n_threads)
-        idx_r = m.Reg('idx_r', t_bits)
-        counter = m.Wire('counter', c_bits * 2)
-        counter_t = m.Wire('counter_t', c_bits * 2)
-        counter_wr = m.Wire('counter_wr', c_bits * 2)
-        ca_out_t = m.Wire('ca_out_t', c_bits)
-        cb_out_t = m.Wire('cb_out_t', c_bits)
-
-        counter_t.assign(Mux(flag_f_exec[idx_r], 0, counter))
-        counter_wr.assign(Mux(Uand(counter_t), 0, counter_t + 1))
-        ca_out_t.assign(counter_t[0:c_bits])
-        cb_out_t.assign(counter_t[c_bits:c_bits * 2])
-
-        m.Always(Posedge(clk))(
-            If(rst)(
-                idx_out(0),
-                v_out(0),
-                ca_out(0),
-                cb_out(0),
-                idx_r(0),
-                flag_f_exec(Int((1 << n_threads) - 1, n_threads, 2)),
-                v_r(Int((1 << n_threads) - 1, n_threads, 2))
-            ).Elif(start)(
-                idx_out(idx_r),
-                v_out(Mux(done, Int(0, 1, 2), v_r[idx_r])),
-                ca_out(ca_out_t),
-                cb_out(cb_out_t),
-                v_r[idx_r](~v_r[idx_r]),
-                If(Not(v_r[idx_r]))(
-                    flag_f_exec[idx_r](0),
-                    If(idx_r == self.n_threads - 1)(
-                        idx_r(0),
-                    ).Else(
-                        idx_r.inc(),
-                    ),
-                ),
-            )
-        )
-
-        par = [
-            ('init_file', './th.rom'),
-            ('read_f', 1),
-            ('write_f', 0)
-        ]
-        con = [
-            ('clk', clk),
-            ('rd_addr0', idx_r),
-            ('out0', counter),
-            ('wr', ~v_r[idx_r]),
-            ('wr_addr', idx_r),
-            ('wr_data', counter_wr),
-        ]
-        aux = self.create_memory_2r_1w(c_bits * 2, t_bits)
-        m.Instance(aux, aux.name, par, con)
-
-        _u.initialize_regs(m)
-
         self.cache[name] = m
         return m
 
@@ -1977,12 +1892,14 @@ class SAComponents:
         n_cells_sqrt = self.n_cells_sqrt
         n_neighbors = self.n_neighbors
         align_bits = self.align_bits
-        c_bits = self.c_bits
-        node_bits = self.c_bits
+        cell_bits = self.cell_bits
+        node_bits = self.node_bits
         lines = self.lines
         columns = self.columns
-        w_bits = c_bits + node_bits + 1
+        w_bits = cell_bits + node_bits + 1
         dist_bits = self.dist_bits
+        base_path = self.base_path
+        parent_name = self.parent_name
 
         name = 'sa_single_%dcells' % n_cells
         if name in self.cache.keys():
@@ -2009,16 +1926,72 @@ class SAComponents:
         m.EmbeddedCode('// #####')
 
         m.EmbeddedCode('')
-        m.EmbeddedCode('// counter cells stage variables')
-        ca = m.Reg('ca', c_bits)
-        cb = m.Reg('cb', c_bits)
+        m.EmbeddedCode('// select cells stage variables')
+        ca = m.Reg('ca', cell_bits)
+        cb = m.Reg('cb', cell_bits)
         m.EmbeddedCode('// #####')
 
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// cell to nodes stage variables')
+        na = m.Reg('na', node_bits)
+        na_v = m.Reg('na_v')
+        nb = m.Reg('nb', node_bits)
+        nb_v = m.Reg('nb_v')
+        na_t = m.Wire('na_t', node_bits)
+        na_v_t = m.Wire('na_v_t')
+        nb_t = m.Wire('nb_t', node_bits)
+        nb_v_t = m.Wire('nb_v_t')
+        m.EmbeddedCode('// #####')
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// neighborhood stage variables')
+        va = m.Reg('va', node_bits * n_neighbors)
+        va_v = m.Reg('va_v', n_neighbors)
+        vb = m.Reg('vb', node_bits * n_neighbors)
+        vb_v = m.Reg('vb_v', n_neighbors)
+        va_t = m.Wire('va_t', node_bits * n_neighbors)
+        va_v_t = m.Wire('va_v_t', n_neighbors)
+        va_v_m = m.Wire('va_v_m', n_neighbors)
+        vb_t = m.Wire('vb_t', node_bits * n_neighbors)
+        vb_v_t = m.Wire('vb_v_t', n_neighbors)
+        vb_v_m = m.Wire('vb_v_m', n_neighbors)
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('//here we guarantee that only valid nodes can give neighbors ')
+        va_v_t.assign(Mux(na_v, va_v_m, Int(0, n_neighbors, 2)))
+        vb_v_t.assign(Mux(nb_v, vb_v_m, Int(0, n_neighbors, 2)))
+        m.EmbeddedCode('// #####')
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// node to cell stage variables')
+        cva_v = m.Reg('cva_v', n_neighbors)
+        cva = m.Reg('cva', cell_bits * n_neighbors)
+        cvb_v = m.Reg('cvb_v', n_neighbors)
+        cvb = m.Reg('cvb', cell_bits * n_neighbors)
+        cva_v_t = m.Wire('cva_v_t', n_neighbors)
+        cva_t = m.Wire('cva_t', cell_bits * n_neighbors)
+        cvb_v_t = m.Wire('cvb_v_t', n_neighbors)
+        cvb_t = m.Wire('cvb_t', cell_bits * n_neighbors)
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// This is only for legibility')
+        m.EmbeddedCode('// #####')
+        cva_v_t.assign(va_v)
+        cvb_v_t.assign(vb_v)
+        m.EmbeddedCode('')
         m.EmbeddedCode('// SA single thread FSM')
         m.Always(Posedge(clk))(
             If(rst)(
                 ca(Int(0, ca.width, 10)),
                 cb(Int(0, cb.width, 10)),
+                na(Int(0, na.width, 10)),
+                na_v(Int(0, 1, 10)),
+                nb(Int(0, nb.width, 10)),
+                nb_v(Int(0, 1, 10)),
+                va(Int(0, va.width, 10)),
+                va_v(Int(0, va_v.width, 10)),
+                vb(Int(0, vb.width, 10)),
+                vb_v(Int(0, vb_v.width, 10)),
                 fsm_sa(CELL_TO_NODES)
             ).Elif(start)(
                 Case(fsm_sa)(
@@ -2038,17 +2011,33 @@ class SAComponents:
                         ),
                     ),
                     When(CELL_TO_NODES)(
-                        #fsm_sa(NEIGHBORHOOD),
-                        fsm_sa(SELECT_CELLS)
+                        If(Uand(Cat(~na_v_t, ~nb_v_t)))(
+                            fsm_sa(SELECT_CELLS),
+                        ).Else(
+                            na(na_t),
+                            na_v(na_v_t),
+                            nb(nb_t),
+                            nb_v(nb_v_t),
+                            fsm_sa(NEIGHBORHOOD),
+                        ),
                     ),
                     When(NEIGHBORHOOD)(
-                        fsm_sa(NODES_TO_CELL)
+                        va(va_t),
+                        va_v(va_v_t),
+                        vb(vb_t),
+                        vb_v(vb_v_t),
+                        fsm_sa(NODES_TO_CELL),
                     ),
                     When(NODES_TO_CELL)(
+                        cva_v(cva_v_t),
+                        cva(cva_t),
+                        cvb_v(cvb_v_t),
+                        cvb(cvb),
                         fsm_sa(DISTANCE_CALCULATOR)
                     ),
                     When(DISTANCE_CALCULATOR)(
-                        fsm_sa(SUM_REDUCTION)
+                        fsm_sa(SELECT_CELLS)
+                        # fsm_sa(SUM_REDUCTION)
                     ),
                     When(SUM_REDUCTION)(
                         fsm_sa(DECISION)
@@ -2067,7 +2056,57 @@ class SAComponents:
             )
         )
 
-        initialize_regs(m)
+        m.EmbeddedCode('// cell to nodes stage memory instantiation')
+        par = [
+            ('READ_F', 1),
+            ('INIT_FILE', base_path + '/verilog/' + parent_name + '_c_n.rom'),
+            ('WRITE_F', 1),
+            ('OUTPUT_FILE', base_path + '/verilog/' + parent_name + '_c_n_out.rom')
+        ]
+        con = [
+            ('clk', clk),
+            ('rd', Int(1, 1, 10)),
+            ('rd_addr0', ca),
+            ('rd_addr1', cb),
+            ('out0', Cat(na_v_t, na_t)),
+            ('out1', Cat(nb_v_t, nb_t)),
+            ('wr', Int(0, 1, 10)),  # TODO
+            ('wr_addr', Int(0, cell_bits, 10)),  # TODO
+            ('wr_data', Int(0, node_bits + 1, 10)),  # TODO
+        ]
+        aux = self.create_memory_2r_1w(node_bits + 1, cell_bits)
+        m.Instance(aux, aux.name, par, con)
+        m.EmbeddedCode('// #####')
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// neighborhood stage memory instantiation')
+        for i in range(n_neighbors):
+            par = [
+                ('READ_F', 1),
+                ('INIT_FILE', base_path + '/verilog/' + parent_name + '_n%d.rom' % i),
+                ('WRITE_F', 0)
+            ]
+            con = [
+                ('clk', clk),
+                ('rd_addr0', na),
+                ('rd_addr1', nb),
+                ('out0', Cat(va_v_m[i], va_t[node_bits * i:node_bits * (i + 1)])),
+                ('out1', Cat(vb_v_m[i], vb_t[node_bits * i:node_bits * (i + 1)])),
+                ('wr', Int(0, 1, 10)),  # TODO
+                ('wr_addr', Int(0, cell_bits, 10)),  # TODO
+                ('wr_data', Int(0, node_bits + 1, 10)),  # TODO
+            ]
+            aux = self.create_memory_2r_1w(node_bits + 1, node_bits)
+            m.Instance(aux, '%s_%i' % (aux.name, i), par, con)
+        m.EmbeddedCode('// #####')
+
+        m.EmbeddedCode('')
+        m.EmbeddedCode('// node to cell stage memory instantiation')
+
+        m.EmbeddedCode('// #####')
+
+        _u.initialize_regs(m)
 
         self.cache[name] = m
+
         return m

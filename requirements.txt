@@ -1,2 +1,3 @@
-networkx==2.7.1
-veriloggen==2.0.2
+networkx==3.2.1
+pygraphviz==1.11
+veriloggen==2.3.0
