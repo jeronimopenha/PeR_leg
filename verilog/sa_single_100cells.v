@@ -1,78 +1,6 @@
 
 
-module test_bench_sa_single_0
-(
-
-);
-
-  reg clk;
-  reg rst;
-  reg start;
-  wire done;
-
-  sa_single_144cells
-  sa_single_144cells
-  (
-    .clk(clk),
-    .rst(rst),
-    .start(start),
-    .done(done),
-    .n_exec(10'd1000),
-    .conf_c2n_rd(1'd0),
-    .conf_c2n_rd_addr(8'd0),
-    .conf_wr(1'd0),
-    .conf_c2n_wr(1'd0),
-    .conf_c2n_wr_addr(8'd0),
-    .conf_c2n_wr_data(9'd0),
-    .conf_n_wr(4'd0),
-    .conf_n_wr_addr(8'd0),
-    .conf_n_wr_data(9'd0),
-    .conf_n2c_wr(4'd0),
-    .conf_n2c_wr_addr(8'd0),
-    .conf_n2c_wr_data(8'd0)
-  );
-
-
-  initial begin
-    clk = 0;
-    rst = 1;
-    start = 0;
-  end
-
-
-  initial begin
-    $dumpfile("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0.vcd");
-    $dumpvars(0);
-  end
-
-
-  initial begin
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    rst = 0;
-    start = 1;
-    #1000;
-    $finish;
-  end
-
-  always #5clk=~clk;
-
-  always @(posedge clk) begin
-    if(done) begin
-      $display("ACC DONE!");
-      $finish;
-    end 
-  end
-
-
-  //Simulation sector - End
-
-endmodule
-
-
-
-module sa_single_144cells
+module sa_single_100cells
 (
   input clk,
   input rst,
@@ -80,18 +8,18 @@ module sa_single_144cells
   input [10-1:0] n_exec,
   output reg done,
   input conf_c2n_rd,
-  input [8-1:0] conf_c2n_rd_addr,
-  output [9-1:0] conf_c2n_rd_data,
+  input [7-1:0] conf_c2n_rd_addr,
+  output [8-1:0] conf_c2n_rd_data,
   input conf_wr,
   input conf_c2n_wr,
-  input [8-1:0] conf_c2n_wr_addr,
-  input [9-1:0] conf_c2n_wr_data,
+  input [7-1:0] conf_c2n_wr_addr,
+  input [8-1:0] conf_c2n_wr_data,
   input [4-1:0] conf_n_wr,
-  input [8-1:0] conf_n_wr_addr,
-  input [9-1:0] conf_n_wr_data,
+  input [7-1:0] conf_n_wr_addr,
+  input [8-1:0] conf_n_wr_data,
   input [4-1:0] conf_n2c_wr,
-  input [8-1:0] conf_n2c_wr_addr,
-  input [8-1:0] conf_n2c_wr_data
+  input [7-1:0] conf_n2c_wr_addr,
+  input [7-1:0] conf_n2c_wr_data
 );
 
   reg [11-1:0] n_exec_counter;
@@ -113,30 +41,30 @@ module sa_single_144cells
   // #####
 
   // select cells stage variables
-  reg [8-1:0] ca;
-  reg [8-1:0] cb;
+  reg [7-1:0] ca;
+  reg [7-1:0] cb;
   // #####
 
   // cell to nodes stage variables
-  reg [8-1:0] na;
+  reg [7-1:0] na;
   reg na_v;
-  reg [8-1:0] nb;
+  reg [7-1:0] nb;
   reg nb_v;
-  wire [8-1:0] na_t;
+  wire [7-1:0] na_t;
   wire na_v_t;
-  wire [8-1:0] nb_t;
+  wire [7-1:0] nb_t;
   wire nb_v_t;
   // #####
 
   // neighborhood stage variables
-  reg [32-1:0] va;
+  reg [28-1:0] va;
   reg [4-1:0] va_v;
-  reg [32-1:0] vb;
+  reg [28-1:0] vb;
   reg [4-1:0] vb_v;
-  wire [32-1:0] va_t;
+  wire [28-1:0] va_t;
   wire [4-1:0] va_v_t;
   wire [4-1:0] va_v_m;
-  wire [32-1:0] vb_t;
+  wire [28-1:0] vb_t;
   wire [4-1:0] vb_v_t;
   wire [4-1:0] vb_v_m;
 
@@ -147,13 +75,13 @@ module sa_single_144cells
 
   // node to cell stage variables
   reg [4-1:0] cva_v;
-  reg [32-1:0] cva;
+  reg [28-1:0] cva;
   reg [4-1:0] cvb_v;
-  reg [32-1:0] cvb;
+  reg [28-1:0] cvb;
   wire [4-1:0] cva_v_t;
-  wire [32-1:0] cva_t;
+  wire [28-1:0] cva_t;
   wire [4-1:0] cvb_v_t;
-  wire [32-1:0] cvb_t;
+  wire [28-1:0] cvb_t;
 
   // This is only for legibility
   assign cva_v_t = va_v;
@@ -175,25 +103,25 @@ module sa_single_144cells
 
   // Distance calculator stage variables
   // Before changes
-  reg [44-1:0] dva_before;
-  reg [44-1:0] dvb_before;
+  reg [40-1:0] dva_before;
+  reg [40-1:0] dvb_before;
   wire [8-1:0] lca_before;
   wire [8-1:0] lcb_before;
-  wire [44-1:0] dva_before_t;
-  wire [44-1:0] dvb_before_t;
+  wire [40-1:0] dva_before_t;
+  wire [40-1:0] dvb_before_t;
 
   assign lca_before = lca;
   assign lcb_before = lcb;
 
   // After changes
-  reg [44-1:0] dva_after;
-  reg [44-1:0] dvb_after;
+  reg [40-1:0] dva_after;
+  reg [40-1:0] dvb_after;
   wire [8-1:0] lca_after;
   wire [8-1:0] lcb_after;
   wire [32-1:0] opva_after;
   wire [32-1:0] opvb_after;
-  wire [44-1:0] dva_after_t;
-  wire [44-1:0] dvb_after_t;
+  wire [40-1:0] dva_after_t;
+  wire [40-1:0] dvb_after_t;
 
   assign lca_after = lcb;
   assign lcb_after = lca;
@@ -209,45 +137,45 @@ module sa_single_144cells
 
   // Sum Reduction stage variables
   // Sum Before change
-  reg [22-1:0] sum_dva_before_p;
-  wire [22-1:0] sum_dva_before_p_t;
-  reg [22-1:0] sum_dvb_before_p;
-  wire [22-1:0] sum_dvb_before_p_t;
-  reg [11-1:0] sum_dva_before;
-  wire [11-1:0] sum_dva_before_t;
-  reg [11-1:0] sum_dvb_before;
-  wire [11-1:0] sum_dvb_before_t;
+  reg [20-1:0] sum_dva_before_p;
+  wire [20-1:0] sum_dva_before_p_t;
+  reg [20-1:0] sum_dvb_before_p;
+  wire [20-1:0] sum_dvb_before_p_t;
+  reg [10-1:0] sum_dva_before;
+  wire [10-1:0] sum_dva_before_t;
+  reg [10-1:0] sum_dvb_before;
+  wire [10-1:0] sum_dvb_before_t;
 
-  assign sum_dva_before_p_t[10:0] = dva_before[10:0] + dva_before[21:11];
-  assign sum_dva_before_p_t[21:11] = dva_before[32:22] + dva_before[43:33];
-  assign sum_dvb_before_p_t[10:0] = dvb_before[10:0] + dvb_before[21:11];
-  assign sum_dvb_before_p_t[21:11] = dvb_before[32:22] + dvb_before[43:33];
-  assign sum_dva_before_t[10:0] = sum_dva_before_p[10:0] + sum_dva_before_p[21:11];
-  assign sum_dvb_before_t[10:0] = sum_dvb_before_p[10:0] + sum_dvb_before_p[21:11];
+  assign sum_dva_before_p_t[9:0] = dva_before[9:0] + dva_before[19:10];
+  assign sum_dva_before_p_t[19:10] = dva_before[29:20] + dva_before[39:30];
+  assign sum_dvb_before_p_t[9:0] = dvb_before[9:0] + dvb_before[19:10];
+  assign sum_dvb_before_p_t[19:10] = dvb_before[29:20] + dvb_before[39:30];
+  assign sum_dva_before_t[9:0] = sum_dva_before_p[9:0] + sum_dva_before_p[19:10];
+  assign sum_dvb_before_t[9:0] = sum_dvb_before_p[9:0] + sum_dvb_before_p[19:10];
 
   // Sum after change
-  reg [22-1:0] sum_dva_after_p;
-  wire [22-1:0] sum_dva_after_p_t;
-  reg [22-1:0] sum_dvb_after_p;
-  wire [22-1:0] sum_dvb_after_p_t;
-  reg [11-1:0] sum_dva_after;
-  wire [11-1:0] sum_dva_after_t;
-  reg [11-1:0] sum_dvb_after;
-  wire [11-1:0] sum_dvb_after_t;
+  reg [20-1:0] sum_dva_after_p;
+  wire [20-1:0] sum_dva_after_p_t;
+  reg [20-1:0] sum_dvb_after_p;
+  wire [20-1:0] sum_dvb_after_p_t;
+  reg [10-1:0] sum_dva_after;
+  wire [10-1:0] sum_dva_after_t;
+  reg [10-1:0] sum_dvb_after;
+  wire [10-1:0] sum_dvb_after_t;
 
-  assign sum_dva_after_p_t[10:0] = dva_after[10:0] + dva_after[21:11];
-  assign sum_dva_after_p_t[21:11] = dva_after[32:22] + dva_after[43:33];
-  assign sum_dvb_after_p_t[10:0] = dvb_after[10:0] + dvb_after[21:11];
-  assign sum_dvb_after_p_t[21:11] = dvb_after[32:22] + dvb_after[43:33];
-  assign sum_dva_after_t[10:0] = sum_dva_after_p[10:0] + sum_dva_after_p[21:11];
-  assign sum_dvb_after_t[10:0] = sum_dvb_after_p[10:0] + sum_dvb_after_p[21:11];
+  assign sum_dva_after_p_t[9:0] = dva_after[9:0] + dva_after[19:10];
+  assign sum_dva_after_p_t[19:10] = dva_after[29:20] + dva_after[39:30];
+  assign sum_dvb_after_p_t[9:0] = dvb_after[9:0] + dvb_after[19:10];
+  assign sum_dvb_after_p_t[19:10] = dvb_after[29:20] + dvb_after[39:30];
+  assign sum_dva_after_t[9:0] = sum_dva_after_p[9:0] + sum_dva_after_p[19:10];
+  assign sum_dvb_after_t[9:0] = sum_dvb_after_p[9:0] + sum_dvb_after_p[19:10];
   // #####
 
   // Total cost stage variables
-  reg [11-1:0] total_cost_before;
-  wire [11-1:0] total_cost_before_t;
-  reg [11-1:0] total_cost_after;
-  wire [11-1:0] total_cost_after_t;
+  reg [10-1:0] total_cost_before;
+  wire [10-1:0] total_cost_before_t;
+  reg [10-1:0] total_cost_after;
+  wire [10-1:0] total_cost_after_t;
 
   assign total_cost_before_t = sum_dva_before + sum_dvb_before;
   assign total_cost_after_t = sum_dva_after + sum_dvb_after;
@@ -262,20 +190,20 @@ module sa_single_144cells
   // Write a and b cost stage variables
   reg fsm_c2n_wr_signal;
   reg fsm_n2c_wr_signal;
-  reg [8-1:0] fsm_mem_c2n_wr_addr;
-  reg [9-1:0] fsm_mem_c2n_wr_data;
-  reg [8-1:0] fsm_mem_n2c_wr_addr;
-  reg [8-1:0] fsm_mem_n2c_wr_data;
-  wire [8-1:0] mem_c2n_rd_addr;
+  reg [7-1:0] fsm_mem_c2n_wr_addr;
+  reg [8-1:0] fsm_mem_c2n_wr_data;
+  reg [7-1:0] fsm_mem_n2c_wr_addr;
+  reg [7-1:0] fsm_mem_n2c_wr_data;
+  wire [7-1:0] mem_c2n_rd_addr;
   wire mem_c2n_wr;
-  wire [8-1:0] mem_c2n_wr_addr;
-  wire [9-1:0] mem_c2n_wr_data;
+  wire [7-1:0] mem_c2n_wr_addr;
+  wire [8-1:0] mem_c2n_wr_data;
   wire [4-1:0] mem_n_wr;
-  wire [8-1:0] mem_n_wr_addr;
-  wire [9-1:0] mem_n_wr_data;
+  wire [7-1:0] mem_n_wr_addr;
+  wire [8-1:0] mem_n_wr_data;
   wire [4-1:0] mem_n2c_wr;
-  wire [8-1:0] mem_n2c_wr_addr;
-  wire [8-1:0] mem_n2c_wr_data;
+  wire [7-1:0] mem_n2c_wr_addr;
+  wire [7-1:0] mem_n2c_wr_data;
 
   assign mem_c2n_wr = (conf_wr)? conf_c2n_wr : fsm_c2n_wr_signal;
   assign mem_c2n_wr_addr = (conf_wr)? conf_c2n_wr_addr : fsm_mem_c2n_wr_addr;
@@ -299,15 +227,15 @@ module sa_single_144cells
     if(rst) begin
       done <= 1'd0;
       n_exec_counter <= 11'd0;
-      ca <= 8'd0;
-      cb <= 8'd0;
-      na <= 8'd0;
+      ca <= 7'd0;
+      cb <= 7'd0;
+      na <= 7'd0;
       na_v <= 1'd0;
-      nb <= 8'd0;
+      nb <= 7'd0;
       nb_v <= 1'd0;
-      va <= 32'd0;
+      va <= 28'd0;
       va_v <= 4'd0;
-      vb <= 32'd0;
+      vb <= 28'd0;
       vb_v <= 4'd0;
       lca <= 8'd0;
       lcb <= 8'd0;
@@ -315,26 +243,26 @@ module sa_single_144cells
       lcva_v <= 4'd0;
       lcvb <= 32'd0;
       lcvb_v <= 4'd0;
-      dva_before <= 44'd0;
-      dvb_before <= 44'd0;
-      dva_after <= 44'd0;
-      dvb_after <= 44'd0;
-      sum_dva_before_p <= 22'd0;
-      sum_dvb_before_p <= 22'd0;
-      sum_dva_after_p <= 22'd0;
-      sum_dvb_after_p <= 22'd0;
-      sum_dva_before <= 11'd0;
-      sum_dvb_before <= 11'd0;
-      sum_dva_after <= 11'd0;
-      sum_dvb_after <= 11'd0;
-      total_cost_before <= 11'd0;
-      total_cost_after <= 11'd0;
+      dva_before <= 40'd0;
+      dvb_before <= 40'd0;
+      dva_after <= 40'd0;
+      dvb_after <= 40'd0;
+      sum_dva_before_p <= 20'd0;
+      sum_dvb_before_p <= 20'd0;
+      sum_dva_after_p <= 20'd0;
+      sum_dvb_after_p <= 20'd0;
+      sum_dva_before <= 10'd0;
+      sum_dvb_before <= 10'd0;
+      sum_dva_after <= 10'd0;
+      sum_dvb_after <= 10'd0;
+      total_cost_before <= 10'd0;
+      total_cost_after <= 10'd0;
       fsm_c2n_wr_signal <= 1'd0;
       fsm_n2c_wr_signal <= 1'd0;
-      fsm_mem_c2n_wr_addr <= 8'd0;
-      fsm_mem_c2n_wr_data <= 9'd0;
-      fsm_mem_n2c_wr_addr <= 8'd0;
-      fsm_mem_n2c_wr_data <= 8'd0;
+      fsm_mem_c2n_wr_addr <= 7'd0;
+      fsm_mem_c2n_wr_data <= 8'd0;
+      fsm_mem_n2c_wr_addr <= 7'd0;
+      fsm_mem_n2c_wr_data <= 7'd0;
       fsm_sa <= CELL_TO_NODES;
     end else begin
       if(start) begin
@@ -342,18 +270,18 @@ module sa_single_144cells
         fsm_n2c_wr_signal <= 1'd0;
         case(fsm_sa)
           SELECT_CELLS: begin
-            if(ca == 8'd12) begin
-              ca <= 8'd0;
-              if(cb == 8'd12) begin
-                cb <= 8'd0;
+            if(ca == 7'd10) begin
+              ca <= 7'd0;
+              if(cb == 7'd10) begin
+                cb <= 7'd0;
                 n_exec_counter <= n_exec_counter + 11'd1;
                 fsm_sa <= END;
               end else begin
-                cb <= cb + 8'd1;
+                cb <= cb + 7'd1;
                 fsm_sa <= CELL_TO_NODES;
               end
             end else begin
-              ca <= ca + 8'd1;
+              ca <= ca + 7'd1;
               fsm_sa <= CELL_TO_NODES;
             end
           end
@@ -456,14 +384,14 @@ module sa_single_144cells
 
   // cell to nodes stage memory instantiation
 
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_c_n.rom"),
     .WRITE_F(1),
     .OUTPUT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_c_n_out.rom")
   )
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   (
     .clk(clk),
     .rd(1'd1),
@@ -480,80 +408,80 @@ module sa_single_144cells
 
   // neighborhood stage memory instantiation
 
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n0.rom"),
     .WRITE_F(0)
   )
-  mem_2r_1w_width9_depth8_0
+  mem_2r_1w_width8_depth7_0
   (
     .clk(clk),
     .rd(1'd1),
     .rd_addr0(na),
     .rd_addr1(nb),
-    .out0({ va_v_m[0], va_t[7:0] }),
-    .out1({ vb_v_m[0], vb_t[7:0] }),
+    .out0({ va_v_m[0], va_t[6:0] }),
+    .out1({ vb_v_m[0], vb_t[6:0] }),
     .wr(mem_n_wr[0]),
     .wr_addr(mem_n_wr_addr),
     .wr_data(mem_n_wr_data)
   );
 
 
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n1.rom"),
     .WRITE_F(0)
   )
-  mem_2r_1w_width9_depth8_1
+  mem_2r_1w_width8_depth7_1
   (
     .clk(clk),
     .rd(1'd1),
     .rd_addr0(na),
     .rd_addr1(nb),
-    .out0({ va_v_m[1], va_t[15:8] }),
-    .out1({ vb_v_m[1], vb_t[15:8] }),
+    .out0({ va_v_m[1], va_t[13:7] }),
+    .out1({ vb_v_m[1], vb_t[13:7] }),
     .wr(mem_n_wr[1]),
     .wr_addr(mem_n_wr_addr),
     .wr_data(mem_n_wr_data)
   );
 
 
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n2.rom"),
     .WRITE_F(0)
   )
-  mem_2r_1w_width9_depth8_2
+  mem_2r_1w_width8_depth7_2
   (
     .clk(clk),
     .rd(1'd1),
     .rd_addr0(na),
     .rd_addr1(nb),
-    .out0({ va_v_m[2], va_t[23:16] }),
-    .out1({ vb_v_m[2], vb_t[23:16] }),
+    .out0({ va_v_m[2], va_t[20:14] }),
+    .out1({ vb_v_m[2], vb_t[20:14] }),
     .wr(mem_n_wr[2]),
     .wr_addr(mem_n_wr_addr),
     .wr_data(mem_n_wr_data)
   );
 
 
-  mem_2r_1w_width9_depth8
+  mem_2r_1w_width8_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n3.rom"),
     .WRITE_F(0)
   )
-  mem_2r_1w_width9_depth8_3
+  mem_2r_1w_width8_depth7_3
   (
     .clk(clk),
     .rd(1'd1),
     .rd_addr0(na),
     .rd_addr1(nb),
-    .out0({ va_v_m[3], va_t[31:24] }),
-    .out1({ vb_v_m[3], vb_t[31:24] }),
+    .out0({ va_v_m[3], va_t[27:21] }),
+    .out1({ vb_v_m[3], vb_t[27:21] }),
     .wr(mem_n_wr[3]),
     .wr_addr(mem_n_wr_addr),
     .wr_data(mem_n_wr_data)
@@ -563,84 +491,84 @@ module sa_single_144cells
 
   // node to cell stage memory instantiation
 
-  mem_2r_1w_width8_depth8
+  mem_2r_1w_width7_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c.rom"),
     .WRITE_F(1),
     .OUTPUT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c_out0.rom")
   )
-  mem_2r_1w_width8_depth8_0
+  mem_2r_1w_width7_depth7_0
   (
     .clk(clk),
     .rd(1'd1),
-    .rd_addr0(va[7:0]),
-    .rd_addr1(vb[7:0]),
-    .out0(cva_t[7:0]),
-    .out1(cvb_t[7:0]),
+    .rd_addr0(va[6:0]),
+    .rd_addr1(vb[6:0]),
+    .out0(cva_t[6:0]),
+    .out1(cvb_t[6:0]),
     .wr(mem_n2c_wr[0]),
     .wr_addr(mem_n2c_wr_addr),
     .wr_data(mem_n2c_wr_data)
   );
 
 
-  mem_2r_1w_width8_depth8
+  mem_2r_1w_width7_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c.rom"),
     .WRITE_F(0),
     .OUTPUT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c_out1.rom")
   )
-  mem_2r_1w_width8_depth8_1
+  mem_2r_1w_width7_depth7_1
   (
     .clk(clk),
     .rd(1'd1),
-    .rd_addr0(va[15:8]),
-    .rd_addr1(vb[15:8]),
-    .out0(cva_t[15:8]),
-    .out1(cvb_t[15:8]),
+    .rd_addr0(va[13:7]),
+    .rd_addr1(vb[13:7]),
+    .out0(cva_t[13:7]),
+    .out1(cvb_t[13:7]),
     .wr(mem_n2c_wr[1]),
     .wr_addr(mem_n2c_wr_addr),
     .wr_data(mem_n2c_wr_data)
   );
 
 
-  mem_2r_1w_width8_depth8
+  mem_2r_1w_width7_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c.rom"),
     .WRITE_F(0),
     .OUTPUT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c_out2.rom")
   )
-  mem_2r_1w_width8_depth8_2
+  mem_2r_1w_width7_depth7_2
   (
     .clk(clk),
     .rd(1'd1),
-    .rd_addr0(va[23:16]),
-    .rd_addr1(vb[23:16]),
-    .out0(cva_t[23:16]),
-    .out1(cvb_t[23:16]),
+    .rd_addr0(va[20:14]),
+    .rd_addr1(vb[20:14]),
+    .out0(cva_t[20:14]),
+    .out1(cvb_t[20:14]),
     .wr(mem_n2c_wr[2]),
     .wr_addr(mem_n2c_wr_addr),
     .wr_data(mem_n2c_wr_data)
   );
 
 
-  mem_2r_1w_width8_depth8
+  mem_2r_1w_width7_depth7
   #(
     .READ_F(1),
     .INIT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c.rom"),
     .WRITE_F(0),
     .OUTPUT_FILE("/home/jeronimo/Documentos/GIT/sa_multi/verilog/test_bench_sa_single_0_n_c_out3.rom")
   )
-  mem_2r_1w_width8_depth8_3
+  mem_2r_1w_width7_depth7_3
   (
     .clk(clk),
     .rd(1'd1),
-    .rd_addr0(va[31:24]),
-    .rd_addr1(vb[31:24]),
-    .out0(cva_t[31:24]),
-    .out1(cvb_t[31:24]),
+    .rd_addr0(va[27:21]),
+    .rd_addr1(vb[27:21]),
+    .out0(cva_t[27:21]),
+    .out1(cvb_t[27:21]),
     .wr(mem_n2c_wr[3]),
     .wr_addr(mem_n2c_wr_addr),
     .wr_data(mem_n2c_wr_data)
@@ -650,8 +578,8 @@ module sa_single_144cells
 
   // line column finder stage lc_table instantiation
 
-  lc_table_12_12
-  lc_table_12_12_c
+  lc_table_10_10
+  lc_table_10_10_c
   (
     .ca(ca),
     .cb(cb),
@@ -660,41 +588,41 @@ module sa_single_144cells
   );
 
 
-  lc_table_12_12
-  lc_table_12_12_v_0
+  lc_table_10_10
+  lc_table_10_10_v_0
   (
-    .ca(cva[7:0]),
-    .cb(cvb[7:0]),
+    .ca(cva[6:0]),
+    .cb(cvb[6:0]),
     .lca(lcva_t[7:0]),
     .lcb(lcvb_t[7:0])
   );
 
 
-  lc_table_12_12
-  lc_table_12_12_v_1
+  lc_table_10_10
+  lc_table_10_10_v_1
   (
-    .ca(cva[15:8]),
-    .cb(cvb[15:8]),
+    .ca(cva[13:7]),
+    .cb(cvb[13:7]),
     .lca(lcva_t[15:8]),
     .lcb(lcvb_t[15:8])
   );
 
 
-  lc_table_12_12
-  lc_table_12_12_v_2
+  lc_table_10_10
+  lc_table_10_10_v_2
   (
-    .ca(cva[23:16]),
-    .cb(cvb[23:16]),
+    .ca(cva[20:14]),
+    .cb(cvb[20:14]),
     .lca(lcva_t[23:16]),
     .lcb(lcvb_t[23:16])
   );
 
 
-  lc_table_12_12
-  lc_table_12_12_v_3
+  lc_table_10_10
+  lc_table_10_10_v_3
   (
-    .ca(cva[31:24]),
-    .cb(cvb[31:24]),
+    .ca(cva[27:21]),
+    .cb(cvb[27:21]),
     .lca(lcva_t[31:24]),
     .lcb(lcvb_t[31:24])
   );
@@ -704,8 +632,8 @@ module sa_single_144cells
   // Distance calculator stage distance talbles instantiation
   // Distance before change
 
-  distance_table_12_12
-  distance_table_12_12_dac_0
+  distance_table_10_10
+  distance_table_10_10_dac_0
   (
     .opa0(lca_before),
     .opa1(lcva[7:0]),
@@ -713,13 +641,13 @@ module sa_single_144cells
     .opb0(lca_before),
     .opb1(lcva[15:8]),
     .opbv(lcva_v[1]),
-    .da(dva_before_t[10:0]),
-    .db(dva_before_t[21:11])
+    .da(dva_before_t[9:0]),
+    .db(dva_before_t[19:10])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_dac_1
+  distance_table_10_10
+  distance_table_10_10_dac_1
   (
     .opa0(lca_before),
     .opa1(lcva[23:16]),
@@ -727,13 +655,13 @@ module sa_single_144cells
     .opb0(lca_before),
     .opb1(lcva[31:24]),
     .opbv(lcva_v[3]),
-    .da(dva_before_t[32:22]),
-    .db(dva_before_t[43:33])
+    .da(dva_before_t[29:20]),
+    .db(dva_before_t[39:30])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_dbc_0
+  distance_table_10_10
+  distance_table_10_10_dbc_0
   (
     .opa0(lcb_before),
     .opa1(lcvb[7:0]),
@@ -741,13 +669,13 @@ module sa_single_144cells
     .opb0(lcb_before),
     .opb1(lcvb[15:8]),
     .opbv(lcvb_v[1]),
-    .da(dvb_before_t[10:0]),
-    .db(dvb_before_t[21:11])
+    .da(dvb_before_t[9:0]),
+    .db(dvb_before_t[19:10])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_dbc_1
+  distance_table_10_10
+  distance_table_10_10_dbc_1
   (
     .opa0(lcb_before),
     .opa1(lcvb[23:16]),
@@ -755,15 +683,15 @@ module sa_single_144cells
     .opb0(lcb_before),
     .opb1(lcvb[31:24]),
     .opbv(lcvb_v[3]),
-    .da(dvb_before_t[32:22]),
-    .db(dvb_before_t[43:33])
+    .da(dvb_before_t[29:20]),
+    .db(dvb_before_t[39:30])
   );
 
 
   // Distance after change
 
-  distance_table_12_12
-  distance_table_12_12_das_0
+  distance_table_10_10
+  distance_table_10_10_das_0
   (
     .opa0(lca_after),
     .opa1(opva_after[7:0]),
@@ -771,13 +699,13 @@ module sa_single_144cells
     .opb0(lca_after),
     .opb1(opva_after[15:8]),
     .opbv(lcva_v[1]),
-    .da(dva_after_t[10:0]),
-    .db(dva_after_t[21:11])
+    .da(dva_after_t[9:0]),
+    .db(dva_after_t[19:10])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_das_1
+  distance_table_10_10
+  distance_table_10_10_das_1
   (
     .opa0(lca_after),
     .opa1(opva_after[23:16]),
@@ -785,13 +713,13 @@ module sa_single_144cells
     .opb0(lca_after),
     .opb1(opva_after[31:24]),
     .opbv(lcva_v[3]),
-    .da(dva_after_t[32:22]),
-    .db(dva_after_t[43:33])
+    .da(dva_after_t[29:20]),
+    .db(dva_after_t[39:30])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_dbs_0
+  distance_table_10_10
+  distance_table_10_10_dbs_0
   (
     .opa0(lcb_after),
     .opa1(opvb_after[7:0]),
@@ -799,13 +727,13 @@ module sa_single_144cells
     .opb0(lcb_after),
     .opb1(opvb_after[15:8]),
     .opbv(lcvb_v[1]),
-    .da(dvb_after_t[10:0]),
-    .db(dvb_after_t[21:11])
+    .da(dvb_after_t[9:0]),
+    .db(dvb_after_t[19:10])
   );
 
 
-  distance_table_12_12
-  distance_table_12_12_dbs_1
+  distance_table_10_10
+  distance_table_10_10_dbs_1
   (
     .opa0(lcb_after),
     .opa1(opvb_after[23:16]),
@@ -813,8 +741,8 @@ module sa_single_144cells
     .opb0(lcb_after),
     .opb1(opvb_after[31:24]),
     .opbv(lcvb_v[3]),
-    .da(dvb_after_t[32:22]),
-    .db(dvb_after_t[43:33])
+    .da(dvb_after_t[29:20]),
+    .db(dvb_after_t[39:30])
   );
 
   // #####
@@ -870,7 +798,7 @@ endmodule
 
 
 
-module mem_2r_1w_width9_depth8 #
+module mem_2r_1w_width8_depth7 #
 (
   parameter READ_F = 0,
   parameter INIT_FILE = "mem_file.txt",
@@ -880,66 +808,16 @@ module mem_2r_1w_width9_depth8 #
 (
   input clk,
   input rd,
-  input [8-1:0] rd_addr0,
-  input [8-1:0] rd_addr1,
-  output [9-1:0] out0,
-  output [9-1:0] out1,
-  input wr,
-  input [8-1:0] wr_addr,
-  input [9-1:0] wr_data
-);
-
-  reg [9-1:0] mem [0:2**8-1];
-  assign out0 = (rd)? mem[rd_addr0] : 9'd0;
-  assign out1 = (rd)? mem[rd_addr1] : 9'd0;
-
-  always @(posedge clk) begin
-    if(wr) begin
-      mem[wr_addr] <= wr_data;
-    end 
-  end
-
-  //synthesis translate_off
-
-  always @(posedge clk) begin
-    if(wr && WRITE_F) begin
-      $writememb(OUTPUT_FILE, mem);
-    end 
-  end
-
-  //synthesis translate_on
-
-  initial begin
-    if(READ_F) begin
-      $readmemb(INIT_FILE, mem);
-    end 
-  end
-
-
-endmodule
-
-
-
-module mem_2r_1w_width8_depth8 #
-(
-  parameter READ_F = 0,
-  parameter INIT_FILE = "mem_file.txt",
-  parameter WRITE_F = 0,
-  parameter OUTPUT_FILE = "mem_out_file.txt"
-)
-(
-  input clk,
-  input rd,
-  input [8-1:0] rd_addr0,
-  input [8-1:0] rd_addr1,
+  input [7-1:0] rd_addr0,
+  input [7-1:0] rd_addr1,
   output [8-1:0] out0,
   output [8-1:0] out1,
   input wr,
-  input [8-1:0] wr_addr,
+  input [7-1:0] wr_addr,
   input [8-1:0] wr_data
 );
 
-  reg [8-1:0] mem [0:2**8-1];
+  reg [8-1:0] mem [0:2**7-1];
   assign out0 = (rd)? mem[rd_addr0] : 8'd0;
   assign out1 = (rd)? mem[rd_addr1] : 8'd0;
 
@@ -970,15 +848,65 @@ endmodule
 
 
 
-module lc_table_12_12
+module mem_2r_1w_width7_depth7 #
 (
-  input [8-1:0] ca,
-  input [8-1:0] cb,
+  parameter READ_F = 0,
+  parameter INIT_FILE = "mem_file.txt",
+  parameter WRITE_F = 0,
+  parameter OUTPUT_FILE = "mem_out_file.txt"
+)
+(
+  input clk,
+  input rd,
+  input [7-1:0] rd_addr0,
+  input [7-1:0] rd_addr1,
+  output [7-1:0] out0,
+  output [7-1:0] out1,
+  input wr,
+  input [7-1:0] wr_addr,
+  input [7-1:0] wr_data
+);
+
+  reg [7-1:0] mem [0:2**7-1];
+  assign out0 = (rd)? mem[rd_addr0] : 7'd0;
+  assign out1 = (rd)? mem[rd_addr1] : 7'd0;
+
+  always @(posedge clk) begin
+    if(wr) begin
+      mem[wr_addr] <= wr_data;
+    end 
+  end
+
+  //synthesis translate_off
+
+  always @(posedge clk) begin
+    if(wr && WRITE_F) begin
+      $writememb(OUTPUT_FILE, mem);
+    end 
+  end
+
+  //synthesis translate_on
+
+  initial begin
+    if(READ_F) begin
+      $readmemb(INIT_FILE, mem);
+    end 
+  end
+
+
+endmodule
+
+
+
+module lc_table_10_10
+(
+  input [7-1:0] ca,
+  input [7-1:0] cb,
   output [8-1:0] lca,
   output [8-1:0] lcb
 );
 
-  wire [8-1:0] lc_table [0:144-1];
+  wire [8-1:0] lc_table [0:100-1];
   assign lca = lc_table[ca];
   assign lcb = lc_table[cb];
   assign lc_table[0] = { 4'd0, 4'd0 };
@@ -991,146 +919,102 @@ module lc_table_12_12
   assign lc_table[7] = { 4'd0, 4'd7 };
   assign lc_table[8] = { 4'd0, 4'd8 };
   assign lc_table[9] = { 4'd0, 4'd9 };
-  assign lc_table[10] = { 4'd0, 4'd10 };
-  assign lc_table[11] = { 4'd0, 4'd11 };
-  assign lc_table[12] = { 4'd1, 4'd0 };
-  assign lc_table[13] = { 4'd1, 4'd1 };
-  assign lc_table[14] = { 4'd1, 4'd2 };
-  assign lc_table[15] = { 4'd1, 4'd3 };
-  assign lc_table[16] = { 4'd1, 4'd4 };
-  assign lc_table[17] = { 4'd1, 4'd5 };
-  assign lc_table[18] = { 4'd1, 4'd6 };
-  assign lc_table[19] = { 4'd1, 4'd7 };
-  assign lc_table[20] = { 4'd1, 4'd8 };
-  assign lc_table[21] = { 4'd1, 4'd9 };
-  assign lc_table[22] = { 4'd1, 4'd10 };
-  assign lc_table[23] = { 4'd1, 4'd11 };
-  assign lc_table[24] = { 4'd2, 4'd0 };
-  assign lc_table[25] = { 4'd2, 4'd1 };
-  assign lc_table[26] = { 4'd2, 4'd2 };
-  assign lc_table[27] = { 4'd2, 4'd3 };
-  assign lc_table[28] = { 4'd2, 4'd4 };
-  assign lc_table[29] = { 4'd2, 4'd5 };
-  assign lc_table[30] = { 4'd2, 4'd6 };
-  assign lc_table[31] = { 4'd2, 4'd7 };
-  assign lc_table[32] = { 4'd2, 4'd8 };
-  assign lc_table[33] = { 4'd2, 4'd9 };
-  assign lc_table[34] = { 4'd2, 4'd10 };
-  assign lc_table[35] = { 4'd2, 4'd11 };
-  assign lc_table[36] = { 4'd3, 4'd0 };
-  assign lc_table[37] = { 4'd3, 4'd1 };
-  assign lc_table[38] = { 4'd3, 4'd2 };
-  assign lc_table[39] = { 4'd3, 4'd3 };
-  assign lc_table[40] = { 4'd3, 4'd4 };
-  assign lc_table[41] = { 4'd3, 4'd5 };
-  assign lc_table[42] = { 4'd3, 4'd6 };
-  assign lc_table[43] = { 4'd3, 4'd7 };
-  assign lc_table[44] = { 4'd3, 4'd8 };
-  assign lc_table[45] = { 4'd3, 4'd9 };
-  assign lc_table[46] = { 4'd3, 4'd10 };
-  assign lc_table[47] = { 4'd3, 4'd11 };
-  assign lc_table[48] = { 4'd4, 4'd0 };
-  assign lc_table[49] = { 4'd4, 4'd1 };
-  assign lc_table[50] = { 4'd4, 4'd2 };
-  assign lc_table[51] = { 4'd4, 4'd3 };
-  assign lc_table[52] = { 4'd4, 4'd4 };
-  assign lc_table[53] = { 4'd4, 4'd5 };
-  assign lc_table[54] = { 4'd4, 4'd6 };
-  assign lc_table[55] = { 4'd4, 4'd7 };
-  assign lc_table[56] = { 4'd4, 4'd8 };
-  assign lc_table[57] = { 4'd4, 4'd9 };
-  assign lc_table[58] = { 4'd4, 4'd10 };
-  assign lc_table[59] = { 4'd4, 4'd11 };
-  assign lc_table[60] = { 4'd5, 4'd0 };
-  assign lc_table[61] = { 4'd5, 4'd1 };
-  assign lc_table[62] = { 4'd5, 4'd2 };
-  assign lc_table[63] = { 4'd5, 4'd3 };
-  assign lc_table[64] = { 4'd5, 4'd4 };
-  assign lc_table[65] = { 4'd5, 4'd5 };
-  assign lc_table[66] = { 4'd5, 4'd6 };
-  assign lc_table[67] = { 4'd5, 4'd7 };
-  assign lc_table[68] = { 4'd5, 4'd8 };
-  assign lc_table[69] = { 4'd5, 4'd9 };
-  assign lc_table[70] = { 4'd5, 4'd10 };
-  assign lc_table[71] = { 4'd5, 4'd11 };
-  assign lc_table[72] = { 4'd6, 4'd0 };
-  assign lc_table[73] = { 4'd6, 4'd1 };
-  assign lc_table[74] = { 4'd6, 4'd2 };
-  assign lc_table[75] = { 4'd6, 4'd3 };
-  assign lc_table[76] = { 4'd6, 4'd4 };
-  assign lc_table[77] = { 4'd6, 4'd5 };
-  assign lc_table[78] = { 4'd6, 4'd6 };
-  assign lc_table[79] = { 4'd6, 4'd7 };
-  assign lc_table[80] = { 4'd6, 4'd8 };
-  assign lc_table[81] = { 4'd6, 4'd9 };
-  assign lc_table[82] = { 4'd6, 4'd10 };
-  assign lc_table[83] = { 4'd6, 4'd11 };
-  assign lc_table[84] = { 4'd7, 4'd0 };
-  assign lc_table[85] = { 4'd7, 4'd1 };
-  assign lc_table[86] = { 4'd7, 4'd2 };
-  assign lc_table[87] = { 4'd7, 4'd3 };
-  assign lc_table[88] = { 4'd7, 4'd4 };
-  assign lc_table[89] = { 4'd7, 4'd5 };
-  assign lc_table[90] = { 4'd7, 4'd6 };
-  assign lc_table[91] = { 4'd7, 4'd7 };
-  assign lc_table[92] = { 4'd7, 4'd8 };
-  assign lc_table[93] = { 4'd7, 4'd9 };
-  assign lc_table[94] = { 4'd7, 4'd10 };
-  assign lc_table[95] = { 4'd7, 4'd11 };
-  assign lc_table[96] = { 4'd8, 4'd0 };
-  assign lc_table[97] = { 4'd8, 4'd1 };
-  assign lc_table[98] = { 4'd8, 4'd2 };
-  assign lc_table[99] = { 4'd8, 4'd3 };
-  assign lc_table[100] = { 4'd8, 4'd4 };
-  assign lc_table[101] = { 4'd8, 4'd5 };
-  assign lc_table[102] = { 4'd8, 4'd6 };
-  assign lc_table[103] = { 4'd8, 4'd7 };
-  assign lc_table[104] = { 4'd8, 4'd8 };
-  assign lc_table[105] = { 4'd8, 4'd9 };
-  assign lc_table[106] = { 4'd8, 4'd10 };
-  assign lc_table[107] = { 4'd8, 4'd11 };
-  assign lc_table[108] = { 4'd9, 4'd0 };
-  assign lc_table[109] = { 4'd9, 4'd1 };
-  assign lc_table[110] = { 4'd9, 4'd2 };
-  assign lc_table[111] = { 4'd9, 4'd3 };
-  assign lc_table[112] = { 4'd9, 4'd4 };
-  assign lc_table[113] = { 4'd9, 4'd5 };
-  assign lc_table[114] = { 4'd9, 4'd6 };
-  assign lc_table[115] = { 4'd9, 4'd7 };
-  assign lc_table[116] = { 4'd9, 4'd8 };
-  assign lc_table[117] = { 4'd9, 4'd9 };
-  assign lc_table[118] = { 4'd9, 4'd10 };
-  assign lc_table[119] = { 4'd9, 4'd11 };
-  assign lc_table[120] = { 4'd10, 4'd0 };
-  assign lc_table[121] = { 4'd10, 4'd1 };
-  assign lc_table[122] = { 4'd10, 4'd2 };
-  assign lc_table[123] = { 4'd10, 4'd3 };
-  assign lc_table[124] = { 4'd10, 4'd4 };
-  assign lc_table[125] = { 4'd10, 4'd5 };
-  assign lc_table[126] = { 4'd10, 4'd6 };
-  assign lc_table[127] = { 4'd10, 4'd7 };
-  assign lc_table[128] = { 4'd10, 4'd8 };
-  assign lc_table[129] = { 4'd10, 4'd9 };
-  assign lc_table[130] = { 4'd10, 4'd10 };
-  assign lc_table[131] = { 4'd10, 4'd11 };
-  assign lc_table[132] = { 4'd11, 4'd0 };
-  assign lc_table[133] = { 4'd11, 4'd1 };
-  assign lc_table[134] = { 4'd11, 4'd2 };
-  assign lc_table[135] = { 4'd11, 4'd3 };
-  assign lc_table[136] = { 4'd11, 4'd4 };
-  assign lc_table[137] = { 4'd11, 4'd5 };
-  assign lc_table[138] = { 4'd11, 4'd6 };
-  assign lc_table[139] = { 4'd11, 4'd7 };
-  assign lc_table[140] = { 4'd11, 4'd8 };
-  assign lc_table[141] = { 4'd11, 4'd9 };
-  assign lc_table[142] = { 4'd11, 4'd10 };
-  assign lc_table[143] = { 4'd11, 4'd11 };
+  assign lc_table[10] = { 4'd1, 4'd0 };
+  assign lc_table[11] = { 4'd1, 4'd1 };
+  assign lc_table[12] = { 4'd1, 4'd2 };
+  assign lc_table[13] = { 4'd1, 4'd3 };
+  assign lc_table[14] = { 4'd1, 4'd4 };
+  assign lc_table[15] = { 4'd1, 4'd5 };
+  assign lc_table[16] = { 4'd1, 4'd6 };
+  assign lc_table[17] = { 4'd1, 4'd7 };
+  assign lc_table[18] = { 4'd1, 4'd8 };
+  assign lc_table[19] = { 4'd1, 4'd9 };
+  assign lc_table[20] = { 4'd2, 4'd0 };
+  assign lc_table[21] = { 4'd2, 4'd1 };
+  assign lc_table[22] = { 4'd2, 4'd2 };
+  assign lc_table[23] = { 4'd2, 4'd3 };
+  assign lc_table[24] = { 4'd2, 4'd4 };
+  assign lc_table[25] = { 4'd2, 4'd5 };
+  assign lc_table[26] = { 4'd2, 4'd6 };
+  assign lc_table[27] = { 4'd2, 4'd7 };
+  assign lc_table[28] = { 4'd2, 4'd8 };
+  assign lc_table[29] = { 4'd2, 4'd9 };
+  assign lc_table[30] = { 4'd3, 4'd0 };
+  assign lc_table[31] = { 4'd3, 4'd1 };
+  assign lc_table[32] = { 4'd3, 4'd2 };
+  assign lc_table[33] = { 4'd3, 4'd3 };
+  assign lc_table[34] = { 4'd3, 4'd4 };
+  assign lc_table[35] = { 4'd3, 4'd5 };
+  assign lc_table[36] = { 4'd3, 4'd6 };
+  assign lc_table[37] = { 4'd3, 4'd7 };
+  assign lc_table[38] = { 4'd3, 4'd8 };
+  assign lc_table[39] = { 4'd3, 4'd9 };
+  assign lc_table[40] = { 4'd4, 4'd0 };
+  assign lc_table[41] = { 4'd4, 4'd1 };
+  assign lc_table[42] = { 4'd4, 4'd2 };
+  assign lc_table[43] = { 4'd4, 4'd3 };
+  assign lc_table[44] = { 4'd4, 4'd4 };
+  assign lc_table[45] = { 4'd4, 4'd5 };
+  assign lc_table[46] = { 4'd4, 4'd6 };
+  assign lc_table[47] = { 4'd4, 4'd7 };
+  assign lc_table[48] = { 4'd4, 4'd8 };
+  assign lc_table[49] = { 4'd4, 4'd9 };
+  assign lc_table[50] = { 4'd5, 4'd0 };
+  assign lc_table[51] = { 4'd5, 4'd1 };
+  assign lc_table[52] = { 4'd5, 4'd2 };
+  assign lc_table[53] = { 4'd5, 4'd3 };
+  assign lc_table[54] = { 4'd5, 4'd4 };
+  assign lc_table[55] = { 4'd5, 4'd5 };
+  assign lc_table[56] = { 4'd5, 4'd6 };
+  assign lc_table[57] = { 4'd5, 4'd7 };
+  assign lc_table[58] = { 4'd5, 4'd8 };
+  assign lc_table[59] = { 4'd5, 4'd9 };
+  assign lc_table[60] = { 4'd6, 4'd0 };
+  assign lc_table[61] = { 4'd6, 4'd1 };
+  assign lc_table[62] = { 4'd6, 4'd2 };
+  assign lc_table[63] = { 4'd6, 4'd3 };
+  assign lc_table[64] = { 4'd6, 4'd4 };
+  assign lc_table[65] = { 4'd6, 4'd5 };
+  assign lc_table[66] = { 4'd6, 4'd6 };
+  assign lc_table[67] = { 4'd6, 4'd7 };
+  assign lc_table[68] = { 4'd6, 4'd8 };
+  assign lc_table[69] = { 4'd6, 4'd9 };
+  assign lc_table[70] = { 4'd7, 4'd0 };
+  assign lc_table[71] = { 4'd7, 4'd1 };
+  assign lc_table[72] = { 4'd7, 4'd2 };
+  assign lc_table[73] = { 4'd7, 4'd3 };
+  assign lc_table[74] = { 4'd7, 4'd4 };
+  assign lc_table[75] = { 4'd7, 4'd5 };
+  assign lc_table[76] = { 4'd7, 4'd6 };
+  assign lc_table[77] = { 4'd7, 4'd7 };
+  assign lc_table[78] = { 4'd7, 4'd8 };
+  assign lc_table[79] = { 4'd7, 4'd9 };
+  assign lc_table[80] = { 4'd8, 4'd0 };
+  assign lc_table[81] = { 4'd8, 4'd1 };
+  assign lc_table[82] = { 4'd8, 4'd2 };
+  assign lc_table[83] = { 4'd8, 4'd3 };
+  assign lc_table[84] = { 4'd8, 4'd4 };
+  assign lc_table[85] = { 4'd8, 4'd5 };
+  assign lc_table[86] = { 4'd8, 4'd6 };
+  assign lc_table[87] = { 4'd8, 4'd7 };
+  assign lc_table[88] = { 4'd8, 4'd8 };
+  assign lc_table[89] = { 4'd8, 4'd9 };
+  assign lc_table[90] = { 4'd9, 4'd0 };
+  assign lc_table[91] = { 4'd9, 4'd1 };
+  assign lc_table[92] = { 4'd9, 4'd2 };
+  assign lc_table[93] = { 4'd9, 4'd3 };
+  assign lc_table[94] = { 4'd9, 4'd4 };
+  assign lc_table[95] = { 4'd9, 4'd5 };
+  assign lc_table[96] = { 4'd9, 4'd6 };
+  assign lc_table[97] = { 4'd9, 4'd7 };
+  assign lc_table[98] = { 4'd9, 4'd8 };
+  assign lc_table[99] = { 4'd9, 4'd9 };
 
 endmodule
 
 
 
-module distance_table_12_12
+module distance_table_10_10
 (
   input [8-1:0] opa0,
   input [8-1:0] opa1,
@@ -1138,13 +1022,13 @@ module distance_table_12_12
   input [8-1:0] opb0,
   input [8-1:0] opb1,
   input opbv,
-  output [11-1:0] da,
-  output [11-1:0] db
+  output [10-1:0] da,
+  output [10-1:0] db
 );
 
-  wire [11-1:0] dist_table [0:2**8-1];
-  wire [11-1:0] da_t;
-  wire [11-1:0] db_t;
+  wire [10-1:0] dist_table [0:2**8-1];
+  wire [10-1:0] da_t;
+  wire [10-1:0] db_t;
 
   assign da_t = dist_table[{ opa1[3:0], opa0[3:0] }] + dist_table[{ opa1[7:4], opa0[7:4] }];
   assign db_t = dist_table[{ opb1[3:0], opb0[3:0] }] + dist_table[{ opb1[7:4], opb0[7:4] }];
@@ -1162,8 +1046,6 @@ module distance_table_12_12
   assign dist_table[7] = 7;
   assign dist_table[8] = 8;
   assign dist_table[9] = 9;
-  assign dist_table[10] = 10;
-  assign dist_table[11] = 11;
   assign dist_table[16] = 1;
   assign dist_table[17] = 0;
   assign dist_table[18] = 1;
@@ -1174,8 +1056,6 @@ module distance_table_12_12
   assign dist_table[23] = 6;
   assign dist_table[24] = 7;
   assign dist_table[25] = 8;
-  assign dist_table[26] = 9;
-  assign dist_table[27] = 10;
   assign dist_table[32] = 2;
   assign dist_table[33] = 1;
   assign dist_table[34] = 0;
@@ -1186,8 +1066,6 @@ module distance_table_12_12
   assign dist_table[39] = 5;
   assign dist_table[40] = 6;
   assign dist_table[41] = 7;
-  assign dist_table[42] = 8;
-  assign dist_table[43] = 9;
   assign dist_table[48] = 3;
   assign dist_table[49] = 2;
   assign dist_table[50] = 1;
@@ -1198,8 +1076,6 @@ module distance_table_12_12
   assign dist_table[55] = 4;
   assign dist_table[56] = 5;
   assign dist_table[57] = 6;
-  assign dist_table[58] = 7;
-  assign dist_table[59] = 8;
   assign dist_table[64] = 4;
   assign dist_table[65] = 3;
   assign dist_table[66] = 2;
@@ -1210,8 +1086,6 @@ module distance_table_12_12
   assign dist_table[71] = 3;
   assign dist_table[72] = 4;
   assign dist_table[73] = 5;
-  assign dist_table[74] = 6;
-  assign dist_table[75] = 7;
   assign dist_table[80] = 5;
   assign dist_table[81] = 4;
   assign dist_table[82] = 3;
@@ -1222,8 +1096,6 @@ module distance_table_12_12
   assign dist_table[87] = 2;
   assign dist_table[88] = 3;
   assign dist_table[89] = 4;
-  assign dist_table[90] = 5;
-  assign dist_table[91] = 6;
   assign dist_table[96] = 6;
   assign dist_table[97] = 5;
   assign dist_table[98] = 4;
@@ -1234,8 +1106,6 @@ module distance_table_12_12
   assign dist_table[103] = 1;
   assign dist_table[104] = 2;
   assign dist_table[105] = 3;
-  assign dist_table[106] = 4;
-  assign dist_table[107] = 5;
   assign dist_table[112] = 7;
   assign dist_table[113] = 6;
   assign dist_table[114] = 5;
@@ -1246,8 +1116,6 @@ module distance_table_12_12
   assign dist_table[119] = 0;
   assign dist_table[120] = 1;
   assign dist_table[121] = 2;
-  assign dist_table[122] = 3;
-  assign dist_table[123] = 4;
   assign dist_table[128] = 8;
   assign dist_table[129] = 7;
   assign dist_table[130] = 6;
@@ -1258,8 +1126,6 @@ module distance_table_12_12
   assign dist_table[135] = 1;
   assign dist_table[136] = 0;
   assign dist_table[137] = 1;
-  assign dist_table[138] = 2;
-  assign dist_table[139] = 3;
   assign dist_table[144] = 9;
   assign dist_table[145] = 8;
   assign dist_table[146] = 7;
@@ -1270,32 +1136,6 @@ module distance_table_12_12
   assign dist_table[151] = 2;
   assign dist_table[152] = 1;
   assign dist_table[153] = 0;
-  assign dist_table[154] = 1;
-  assign dist_table[155] = 2;
-  assign dist_table[160] = 10;
-  assign dist_table[161] = 9;
-  assign dist_table[162] = 8;
-  assign dist_table[163] = 7;
-  assign dist_table[164] = 6;
-  assign dist_table[165] = 5;
-  assign dist_table[166] = 4;
-  assign dist_table[167] = 3;
-  assign dist_table[168] = 2;
-  assign dist_table[169] = 1;
-  assign dist_table[170] = 0;
-  assign dist_table[171] = 1;
-  assign dist_table[176] = 11;
-  assign dist_table[177] = 10;
-  assign dist_table[178] = 9;
-  assign dist_table[179] = 8;
-  assign dist_table[180] = 7;
-  assign dist_table[181] = 6;
-  assign dist_table[182] = 5;
-  assign dist_table[183] = 4;
-  assign dist_table[184] = 3;
-  assign dist_table[185] = 2;
-  assign dist_table[186] = 1;
-  assign dist_table[187] = 0;
 
 endmodule
 

@@ -15,6 +15,10 @@ def create_sa_single_test_bench(base_path: str, sa_graph: SaGraph, test_number: 
     sa_comp = SAComponents(sa_graph, base_path, name)
     create_rom_files(sa_graph, sa_comp, base_path + "/verilog/" + name)
 
+    cell_bits = sa_comp.cell_bits
+    node_bits = sa_comp.node_bits
+    n_neighbors = sa_comp.n_neighbors
+
     m = Module(name)
 
     clk = m.Reg('clk')
@@ -29,6 +33,24 @@ def create_sa_single_test_bench(base_path: str, sa_graph: SaGraph, test_number: 
         ('rst', rst),
         ('start', start),
         ('done', done),
+        ('n_exec', Int(1000, 10, 10)),
+
+        ('conf_c2n_rd', Int(0, 1, 10)),
+        ('conf_c2n_rd_addr', Int(0, cell_bits, 10)),
+
+        ('conf_wr', Int(0, 1, 10)),
+
+        ('conf_c2n_wr', Int(0, 1, 10)),
+        ('conf_c2n_wr_addr', Int(0, cell_bits, 10)),
+        ('conf_c2n_wr_data', Int(0, node_bits + 1, 10)),
+
+        ('conf_n_wr', Int(0, n_neighbors, 10)),
+        ('conf_n_wr_addr', Int(0, node_bits, 10)),
+        ('conf_n_wr_data', Int(0, node_bits + 1, 10)),
+
+        ('conf_n2c_wr', Int(0, n_neighbors, 10)),
+        ('conf_n2c_wr_addr', Int(0, cell_bits, 10)),
+        ('conf_n2c_wr_data', Int(0, node_bits, 10)),
     ]
     sa_single = sa_comp.create_sa_fsm_single_thread()
     m.Instance(sa_single, sa_single.name, par, con)
@@ -54,6 +76,8 @@ def create_sa_single_test_bench(base_path: str, sa_graph: SaGraph, test_number: 
     m.EmbeddedCode('\n//Simulation sector - End')
 
     m.to_verilog(verilog_file)
-    sim = simulation.Simulator(m, sim='iverilog')
-    rslt = sim.run(outputfile=output_file)
-    print(rslt)
+    main_module_file = base_path + "/verilog/%s.v" % sa_single.name
+    sa_single.to_verilog(main_module_file)
+    #sim = simulation.Simulator(m, sim='iverilog')
+    #rslt = sim.run(outputfile=output_file)
+    #print(rslt)
