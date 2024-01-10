@@ -16,6 +16,7 @@ class ProjGraph:
         self.nodes = []
         self.n_nodes = 0
         self.edges = []
+        self.n_edges = 0
         self.nodes_to_idx = {}
         self.neighbors = {}
         self.n_cells = 0
@@ -30,6 +31,7 @@ class ProjGraph:
         self.nodes = list(g.nodes)
         self.n_nodes = len(self.nodes)
         self.edges = list(g.edges)
+        self.n_edges = len(self.edges)
         self.nodes_to_idx = {}
         self.neighbors = {}
         for i in range(self.n_nodes):

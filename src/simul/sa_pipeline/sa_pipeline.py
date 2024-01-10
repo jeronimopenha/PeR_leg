@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print(sa_graph.nodes)
     print(sa_graph.neighbors)
 
-    th = _th.Th(sa_graph, n_threads=n_threads)
+    th = _th.St1EdgesSel(sa_graph, n_threads=n_threads)
     st1 = _st1.St1(sa_graph, n_threads=n_threads)
     st2 = _st2.St2(sa_graph)
     st3 = _st3.St3(sa_graph, n_threads=n_threads)
