@@ -4,13 +4,11 @@ import sys
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
-import src.hw.sa_components as sac
-import src.hw.testbenches as _t
-import src.hw.sa_aws as _aws
-from src.utils.util import SaGraph
-import src.hw.sa_acelerator as _acc
+import old.src.hw.sa_pipeline.sa_components as sac
+import old.src.hw.sa_pipeline.testbenches as _t
+from src.hw.sa_pipeline.util import SaGraph
 
-sa_graph = SaGraph('dot/mac.dot')
+sa_graph = SaGraph('dot_db/mac.dot_db')
 '''acc = _acc.SaAccelerator(sa_graph, 1)
 acc.get().to_verilog(os.getcwd() + "/verilog/sa_aws_8x8_1c")
 acc = _acc.SaAccelerator(sa_graph, 10)

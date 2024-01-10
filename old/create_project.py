@@ -7,11 +7,10 @@ if os.getcwd() not in sys.path:
 import argparse
 import traceback
 from veriloggen import *
-from math import ceil
 
-from src.hw.create_axy_interface import AccAXIInterface
-import src.hw.sa_acelerator as _sa
-import src.utils.util as _u
+from old.src.hw import AccAXIInterface
+import old.src.hw.sa_pipeline.sa_acelerator as _sa
+import src.hw.sa_pipeline.util as _u
 
 
 # p = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +29,7 @@ def create_args():
     parser.add_argument('-c', '--copies', help='Number of SA copies', type=int, default=1)
     parser.add_argument('-n', '--name', help='Project name', type=str, default='a.prj')
     parser.add_argument('-o', '--output', help='Project location', type=str, default='.')
-    parser.add_argument('-d', '--dot', help='DOT dataflow description file', type=str)
+    parser.add_argument('-d', '--dot_db', help='DOT dataflow description file', type=str)
 
     return parser.parse_args()
 
@@ -83,7 +82,7 @@ def main():
         args.output = running_path
 
     if args.dot:
-        #args.dot = running_path + '/' + args.dot
+        #args.dot_db = running_path + '/' + args.dot_db
         create_project(sa_root, args.dot, args.copies, args.name, args.output)
         print('Project successfully created in %s/%s' % (args.output, args.name))
     else:
