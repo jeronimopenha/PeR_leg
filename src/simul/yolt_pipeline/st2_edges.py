@@ -1,6 +1,6 @@
 class St2Edges(object):
     """
-    This class is responsible to generate the edges sections for each thread.
+    This class is responsible give the edges for each thread.
     """
 
     def __init__(self, edges: list, latency: int = 5):

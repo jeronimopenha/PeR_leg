@@ -6,26 +6,26 @@ from math import ceil, sqrt
 class ProjGraph:
 
     def __init__(self, dot: str):
-        self.dot = dot
-        self.gv = pgv.AGraph(self.dot, strict=False, directed=True)
-        self.g = nx.DiGraph(self.gv)
-        self.nodes = []
-        self.n_nodes = 0
-        self.edges = []
-        self.n_edges = 0
-        self.nodes_to_idx = {}
-        self.neighbors = {}
-        self.n_cells = 0
-        self.n_cells_sqrt = 0
+        self.dot: str = dot
+        self.gv: pgv.AGraph = pgv.AGraph(self.dot, strict=False, directed=True)
+        self.g: nx.DiGraph = nx.DiGraph(self.gv)
+        self.nodes: list = []
+        self.n_nodes: int = 0
+        self.edges: list = []
+        self.n_edges: int = 0
+        self.nodes_to_idx: dict = {}
+        self.neighbors: dict = {}
+        self.n_cells: int = 0
+        self.n_cells_sqrt: int = 0
         self.get_dot_vars()
 
-    def get_dot_vars(self):
-        self.nodes = list(self.g.nodes)
-        self.n_nodes = len(self.nodes)
-        self.edges = list(self.g.edges)
-        self.n_edges = len(self.edges)
-        self.nodes_to_idx = {}
-        self.neighbors = {}
+    def get_dot_vars(self) -> None:
+        self.nodes: list = list(self.g.nodes)
+        self.n_nodes: int = len(self.nodes)
+        self.edges: list = list(self.g.edges)
+        self.n_edges: int = len(self.edges)
+        self.nodes_to_idx: dict = {}
+        self.neighbors: dict = {}
         for i in range(self.n_nodes):
             self.nodes_to_idx[self.nodes[i]] = i
 
@@ -42,12 +42,13 @@ class ProjGraph:
         self.n_cells_sqrt = ceil(sqrt(self.n_nodes))
         self.n_cells = pow(self.n_cells_sqrt, 2)
 
-    def get_edges_depth_first(self) -> list(list()):
+    # FIXME
+    def get_edges_depth_first(self) -> list[list]:
         # FIXME Acertar o algoritmo para grafos não conectados
         # FIXME docstring
         """_summary_
             Returns a list of edges according
-            with the depth first algorithm
+            to the depth first algorithm
 
         Args:
             self (_type_): _description_
@@ -55,21 +56,21 @@ class ProjGraph:
         Returns:
             _type_: _description_
         """
-        temp_edges = list(self.g.edges)
-        r_edges = []
+        temp_edges: list = list(self.g.edges)
+        r_edges: list = []
 
         # finding the bottom node (with no successors)
-        lower_node = None
+        lower_node: str = ""
         for p in self.g._succ:
             if len(self.g._succ[p]) == 0:
                 lower_node = p
                 break
 
         # creating the edges list
-        r = lower_node
-        q = []
+        r: str = lower_node
+        q: list = []
         q.append(r)
-        working = True
+        working: bool = True
         while working:
             working = False
             for e in temp_edges:
@@ -91,89 +92,91 @@ class ProjGraph:
                         working = True'''
         return r_edges
 
-    def get_edges_zigzag(self) -> list(list()):
+    # FIXME
+    def get_edges_zigzag(self) -> list[list]:
         # FIXME docstring
         """_summary_
             Returns a list of edges according
-            with the zig zag algorithm
+            to the zigzag algorithm
         Returns:
             _type_: _description_
         """
 
-        output_list = []
+        output_list: list = []
         # get the node inputs
-        for n in self.g.nodes():
-            if self.g.out_degree(n) == 0:
-                output_list.append([n, 'IN'])
+        for node in self.g.nodes():
+            if self.g.out_degree(node) == 0:
+                output_list.append([node, 'IN'])
 
-        stack = output_list.copy()
+        stack: list = output_list.copy()
 
-        edges = []
+        edges: list = []
 
-        l_fanin, l_fanout = {}, {}
-        for no in self.g:
-            l_fanin[no] = list(self.g.predecessors(no))
-            l_fanout[no] = list(self.g.successors(no))
+        fanin: dict = {}
+        fanout: dict = {}
+        for node in self.g.nodes():
+            fanin[node] = list(self.g.predecessors(node))
+            fanout[node] = list(self.g.successors(node))
 
         while stack:
             a, direction = stack.pop(0)  # get the top1
 
-            fanin = len(l_fanin[a])  # get size fanin
-            fanout = len(l_fanout[a])  # get size fanout
+            n_fanin: int = len(fanin[a])  # get size n_fanin
+            n_fanout: int = len(fanout[a])  # get size n_fanout
 
             if direction == 'IN':  # direction == 'IN'
 
-                if fanout >= 1:  # Case 3
+                if n_fanout >= 1:  # Case 3
 
-                    b = l_fanout[a][-1]  # get the element more the right side
+                    b: str = fanout[a][-1]  # get the element more the right side
 
-                    for i in range(fanin):
+                    for i in range(n_fanin):
                         stack.insert(0, [a, 'IN'])
                     stack.insert(0, [b, 'OUT'])  # insert into stack
 
-                    l_fanout[a].remove(b)
-                    l_fanin[b].remove(a)
+                    fanout[a].remove(b)
+                    fanin[b].remove(a)
 
                     edges.append([a, b, 'OUT'])
 
-                elif fanin >= 1:  # Case 2
+                elif n_fanin >= 1:  # Case 2
 
-                    b = l_fanin[a][-1]  # get the elem more in the right
+                    b: str = fanin[a][-1]  # get the elem more in the right
 
                     stack.insert(0, [a, 'IN'])
-                    for i in range(fanin):
+                    for i in range(n_fanin):
                         stack.insert(0, [b, 'IN'])
 
-                    l_fanin[a].remove(b)
-                    l_fanout[b].remove(a)
+                    fanin[a].remove(b)
+                    fanout[b].remove(a)
 
                     edges.append([a, b, 'IN'])
 
             else:  # direction == 'OUT'
 
-                if fanin >= 1:  # Case 3
+                if n_fanin >= 1:  # Case 3
 
-                    b = l_fanin[a][0]  # get the element more left side
+                    b = fanin[a][0]  # get the element more left side
 
-                    for i in range(fanout):
+                    for i in range(n_fanout):
                         stack.insert(0, [a, 'OUT'])
                     stack.insert(0, [b, 'IN'])
 
-                    l_fanin[a].remove(b)
-                    l_fanout[b].remove(a)
+                    fanin[a].remove(b)
+                    fanout[b].remove(a)
 
                     edges.append([a, b, 'IN'])
 
-                elif fanout >= 1:  # Case 2
+                elif n_fanout >= 1:  # Case 2
 
-                    b = l_fanout[a][0]  # get the element more left side
+                    b = fanout[a][0]  # get the element more left side
 
                     stack.insert(0, [a, 'OUT'])
-                    for i in range(fanout):
+                    for i in range(n_fanout):
                         stack.insert(0, [b, 'OUT'])
 
-                    l_fanout[a].remove(b)
-                    l_fanin[b].remove(a)
+                    fanout[a].remove(b)
+                    fanin[b].remove(a)
 
                     edges.append([a, b, 'OUT'])
 

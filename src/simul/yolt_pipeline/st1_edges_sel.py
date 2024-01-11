@@ -3,8 +3,8 @@ class St1EdgesSel(object):
     This class is responsible to generate the edges sections for each thread.
     """
 
-    def __init__(self, n_threads: int = 1, n_edges: int = 0):
-        self.latency: int = 5
+    def __init__(self, n_threads: int = 1, n_edges: int = 0, latency: int = 5):
+        self.latency: int = latency
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
         self.edge_counter: list[int] = [0 for i in range(self.latency)]
