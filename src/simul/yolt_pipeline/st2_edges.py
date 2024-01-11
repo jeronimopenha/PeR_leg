@@ -23,7 +23,7 @@ class St2Edges(object):
         # process the new output
         th_idx: int = st_input['th_idx']
         th_valid: bool = st_input['th_valid']
-        edge_n: int = st_input['edge_n']
+        edge_n: int = st_input['edg_n']
         a, b = self.edges[edge_n]
 
         self.output_new = {
