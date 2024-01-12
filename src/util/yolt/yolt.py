@@ -7,10 +7,9 @@ from src.util.per_graph import PeRGraph
 class Yolt(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
-        self.per_graph = per_graph
-        self.n_threads: int = n_threads
         self.latency: int = 5
-        self.per_graph: PeRGraph = per_graph
+        self.per_graph:PeRGraph = per_graph
+        self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
         self.edges_str: list[list] = self.per_graph.get_edges_zigzag()

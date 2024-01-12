@@ -32,7 +32,7 @@ class St3N2C(object):
         b: int = st_input['b']
         ca: int = self.n2c[th_idx][a] if self.n2c[th_idx][a] is not None else 0
 
-        ia, ja = U.get_lc_node(ca, self.n_cells_sqrt, self.n_cells_sqrt)
+        ia, ja = U.get_line_column_cell_sqr(ca, self.n_cells_sqrt)
 
         # TODO
         # return increment

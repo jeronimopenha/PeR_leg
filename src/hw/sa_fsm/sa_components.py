@@ -28,6 +28,7 @@ class SAComponents:
 
         self.cache = {}
 
+    # FIXME
     def create_memory_2r_1w(self, width, depth) -> Module:
         name = 'mem_2r_1w_width%d_depth%d' % (width, depth)
         if name in self.cache.keys():
@@ -38,24 +39,27 @@ class SAComponents:
         INIT_FILE = m.Parameter('INIT_FILE', 'mem_file.txt')
         WRITE_F = m.Parameter('WRITE_F', 0)
         OUTPUT_FILE = m.Parameter('OUTPUT_FILE', 'mem_out_file.txt')
+        WIDTH = m.Parameter('WIDTH', 8)
+        DEPTH = m.Parameter('DEPTH', 3)
 
         clk = m.Input('clk')
         rd = m.Input('rd')
-        rd_addr0 = m.Input('rd_addr0', depth)
-        rd_addr1 = m.Input('rd_addr1', depth)
-        out0 = m.Output('out0', width)
-        out1 = m.Output('out1', width)
+        rd_addr0 = m.Input('rd_addr0', DEPTH)
+        rd_addr1 = m.Input('rd_addr1', DEPTH)
+        out0 = m.Output('out0', WIDTH)
+        out1 = m.Output('out1', WIDTH)
 
         wr = m.Input('wr')
-        wr_addr = m.Input('wr_addr', depth)
-        wr_data = m.Input('wr_data', width)
+        wr_addr = m.Input('wr_addr', DEPTH)
+        wr_data = m.Input('wr_data', WIDTH)
 
         # m.EmbeddedCode(
         #    '(*rom_style = "block" *) reg [%d-1:0] mem[0:2**%d-1];' % (width, depth))
         # m.EmbeddedCode('/*')
-        mem = m.Reg('mem', width, Power(2, depth))
+        mem = m.Reg('mem', width, Power(2, DEPTH))
         # m.EmbeddedCode('*/')
 
+        # FIXME
         out0.assign(Mux(rd, mem[rd_addr0], Int(0, width, 10)))
         out1.assign(Mux(rd, mem[rd_addr1], Int(0, width, 10)))
 
