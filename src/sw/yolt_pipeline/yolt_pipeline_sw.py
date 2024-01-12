@@ -26,4 +26,3 @@ class YoltPipeline(Yolt):
             print(self.st2_edges.output)
             print(self.st3_n2c.output)
             print()
-            a = 1
