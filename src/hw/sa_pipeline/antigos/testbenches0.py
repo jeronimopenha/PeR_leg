@@ -6,8 +6,8 @@ from math import ceil, log2, sqrt
 
 
 def create_sa_test_bench(sa_comp: SAComponents) -> str:
-    sa_graph = sa_comp.proj_graph
-    n_cells = sa_comp.proj_graph.n_cells
+    sa_graph = sa_comp.per_graph
+    n_cells = sa_comp.per_graph.n_cells
     n_neighbors = sa_comp.n_neighbors
     align_bits = sa_comp.align_bits
     n_threads = sa_comp.n_threads

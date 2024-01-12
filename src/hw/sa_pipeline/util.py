@@ -144,8 +144,8 @@ def get_n_bits(n):
 
 
 def create_rom_files(sa_comp, path: str):
-    sa_graph = sa_comp.proj_graph
-    n_cells = sa_comp.proj_graph.n_cells
+    sa_graph = sa_comp.per_graph
+    n_cells = sa_comp.per_graph.n_cells
     n_neighbors = sa_comp.n_neighbors
     align_bits = sa_comp.align_bits
     n_threads = sa_comp.n_threads
@@ -163,7 +163,7 @@ def create_rom_files(sa_comp, path: str):
     c_n = []
     n_c = []
     for i in range(n_threads):
-        c_n_i, n_c_i = sa_graph.get_initial_grid()
+        c_n_i, n_c_i = sa_graph.get_initial_n2c()
         c_n.append(c_n_i)
         n_c.append(n_c_i)
 

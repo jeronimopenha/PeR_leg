@@ -9,7 +9,7 @@ import src.sw.st1 as _st1
 import src.sw.st2 as _st2
 import src.sw.st3 as _st3
 import src.sw.st4 as _st4
-import src.simul.sa_pipeline.st5 as _st5
+import src.sw.sa_pipeline.st5 as _st5
 import src.sw.st6 as _st6
 import src.sw.st7 as _st7
 import src.sw.st8 as _st8
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print(sa_graph.nodes)
     print(sa_graph.neighbors)
 
-    th = _th.Th(sa_graph, n_threads=n_threads)
+    th = _th.St1EdgesSel(sa_graph, n_threads=n_threads)
     st1 = _st1.St1(sa_graph, n_threads=n_threads)
     st2 = _st2.St2(sa_graph)
     st3 = _st3.St3(sa_graph, n_threads=n_threads)
