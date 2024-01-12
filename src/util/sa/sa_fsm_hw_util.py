@@ -1,11 +1,11 @@
 from src.hw.sa_fsm.sa_components import SAComponents
-from src.util.proj_graph import ProjGraph
+from src.util.per_graph import PeRGraph
 from src.util.sa.sa_util import SaUtil
 
 
-class SaFsmUtil(SaUtil):
+class SaFsmHwUtil(SaUtil):
 
-    def __init__(self, proj_graph: ProjGraph):
+    def __init__(self, proj_graph: PeRGraph):
         super().__init__(proj_graph)
 
     def create_rom_files(self, sa_comp: SAComponents, path: str):

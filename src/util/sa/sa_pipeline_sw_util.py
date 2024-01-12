@@ -1,10 +1,10 @@
 import random as rnd
-from src.util.proj_graph import ProjGraph
+from src.util.per_graph import PeRGraph
 from src.util.sa.sa_util import SaUtil
 
 
-class SaSimulUtil(SaUtil):
-    def __init__(self, proj_graph: ProjGraph):
+class SaPipelineSwlUtil(SaUtil):
+    def __init__(self, proj_graph: PeRGraph):
         super().__init__(proj_graph)
 
     def get_total_cost(self, c_n, n_c):
