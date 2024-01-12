@@ -22,9 +22,7 @@ class Yolt(object):
                 ]
             )
 
-        self.n2c: list[list] = self.get_initial_n2c(self.edges_int[0][0], self.latency)
-        # TODO
-        self.c2n: list[list] = []
+        self.n2c, self.c2n = self.get_initial_position(self.edges_int[0][0], self.latency)
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
@@ -35,11 +33,15 @@ class Yolt(object):
     def reset_random(random_seed: int = 0):
         rnd.seed(random_seed)
 
-    def get_initial_n2c(self, first_node: int, latency: int = 5) -> list[list]:
+    def get_initial_position(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list] = []
+        c2n: list[list] = []
         for i in range(latency):
             n2c_tmp: list = [None for j in range(self.per_graph.n_cells)]
+            c2n_tmp: list = [None for j in range(self.per_graph.n_cells)]
             idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
             n2c_tmp[first_node] = idx
+            c2n_tmp[idx] = first_node
             n2c.append(n2c_tmp)
-        return n2c
+            c2n.append(c2n_tmp)
+        return n2c, c2n
