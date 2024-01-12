@@ -13,7 +13,6 @@ class St3N2C(object):
         self.output_new: dict = {
             'th_idx': 0,
             'th_valid': False,
-            'ca': 0,
             'ia': 0,
             'ja': 0,
             'b': 0,
@@ -40,7 +39,6 @@ class St3N2C(object):
         self.output_new = {
             'th_idx': th_idx,
             'th_valid': th_valid,
-            'ca': ca,
             'ia': ia,
             'ja': ja,
             'b': b,

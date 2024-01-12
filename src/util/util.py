@@ -20,3 +20,26 @@ class Util(object):
         line: int = cell // n_lines
         column: int = cell % n_columns
         return line, column
+
+    @staticmethod
+    def get_distance_table(cells_sqrt: int) -> list[list]:
+        distance_tale_tmp: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
+        distance_tale: list[list] = []
+        for i in range(cells_sqrt):
+            for j in range(cells_sqrt):
+                if j == i == 0:
+                    continue
+                d: int = i + j
+                if [i, j] not in distance_tale_tmp[d - 1]:
+                    distance_tale_tmp[d - 1].append([i, j])
+                if [i, -j] not in distance_tale_tmp[d - 1]:
+                    distance_tale_tmp[d - 1].append([i, -j])
+                if [-i, -j] not in distance_tale_tmp[d - 1]:
+                    distance_tale_tmp[d - 1].append([-i, -j])
+                if [-i, j] not in distance_tale_tmp[d - 1]:
+                    distance_tale_tmp[d - 1].append([-i, j])
+        for d in range(len(distance_tale_tmp)):
+            for p in distance_tale_tmp[d]:
+                distance_tale.append(p)
+
+        return distance_tale

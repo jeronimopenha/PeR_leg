@@ -3,19 +3,20 @@ from src.util.util import Util as U
 
 class St4Dist(object):
     """
-    This class is responsible give the 'a' node's cell and line and column.
+    This class is responsible give one possible neighbor cell of 'a'.
     """
 
-    def __init__(self, n2c: list[list], n_cells_sqrt: int):
-        self.c2n: list[list] = n2c
+    def __init__(self, n_cells_sqrt: int, latency: int):
+        self.latency = latency
         self.n_cells_sqrt: int = n_cells_sqrt
+        self.distance_table: list[list] = U.get_distance_table(self.n_cells_sqrt)
+        self.th_dist_table_counter: list[int] = [0 for i in range(self.latency)]
 
         self.output_new: dict = {
             'th_idx': 0,
             'th_valid': False,
-            'ca': 0,
-            'ia': 0,
-            'ja': 0,
+            'ib': 0,
+            'jb': 0,
             'b': 0,
         }
 
@@ -28,11 +29,13 @@ class St4Dist(object):
         # process the new output
         th_idx: int = st_input['th_idx']
         th_valid: bool = st_input['th_valid']
-        a: int = st_input['a']
+        ia: int = st_input['ia']
+        ja: int = st_input['ja']
         b: int = st_input['b']
-        ca: int = self.n2c[th_idx][a] if self.n2c[th_idx][a] is not None else 0
+        add_i, add_j = self.distance_table[self.th_dist_table_counter[th_idx]]
 
-        ia, ja = U.get_line_column_cell_sqr(ca, self.n_cells_sqrt)
+        ib: int = ia + add_i
+        jb: int = ja + add_j
 
         # TODO
         # return increment
@@ -40,8 +43,7 @@ class St4Dist(object):
         self.output_new = {
             'th_idx': th_idx,
             'th_valid': th_valid,
-            'ca': ca,
-            'ia': ia,
-            'ja': ja,
+            'ib': ib,
+            'jb': jb,
             'b': b,
         }

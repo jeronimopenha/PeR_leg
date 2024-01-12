@@ -8,7 +8,7 @@ class Yolt(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
         self.latency: int = 5
-        self.per_graph:PeRGraph = per_graph
+        self.per_graph: PeRGraph = per_graph
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
@@ -23,6 +23,8 @@ class Yolt(object):
             )
 
         self.n2c: list[list] = self.get_initial_n2c(self.edges_int[0][0], self.latency)
+        # TODO
+        self.c2n: list[list] = []
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
