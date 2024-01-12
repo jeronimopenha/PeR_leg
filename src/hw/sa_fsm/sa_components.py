@@ -2,13 +2,13 @@ from math import ceil, log2, sqrt
 
 from veriloggen import *
 from src.util.verilog_util import VerilogUtil as Vu
-from src.util.proj_graph import ProjGraph
+from src.util.per_graph import PeRGraph
 
 
 class SAComponents:
     def __init__(
             self,
-            proj_graph: ProjGraph,
+            proj_graph: PeRGraph,
             base_path: str,
             parent_name: str,
             n_neighbors: int = 4,

@@ -9,7 +9,7 @@ import src.sw.st1 as _st1
 import src.sw.st2 as _st2
 import src.sw.st3 as _st3
 import src.sw.st4 as _st4
-import src.simul.sa_pipeline.st5 as _st5
+import src.sw.sa_pipeline.st5 as _st5
 import src.sw.st6 as _st6
 import src.sw.st7 as _st7
 import src.sw.st8 as _st8

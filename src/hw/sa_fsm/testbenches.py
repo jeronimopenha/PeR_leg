@@ -1,11 +1,11 @@
 from veriloggen import *
 from src.util.verilog_util import sa_fsm_create_rom_files, initialize_regs
 from src.util.verilog_util import VerilogUtil as Vu
-from src.util.proj_graph import ProjGraph
+from src.util.per_graph import PeRGraph
 from src.hw.sa_fsm.sa_components import SAComponents
 
 
-def create_sa_single_test_bench(base_path: str, sa_graph: ProjGraph, test_number: int = 0) -> str:
+def create_sa_single_test_bench(base_path: str, sa_graph: PeRGraph, test_number: int = 0) -> str:
     name = 'test_bench_sa_single_%d' % test_number
     dumpfile = base_path + "/verilog/%s.vcd" % name
     verilog_file = base_path + "/verilog/%s.v" % name

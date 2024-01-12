@@ -1,13 +1,14 @@
 import random as rnd
-from src.util.proj_graph import ProjGraph
+from src.util.per_graph import PeRGraph
 
 
 class SaUtil(object):
 
-    def __init__(self, proj_graph: ProjGraph):
+    def __init__(self, proj_graph: PeRGraph):
         self.proj_graph = proj_graph
 
-    def reset_random(self):
+    @staticmethod
+    def reset_random():
         rnd.seed(0)
 
     def get_initial_grid(self) -> tuple[list, list]:

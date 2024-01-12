@@ -3,7 +3,7 @@ import networkx as nx
 from math import ceil, sqrt
 
 
-class ProjGraph:
+class PeRGraph:
 
     def __init__(self, dot: str):
         self.dot: str = dot
@@ -11,7 +11,7 @@ class ProjGraph:
         self.g: nx.DiGraph = nx.DiGraph(self.gv)
         self.nodes: list = []
         self.n_nodes: int = 0
-        self.edges: list = []
+        self.edges_str: list[list] = []
         self.n_edges: int = 0
         self.nodes_to_idx: dict = {}
         self.neighbors: dict = {}
@@ -20,16 +20,15 @@ class ProjGraph:
         self.get_dot_vars()
 
     def get_dot_vars(self) -> None:
-        self.nodes: list = list(self.g.nodes)
-        self.n_nodes: int = len(self.nodes)
-        self.edges: list = list(self.g.edges)
-        self.n_edges: int = len(self.edges)
-        self.nodes_to_idx: dict = {}
-        self.neighbors: dict = {}
+        self.nodes = list(self.g.nodes)
+        self.n_nodes = len(self.nodes)
+        self.edges_str = list(self.g.edges)
+        self.n_edges = len(self.edges_str)
+
         for i in range(self.n_nodes):
             self.nodes_to_idx[self.nodes[i]] = i
 
-        for e in self.edges:
+        for e in self.edges_str:
             if self.nodes_to_idx[e[0]] not in self.neighbors.keys():
                 self.neighbors[self.nodes_to_idx[e[0]]] = []
             if self.nodes_to_idx[e[1]] not in self.neighbors.keys():
@@ -56,7 +55,7 @@ class ProjGraph:
         Returns:
             _type_: _description_
         """
-        temp_edges: list = list(self.g.edges)
+        temp_edges: list = list(self.g.edges_str)
         r_edges: list = []
 
         # finding the bottom node (with no successors)

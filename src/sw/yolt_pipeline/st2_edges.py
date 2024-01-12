@@ -3,18 +3,17 @@ class St2Edges(object):
     This class is responsible give the edges for each thread.
     """
 
-    def __init__(self, edges: list, latency: int = 5):
-        self.latency: int = latency
+    def __init__(self, edges: list):
         self.edges: list = edges
 
-        self.output_new = {
+        self.output_new: dict = {
             'th_idx': 0,
             'th_valid': False,
             'a': 0,
             'b': 0,
         }
 
-        self.output = self.output_new.copy()
+        self.output: dict = self.output_new.copy()
 
     def execute(self, st_input: dict):
         # Move forward the output

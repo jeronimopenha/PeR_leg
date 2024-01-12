@@ -5,10 +5,10 @@ base_path = os.getcwd()
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
-from src.simul.yolt_pipeline.yolt_pipeline import YoltPipeline
-from src.util.proj_graph import ProjGraph
+from src.sw.yolt_pipeline.yolt_pipeline_sw import YoltPipeline
+from src.util.per_graph import PeRGraph
 
 dot_file = base_path = os.getcwd() + '/dot_db/mac.dot'
-proj_graph = ProjGraph(dot_file)
-yolt = YoltPipeline(proj_graph)
+per_graph = PeRGraph(dot_file)
+yolt = YoltPipeline(per_graph)
 yolt.run()

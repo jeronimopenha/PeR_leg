@@ -35,7 +35,7 @@ class St1EdgesSel(object):
         # TODO
         # return increment
 
-        # increment thee thread index
+        # increment the thread index
         self.th_idx = self.th_idx + 1 if self.th_idx + 1 < self.latency else 0
 
         if len(set(self.thread_valid)) == 1:
