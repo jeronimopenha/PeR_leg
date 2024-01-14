@@ -43,3 +43,9 @@ class Util(object):
                 distance_tale.append(p)
 
         return distance_tale
+
+    @staticmethod
+    def get_cell_from_line_column(cell_line: int, cell_column: int, n_lines: int) -> int:
+        cell: int = cell_line * n_lines + cell_column
+
+        return cell

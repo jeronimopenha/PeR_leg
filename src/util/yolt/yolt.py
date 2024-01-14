@@ -7,7 +7,7 @@ from src.util.per_graph import PeRGraph
 class Yolt(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
-        self.latency: int = 5
+        self.latency: int = 6
         self.per_graph: PeRGraph = per_graph
         self.n_threads: int = n_threads
         self.reset_random(random_seed)

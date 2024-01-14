@@ -18,22 +18,30 @@ class St1EdgesSel(object):
             'th_idx': 0,
             'th_valid': False,
             'edg_n': 0,
+            'place': False
         }
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self):
+    def execute(self, st1_input: dict, st5_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
+
+        # return update
+        # return update
+        st5_place: bool = st5_input['place']
+
+        st1_edg_n: int = st1_input['edg_n']
+        st1_th_idx: int = st1_input['th_idx']
+        st1_place: int = st1_input['place']
+        if st1_place:
+            self.edge_counter[st1_th_idx] += st1_edg_n + 1
 
         # process the new output
         th_idx: int = self.th_idx
         if self.thread_valid[th_idx] and self.edge_counter[th_idx] == self.n_edges:
             self.thread_valid[th_idx] = False
             self.thread_done[th_idx] = True
-
-        # TODO
-        # return increment
 
         # increment the thread index
         self.th_idx = self.th_idx + 1 if self.th_idx + 1 < self.latency else 0
@@ -45,4 +53,5 @@ class St1EdgesSel(object):
             'th_idx': th_idx,
             'th_valid': self.thread_valid[th_idx],
             'edg_n': self.edge_counter[th_idx],
+            'place': st5_place,
         }

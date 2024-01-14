@@ -20,26 +20,32 @@ class St3N2C(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st_input: dict):
+    def execute(self, st2_input: dict, st5_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 
+        # return update
+        st5_th_idx: int = st5_input['th_idx']
+        st5_place: bool = st5_input['place']
+        st5_cb: int = st5_input['cb']
+        st5_b: int = st5_input['b']
+        if st5_place:
+            self.n2c[st5_th_idx][st5_b] = st5_cb
+
         # process the new output
-        th_idx: int = st_input['th_idx']
-        th_valid: bool = st_input['th_valid']
-        a: int = st_input['a']
-        b: int = st_input['b']
-        ca: int = self.n2c[th_idx][a] if self.n2c[th_idx][a] is not None else 0
+        st2_th_idx: int = st2_input['th_idx']
+        st2_th_valid: bool = st2_input['th_valid']
+        st2_a: int = st2_input['a']
+        st2_b: int = st2_input['b']
+
+        ca: int = self.n2c[st2_th_idx][st2_a] if self.n2c[st2_th_idx][st2_a] is not None else 0
 
         ia, ja = U.get_line_column_cell_sqrt(ca, self.n_cells_sqrt)
 
-        # TODO
-        # return increment
-
         self.output_new = {
-            'th_idx': th_idx,
-            'th_valid': th_valid,
+            'th_idx': st2_th_idx,
+            'th_valid': st2_th_valid,
             'ia': ia,
             'ja': ja,
-            'b': b,
+            'b': st2_b,
         }

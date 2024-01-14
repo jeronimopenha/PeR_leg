@@ -22,28 +22,36 @@ class St4Dist(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st_input: dict):
+    def execute(self, st3_input: dict, st4_input: dict, st5_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 
+        # return update
+        st4_th_idx = st4_input['th_idx']
+        st4_th_valid = st4_input['th_valid']
+        st5_th_idx: int = st5_input['th_idx']
+        st5_place: bool = st5_input['place']
+        if st5_place:
+            self.th_dist_table_counter[st5_th_idx] = 0
+        elif st4_th_valid:
+            self.th_dist_table_counter[st4_th_idx] += 1
+
         # process the new output
-        th_idx: int = st_input['th_idx']
-        th_valid: bool = st_input['th_valid']
-        ia: int = st_input['ia']
-        ja: int = st_input['ja']
-        b: int = st_input['b']
-        add_i, add_j = self.distance_table[self.th_dist_table_counter[th_idx]]
+        st3_th_idx: int = st3_input['th_idx']
+        st3_th_valid: bool = st3_input['th_valid']
+        st3_ia: int = st3_input['ia']
+        st3_ja: int = st3_input['ja']
+        st3_b: int = st3_input['b']
 
-        ib: int = ia + add_i
-        jb: int = ja + add_j
+        add_i, add_j = self.distance_table[self.th_dist_table_counter[st3_th_idx]]
 
-        # TODO
-        # return increment
+        ib: int = st3_ia + add_i
+        jb: int = st3_ja + add_j
 
         self.output_new = {
-            'th_idx': th_idx,
-            'th_valid': th_valid,
+            'th_idx': st3_th_idx,
+            'th_valid': st3_th_valid,
             'ib': ib,
             'jb': jb,
-            'b': b,
+            'b': st3_b,
         }
