@@ -44,13 +44,14 @@ class St5C2n(object):
 
         # fixme
         cb: int = U.get_cell_from_line_column(st4_ib, st4_jb, self.n_cells_sqrt)
-        cb_content = self.c2n[st4_th_idx][cb]
 
         border: bool = False
         if st4_ib > self.n_cells_sqrt - 1 or \
                 st4_jb > self.n_cells_sqrt - 1 or \
                 st4_ib < 0 or st4_jb < 0:
             border = True
+
+        cb_content = 0 if border else self.c2n[st4_th_idx][cb]
 
         if st4_th_valid and cb_content is None and not border:
             place = True

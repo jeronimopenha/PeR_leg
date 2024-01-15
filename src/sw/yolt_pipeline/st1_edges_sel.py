@@ -3,7 +3,7 @@ class St1EdgesSel(object):
     This class is responsible to generate the edges sections for each thread.
     """
 
-    def __init__(self, n_threads: int = 1, n_edges: int = 0, latency: int = 6):
+    def __init__(self, n_threads: int, n_edges: int, latency: int):
         self.latency: int = latency
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
@@ -28,35 +28,38 @@ class St1EdgesSel(object):
         self.output = self.output_new.copy()
 
         # return update
-        # FIXME
         st5_place: bool = st5_input['place']
 
         st1_edg_n: int = st1_input['edg_n']
         st1_th_idx: int = st1_input['th_idx']
         st1_place: int = st1_input['place']
         if st1_place:
-            self.edge_counter[st1_th_idx] += st1_edg_n + 1
+            self.edge_counter[st1_th_idx] += st1_edg_n
 
-        # process the new output
+            # process the new output
         th_idx: int = self.th_idx
+
+        # increment the thread index
+        self.th_idx = th_idx + 1 if th_idx + 1 < self.latency else 0
 
         # done condition
         if self.thread_valid[th_idx] and self.edge_counter[th_idx] == self.n_edges:
             self.thread_valid[th_idx] = False
             self.thread_done[th_idx] = True
 
-        # increment the thread index
-        # FIXME
-        self.th_idx = self.th_idx + 1 if self.th_idx + 1 < self.latency else 0
-
         # process done condition
-        # FIXME Aqui vai dar 1 se todas forem true ou false corrigir !!!!!
-        if len(set(self.thread_valid)) == 1:
-            self.done = True
+        self.done = True
+        for th_done in self.thread_done:
+            if not th_done:
+                self.done = False
+                break
+
+        edge_n: int = self.edge_counter[th_idx] if not st5_place else self.edge_counter[th_idx] + 1
+        th_valid: int = self.thread_valid[th_idx]
 
         self.output_new = {
             'th_idx': th_idx,
-            'th_valid': self.thread_valid[th_idx],
-            'edg_n': self.edge_counter[th_idx],
+            'th_valid': th_valid,
+            'edg_n': edge_n,
             'place': st5_place,
         }
