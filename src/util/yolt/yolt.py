@@ -22,7 +22,7 @@ class Yolt(object):
                 ]
             )
 
-        self.n2c, self.c2n = self.get_initial_position(self.edges_int[0][0], self.latency)
+        self.n2c, self.c2n = self.get_initial_position_ij(self.edges_int[0][0], self.latency)
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
@@ -44,4 +44,24 @@ class Yolt(object):
             c2n_tmp[idx] = first_node
             n2c.append(n2c_tmp)
             c2n.append(c2n_tmp)
+        return n2c, c2n
+
+    #FIXME - working here
+    def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+        n2c: list[list[list]] = []
+        c2n: list[list] = []
+        for i in range(latency):
+            n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
+            c2n_tmp: list[list] = [
+                [
+                    None for _ in range(self.per_graph.n_cells)
+                ] for _ in range(self.per_graph.n_cells)
+            ]
+
+            idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
+            n2c_tmp[first_node] = idx
+            c2n_tmp[idx] = first_node
+            n2c.append(n2c_tmp)
+            c2n.append(c2n_tmp)
+
         return n2c, c2n
