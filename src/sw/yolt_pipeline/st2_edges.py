@@ -4,6 +4,7 @@ class St2Edges(object):
     """
 
     def __init__(self, edges: list):
+        #FIXME Uma lista de arestas para cada thread
         self.edges: list = edges
 
         self.output_new: dict = {
@@ -15,19 +16,20 @@ class St2Edges(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st_input: dict):
+    def execute(self, st1_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 
         # process the new output
-        th_idx: int = st_input['th_idx']
-        th_valid: bool = st_input['th_valid']
-        edge_n: int = st_input['edg_n']
-        a, b = self.edges[edge_n]
+        st1_th_idx: int = st1_input['th_idx']
+        st1_th_valid: bool = st1_input['th_valid']
+        st1_edge_n: int = st1_input['edg_n']
+
+        a, b = self.edges[st1_edge_n]
 
         self.output_new = {
-            'th_idx': th_idx,
-            'th_valid': th_valid,
+            'th_idx': st1_th_idx,
+            'th_valid': st1_th_valid,
             'a': a,
             'b': b,
         }

@@ -27,6 +27,7 @@ class St4Dist(object):
         self.output = self.output_new.copy()
 
         # return update
+        # FIXME - apenas o estágio 5 faz o incremento
         st4_th_idx = st4_input['th_idx']
         st4_th_valid = st4_input['th_valid']
         st5_th_idx: int = st5_input['th_idx']

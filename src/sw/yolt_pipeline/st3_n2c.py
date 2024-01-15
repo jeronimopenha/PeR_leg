@@ -7,6 +7,7 @@ class St3N2C(object):
     """
 
     def __init__(self, n2c: list[list], n_cells_sqrt: int):
+        # FIXME Guardar linha e coluna, não o número da célula
         self.n2c: list[list] = n2c
         self.n_cells_sqrt: int = n_cells_sqrt
 
@@ -40,6 +41,7 @@ class St3N2C(object):
 
         ca: int = self.n2c[st2_th_idx][st2_a] if self.n2c[st2_th_idx][st2_a] is not None else 0
 
+        # fixme sumir com essa linha
         ia, ja = U.get_line_column_cell_sqrt(ca, self.n_cells_sqrt)
 
         self.output_new = {

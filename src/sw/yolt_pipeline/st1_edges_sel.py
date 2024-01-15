@@ -3,7 +3,7 @@ class St1EdgesSel(object):
     This class is responsible to generate the edges sections for each thread.
     """
 
-    def __init__(self, n_threads: int = 1, n_edges: int = 0, latency: int = 5):
+    def __init__(self, n_threads: int = 1, n_edges: int = 0, latency: int = 6):
         self.latency: int = latency
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
@@ -28,7 +28,7 @@ class St1EdgesSel(object):
         self.output = self.output_new.copy()
 
         # return update
-        # return update
+        # FIXME
         st5_place: bool = st5_input['place']
 
         st1_edg_n: int = st1_input['edg_n']
@@ -39,13 +39,18 @@ class St1EdgesSel(object):
 
         # process the new output
         th_idx: int = self.th_idx
+
+        # done condition
         if self.thread_valid[th_idx] and self.edge_counter[th_idx] == self.n_edges:
             self.thread_valid[th_idx] = False
             self.thread_done[th_idx] = True
 
         # increment the thread index
+        # FIXME
         self.th_idx = self.th_idx + 1 if self.th_idx + 1 < self.latency else 0
 
+        # process done condition
+        # FIXME Aqui vai dar 1 se todas forem true ou false corrigir !!!!!
         if len(set(self.thread_valid)) == 1:
             self.done = True
 
