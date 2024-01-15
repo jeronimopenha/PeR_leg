@@ -15,6 +15,7 @@ class St5C2n(object):
             'th_idx': 0,
             'th_valid': False,
             'place': False,
+            'd_count': 0,
             'b': 0,
             'cb': 0,
         }
@@ -38,6 +39,7 @@ class St5C2n(object):
         st4_th_valid: bool = st4_input['th_valid']
         st4_ib: int = st4_input['ib']
         st4_jb: int = st4_input['jb']
+        st4_d_count: int = st4_input['d_count']
         st4_b: int = st4_input['b']
 
         place: bool = False
@@ -60,6 +62,7 @@ class St5C2n(object):
             'th_idx': st4_th_idx,
             'th_valid': st4_th_valid,
             'place': place,
+            'd_count': st4_d_count,
             'b': st4_b,
             'cb': cb,
         }
