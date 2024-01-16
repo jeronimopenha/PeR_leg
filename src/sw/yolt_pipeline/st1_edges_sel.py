@@ -34,7 +34,10 @@ class St1EdgesSel(object):
         st1_th_idx: int = st1_input['th_idx']
         st1_place: int = st1_input['place']
         if st1_place:
-            self.edge_counter[st1_th_idx] = st1_edg_n
+            if st1_edg_n == self.n_edges - 1:
+                self.edge_counter[st1_th_idx] = 0
+            else:
+                self.edge_counter[st1_th_idx] = st1_edg_n
 
             # process the new output
         th_idx: int = self.th_idx

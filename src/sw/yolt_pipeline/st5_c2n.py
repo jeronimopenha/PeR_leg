@@ -7,9 +7,9 @@ class St5C2n(object):
     and send to other stages the update signal
     """
 
-    def __init__(self, c2n: list[list], n_cells_sqrt: int):
+    def __init__(self, c2n: list[list[list]], n_cells_sqrt: int):
         self.n_cells_sqrt: int = n_cells_sqrt
-        self.c2n: list[list] = c2n
+        self.c2n: list[list[list]] = c2n
 
         self.output_new: dict = {
             'th_idx': 0,
@@ -17,7 +17,8 @@ class St5C2n(object):
             'place': False,
             'd_count': 0,
             'b': 0,
-            'cb': 0,
+            'ib': 0,
+            'jb': 0,
         }
 
         self.output: dict = self.output_new.copy()
@@ -29,10 +30,11 @@ class St5C2n(object):
         # return update
         st5_th_idx: int = st5_input['th_idx']
         st5_place: bool = st5_input['place']
-        st5_cb: int = st5_input['cb']
+        st5_ib: int = st5_input['ib']
+        st5_jb: int = st5_input['jb']
         st5_b: int = st5_input['b']
         if st5_place:
-            self.c2n[st5_th_idx][st5_cb] = st5_b
+            self.c2n[st5_th_idx][st5_ib][st5_jb] = st5_b
 
         # process the new output
         st4_th_idx: int = st4_input['th_idx']
@@ -44,16 +46,13 @@ class St5C2n(object):
 
         place: bool = False
 
-        # fixme
-        cb: int = U.get_cell_from_line_column(st4_ib, st4_jb, self.n_cells_sqrt)
-
         border: bool = False
         if st4_ib > self.n_cells_sqrt - 1 or \
                 st4_jb > self.n_cells_sqrt - 1 or \
                 st4_ib < 0 or st4_jb < 0:
             border = True
 
-        cb_content = 0 if border else self.c2n[st4_th_idx][cb]
+        cb_content = 0 if border else self.c2n[st4_th_idx][st4_ib][st4_jb]
 
         if st4_th_valid and cb_content is None and not border:
             place = True
@@ -64,5 +63,6 @@ class St5C2n(object):
             'place': place,
             'd_count': st4_d_count,
             'b': st4_b,
-            'cb': cb,
+            'ib': st4_ib,
+            'jb': st4_jb,
         }

@@ -1,6 +1,7 @@
 import random as rnd
 
 from math import sqrt
+from src.util.util import Util as U
 from src.util.per_graph import PeRGraph
 
 
@@ -46,7 +47,7 @@ class Yolt(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    #FIXME - working here
+    # FIXME - working here
     def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
@@ -54,13 +55,15 @@ class Yolt(object):
             n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
             c2n_tmp: list[list] = [
                 [
-                    None for _ in range(self.per_graph.n_cells)
-                ] for _ in range(self.per_graph.n_cells)
+                    None for _ in range(self.per_graph.n_cells_sqrt)
+                ] for _ in range(self.per_graph.n_cells_sqrt)
             ]
 
-            idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
-            n2c_tmp[first_node] = idx
-            c2n_tmp[idx] = first_node
+            idxl, idxc = U.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
+                                                     self.per_graph.n_cells_sqrt)
+            n2c_tmp[first_node][0] = idxl
+            n2c_tmp[first_node][1] = idxc
+            c2n_tmp[idxl][idxc] = first_node
             n2c.append(n2c_tmp)
             c2n.append(c2n_tmp)
 
