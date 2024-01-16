@@ -11,7 +11,7 @@ class YoltPipeline(Yolt):
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1):
         super().__init__(per_graph, n_threads)
 
-    def run(self, times: int = 1):
+    def run(self, times: int = 1) -> dict:
         results: dict = {}
         print(self.per_graph.nodes)
         print(self.per_graph.neighbors)
@@ -44,4 +44,9 @@ class YoltPipeline(Yolt):
                 th_dict[th_key].append('thread - %d, loop counter: %d' % (th, st1_edge_sel.exec_counter[th]))
                 th_dict[th_key].append(st5_c2n.c2n[th])
             results[results_key].append(th_dict)
-        z = 1
+        return results
+
+    #TODO - parei aqui
+    def save_results_raw(self, results: dict, path: str) -> None:
+        for rkey in results.keys():
+            result = results[rkey]
