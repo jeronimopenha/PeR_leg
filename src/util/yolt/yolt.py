@@ -23,8 +23,6 @@ class Yolt(object):
                 ]
             )
 
-        self.n2c, self.c2n = self.get_initial_position_ij(self.edges_int[0][0], self.latency)
-
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
         self.line_bits = int(sqrt(self.per_graph.n_cells))

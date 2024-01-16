@@ -8,6 +8,8 @@ class St1EdgesSel(object):
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
         self.edge_counter: list[int] = [0 for i in range(self.latency)]
+        self.exec_counter: list[int] = [0 for i in range(self.latency)]
+        self.total_pipeline_counter: int = 0
 
         self.thread_valid: list[bool] = [True if i < self.n_threads else False for i in range(self.latency)]
         self.thread_done: list[bool] = [False if i < self.n_threads else True for i in range(self.latency)]
@@ -38,6 +40,10 @@ class St1EdgesSel(object):
 
         if st1_incr_edge_n:
             self.edge_counter[st1_th_idx] = st1_edg_n
+        if st1_th_valid:
+            self.exec_counter[st1_th_idx] += 1
+
+        self.total_pipeline_counter += 1
 
         # process the new output
         th_idx: int = self.th_idx

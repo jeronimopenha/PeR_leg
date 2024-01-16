@@ -12,4 +12,4 @@ dot_file = base_path = os.getcwd() + '/dot_db/mac.dot'
 per_graph = PeRGraph(dot_file)
 n_threads = 6
 yolt = YoltPipeline(per_graph, n_threads)
-yolt.run()
+yolt.run(10)
