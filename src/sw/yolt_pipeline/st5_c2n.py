@@ -19,6 +19,7 @@ class St5C2n(object):
             'b': 0,
             'ib': 0,
             'jb': 0,
+            'b_placed': False
         }
 
         self.output: dict = self.output_new.copy()
@@ -35,6 +36,9 @@ class St5C2n(object):
         st5_b: int = st5_input['b']
         if st5_place:
             self.c2n[st5_th_idx][st5_ib][st5_jb] = st5_b
+            # for l in self.c2n[st5_th_idx]:
+            # print(l)pass
+            # print()
 
         # process the new output
         st4_th_idx: int = st4_input['th_idx']
@@ -43,6 +47,11 @@ class St5C2n(object):
         st4_jb: int = st4_input['jb']
         st4_d_count: int = st4_input['d_count']
         st4_b: int = st4_input['b']
+        st4_b_placed: bool = st4_input['b_placed']
+
+        # FIXME apenas para depuração
+        if st4_th_idx == 0 and st4_th_valid:
+            z = 1
 
         place: bool = False
 
@@ -54,7 +63,7 @@ class St5C2n(object):
 
         cb_content = 0 if border else self.c2n[st4_th_idx][st4_ib][st4_jb]
 
-        if st4_th_valid and cb_content is None and not border:
+        if st4_th_valid and cb_content is None and not border and not st4_b_placed:
             place = True
 
         self.output_new = {
@@ -65,4 +74,5 @@ class St5C2n(object):
             'b': st4_b,
             'ib': st4_ib,
             'jb': st4_jb,
+            'b_placed': st4_b_placed,
         }

@@ -3,8 +3,9 @@ class St2Edges(object):
     This class is responsible give the edges for each thread.
     """
 
-    def __init__(self, edges: list, latency: int):
+    def __init__(self, edges: list, latency: int, n_edges):
         self.edges: list[list] = [edges for i in range(latency)]
+        self.n_edges: int = n_edges
 
         self.output_new: dict = {
             'th_idx': 0,
@@ -24,11 +25,17 @@ class St2Edges(object):
         st1_th_valid: bool = st1_input['th_valid']
         st1_edge_n: int = st1_input['edg_n']
 
-        a, b = self.edges[st1_th_idx][st1_edge_n]
+        # FIXME apenas para depuração
+        if st1_th_idx == 0 and st1_th_valid:
+            z = 1
+
+        edge_n_valid = st1_edge_n < self.n_edges
+
+        a, b = self.edges[st1_th_idx][st1_edge_n] if edge_n_valid else (0, 0)
 
         self.output_new = {
             'th_idx': st1_th_idx,
-            'th_valid': st1_th_valid,
+            'th_valid': st1_th_valid and edge_n_valid,
             'a': a,
             'b': b,
         }

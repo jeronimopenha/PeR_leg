@@ -17,6 +17,7 @@ class St4Dist(object):
             'jb': 0,
             'd_count': 0,
             'b': 0,
+            'b_placed': False,
         }
 
         self.output: dict = self.output_new.copy()
@@ -32,6 +33,11 @@ class St4Dist(object):
         st3_ja: int = st3_input['ja']
         st3_d_count: int = st3_input['d_count']
         st3_b: int = st3_input['b']
+        st3_b_placed: bool = st3_input['b_placed']
+
+        # FIXME apenas para depuração
+        if st3_th_idx == 0 and st3_th_valid:
+            z = 1
 
         add_i, add_j = self.distance_table[st3_d_count]
 
@@ -45,4 +51,5 @@ class St4Dist(object):
             'jb': jb,
             'd_count': st3_d_count,
             'b': st3_b,
+            'b_placed': st3_b_placed,
         }

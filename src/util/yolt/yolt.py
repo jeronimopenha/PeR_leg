@@ -47,7 +47,6 @@ class Yolt(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    # FIXME - working here
     def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []

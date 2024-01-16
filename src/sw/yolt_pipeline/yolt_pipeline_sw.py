@@ -12,7 +12,7 @@ class YoltPipeline(Yolt):
         super().__init__(per_graph, n_threads)
 
         self.st1_edge_sel: St1EdgesSel = St1EdgesSel(self.n_threads, self.per_graph.n_edges, self.latency)
-        self.st2_edges: St2Edges = St2Edges(self.edges_int, self.latency)
+        self.st2_edges: St2Edges = St2Edges(self.edges_int, self.latency, self.per_graph.n_edges)
         self.st3_n2c: St3N2C = St3N2C(self.n2c, self.per_graph.n_cells_sqrt, self.latency)
         self.st4_dist = St4Dist(self.per_graph.n_cells_sqrt)
         self.st5_c2n = St5C2n(self.c2n, self.per_graph.n_cells_sqrt)
@@ -28,9 +28,8 @@ class YoltPipeline(Yolt):
             self.st3_n2c.execute(self.st2_edges.output, self.st5_c2n.output)
             self.st4_dist.execute(self.st3_n2c.output, self.st4_dist.output)
             self.st5_c2n.execute(self.st4_dist.output, self.st5_c2n.output)
-            print(self.st1_edge_sel.output)
-            print(self.st2_edges.output)
-            print(self.st3_n2c.output)
-            print(self.st4_dist.output)
-            print(self.st5_c2n.output)
+        for th in range(self.latency):
+            print(th)
+            for line in self.st5_c2n.c2n[th]:
+                print(line)
             print()
