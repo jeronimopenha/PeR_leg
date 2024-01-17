@@ -1,3 +1,4 @@
-networkx==3.2.1
-pygraphviz==1.11
+networkx~=2.4
+pygraphviz~=1.7
 veriloggen==2.3.0
+numpy~=1.21.5

@@ -37,6 +37,7 @@ class YotoPipeline(Yoto):
                 st4_dist.compute(st3_n2c.output, st4_dist.output)
                 st5_c2n.compute(st4_dist.output, st5_c2n.output)
                 counter += 1
+
             results[results_key]['total_exec_clk'] = st1_edge_sel.total_pipeline_counter
             th_dict: dict = {}
             for th in range(self.latency):
@@ -44,10 +45,11 @@ class YotoPipeline(Yoto):
                 th_dict[th_key]: dict = {}
                 th_dict[th_key]['total_th_clk'] = st1_edge_sel.exec_counter[th]
                 th_dict[th_key]['th_placement'] = st5_c2n.c2n[th]
+                # TODO
+                # self.routing_mesh()
             results[results_key]['th_results'] = th_dict
         return results
 
-    # TODO - parei aqui
     def save_execution_report_raw(self, results: dict, path: str, file_name: str) -> None:
         total_max_clk: int = -1
         total_min_clk: int = -1
