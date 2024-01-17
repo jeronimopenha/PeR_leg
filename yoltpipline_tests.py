@@ -10,6 +10,7 @@ from src.util.per_graph import PeRGraph
 
 dot_file = base_path = os.getcwd() + '/dot_db/mac.dot'
 # TODO automatizar a criacao das pastas
+# YOTO_1comp_counters TAG
 output_path = os.getcwd() + '/results/sw/yoto_pipeline/'
 per_graph = PeRGraph(dot_file)
 n_threads = 6
