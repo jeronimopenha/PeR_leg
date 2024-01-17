@@ -1,3 +1,6 @@
+import os
+
+
 class Util(object):
 
     @staticmethod
@@ -49,3 +52,10 @@ class Util(object):
         cell: int = cell_line * n_lines + cell_column
 
         return cell
+
+    @staticmethod
+    def get_files_list_by_extension(path: str, extension: str) -> list[list]:
+        dots_path_list = [[os.path.join(path, name), name] for name in os.listdir(path)]
+        files_list = [file for file in dots_path_list if os.path.isfile(file[0])]
+        files_list_by_extension = [arq for arq in files_list if arq[0].lower().endswith(extension)]
+        return files_list_by_extension

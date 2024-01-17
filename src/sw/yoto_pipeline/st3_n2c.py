@@ -25,7 +25,7 @@ class St3N2C(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st2_input: dict, st5_input: dict):
+    def compute(self, st2_input: dict, st5_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 

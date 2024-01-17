@@ -1,3 +1,4 @@
+import json
 from src.util.per_graph import PeRGraph
 from src.util.yoto.yoto import Yoto
 from src.sw.yoto_pipeline.st1_edges_sel import St1EdgesSel
@@ -11,14 +12,14 @@ class YotoPipeline(Yoto):
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1):
         super().__init__(per_graph, n_threads)
 
-    def run(self, times: int = 1) -> dict:
+    def run(self, n_copies: int = 1) -> dict:
         results: dict = {}
         print(self.per_graph.nodes)
         print(self.per_graph.neighbors)
         print()
-        for t in range(times):
+        for t in range(n_copies):
             results_key = 'exec_%d' % t
-            results[results_key] = []
+            results[results_key] = {}
 
             n2c, c2n = self.get_initial_position_ij(self.edges_int[0][0], self.latency)
 
@@ -30,23 +31,87 @@ class YotoPipeline(Yoto):
 
             counter = 0
             while not st1_edge_sel.done:
-                st1_edge_sel.execute(st1_edge_sel.output, st5_c2n.output)
-                st2_edges.execute(st1_edge_sel.output)
-                st3_n2c.execute(st2_edges.output, st5_c2n.output)
-                st4_dist.execute(st3_n2c.output, st4_dist.output)
-                st5_c2n.execute(st4_dist.output, st5_c2n.output)
+                st1_edge_sel.compute(st1_edge_sel.output, st5_c2n.output)
+                st2_edges.compute(st1_edge_sel.output)
+                st3_n2c.compute(st2_edges.output, st5_c2n.output)
+                st4_dist.compute(st3_n2c.output, st4_dist.output)
+                st5_c2n.compute(st4_dist.output, st5_c2n.output)
                 counter += 1
-            results[results_key].append('Total execution clocks: %d\n' % st1_edge_sel.total_pipeline_counter)
+            results[results_key]['total_exec_clk'] = st1_edge_sel.total_pipeline_counter
             th_dict: dict = {}
             for th in range(self.latency):
-                th_key = 'Time_%d_TH_%d' % (th, t)
-                th_dict[th_key] = []
-                th_dict[th_key].append('thread - %d, loop counter: %d' % (th, st1_edge_sel.exec_counter[th]))
-                th_dict[th_key].append(st5_c2n.c2n[th])
-            results[results_key].append(th_dict)
+                th_key = 'Time_%d_TH_%d' % (t, th)
+                th_dict[th_key]: dict = {}
+                th_dict[th_key]['total_th_clk'] = st1_edge_sel.exec_counter[th]
+                th_dict[th_key]['th_placement'] = st5_c2n.c2n[th]
+            results[results_key]['th_results'] = th_dict
         return results
 
-    #TODO - parei aqui
-    def save_results_raw(self, results: dict, path: str) -> None:
-        for rkey in results.keys():
-            result = results[rkey]
+    # TODO - parei aqui
+    def save_execution_report_raw(self, results: dict, path: str, file_name: str) -> None:
+        total_max_clk: int = -1
+        total_min_clk: int = -1
+        total_avg_clk: int = 0
+        n_tests = len(results)
+        th_max_clk: int = -1
+        th_min_clk: int = -1
+        th_avg_clk: int = 0
+        total_threads: int = n_tests * self.n_threads
+        th_placements: dict = {}
+
+        # generate data for reports
+        for r_key in results.keys():
+            result = results[r_key]
+
+            total_exec_clk: int = result['total_exec_clk']
+
+            total_avg_clk += total_exec_clk
+
+            if total_max_clk == -1:
+                total_max_clk = total_exec_clk
+            else:
+                if total_exec_clk > total_max_clk:
+                    total_max_clk = total_exec_clk
+            if total_min_clk == -1:
+                total_min_clk = total_exec_clk
+            else:
+                if total_exec_clk < total_min_clk:
+                    total_min_clk = total_exec_clk
+            for th_key in result['th_results'].keys():
+                th_results = result['th_results'][th_key]
+                th_placements[th_key] = th_results['th_placement']
+
+                total_th_clk: int = th_results['total_th_clk']
+
+                th_avg_clk += total_th_clk
+
+                if th_max_clk == -1:
+                    th_max_clk = total_th_clk
+                else:
+                    if total_th_clk > th_max_clk:
+                        th_max_clk = total_th_clk
+                if th_min_clk == -1:
+                    th_min_clk = total_th_clk
+                else:
+                    if total_th_clk < th_min_clk:
+                        th_min_clk = total_th_clk
+        total_avg_clk /= n_tests
+        th_avg_clk /= total_threads
+
+        execution_report_raw: dict = {
+            'graph_name': file_name,
+            'graph_path': path,
+            'n_tests': n_tests,
+            'total_max_clk': total_max_clk,
+            'total_min_clk': total_min_clk,
+            'total_avg_clk': total_avg_clk,
+            'th_max_clk': th_max_clk,
+            'th_min_clk': th_min_clk,
+            'th_avg_clk': th_avg_clk,
+            'total_threads': total_threads,
+            'th_placements': th_placements,
+            'nodes_dict': self.per_graph.nodes_to_idx,
+        }
+        with open(path + file_name + '.rep.json', 'w', encoding='utf-8') as file:
+            json.dump(execution_report_raw, file, ensure_ascii=False, indent=4)
+        file.close()

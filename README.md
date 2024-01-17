@@ -1,2 +1,2 @@
-# sa_multi
-Simulated annealing repository for some experimental implementations
+# PeR
+Placement and routing algoithms repository
