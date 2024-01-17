@@ -15,7 +15,7 @@ class YoltPipeline(Yolt):
         self.st3_n2c: St3N2C = St3N2C(self.n2c, self.per_graph.n_cells_sqrt)
         self.st4_dist = St4Dist(self.per_graph.n_cells_sqrt, self.latency)
 
-    def run(self):
+    def run(self,copies: int):
         print(self.per_graph.nodes)
         print(self.per_graph.neighbors)
         print()
