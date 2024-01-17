@@ -5,7 +5,7 @@ from src.util.util import Util as U
 from src.util.per_graph import PeRGraph
 
 
-class Yolt(object):
+class Yoto(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
         self.latency: int = 6

@@ -1,13 +1,13 @@
 from src.util.per_graph import PeRGraph
-from src.util.yolt.yolt import Yolt
-from src.sw.yolt_pipeline.st1_edges_sel import St1EdgesSel
-from src.sw.yolt_pipeline.st2_edges import St2Edges
-from src.sw.yolt_pipeline.st3_n2c import St3N2C
-from src.sw.yolt_pipeline.st4_dist import St4Dist
-from src.sw.yolt_pipeline.st5_c2n import St5C2n
+from src.util.yoto.yoto import Yoto
+from src.sw.yoto_pipeline.st1_edges_sel import St1EdgesSel
+from src.sw.yoto_pipeline.st2_edges import St2Edges
+from src.sw.yoto_pipeline.st3_n2c import St3N2C
+from src.sw.yoto_pipeline.st4_dist import St4Dist
+from src.sw.yoto_pipeline.st5_c2n import St5C2n
 
 
-class YoltPipeline(Yolt):
+class YotoPipeline(Yoto):
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1):
         super().__init__(per_graph, n_threads)
 
