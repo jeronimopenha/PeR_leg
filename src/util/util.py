@@ -1,4 +1,9 @@
 import os
+import sys
+import pandas as pd
+import json
+import traceback
+import matplotlib.pyplot as plt
 
 
 class Util(object):
@@ -59,3 +64,55 @@ class Util(object):
         files_list = [file for file in dots_path_list if os.path.isfile(file[0])]
         files_list_by_extension = [arq for arq in files_list if arq[0].lower().endswith(extension)]
         return files_list_by_extension
+
+    @staticmethod
+    def read_json(file: str):
+        with open(file) as p_file:
+            contents: str = p_file.read()
+            content_dic: dict = json.loads(contents)
+        p_file.close()
+        return content_dic
+
+    @staticmethod
+    def save_json(path: str, file_name: str, data: dict):
+        with open(path + file_name + '.json', 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
+        file.close()
+
+    #TODO Parei aqui
+    @staticmethod
+    def get_router_hist_graph_from_dict(router_reports: dict):
+        data: dict = {}
+        for router_reports_key in router_reports.keys():
+            report = router_reports[router_reports_key]
+            for len_key in report.keys():
+                if len_key in data.keys():
+                    data[len_key].append(report[len_key])
+                else:
+                    data[len_key] = [report[len_key]]
+        maxlen = 0
+        for key in data.keys():
+            if len(data[key]) > maxlen:
+                maxlen = len(data[key])
+        for key in data.keys():
+            while len(data[key]) < maxlen:
+                data[key].append(0)
+
+        try:
+            fig_path = './exp_results/boxplots/'
+            fig_name = 'test_simul.svg'
+
+            # Set the figure size
+            plt.rcParams["figure.figsize"] = [7.50, 3.50]
+            plt.rcParams["figure.autolayout"] = True
+            # Pandas dataframe
+            pd_data = pd.DataFrame(data)
+            # Plot the dataframe
+            ax = pd_data[list(pd_data.keys())].plot(kind='box', title='boxplot')
+            # Display the plot
+            # plt.show()
+            plt.savefig('%s%s' % (fig_path, fig_name), dpi='figure', format='svg')
+
+        except Exception as e:
+            print(e)
+            traceback.print_exc()

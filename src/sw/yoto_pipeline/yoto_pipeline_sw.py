@@ -1,5 +1,5 @@
-import json
 from src.util.per_graph import PeRGraph
+from src.util.util import Util as U
 from src.util.yoto.yoto import Yoto
 from src.sw.yoto_pipeline.st1_edges_sel import St1EdgesSel
 from src.sw.yoto_pipeline.st2_edges import St2Edges
@@ -41,16 +41,30 @@ class YotoPipeline(Yoto):
             results[results_key]['total_exec_clk'] = st1_edge_sel.total_pipeline_counter
             th_dict: dict = {}
             for th in range(self.latency):
-                th_key = 'Time_%d_TH_%d' % (t, th)
+                th_key = 'Copy_%d_TH_%d' % (t, th)
                 th_dict[th_key]: dict = {}
                 th_dict[th_key]['total_th_clk'] = st1_edge_sel.exec_counter[th]
-                th_dict[th_key]['th_placement'] = st5_c2n.c2n[th]
-                # TODO
-                # self.routing_mesh()
+                th_dict[th_key]['th_placement'] = st3_n2c.n2c[th]
+
+                routed, grid, dic_path = self.routing_mesh(self.edges_int, st3_n2c.n2c[th])
+                histogram: dict = {}
+                for path in dic_path.keys():
+                    path_len = len(dic_path[path])
+                    if path_len in histogram:
+                        histogram[path_len] += 1
+                    else:
+                        histogram[path_len] = 1
+                th_dict[th_key]['th_routed'] = routed
+                th_dict[th_key]['th_histogram'] = dict(sorted(histogram.items()))
             results[results_key]['th_results'] = th_dict
         return results
 
     def save_execution_report_raw(self, results: dict, path: str, file_name: str) -> None:
+        execution_report_raw: dict = self.get_report(results, path, file_name)
+
+        U.save_json(path, file_name, execution_report_raw)
+
+    def get_report(self, results: dict, path: str, file_name: str) -> dict:
         total_max_clk: int = -1
         total_min_clk: int = -1
         total_avg_clk: int = 0
@@ -59,7 +73,8 @@ class YotoPipeline(Yoto):
         th_min_clk: int = -1
         th_avg_clk: int = 0
         total_threads: int = n_tests * self.n_threads
-        th_placements: dict = {}
+        th_histogram: dict = {}
+        th_routed: dict = {}
 
         # generate data for reports
         for r_key in results.keys():
@@ -81,7 +96,9 @@ class YotoPipeline(Yoto):
                     total_min_clk = total_exec_clk
             for th_key in result['th_results'].keys():
                 th_results = result['th_results'][th_key]
-                th_placements[th_key] = th_results['th_placement']
+                # th_placements[th_key] = th_results['th_placement']
+                th_histogram[th_key] = th_results['th_histogram']
+                th_routed[th_key] = th_results['th_routed']
 
                 total_th_clk: int = th_results['total_th_clk']
 
@@ -111,9 +128,8 @@ class YotoPipeline(Yoto):
             'th_min_clk': th_min_clk,
             'th_avg_clk': th_avg_clk,
             'total_threads': total_threads,
-            'th_placements': th_placements,
+            'th_routed': th_routed,
+            'th_histogram': th_histogram,
             'nodes_dict': self.per_graph.nodes_to_idx,
         }
-        with open(path + file_name + '.rep.json', 'w', encoding='utf-8') as file:
-            json.dump(execution_report_raw, file, ensure_ascii=False, indent=4)
-        file.close()
+        return execution_report_raw

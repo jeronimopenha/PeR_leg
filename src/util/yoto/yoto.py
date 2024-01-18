@@ -86,20 +86,19 @@ class Yoto(object):
         grid = np.full((n_cells, 4, 1), -1, dtype=int)
         dic_path = {}
 
-        # verify if is routing
         for j in range(0, len(edges)):
             a = int(edges[j][0])
             b = int(edges[j][1])
-            key = edges[j][0] + "_" + edges[j][1]
-            pos_a_i = positions[str(a)][0]
-            pos_a_j = positions[str(a)][1]
-            pos_b_i = positions[str(b)][0]
-            pos_b_j = positions[str(b)][1]
+            key = '%d_%d' % (edges[j][0], edges[j][1])
+            pos_a_i = positions[a][0]
+            pos_a_j = positions[a][1]
+            pos_b_i = positions[b][0]
+            pos_b_j = positions[b][1]
 
             dic_path[key] = []
             dist_walk = -1
 
-            diff_i, diff_j = pos_b_i - pos_a_i, pos_b_j - pos_a_j
+            # diff_i, diff_j = pos_b_i - pos_a_i, pos_b_j - pos_a_j
             dist_i, dist_j = abs(pos_b_i - pos_a_i), abs(pos_b_j - pos_a_j)
 
             pos_node_i, pos_node_j = pos_a_i, pos_a_j
@@ -118,33 +117,33 @@ class Yoto(object):
                 # go to right neighbor
                 # [pe], [0 = top, 1 = right, 2 = down, 3 = left], [0 = IN, OUT = 1]
                 # go right
-                if diff_j > 0 and pe_curr + 1 < (pos_node_i + 1) * n_cells_sqrt and (
-                        grid[pe_curr][1][0] == -1 or grid[pe_curr][1][0] == a) and grid[pe_curr + 1][3][0] != a and (
-                        pe_curr + 1) not in count_per_curr:
+                if (diff_j > 0 and pe_curr + 1 < (pos_node_i + 1) * n_cells_sqrt and
+                        (grid[pe_curr][1][0] == -1 or grid[pe_curr][1][0] == a) and
+                        grid[pe_curr + 1][3][0] != a and (pe_curr + 1) not in count_per_curr):
                     grid[pe_curr][1][0] = a
                     pos_node_j += 1
                     change = True
                     # print("VIZ right 1")
                 # go left
-                elif diff_j < 0 and pe_curr - 1 >= pos_node_i * n_cells_sqrt and (
-                        grid[pe_curr][3][0] == -1 or grid[pe_curr][3][0] == a) and grid[pe_curr - 1][1][0] != a and (
-                        pe_curr - 1) not in count_per_curr:
+                elif (diff_j < 0 and pe_curr - 1 >= pos_node_i * n_cells_sqrt and
+                      (grid[pe_curr][3][0] == -1 or grid[pe_curr][3][0] == a) and
+                      grid[pe_curr - 1][1][0] != a and (pe_curr - 1) not in count_per_curr):
                     grid[pe_curr][3][0] = a
                     pos_node_j -= 1
                     change = True
                     # print("VIZ left 1")
                 # go down
-                elif diff_i > 0 and pe_curr + n_cells_sqrt < n_cells and (
-                        grid[pe_curr][2][0] == -1 or grid[pe_curr][2][0] == a) and grid[pe_curr + n_cells_sqrt][0][
-                    0] != a and (pe_curr + n_cells_sqrt) not in count_per_curr:
+                elif (diff_i > 0 and pe_curr + n_cells_sqrt < n_cells and
+                      (grid[pe_curr][2][0] == -1 or grid[pe_curr][2][0] == a) and
+                      grid[pe_curr + n_cells_sqrt][0][0] != a and (pe_curr + n_cells_sqrt) not in count_per_curr):
                     grid[pe_curr][2][0] = a
                     pos_node_i += 1
                     change = True
                     # print("VIZ down 1")
                 # go up
-                elif diff_i < 0 and pe_curr - n_cells_sqrt >= 0 and (
-                        grid[pe_curr][0][0] == -1 or grid[pe_curr][0][0] == a) and grid[pe_curr - n_cells_sqrt][2][
-                    0] != a and (pe_curr - n_cells_sqrt) not in count_per_curr:
+                elif (diff_i < 0 <= pe_curr - n_cells_sqrt and
+                      (grid[pe_curr][0][0] == -1 or grid[pe_curr][0][0] == a) and
+                      grid[pe_curr - n_cells_sqrt][2][0] != a and (pe_curr - n_cells_sqrt) not in count_per_curr):
                     grid[pe_curr][0][0] = a
                     pos_node_i -= 1
                     change = True
@@ -153,32 +152,33 @@ class Yoto(object):
                 if not change:  # change, try a long path
 
                     # go right
-                    if pe_curr + 1 < (pos_node_i + 1) * n_cells_sqrt and (
-                            grid[pe_curr][1][0] == -1 or grid[pe_curr][1][0] == a) and grid[pe_curr + 1][3][
-                        0] != a and (pe_curr + 1) not in count_per_curr:
+                    if (pe_curr + 1 < (pos_node_i + 1) * n_cells_sqrt and
+                            (grid[pe_curr][1][0] == -1 or grid[pe_curr][1][0] == a) and
+                            grid[pe_curr + 1][3][0] != a and (pe_curr + 1) not in count_per_curr):
                         grid[pe_curr][1][0] = a
                         pos_node_j += 1
                         change = True
                         # print("right 1")
                     # go left
-                    elif pe_curr - 1 >= pos_node_i * n_cells_sqrt and (
-                            grid[pe_curr][3][0] == -1 or grid[pe_curr][3][0] == a) and grid[pe_curr - 1][1][
-                        0] != a and (pe_curr - 1) not in count_per_curr:
+                    elif (pe_curr - 1 >= pos_node_i * n_cells_sqrt and
+                          (grid[pe_curr][3][0] == -1 or grid[pe_curr][3][0] == a) and
+                          grid[pe_curr - 1][1][0] != a and (pe_curr - 1) not in count_per_curr):
                         grid[pe_curr][3][0] = a
                         pos_node_j -= 1
                         change = True
                         # print("left 1")
                     # go down
-                    elif pe_curr + n_cells_sqrt < n_cells and (
-                            grid[pe_curr][2][0] == -1 or grid[pe_curr][2][0] == a) and grid[pe_curr + n_cells_sqrt][0][
-                        0] != a and (pe_curr + n_cells_sqrt) not in count_per_curr:
+                    elif (pe_curr + n_cells_sqrt < n_cells and
+                          (grid[pe_curr][2][0] == -1 or grid[pe_curr][2][0] == a) and
+                          grid[pe_curr + n_cells_sqrt][0][0] != a and (pe_curr + n_cells_sqrt) not in count_per_curr):
                         grid[pe_curr][2][0] = a
                         pos_node_i += 1
                         change = True
                         # print("down 1")
-                    elif pe_curr - n_cells_sqrt >= 0 and (grid[pe_curr][0][0] == -1 or grid[pe_curr][0][0] == a) and \
-                            grid[pe_curr - n_cells_sqrt][2][0] != a and (
-                            pe_curr - n_cells_sqrt) not in count_per_curr:  # go up
+                    elif (pe_curr - n_cells_sqrt >= 0 and
+                          (grid[pe_curr][0][0] == -1 or grid[pe_curr][0][0] == a) and
+                          grid[pe_curr - n_cells_sqrt][2][0] != a and
+                          (pe_curr - n_cells_sqrt) not in count_per_curr):  # go up
                         grid[pe_curr][0][0] = a
                         pos_node_i -= 1
                         change = True
@@ -190,13 +190,12 @@ class Yoto(object):
                 if not change:  # not routing
                     return False, grid, dic_path
 
-                dist_i, dist_j = abs(
-                    pos_b_i - pos_node_i), abs(pos_b_j - pos_node_j)
+                dist_i, dist_j = abs(pos_b_i - pos_node_i), abs(pos_b_j - pos_node_j)
                 dist_walk += 1
                 change = False
 
             if change:  # stop, give errors
                 return False, grid, dic_path
 
-            pe_final = pos_node_i * n_cells_sqrt + pos_node_j
+            # pe_final = pos_node_i * n_cells_sqrt + pos_node_j
         return True, grid, dic_path
