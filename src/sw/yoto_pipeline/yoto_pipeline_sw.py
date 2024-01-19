@@ -9,14 +9,15 @@ from src.sw.yoto_pipeline.st5_c2n import St5C2n
 
 
 class YotoPipeline(Yoto):
-    def __init__(self, per_graph: PeRGraph, n_threads: int = 1):
-        super().__init__(per_graph, n_threads)
+    def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
+        super().__init__(per_graph, n_threads, random_seed)
 
     def run(self, n_copies: int = 1) -> dict:
         results: dict = {}
         print(self.per_graph.nodes)
         print(self.per_graph.neighbors)
         print()
+        self.reset_random(0)
         for t in range(n_copies):
             results_key = 'exec_%d' % t
             results[results_key] = {}
@@ -50,10 +51,11 @@ class YotoPipeline(Yoto):
                 histogram: dict = {}
                 for path in dic_path.keys():
                     path_len = len(dic_path[path])
-                    if path_len in histogram:
-                        histogram[path_len] += 1
+                    len_key = 'dist_%d' % path_len
+                    if len_key in histogram:
+                        histogram[len_key] += 1
                     else:
-                        histogram[path_len] = 1
+                        histogram[len_key] = 1
                 th_dict[th_key]['th_routed'] = routed
                 th_dict[th_key]['th_histogram'] = dict(sorted(histogram.items()))
             results[results_key]['th_results'] = th_dict

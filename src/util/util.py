@@ -79,39 +79,38 @@ class Util(object):
             json.dump(data, file, ensure_ascii=False, indent=4)
         file.close()
 
-    #TODO Parei aqui
+    # TODO Parei aqui
     @staticmethod
-    def get_router_hist_graph_from_dict(router_reports: dict):
+    def get_router_bp_graph_from_dict(report_data: dict, graph_path: str, graph_name: str):
         data: dict = {}
-        for router_reports_key in router_reports.keys():
-            report = router_reports[router_reports_key]
+        for router_reports_key in report_data.keys():
+            report = report_data[router_reports_key]
             for len_key in report.keys():
                 if len_key in data.keys():
                     data[len_key].append(report[len_key])
                 else:
                     data[len_key] = [report[len_key]]
-        maxlen = 0
+        max_len = 0
         for key in data.keys():
-            if len(data[key]) > maxlen:
-                maxlen = len(data[key])
+            if len(data[key]) > max_len:
+                max_len = len(data[key])
         for key in data.keys():
-            while len(data[key]) < maxlen:
+            while len(data[key]) < max_len:
                 data[key].append(0)
-
+        data = dict(sorted(data.items()))
         try:
-            fig_path = './exp_results/boxplots/'
-            fig_name = 'test_simul.svg'
 
             # Set the figure size
             plt.rcParams["figure.figsize"] = [7.50, 3.50]
             plt.rcParams["figure.autolayout"] = True
             # Pandas dataframe
             pd_data = pd.DataFrame(data)
+            #print(pd_data)
             # Plot the dataframe
             ax = pd_data[list(pd_data.keys())].plot(kind='box', title='boxplot')
             # Display the plot
-            # plt.show()
-            plt.savefig('%s%s' % (fig_path, fig_name), dpi='figure', format='svg')
+            #plt.show()
+            plt.savefig('%s%s.svg' % (graph_path, graph_name), dpi='figure', format='svg')
 
         except Exception as e:
             print(e)
