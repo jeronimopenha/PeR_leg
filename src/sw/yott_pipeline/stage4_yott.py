@@ -21,7 +21,9 @@ class Stage4YOTT:
             adj_index = out_previous_stage['adj_index']
             C_A = out_previous_stage['C_A']
 
+            print(out_previous_stage)
             i,j = self.distance_table[adj_index]
+            print(C_A)
             C_S = (C_A[0]+i,C_A[1]+j) 
 
             self.output = {

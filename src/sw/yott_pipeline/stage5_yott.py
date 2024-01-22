@@ -20,7 +20,7 @@ class Stage5YOTT:
         C_S = out_previous_stage['C_S']
 
         
-        SA = self.satisfies_annotation(C_S,C_C,dist_CB) if dist_CB != -1 else 1
+        SA = self.satisfies_annotation(C_S,C_C,dist_CB) if dist_CB != -1 else True
 
         self.output = {
             'thread_index': thread_index,

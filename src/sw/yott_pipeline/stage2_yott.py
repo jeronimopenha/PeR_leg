@@ -21,9 +21,9 @@ class Stage2YOTT:
     if not thread_done:
         edge_index = out_previous_stage['edge_index']
         thread_index = out_previous_stage['thread_index']
-        B,A = self.edges[edge_index]
+        A,B = self.edges[edge_index]
         C,dist_CB = self.annotations[edge_index]
-
+        
         self.output = {
         'thread_index':thread_index,
         'thread_done': thread_done,
@@ -34,7 +34,6 @@ class Stage2YOTT:
     }
     else:
       self.output = {'thread_done': thread_done}
-
 
 if __name__ == "__main__":
     ITL = [(1,0),(2,1),(3,2),(4,3),(5,4)]
