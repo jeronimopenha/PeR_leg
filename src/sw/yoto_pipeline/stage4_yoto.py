@@ -17,7 +17,6 @@ class Stage4YOTO(object):
             'jb': 0,
             'dist_counter': 0,
             'b': 0,
-            'b_placed': False,
         }
 
         self.old_output: dict = self.new_output.copy()
@@ -33,7 +32,6 @@ class Stage4YOTO(object):
         st3_ja: int = st3_input['ja']
         st3_dist_counter: int = st3_input['dist_counter']
         st3_b: int = st3_input['b']
-        st3_b_placed: bool = st3_input['b_placed']
 
         # FIXME for debugging BEGIN
         if st3_th_idx == 0 and st3_th_valid:
@@ -52,5 +50,4 @@ class Stage4YOTO(object):
             'jb': jb,
             'dist_counter': st3_dist_counter,
             'b': st3_b,
-            'b_placed': st3_b_placed,
         }

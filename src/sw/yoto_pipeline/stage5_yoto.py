@@ -19,7 +19,6 @@ class Stage5YOTO(object):
             'b': 0,
             'ib': 0,
             'jb': 0,
-            'b_placed': False
         }
 
         self.old_output: dict = self.new_output.copy()
@@ -47,7 +46,6 @@ class Stage5YOTO(object):
         st4_jb: int = st4_input['jb']
         st4_dist_counter: int = st4_input['dist_counter']
         st4_b: int = st4_input['b']
-        st4_b_placed: bool = st4_input['b_placed']
 
         # FIXME for debugging BEGIN
         if st4_th_idx == 0 and st4_th_valid:
@@ -64,7 +62,7 @@ class Stage5YOTO(object):
 
         cb_content = 0 if border else self.c2n[st4_th_idx][st4_ib][st4_jb]
 
-        if st4_th_valid and cb_content is None and not border and not st4_b_placed:
+        if st4_th_valid and cb_content is None and not border:
             place = True
 
         self.new_output = {
@@ -75,5 +73,4 @@ class Stage5YOTO(object):
             'b': st4_b,
             'ib': st4_ib,
             'jb': st4_jb,
-            'b_placed': st4_b_placed,
         }

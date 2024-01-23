@@ -19,7 +19,6 @@ class StageYOTO(object):
             'ja': 0,
             'dist_counter': 0,
             'b': 0,
-            'b_placed': False,
         }
 
         self.old_output: dict = self.new_output.copy()
@@ -36,12 +35,11 @@ class StageYOTO(object):
         st5_ib: int = st5_input['ib']
         st5_jb: int = st5_input['jb']
         st5_b: int = st5_input['b']
-        st5_b_placed: bool = st5_input['b_placed']
         if st5_place:
             self.n2c[st5_th_idx][st5_b][0] = st5_ib
             self.n2c[st5_th_idx][st5_b][1] = st5_jb
             self.th_dist_table_counter[st5_th_idx] = 0
-        elif st5_th_valid and not st5_b_placed:
+        elif st5_th_valid:
             self.th_dist_table_counter[st5_th_idx] = st5_dist_counter + 1
 
         # process the new output
@@ -57,7 +55,6 @@ class StageYOTO(object):
 
         ia: int = self.n2c[st2_th_idx][st2_a][0] if self.n2c[st2_th_idx][st2_a][0] is not None else 0
         ja: int = self.n2c[st2_th_idx][st2_a][1] if self.n2c[st2_th_idx][st2_a][1] is not None else 0
-        b_placed: bool = False if self.n2c[st2_th_idx][st2_b][1] is None else True
         dist_counter = self.th_dist_table_counter[st2_th_idx]
 
         self.new_output = {
@@ -67,5 +64,4 @@ class StageYOTO(object):
             'ja': ja,
             'dist_counter': dist_counter,
             'b': st2_b,
-            'b_placed': b_placed,
         }

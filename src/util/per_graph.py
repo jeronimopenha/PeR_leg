@@ -91,7 +91,6 @@ class PeRGraph:
                         working = True'''
         return r_edges
 
-    # FIXME
     def get_edges_zigzag(self) -> list[list]:
         # FIXME docstring
         """_summary_
@@ -182,12 +181,13 @@ class PeRGraph:
         return self.remove_nodes_already_placed(edges)
 
     @staticmethod
-    def remove_nodes_already_placed(itl: list[list]) -> list[list]:
-        dic: dict = {itl[0][0]: True,
-                     itl[0][1]: True}
-        new_itl: list[list] = [itl[0]]
-        for (dst, src) in (itl[1:]):
-            if dic.get(src) is None:
-                dic[src] = True
-                new_itl.append([dst, src])
-        return new_itl
+    def remove_nodes_already_placed(edges: list[list]) -> list[list]:
+        dic: dict = {edges[0][0]: True,
+                     edges[0][1]: True}
+        new_edges: list[list] = [edges[0][:2]]
+        for edge in (edges[1:]):
+            src, dst = edge[:2]
+            if dic.get(dst) is None:
+                dic[dst] = True
+                new_edges.append([src, dst])
+        return new_edges

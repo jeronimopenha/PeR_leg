@@ -31,7 +31,6 @@ class Stage1YOTO(object):
 
         # return update
         st5_place: bool = st5_input['place']
-        st5_b_placed: bool = st5_input['b_placed']
 
         st1_edg_n: int = st1_input['edg_n']
         st1_th_idx: int = st1_input['th_idx']
@@ -68,7 +67,7 @@ class Stage1YOTO(object):
                 self.done = False
                 break
 
-        incr_edge_n = st5_place or st5_b_placed
+        incr_edge_n = st5_place
         edge_n: int = self.edge_counter[th_idx] if not incr_edge_n else self.edge_counter[th_idx] + 1
         th_valid: int = self.thread_valid[th_idx]
 

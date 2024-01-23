@@ -1,11 +1,11 @@
 from src.util.per_graph import PeRGraph
 from src.util.util import Util as U
 from src.util.yoto.yoto import Yoto
-from src.sw.yoto_pipeline.stage1_edges_sel import Stage1YOTO
-from src.sw.yoto_pipeline.stage2_edges import Stage2YOTO
-from src.sw.yoto_pipeline.stage3_n2c import StageYOTO
-from src.sw.yoto_pipeline.stage4_dist import Stage4YOTO
-from src.sw.yoto_pipeline.stage5_c2n import Stage5YOTO
+from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
+from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
+from src.sw.yoto_pipeline.stage3_yoto import StageYOTO
+from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
+from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 
 
 class YotoPipeline(Yoto):

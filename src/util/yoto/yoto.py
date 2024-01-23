@@ -16,7 +16,7 @@ class Yoto(object):
 
         self.edges_str: list[list] = self.per_graph.get_edges_zigzag()
         self.edges_int: list[list] = []
-        for a, b, direction in self.edges_str:
+        for a, b in self.edges_str:
             self.edges_int.append(
                 [
                     self.per_graph.nodes_to_idx[a],

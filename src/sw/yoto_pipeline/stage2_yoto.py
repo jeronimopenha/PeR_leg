@@ -32,6 +32,7 @@ class Stage2YOTO(object):
 
         edge_n_valid = st1_edge_n < self.n_edges
 
+        # fixme - Continue
         a, b = self.edges[st1_th_idx][st1_edge_n] if edge_n_valid else (0, 0)
 
         self.new_output = {
