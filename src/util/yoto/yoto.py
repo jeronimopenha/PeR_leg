@@ -23,6 +23,7 @@ class Yoto(object):
                     self.per_graph.nodes_to_idx[b]
                 ]
             )
+        self.n_edges = len(self.edges_int)
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt

@@ -24,8 +24,8 @@ class YotoPipeline(Yoto):
 
             n2c, c2n = self.get_initial_position_ij(self.edges_int[0][0], self.len_pipeline)
 
-            st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.per_graph.n_edges, self.len_pipeline)
-            st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.len_pipeline, self.per_graph.n_edges)
+            st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.n_edges, self.len_pipeline)
+            st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.len_pipeline, self.n_edges)
             st3_n2c: StageYOTO = StageYOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
             st4_dist = Stage4YOTO(self.per_graph.n_cells_sqrt)
             st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
@@ -42,7 +42,7 @@ class YotoPipeline(Yoto):
             results[results_key]['total_exec_clk'] = st1_edge_sel.total_pipeline_counter
             th_dict: dict = {}
             for th in range(self.len_pipeline):
-                th_key = 'Copy_%d_TH_%d' % (t, th)
+                th_key = 'Exec_%d_TH_%d' % (t, th)
                 th_dict[th_key]: dict = {}
                 th_dict[th_key]['total_th_clk'] = st1_edge_sel.exec_counter[th]
                 th_dict[th_key]['th_placement'] = st3_n2c.n2c[th]
