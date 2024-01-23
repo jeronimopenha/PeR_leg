@@ -16,7 +16,7 @@ class St2Edges(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st1_input: dict):
+    def compute(self, st1_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 

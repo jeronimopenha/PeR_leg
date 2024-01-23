@@ -24,7 +24,7 @@ class St5C2n(object):
 
         self.output: dict = self.output_new.copy()
 
-    def execute(self, st4_input: dict, st5_input: dict):
+    def compute(self, st4_input: dict, st5_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 

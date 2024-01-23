@@ -7,13 +7,42 @@ if os.getcwd() not in sys.path:
 
 from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
 from src.util.per_graph import PeRGraph
+from src.util.util import Util as U
 
-dot_file = base_path = os.getcwd() + '/dot_db/mac.dot'
-# TODO automatizar a criacao das pastas
-# YOTO_1comp_counters TAG
-output_path = os.getcwd() + '/results/sw/yoto_pipeline/'
-per_graph = PeRGraph(dot_file)
-n_threads = 6
-yolt = YotoPipeline(per_graph, n_threads)
-results: dict = yolt.run(10)
-yolt.save_results_raw(results, output_path)
+
+def run_connected_graphs(test_name: str):
+    # YOTO_1comp_counters TAG
+    n_threads = 6
+    seed: int = 0
+
+    dot_path_base = os.getcwd() + '/dot_db/'
+    dot_connected_path = dot_path_base + 'connected/'
+
+    output_path_base = os.getcwd() + '/results/sw/yoto/yoto_pipeline/'
+
+    output_path = output_path_base + test_name + '/'
+
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
+    # list connected benchmarks
+    dots_list = U.get_files_list_by_extension(dot_connected_path, '.dot')
+    # FIXME a linha baixo e apenas para depuracao
+    # dots_list = [['/home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot', 'mac.dot']]
+    for dot, dot_name in dots_list:
+        per_graph = PeRGraph(dot)
+        yoto = YotoPipeline(per_graph, n_threads, seed)
+        results: dict = yoto.run(10)
+        # yoto.save_execution_report_raw(results, output_path, dot_name)
+        report = yoto.get_report(results, output_path, dot_name)
+        box_plot_histogram: dict = {}
+        for key in report['th_routed'].keys():
+            if report['th_routed'][key]:
+                box_plot_histogram[key] = report['th_histogram'][key]
+        if box_plot_histogram:
+            U.get_router_bp_graph_from_dict(box_plot_histogram, output_path, dot_name)
+        seed += 1
+
+
+if __name__ == '__main__':
+    run_connected_graphs('2024_01_17')
