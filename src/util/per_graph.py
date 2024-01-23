@@ -180,13 +180,14 @@ class PeRGraph:
                     edges.append([a, b, 'OUT'])
 
         return self.remove_nodes_already_placed(edges)
-    
-    def remove_nodes_already_placed(self,ITL):
-        dic = {ITL[0][0]:True,
-            ITL[0][1]:True}
-        new_ITL = [ITL[0]]
-        for (dst,src) in (ITL[1:]):
+
+    @staticmethod
+    def remove_nodes_already_placed(itl: list[list]) -> list[list]:
+        dic: dict = {itl[0][0]: True,
+                     itl[0][1]: True}
+        new_itl: list[list] = [itl[0]]
+        for (dst, src) in (itl[1:]):
             if dic.get(src) is None:
                 dic[src] = True
-                new_ITL.append([dst,src])
-        return new_ITL
+                new_itl.append([dst, src])
+        return new_itl

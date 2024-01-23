@@ -45,4 +45,4 @@ def run_connected_graphs(test_name: str):
 
 
 if __name__ == '__main__':
-    run_connected_graphs('2024_01_17')
+    run_connected_graphs('2024_01_23')
