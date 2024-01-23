@@ -22,7 +22,7 @@ class St4Dist(object):
 
         self.output: dict = self.output_new.copy()
 
-    def compute(self, st3_input: dict, st4_input: dict):
+    def compute(self, st3_input: dict):
         # Move forward the output
         self.output = self.output_new.copy()
 

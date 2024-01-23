@@ -1,9 +1,9 @@
 from abc import ABC,abstractmethod
+
 class IFIFO(ABC):
     @abstractmethod
     def put(self, thread_index, should_write):
         pass
-    # return (thread_index,should_write)
     @abstractmethod
     def get(self):
         pass

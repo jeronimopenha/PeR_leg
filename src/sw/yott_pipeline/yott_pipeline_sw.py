@@ -15,7 +15,7 @@ class YOTTPipeline(YOTT):
     def __init__(self,annotations,per_graph: PeRGraph,num_threads: int = 7):
         self.annotations = annotations
         super().__init__(per_graph, num_threads)
-        self.ITL = self.remove_nodes_already_placed(self.edges_int)
+        self.ITL = self.edges_int
         #FIXME retirar
         self.annotations = [[-1,-1] for i in range(len(self.ITL))]
 
@@ -52,10 +52,8 @@ class YOTTPipeline(YOTT):
 
                 stage4.compute(stage3)
                 
-
                 stage5.compute(stage4)
                 
-
                 stage6.compute(stage5,stage0)
                 
                 print(stage0.output)
@@ -87,11 +85,5 @@ class YOTTPipeline(YOTT):
             for row in thread:
                 print(row)
             print()
-    def remove_nodes_already_placed(self,ITL):
-        dic = {ITL[0][0]:True}
-        new_ITL = [ITL[0]]
-        for (src,dst) in (ITL[1:]):
-            if dic.get(dst) is None:
-                dic[dst] = True
-                new_ITL.append([src,dst])
-        return new_ITL
+
+
