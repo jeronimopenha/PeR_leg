@@ -9,7 +9,7 @@ from src.util.per_graph import PeRGraph
 class Yoto(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
-        self.latency: int = 6
+        self.len_pipeline: int = 6
         self.per_graph: PeRGraph = per_graph
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
@@ -33,10 +33,10 @@ class Yoto(object):
     def reset_random(random_seed: int = 0):
         rnd.seed(random_seed)
 
-    def get_initial_position(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position(self, first_node: int, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list] = []
         c2n: list[list] = []
-        for i in range(latency):
+        for i in range(len_pipeline):
             n2c_tmp: list = [None for j in range(self.per_graph.n_cells)]
             c2n_tmp: list = [None for j in range(self.per_graph.n_cells)]
             idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
@@ -46,10 +46,10 @@ class Yoto(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position_ij(self, first_node: int, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
-        for i in range(latency):
+        for i in range(len_pipeline):
             n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
             c2n_tmp: list[list] = [
                 [

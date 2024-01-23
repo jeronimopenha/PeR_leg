@@ -1,33 +1,33 @@
-class St1EdgesSel(object):
+class Stage1YOTO(object):
     """
     This class is responsible to generate the edges sections for each thread.
     """
 
-    def __init__(self, n_threads: int, n_edges: int, latency: int):
-        self.latency: int = latency
+    def __init__(self, n_threads: int, n_edges: int, len_pipeline: int):
+        self.len_pipeline: int = len_pipeline
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
-        self.edge_counter: list[int] = [0 for i in range(self.latency)]
-        self.exec_counter: list[int] = [0 for i in range(self.latency)]
+        self.edge_counter: list[int] = [0 for i in range(self.len_pipeline)]
+        self.exec_counter: list[int] = [0 for i in range(self.len_pipeline)]
         self.total_pipeline_counter: int = 0
 
-        self.thread_valid: list[bool] = [True if i < self.n_threads else False for i in range(self.latency)]
-        self.thread_done: list[bool] = [False if i < self.n_threads else True for i in range(self.latency)]
+        self.thread_valid: list[bool] = [True if i < self.n_threads else False for i in range(self.len_pipeline)]
+        self.thread_done: list[bool] = [False if i < self.n_threads else True for i in range(self.len_pipeline)]
         self.th_idx: int = 0
         self.done: bool = False
 
-        self.output_new: dict = {
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'edg_n': 0,
             'incr_edge_n': False
         }
 
-        self.output: dict = self.output_new.copy()
+        self.old_output: dict = self.new_output.copy()
 
     def compute(self, st1_input: dict, st5_input: dict):
         # Move forward the output
-        self.output = self.output_new.copy()
+        self.old_output = self.new_output.copy()
 
         # return update
         st5_place: bool = st5_input['place']
@@ -47,11 +47,14 @@ class St1EdgesSel(object):
 
         # process the new output
         th_idx: int = self.th_idx
+
+        # FIXME for debugging BEGIN
         if th_idx == 0:
             z = 1
+        # FIXME END
 
         # increment the thread index
-        self.th_idx = th_idx + 1 if th_idx + 1 < self.latency else 0
+        self.th_idx = th_idx + 1 if th_idx + 1 < self.len_pipeline else 0
 
         # done condition
         if st1_th_valid and st1_edg_n == self.n_edges and st1_incr_edge_n:
@@ -69,7 +72,7 @@ class St1EdgesSel(object):
         edge_n: int = self.edge_counter[th_idx] if not incr_edge_n else self.edge_counter[th_idx] + 1
         th_valid: int = self.thread_valid[th_idx]
 
-        self.output_new = {
+        self.new_output = {
             'th_idx': th_idx,
             'th_valid': th_valid,
             'edg_n': edge_n,
