@@ -22,7 +22,7 @@ class YOTT(object):
                     self.per_graph.nodes_to_idx[b]
                 ]
             )
-
+        self.edges_int = self. remove_nodes_already_placed(self.edges_int)
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
         self.line_bits = int(sqrt(self.per_graph.n_cells))
@@ -65,3 +65,15 @@ class YOTT(object):
             c2n.append(c2n_tmp)
 
         return n2c, c2n
+    
+    def remove_nodes_already_placed(self,ITL):
+        dic = {ITL[0][0]:True,
+            ITL[0][1]:True}
+        new_ITL = [ITL[0]]
+        print(ITL)
+        for dst,src in (ITL[1:]):
+            if dic.get(src) is None:
+                dic[src] = True
+                new_ITL.append([dst,src])
+        return new_ITL
+
