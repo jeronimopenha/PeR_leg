@@ -121,3 +121,7 @@ class Util(object):
         if i > n_cells_sqrt - 1 or j > n_cells_sqrt - 1 or i < 0 or j < 0:
             out_of_border = True
         return out_of_border
+
+    @staticmethod
+    def dist_manhattan(PE1:tuple, PE2:tuple):
+        return abs(PE1[0] - PE2[0]) + abs(PE1[1] - PE2[1])
