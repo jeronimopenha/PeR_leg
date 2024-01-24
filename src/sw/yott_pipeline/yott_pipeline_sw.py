@@ -67,7 +67,7 @@ class YOTTPipeline(YOTT):
                 print(stage6.new_output_stage3)
                 print()
 
-                # input()
+                input()
             self.print_grid(stage6.C2N)
             # print(self.stage2.N2C)
             # print(self.stage4.C2N)

@@ -1,9 +1,12 @@
+import math
+
+
 class Stage6YOTT:
   def __init__(self,tam_grid, len_pipe,C2N):
     self.tam_grid =tam_grid
     self.C2N = C2N
-    self.try_count = [0 for i in range(len_pipe)]
-    self.threads_free_cel = [None for i in range(len_pipe)]
+    self.threads_current_adj_dists = [1 for i in range(len_pipe)]
+    self.threads_free_cel = [[None,math.inf] for i in range(len_pipe)]
     self.new_output_stage3= {
         'should_write': 0,
         'thread_index':0 ,
@@ -17,26 +20,40 @@ class Stage6YOTT:
       self.old_output_stage3 =  self.new_output_stage3.copy()
       out_previous_stage = stage5.old_output
       thread_index = out_previous_stage['thread_index']
-      SA = out_previous_stage['SA']
+      cost = out_previous_stage['cost']
       C_S = out_previous_stage['C_S']
       B = out_previous_stage['B']
       thread_valid = out_previous_stage['thread_valid']
+      dist_CA_CS = out_previous_stage['dist_CA_CS']
 
-      follow_annotation = self.try_count[thread_index] < 10
+      was_there_change = dist_CA_CS != self.threads_current_adj_dists[thread_index]
       
       if not self.out_of_grid(C_S,self.tam_grid):
          N_C_S = self.C2N[thread_index][C_S[0]][C_S[1]]
-         should_write = self.should_write(SA,N_C_S)
+         print(N_C_S)
+         if N_C_S == None:
+            if dist_CA_CS < 3:
+               if cost == 0:
+                  should_write = 1
+               else:
+                  if cost < self.threads_free_cel[thread_index][1]:
+                     self.threads_free_cel[thread_index] = [C_S,cost]
+                  should_write = 0
+            else: 
+               should_write = 1
+         else:
+            should_write = 0
       else: 
-         N_C_S = -1
          should_write = 0
       
-      if not follow_annotation and self.threads_free_cel[thread_index] != None: #type:ignore
-         C_S = self.threads_free_cel[thread_index] #type:ignore
-         should_write =  1
-      elif follow_annotation and self.threads_free_cel[thread_index] == None and N_C_S == None: #type:ignore
-         self.threads_free_cel[thread_index] =  C_S #type:ignore
 
+      if was_there_change:
+         self.threads_current_adj_dists[thread_index] = dist_CA_CS
+         if self.threads_free_cel[thread_index][0] != None:
+            C_S = self.threads_free_cel[thread_index][0]
+            should_write = 1
+
+             
       should_write = should_write and thread_valid
 
       self.new_output_stage3 = {
@@ -47,21 +64,14 @@ class Stage6YOTT:
       'C_S': C_S
       }
 
-      if should_write:
+      if should_write == 1:
          self.C2N[thread_index][C_S[0]][C_S[1]] = B
-         self.try_count[thread_index] = 0
-         self.threads_free_cel[thread_index] = None #type:ignore
-      elif not should_write and thread_valid:
-         self.try_count[thread_index] += 1
+         self.threads_current_adj_dists[thread_index] = 1
+         self.threads_free_cel[thread_index][0] = None #type:ignore
+
       
-      if thread_valid:   
+      if thread_valid == 1:   
          stage0.fifo.put(thread_index,should_write)  
 
   def out_of_grid(self,C_S,tam_grid):
     return ((C_S[0] < 0 or C_S[0]>=tam_grid ) or (C_S[1] < 0 or C_S[1]>=tam_grid ))
-
-  def should_write(self,satisfies_annotation,N_C_S):
-    if N_C_S != None:
-       return 0
-    return satisfies_annotation 
-    

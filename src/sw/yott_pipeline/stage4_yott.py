@@ -12,6 +12,8 @@ class Stage4YOTT:
         'C_S': [0,1],    
         'C_C':[0,0],
         'dist_CB': 1,
+        'dist_CA_CS': 1
+
     } 
         self.old_output = self.new_output  
 
@@ -25,7 +27,10 @@ class Stage4YOTT:
         C_A = out_previous_stage['C_A']
 
         i,j = self.distance_table[thread_index][adj_index]
+        
         C_S = [C_A[0]+i,C_A[1]+j] 
+
+        dist_CA_CS = U.dist_manhattan(C_A,C_S) #type:ignore
 
         self.new_output = {
         'thread_index': thread_index,
@@ -34,6 +39,7 @@ class Stage4YOTT:
         'C_S': C_S,    
         'C_C':out_previous_stage['C_C'],
         'dist_CB': out_previous_stage['dist_CB'],
+        'dist_CA_CS': dist_CA_CS
     } 
 
 
