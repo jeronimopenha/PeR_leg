@@ -104,13 +104,20 @@ class Util(object):
             plt.rcParams["figure.autolayout"] = True
             # Pandas dataframe
             pd_data = pd.DataFrame(data)
-            #print(pd_data)
+            # print(pd_data)
             # Plot the dataframe
             ax = pd_data[list(pd_data.keys())].plot(kind='box', title='boxplot')
             # Display the plot
-            #plt.show()
+            # plt.show()
             plt.savefig('%s%s.svg' % (graph_path, graph_name), dpi='figure', format='svg')
 
         except Exception as e:
             print(e)
             traceback.print_exc()
+
+    @staticmethod
+    def is_out_of_border_sqr(i: int, j: int, n_cells_sqrt: int) -> bool:
+        out_of_border: bool = False
+        if i > n_cells_sqrt - 1 or j > n_cells_sqrt - 1 or i < 0 or j < 0:
+            out_of_border = True
+        return out_of_border

@@ -14,8 +14,8 @@ class YotoPipeline(Yoto):
 
     def run(self, n_copies: int = 1) -> dict:
         results: dict = {}
-        print(self.per_graph.nodes)
-        print(self.per_graph.neighbors)
+        # print(self.per_graph.nodes)
+        # print(self.per_graph.neighbors)
         print()
         self.reset_random(0)
         for t in range(n_copies):

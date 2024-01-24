@@ -186,8 +186,8 @@ class PeRGraph:
                      edges[0][1]: True}
         new_edges: list[list] = [edges[0][:2]]
         for edge in (edges[1:]):
-            src, dst = edge[:2]
-            if dic.get(dst) is None:
-                dic[dst] = True
-                new_edges.append([src, dst])
+            n1, n2 = edge[:2]
+            if dic.get(n2) is None:
+                dic[n2] = True
+                new_edges.append([n1, n2])
         return new_edges

@@ -54,15 +54,11 @@ class Stage5YOTO(object):
 
         place: bool = False
 
-        border: bool = False
-        if st4_ib > self.n_cells_sqrt - 1 or \
-                st4_jb > self.n_cells_sqrt - 1 or \
-                st4_ib < 0 or st4_jb < 0:
-            border = True
+        out_of_border: U.is_out_of_border_sqr(st4_ib, st4_jb, self.n_cells_sqrt)
 
-        cb_content = 0 if border else self.c2n[st4_th_idx][st4_ib][st4_jb]
+        cb_content = 0 if out_of_border else self.c2n[st4_th_idx][st4_ib][st4_jb]
 
-        if st4_th_valid and cb_content is None and not border:
+        if st4_th_valid and cb_content is None and not out_of_border:
             place = True
 
         self.new_output = {
