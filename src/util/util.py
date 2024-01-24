@@ -79,9 +79,8 @@ class Util(object):
             json.dump(data, file, ensure_ascii=False, indent=4)
         file.close()
 
-    # TODO Parei aqui
     @staticmethod
-    def get_router_bp_graph_from_dict(report_data: dict, graph_path: str, graph_name: str):
+    def get_router_boxplot_graph_from_dict(report_data: dict, graph_path: str, graph_name: str):
         data: dict = {}
         for router_reports_key in report_data.keys():
             report = report_data[router_reports_key]

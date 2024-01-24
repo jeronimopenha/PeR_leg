@@ -9,34 +9,76 @@ from src.util.per_graph import PeRGraph
 class Yoto(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
-        self.latency: int = 6
+        self.len_pipeline: int = 6
         self.per_graph: PeRGraph = per_graph
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
         self.edges_str: list[list] = self.per_graph.get_edges_zigzag()
-        self.edges_int: list[list] = []
-        for a, b, direction in self.edges_str:
-            self.edges_int.append(
-                [
-                    self.per_graph.nodes_to_idx[a],
-                    self.per_graph.nodes_to_idx[b]
-                ]
-            )
+        self.edges_int: list[list] = self.get_edges_int(self.edges_str)
+
+        self.n_edges = len(self.edges_int)
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
 
+    def get_edges_int(self, edges_str: list[list]) -> list[list]:
+        edges_int: list[list] = []
+        for a, b in edges_str:
+            edges_int.append(
+                [
+                    self.per_graph.nodes_to_idx[a],
+                    self.per_graph.nodes_to_idx[b]
+                ]
+            )
+        return edges_int
+
     @staticmethod
     def reset_random(random_seed: int = 0):
         rnd.seed(random_seed)
 
-    def get_initial_position(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    @staticmethod
+    def get_router_edges(self):
+        pass
+
+    @staticmethod
+    def get_edges_distances(edges: list[list], n2c: list[list]) -> tuple[dict, list]:
+        dic_edges_dist: dict = {}
+        list_edges_dist: list = []
+        for edge in edges:
+            n1 = edge[0]
+            n2 = edge[1]
+            a: list = n2c[n1]
+            b: list = n2c[n2]
+            edge_distance: int = Yoto.get_edge_distance(a, b)
+            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
+            list_edges_dist.append(edge_distance)
+        return dic_edges_dist, list_edges_dist
+
+    @staticmethod
+    def get_edge_distance(a: list[int], b: list[int]) -> int:
+        ia, ja = a
+        ib, jb = b
+        edge_distance = abs(ia - ib) + abs(ja - jb)
+        return edge_distance
+
+    def get_edges_int(self, edges_str: list[list]) -> list[list]:
+        edges_int: list[list] = []
+        for a, b in edges_str:
+            edges_int.append(
+                [
+                    self.per_graph.nodes_to_idx[a],
+                    self.per_graph.nodes_to_idx[b]
+                ]
+            )
+        return edges_int
+
+    def get_initial_position(self, first_node: int, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list] = []
         c2n: list[list] = []
-        for i in range(latency):
+        for i in range(len_pipeline):
             n2c_tmp: list = [None for j in range(self.per_graph.n_cells)]
             c2n_tmp: list = [None for j in range(self.per_graph.n_cells)]
             idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
@@ -46,10 +88,10 @@ class Yoto(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position_ij(self, first_node: int, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
-        for i in range(latency):
+        for i in range(len_pipeline):
             n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
             c2n_tmp: list[list] = [
                 [

@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print(sa_graph.nodes)
     print(sa_graph.neighbors)
 
-    th = _th.St1EdgesSel(sa_graph, n_threads=n_threads)
+    th = _th.Stage1YOTO(sa_graph, n_threads=n_threads)
     st1 = _st1.St1(sa_graph, n_threads=n_threads)
     st2 = _st2.St2(sa_graph)
     st3 = _st3.St3(sa_graph, n_threads=n_threads)
@@ -38,15 +38,15 @@ if __name__ == '__main__':
 
     for i in range(288 * 1000):
         th.compute()
-        st1.compute(th.output, st9.output, st1.output['wb'])
-        st2.compute(st1.output)
-        st3.compute(st2.output, st3.output['wb'])
-        st4.compute(st3.output)
-        st5.execute(st4.output)
+        st1.compute(th.old_output, st9.old_output, st1.old_output['wb'])
+        st2.compute(st1.old_output)
+        st3.compute(st2.old_output, st3.old_output['wb'])
+        st4.compute(st3.old_output)
+        st5.execute(st4.old_output)
         st6.compute(st5.output)
-        st7.compute(st6.output)
-        st8.compute(st7.output)
-        st9.compute(st8.output)
-        st10.compute(st9.output)
+        st7.compute(st6.old_output)
+        st8.compute(st7.old_output)
+        st9.compute(st8.old_output)
+        st10.compute(st9.old_output)
         # print('%d %d %d %d %d %d %d %d %d %d' % (st1.output['idx'], st2.output['idx'], st3.output['idx'], st4.output['idx'],
         #      st5.output['idx'], st6.output['idx'], st7.output['idx'], st8.output['idx'], st9.output['idx'], st10.output['idx']))
