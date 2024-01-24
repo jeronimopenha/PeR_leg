@@ -15,14 +15,14 @@ class YOTT(object):
 
         self.edges_str: list[list] = self.per_graph.get_edges_zigzag()
         self.edges_int: list[list] = []
-        for a, b, direction in self.edges_str:
+        for a, b in self.edges_str:
             self.edges_int.append(
                 [
                     self.per_graph.nodes_to_idx[a],
                     self.per_graph.nodes_to_idx[b]
                 ]
             )
-        self.edges_int = self. remove_nodes_already_placed(self.edges_int)
+        self.edges_int = self.edges_int
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
         self.line_bits = int(sqrt(self.per_graph.n_cells))
@@ -32,7 +32,7 @@ class YOTT(object):
     def reset_random(random_seed: int = 0):
         rnd.seed(random_seed)
 
-    def get_initial_position(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position(self, first_node: int, latency: int = 7) -> tuple[list[list], list[list]]:
         n2c: list[list] = []
         c2n: list[list] = []
         for i in range(latency):
@@ -45,7 +45,7 @@ class YOTT(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    def get_initial_position_ij(self, first_node: int, latency: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position_ij(self, first_node: int, latency: int = 7) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
         for i in range(latency):
@@ -65,15 +65,5 @@ class YOTT(object):
             c2n.append(c2n_tmp)
 
         return n2c, c2n
-    
-    def remove_nodes_already_placed(self,ITL):
-        dic = {ITL[0][0]:True,
-            ITL[0][1]:True}
-        new_ITL = [ITL[0]]
-        print(ITL)
-        for dst,src in (ITL[1:]):
-            if dic.get(src) is None:
-                dic[src] = True
-                new_ITL.append([dst,src])
-        return new_ITL
+   
 
