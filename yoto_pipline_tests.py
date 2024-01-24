@@ -40,7 +40,7 @@ def run_connected_graphs(test_name: str):
             if report['th_routed'][key]:
                 box_plot_histogram[key] = report['th_histogram'][key]
         if box_plot_histogram:
-            U.get_router_bp_graph_from_dict(box_plot_histogram, output_path, dot_name)
+            U.get_router_boxplot_graph_from_dict(box_plot_histogram, output_path, dot_name)
         seed += 1
 
 

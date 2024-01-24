@@ -47,7 +47,16 @@ class YotoPipeline(Yoto):
                 th_dict[th_key]['total_th_clk'] = st1_edge_sel.exec_counter[th]
                 th_dict[th_key]['th_placement'] = st3_n2c.n2c[th]
 
-                routed, grid, dic_path = self.routing_mesh(self.edges_int, st3_n2c.n2c[th])
+                graph_edges_str = self.per_graph.edges_str
+                graph_edges_int = self.get_edges_int(graph_edges_str)
+                dic_edges_dist, list_edges_dist = self.get_edges_distances(graph_edges_int, st3_n2c.n2c[th])
+                dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
+                th_dict[th_key]['th_placement_distances'] = dic_edges_dist
+
+                router_edges = [graph_edges_int[i] for i in
+                                sorted(range(len(list_edges_dist)), key=lambda i: list_edges_dist[i])]
+
+                routed, grid, dic_path = self.routing_mesh(router_edges, st3_n2c.n2c[th])
                 histogram: dict = {}
                 for path in dic_path.keys():
                     path_len = len(dic_path[path])
@@ -78,6 +87,7 @@ class YotoPipeline(Yoto):
         n_threads: int = n_tests * self.n_threads
         th_histogram: dict = {}
         th_routed: dict = {}
+        th_placement_distances: dict = {}
 
         # generate data for reports
         for result_key in results.keys():
@@ -102,6 +112,7 @@ class YotoPipeline(Yoto):
                 # th_placements[th_key] = th_results['th_placement']
                 th_histogram[th_key] = th_results['th_histogram']
                 th_routed[th_key] = th_results['th_routed']
+                th_placement_distances[th_key] = th_results['th_placement_distances']
 
                 total_th_clk: int = th_results['total_th_clk']
 
@@ -133,6 +144,7 @@ class YotoPipeline(Yoto):
             'n_threads': n_threads,
             'th_routed': th_routed,
             'th_histogram': th_histogram,
+            'th_placement_distances': th_placement_distances,
             'nodes_dict': self.per_graph.nodes_to_idx,
         }
         return execution_report_raw
