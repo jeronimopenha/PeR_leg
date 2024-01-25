@@ -1,4 +1,4 @@
-from src.util.util import Util as U
+from src.util.util import Util
 
 
 class Stage4YOTO(object):
@@ -6,9 +6,11 @@ class Stage4YOTO(object):
     This class is responsible give one possible neighbor cell of 'a'.
     """
 
-    def __init__(self, n_cells_sqrt: int):
+    def __init__(self, n_cells_sqrt: int, len_pipeline: int):
         self.n_cells_sqrt: int = n_cells_sqrt
-        self.distance_table: list[list] = U.get_distance_table(self.n_cells_sqrt)
+        self.len_pipeline: int = len_pipeline
+        self.distance_table: list[list[list]] = [Util.get_distance_table(self.n_cells_sqrt) for _ in
+                                                 range(self.len_pipeline)]
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -38,7 +40,7 @@ class Stage4YOTO(object):
             z = 1
         # FIXME END
 
-        add_i, add_j = self.distance_table[st3_dist_counter]
+        add_i, add_j = self.distance_table[st3_th_idx][st3_dist_counter]
 
         ib: int = st3_ia + add_i
         jb: int = st3_ja + add_j

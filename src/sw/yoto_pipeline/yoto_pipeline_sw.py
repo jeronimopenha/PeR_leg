@@ -1,5 +1,5 @@
 from src.util.per_graph import PeRGraph
-from src.util.util import Util as U
+from src.util.util import Util
 from src.util.traversal import Traversal
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
@@ -27,7 +27,7 @@ class YotoPipeline(Traversal):
             st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.n_edges, self.len_pipeline)
             st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.len_pipeline, self.n_edges)
             st3_n2c: StageYOTO = StageYOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
-            st4_dist = Stage4YOTO(self.per_graph.n_cells_sqrt)
+            st4_dist = Stage4YOTO(self.per_graph.n_cells_sqrt, self.len_pipeline)
             st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
 
             counter = 0
@@ -73,7 +73,7 @@ class YotoPipeline(Traversal):
     def save_execution_report_json(self, results: dict, path: str, file_name: str) -> None:
         execution_report_raw: dict = self.get_report(results, path, file_name)
 
-        U.save_json(path, file_name, execution_report_raw)
+        Util.save_json(path, file_name, execution_report_raw)
 
     def get_report(self, results: dict, path: str, file_name: str) -> dict:
         exec_max_clk: int = -1
