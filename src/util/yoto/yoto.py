@@ -2,11 +2,11 @@ import random as rnd
 import numpy as np
 
 from math import sqrt
-from src.util.util import Util
+from src.util.util import Util as U
 from src.util.per_graph import PeRGraph
 
 
-class Traversal(object):
+class Yoto(object):
 
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
         self.len_pipeline: int = 6
@@ -52,7 +52,7 @@ class Traversal(object):
             n2 = edge[1]
             a: list = n2c[n1]
             b: list = n2c[n2]
-            edge_distance: int = Util.dist_manhattan(a, b)
+            edge_distance: int = Yoto.get_edge_distance(a, b)
             dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
             list_edges_dist.append(edge_distance)
         return dic_edges_dist, list_edges_dist
@@ -99,8 +99,8 @@ class Traversal(object):
                 ] for _ in range(self.per_graph.n_cells_sqrt)
             ]
 
-            idxl, idxc = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
-                                                        self.per_graph.n_cells_sqrt)
+            idxl, idxc = U.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
+                                                     self.per_graph.n_cells_sqrt)
             n2c_tmp[first_node][0] = idxl
             n2c_tmp[first_node][1] = idxc
             c2n_tmp[idxl][idxc] = first_node

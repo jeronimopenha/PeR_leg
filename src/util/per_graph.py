@@ -107,7 +107,6 @@ class PeRGraph:
                 output_list.append([node, 'IN'])
 
         stack: list = output_list.copy()
-
         edges: list = []
 
         fanin: dict = {}

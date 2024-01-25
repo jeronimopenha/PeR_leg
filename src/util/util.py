@@ -32,7 +32,7 @@ class Util(object):
     @staticmethod
     def get_distance_table(cells_sqrt: int) -> list[list]:
         distance_tale_tmp: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
-        distance_tale: list[list] = []
+        distance_table: list[list] = []
         for i in range(cells_sqrt):
             for j in range(cells_sqrt):
                 if j == i == 0:
@@ -48,9 +48,9 @@ class Util(object):
                     distance_tale_tmp[d - 1].append([-i, j])
         for d in range(len(distance_tale_tmp)):
             for p in distance_tale_tmp[d]:
-                distance_tale.append(p)
+                distance_table.append(p)
 
-        return distance_tale
+        return distance_table
 
     @staticmethod
     def get_cell_from_line_column(cell_line: int, cell_column: int, n_lines: int) -> int:
@@ -122,8 +122,7 @@ class Util(object):
             out_of_border = True
         return out_of_border
 
-
-    
+    # TODO depois podemos colocar mais tipos de calculos de distancias em um ENUM caso necessario, mas acho que não sera
     @staticmethod
     def get_edges_distances(edges: list[list], n2c: list[list]) -> tuple[dict, list]:
         dic_edges_dist: dict = {}

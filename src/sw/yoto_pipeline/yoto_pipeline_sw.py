@@ -1,6 +1,6 @@
 from src.util.per_graph import PeRGraph
 from src.util.util import Util as U
-from src.util.yoto.yoto import Yoto
+from src.util.traversal import Traversal
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
 from src.sw.yoto_pipeline.stage3_yoto import StageYOTO
@@ -8,7 +8,7 @@ from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
 from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 
 
-class YotoPipeline(Yoto):
+class YotoPipeline(Traversal):
     def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
         super().__init__(per_graph, n_threads, random_seed)
 
