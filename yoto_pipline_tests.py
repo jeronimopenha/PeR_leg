@@ -7,7 +7,7 @@ if os.getcwd() not in sys.path:
 
 from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
 from src.util.per_graph import PeRGraph
-from src.util.util import Util as U
+from src.util.util import Util
 
 
 def run_connected_graphs(test_name: str):
@@ -26,7 +26,7 @@ def run_connected_graphs(test_name: str):
         os.makedirs(output_path)
 
     # list connected benchmarks
-    dots_list = U.get_files_list_by_extension(dot_connected_path, '.dot')
+    dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
     # FIXME a linha baixo e apenas para depuracao
     # dots_list = [['/home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot', 'mac.dot']]
     for dot, dot_name in dots_list:
@@ -40,7 +40,7 @@ def run_connected_graphs(test_name: str):
             if report['th_routed'][key]:
                 box_plot_histogram[key] = report['th_histogram'][key]
         if box_plot_histogram:
-            U.get_router_boxplot_graph_from_dict(box_plot_histogram, output_path, dot_name)
+            Util.get_router_boxplot_graph_from_dict(box_plot_histogram, output_path, dot_name)
         seed += 1
 
 

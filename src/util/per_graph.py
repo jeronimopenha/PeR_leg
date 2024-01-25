@@ -1,5 +1,6 @@
 import pygraphviz as pgv
 import networkx as nx
+import random
 from math import ceil, sqrt
 
 
@@ -106,8 +107,8 @@ class PeRGraph:
             if self.g.out_degree(node) == 0:
                 output_list.append([node, 'IN'])
 
+        random.shuffle(output_list)
         stack: list = output_list.copy()
-
         edges: list = []
 
         fanin: dict = {}
@@ -115,6 +116,8 @@ class PeRGraph:
         for node in self.g.nodes():
             fanin[node] = list(self.g.predecessors(node))
             fanout[node] = list(self.g.successors(node))
+            random.shuffle(fanin[node])
+            random.shuffle(fanout[node])
 
         while stack:
             a, direction = stack.pop(0)  # get the top1

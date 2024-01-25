@@ -3,8 +3,8 @@ class Stage2YOTO(object):
     This class is responsible give the edges for each thread.
     """
 
-    def __init__(self, edges: list, len_pipeline: int, n_edges):
-        self.edges: list[list] = [edges for i in range(len_pipeline)]
+    def __init__(self, edges: list[list[list]], n_edges):
+        self.edges: list[list[list]] = edges
         self.n_edges: int = n_edges
 
         self.new_output: dict = {

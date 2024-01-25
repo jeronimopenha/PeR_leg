@@ -1,6 +1,3 @@
-from src.util.util import Util as U
-
-
 class StageYOTO(object):
     """
     This class is responsible give the 'a' node's cell and line and column.
