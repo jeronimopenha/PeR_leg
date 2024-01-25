@@ -2,6 +2,9 @@ import os
 import pandas as pd
 import json
 import traceback
+import matplotlib
+
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import random
 

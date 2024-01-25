@@ -33,7 +33,7 @@ def run_connected_graphs(test_name: str):
         per_graph = PeRGraph(dot)
         yoto = YotoPipeline(per_graph, n_threads, seed)
         results: dict = yoto.run(10)
-        #yoto.save_execution_report_json(results, output_path, dot_name)
+        yoto.save_execution_report_json(results, output_path, dot_name)
         report = yoto.get_report(results, output_path, dot_name)
         box_plot_histogram: dict = {}
         for key in report['th_routed'].keys():

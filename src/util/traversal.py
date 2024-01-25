@@ -14,10 +14,10 @@ class Traversal(object):
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
-        self.edges_str: list[list] = self.per_graph.get_edges_zigzag()
-        self.edges_int: list[list] = self.get_edges_int(self.edges_str)
+        self.edges_str: list[list[list]] = [self.per_graph.get_edges_zigzag() for _ in range(self.len_pipeline)]
+        self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
 
-        self.n_edges = len(self.edges_int)
+        self.n_edges = len(self.edges_int[0])
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
@@ -88,7 +88,7 @@ class Traversal(object):
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    def get_initial_position_ij(self, first_node: int, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
+    def get_initial_position_ij(self, first_node: list, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
         for i in range(len_pipeline):
@@ -99,11 +99,11 @@ class Traversal(object):
                 ] for _ in range(self.per_graph.n_cells_sqrt)
             ]
 
-            idxl, idxc = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
+            idxi, idxj = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
                                                         self.per_graph.n_cells_sqrt)
-            n2c_tmp[first_node][0] = idxl
-            n2c_tmp[first_node][1] = idxc
-            c2n_tmp[idxl][idxc] = first_node
+            n2c_tmp[first_node[i]][0] = idxi
+            n2c_tmp[first_node[i]][1] = idxj
+            c2n_tmp[idxi][idxj] = first_node[i]
             n2c.append(n2c_tmp)
             c2n.append(c2n_tmp)
 

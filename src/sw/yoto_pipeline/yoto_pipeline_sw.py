@@ -22,10 +22,11 @@ class YotoPipeline(Traversal):
             results_key = 'exec_%d' % t
             results[results_key] = {}
 
-            n2c, c2n = self.get_initial_position_ij(self.edges_int[0][0], self.len_pipeline)
+            first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
+            n2c, c2n = self.get_initial_position_ij(first_nodes, self.len_pipeline)
 
             st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.n_edges, self.len_pipeline)
-            st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.len_pipeline, self.n_edges)
+            st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.n_edges)
             st3_n2c: StageYOTO = StageYOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
             st4_dist = Stage4YOTO(self.per_graph.n_cells_sqrt, self.len_pipeline)
             st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
