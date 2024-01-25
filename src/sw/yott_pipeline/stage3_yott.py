@@ -26,7 +26,7 @@ class Stage3YOTT:
         self.N2C[old_thread_index][old_B] = old_C_S #type:ignore
         self.thread_adj_indexes[old_thread_index] = 0
     elif out_stage6['thread_valid'] == 1:
-        self.thread_adj_indexes[old_thread_index] += 1 if self.thread_adj_indexes[old_thread_index] < len_adjacentes else 0 
+        self.thread_adj_indexes[old_thread_index] += 1
 
     out_previous_stage = stage2.old_output
     thread_valid = out_previous_stage['thread_valid'] 

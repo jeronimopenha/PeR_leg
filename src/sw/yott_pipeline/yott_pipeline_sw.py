@@ -15,9 +15,9 @@ class YOTTPipeline(YOTT):
     def __init__(self,annotations,per_graph: PeRGraph,num_threads: int = 7):
         self.annotations = annotations
         super().__init__(per_graph, num_threads)
-        self.ITL = self.edges_int
+        self.ITL = [self.edges_int for i in range(self.latency)]
         #FIXME retirar
-        self.annotations = [[-1,-1] for i in range(len(self.ITL))]
+        self.annotations = [[-1,-1] for i in range(len(self.edges_int))]
 
     def run(self,copies: int = 1):
         results: dict = {}
@@ -30,14 +30,15 @@ class YOTTPipeline(YOTT):
             
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads),self.latency)
             # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
-            stage1 = Stage1YOTT(self.latency,self.n_threads,len(self.ITL))
+            stage1 = Stage1YOTT(self.latency,self.n_threads,len(self.edges_int))
             stage2 = Stage2YOTT(self.ITL,self.annotations,self.n_threads)
-            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt)
+            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.latency)
             stage3 = Stage3YOTT(self.latency,N2C)
             stage5 = Stage5YOTT()
             stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.latency,C2N)
-            len_adjacentes_indexes = len(stage4.distance_table)
+            len_adjacentes_indexes = len(stage4.distance_table[0])
             while not stage1.done:
+                # print(stage6.old_output_stage3)
                 stage0.compute()
                 # print(stage0.new_output)
                 # print()

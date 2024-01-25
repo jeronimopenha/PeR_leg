@@ -121,3 +121,26 @@ class Util(object):
         if i > n_cells_sqrt - 1 or j > n_cells_sqrt - 1 or i < 0 or j < 0:
             out_of_border = True
         return out_of_border
+
+
+    
+    @staticmethod
+    def get_edges_distances(edges: list[list], n2c: list[list]) -> tuple[dict, list]:
+        dic_edges_dist: dict = {}
+        list_edges_dist: list = []
+        for edge in edges:
+            n1 = edge[0]
+            n2 = edge[1]
+            a: list = n2c[n1]
+            b: list = n2c[n2]
+            edge_distance: int = Util.dist_manhattan(a, b)
+            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
+            list_edges_dist.append(edge_distance)
+        return dic_edges_dist, list_edges_dist
+
+    @staticmethod
+    def dist_manhattan(a: list[int], b: list[int]) -> int:
+        ia, ja = a
+        ib, jb = b
+        edge_distance = abs(ia - ib) + abs(ja - jb)
+        return edge_distance

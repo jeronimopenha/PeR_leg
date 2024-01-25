@@ -1,11 +1,15 @@
+from src.util.util import Util
+
+
 class Stage5YOTT:
   def __init__(self):
       self.new_output = {
         'thread_index': 0,
         'thread_valid': 0,
         'B': 0,
-        'SA': 0,
-        'C_S': [0,1],    
+        'cost': 0,
+        'C_S': [0,1],
+        'dist_CA_CS': 1    
     } 
       self.old_output = self.new_output
 
@@ -22,18 +26,16 @@ class Stage5YOTT:
     C_S = out_previous_stage['C_S']
 
     
-    SA = self.satisfies_annotation(C_S,C_C,dist_CB) if dist_CB != -1 else True
+    cost = self.calc_cost(C_S,C_C,dist_CB) if dist_CB != -1 else 0
 
     self.new_output = {
         'thread_index': thread_index,
         'thread_valid': out_previous_stage['thread_valid'],
-        'SA': SA,
+        'cost': cost,
         'C_S': C_S,
-        'B': B
+        'B': B,
+        'dist_CA_CS': out_previous_stage['dist_CA_CS']
     }
 
-  def dist_manhattan(self,pe1:tuple, pe2:tuple):
-    return abs(pe1[0] - pe2[0]) + abs(pe1[1] - pe2[1])
-
-  def satisfies_annotation(self,C_S,C_C,distC_B)-> bool:
-    return distC_B == self.dist_manhattan(C_S,C_C)
+  def calc_cost(self,C_S,C_C,distC_B)-> bool:
+    return abs(Util.dist_manhattan(C_S,C_C) - distC_B)
