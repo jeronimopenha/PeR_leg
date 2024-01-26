@@ -1,22 +1,23 @@
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
+from src.util.per_enum import ArchType
 from src.util.traversal import Traversal
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
-from src.sw.yoto_pipeline.stage3_yoto import StageYOTO
+from src.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
 from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
 from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 
 
 class YotoPipeline(Traversal):
-    def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
-        super().__init__(per_graph, n_threads, random_seed)
+    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, n_threads: int = 1, random_seed: int = 0):
+        super().__init__(per_graph, arch_type, n_threads, random_seed)
 
     def run(self, n_copies: int = 1) -> dict:
         results: dict = {}
         # print(self.per_graph.nodes)
         # print(self.per_graph.neighbors)
-        print()
+        # print()
         self.reset_random(0)
         for t in range(n_copies):
             results_key = 'exec_%d' % t
@@ -27,8 +28,8 @@ class YotoPipeline(Traversal):
 
             st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.n_edges, self.len_pipeline)
             st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.n_edges)
-            st3_n2c: StageYOTO = StageYOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
-            st4_dist = Stage4YOTO(self.per_graph.n_cells_sqrt, self.len_pipeline)
+            st3_n2c: Stage3YOTO = Stage3YOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
+            st4_dist = Stage4YOTO(self.arch_type,self.per_graph.n_cells_sqrt, self.len_pipeline)
             st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
 
             counter = 0

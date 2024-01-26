@@ -1,12 +1,14 @@
+from math import ceil
+from src.util.per_enum import ArchType
 import os
 import pandas as pd
 import json
 import traceback
+import random
 import matplotlib
 
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import random
 
 
 class Util(object):
@@ -33,28 +35,71 @@ class Util(object):
         return line, column
 
     @staticmethod
-    def get_distance_table(cells_sqrt: int) -> list[list]:
-        dist_tale_tmp: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
-        distance_table: list[list] = []
+    def get_distance_table(arch_type: ArchType, cells_sqrt: int) -> list[list]:
+        if arch_type == ArchType.MESH:
+            return Util.get_mesh_distances(cells_sqrt)
+        elif arch_type == ArchType.ONE_HOP:
+            return Util.get_one_hop_distances(cells_sqrt)
+        else:
+            raise Exception("Architecture type not supported")
+
+    @staticmethod
+    def get_mesh_distances(cells_sqrt: int) -> list[list]:
+        table_tmp: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
+        mesh_distances: list[list] = []
         for i in range(cells_sqrt):
             for j in range(cells_sqrt):
                 if j == i == 0:
                     continue
                 d: int = i + j
-                if [i, j] not in dist_tale_tmp[d - 1]:
-                    dist_tale_tmp[d - 1].append([i, j])
-                if [i, -j] not in dist_tale_tmp[d - 1]:
-                    dist_tale_tmp[d - 1].append([i, -j])
-                if [-i, -j] not in dist_tale_tmp[d - 1]:
-                    dist_tale_tmp[d - 1].append([-i, -j])
-                if [-i, j] not in dist_tale_tmp[d - 1]:
-                    dist_tale_tmp[d - 1].append([-i, j])
-        for d in range(len(dist_tale_tmp)):
-            random.shuffle(dist_tale_tmp[d])
-            for p in dist_tale_tmp[d]:
-                distance_table.append(p)
+                if [i, j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([i, j])
+                if [i, -j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([i, -j])
+                if [-i, -j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([-i, -j])
+                if [-i, j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([-i, j])
+        for d in range(len(table_tmp)):
+            random.shuffle(table_tmp[d])
+            for p in table_tmp[d]:
+                mesh_distances.append(p)
+        return mesh_distances
 
-        return distance_table
+    # TODO - Esse método está em desenvolvimento
+    @staticmethod
+    def get_one_hop_distances(cells_sqrt: int) -> list[list]:
+        max_distance: int = 2 * ceil((cells_sqrt - 1) / 2)
+        table_tmp: list[list] = [
+            [
+                None for i in range(max_distance + 1)
+            ] for i in range(max_distance + 1)
+        ]
+        for i in range(cells_sqrt):
+            di: int = ceil(i / 2)
+            for j in range(cells_sqrt):
+                dj: int = ceil(j / 2)
+                table_tmp[i][j] = di + dj
+        # TODO Parei aqui
+        one_hop_distances: list[list] = []
+        for i in range(cells_sqrt):
+            for j in range(cells_sqrt):
+                if j == i == 0:
+                    continue
+                d: int = i + j
+                if [i, j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([i, j])
+                if [i, -j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([i, -j])
+                if [-i, -j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([-i, -j])
+                if [-i, j] not in table_tmp[d - 1]:
+                    table_tmp[d - 1].append([-i, j])
+        for d in range(len(table_tmp)):
+            random.shuffle(table_tmp[d])
+            for p in table_tmp[d]:
+                one_hop_distances.append(p)
+        return one_hop_distances
 
     @staticmethod
     def get_cell_from_line_column(cell_line: int, cell_column: int, n_lines: int) -> int:

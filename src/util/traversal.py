@@ -2,15 +2,17 @@ import random as rnd
 import numpy as np
 
 from math import sqrt
+from src.util.per_enum import ArchType
 from src.util.util import Util
 from src.util.per_graph import PeRGraph
 
 
 class Traversal(object):
 
-    def __init__(self, per_graph: PeRGraph, n_threads: int = 1, random_seed: int = 0):
+    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, n_threads: int = 1, random_seed: int = 0):
         self.len_pipeline: int = 6
         self.per_graph: PeRGraph = per_graph
+        self.arch_type: ArchType = arch_type
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
