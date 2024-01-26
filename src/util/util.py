@@ -35,69 +35,64 @@ class Util(object):
         return line, column
 
     @staticmethod
-    def get_distance_table(arch_type: ArchType, cells_sqrt: int) -> list[list]:
+    def get_distance_table(arch_type: ArchType, cells_sqrt: int, make_shuffle: bool) -> list[list]:
         if arch_type == ArchType.MESH:
-            return Util.get_mesh_distances(cells_sqrt)
+            return Util.get_mesh_distances(cells_sqrt, make_shuffle)
         elif arch_type == ArchType.ONE_HOP:
-            return Util.get_one_hop_distances(cells_sqrt)
+            return Util.get_one_hop_distances(cells_sqrt, make_shuffle)
         else:
             raise Exception("Architecture type not supported")
 
     @staticmethod
-    def get_mesh_distances(cells_sqrt: int) -> list[list]:
-        table_tmp: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
-        mesh_distances: list[list] = []
+    def get_mesh_distances(cells_sqrt: int, make_shuffle: bool) -> list[list]:
+        distance_table_raw: list[list] = [[] for i in range((cells_sqrt - 1) * 2)]
         for i in range(cells_sqrt):
             for j in range(cells_sqrt):
                 if j == i == 0:
                     continue
                 d: int = i + j
-                if [i, j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([i, j])
-                if [i, -j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([i, -j])
-                if [-i, -j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([-i, -j])
-                if [-i, j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([-i, j])
-        for d in range(len(table_tmp)):
-            random.shuffle(table_tmp[d])
-            for p in table_tmp[d]:
-                mesh_distances.append(p)
+                if [i, j] not in distance_table_raw[d - 1]:
+                    distance_table_raw[d - 1].append([i, j])
+                if [i, -j] not in distance_table_raw[d - 1]:
+                    distance_table_raw[d - 1].append([i, -j])
+                if [-i, -j] not in distance_table_raw[d - 1]:
+                    distance_table_raw[d - 1].append([-i, -j])
+                if [-i, j] not in distance_table_raw[d - 1]:
+                    distance_table_raw[d - 1].append([-i, j])
+        mesh_distances: list[list] = Util.format_distance_table(distance_table_raw, make_shuffle)
         return mesh_distances
 
-    # TODO - Esse método está em desenvolvimento
     @staticmethod
-    def get_one_hop_distances(cells_sqrt: int) -> list[list]:
+    def get_one_hop_distances(cells_sqrt: int, make_shuffle: bool) -> list[list]:
         max_distance: int = 2 * ceil((cells_sqrt - 1) / 2)
-        table_tmp: list[list] = [
-            [
-                None for i in range(max_distance + 1)
-            ] for i in range(max_distance + 1)
-        ]
+        distance_table_raw: list[list] = [[] for i in range(max_distance + 1)]
         for i in range(cells_sqrt):
             di: int = ceil(i / 2)
             for j in range(cells_sqrt):
                 dj: int = ceil(j / 2)
-                table_tmp[i][j] = di + dj
-        # TODO Parei aqui
-        one_hop_distances: list[list] = []
-        for i in range(cells_sqrt):
-            for j in range(cells_sqrt):
-                if j == i == 0:
+                d: int = di + dj
+                if d == 0:
                     continue
-                d: int = i + j
-                if [i, j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([i, j])
-                if [i, -j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([i, -j])
-                if [-i, -j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([-i, -j])
-                if [-i, j] not in table_tmp[d - 1]:
-                    table_tmp[d - 1].append([-i, j])
-        for d in range(len(table_tmp)):
-            random.shuffle(table_tmp[d])
-            for p in table_tmp[d]:
+                distance_table_raw[d - 1].append([i, j])
+                if i == 0:
+                    distance_table_raw[d - 1].append([i, -j])
+                elif j == 0:
+                    distance_table_raw[d - 1].append([-i, j])
+                else:
+                    distance_table_raw[d - 1].append([i, -j])
+                    distance_table_raw[d - 1].append([-i, j])
+                    distance_table_raw[d - 1].append([-i, -j])
+
+        one_hop_distances: list[list] = Util.format_distance_table(distance_table_raw, make_shuffle)
+        return one_hop_distances
+
+    @staticmethod
+    def format_distance_table(distance_table_raw: list[list], make_shuffle: bool) -> list[list]:
+        one_hop_distances: list[list] = []
+        for d in range(len(distance_table_raw)):
+            if make_shuffle:
+                random.shuffle(distance_table_raw[d])
+            for p in distance_table_raw[d]:
                 one_hop_distances.append(p)
         return one_hop_distances
 

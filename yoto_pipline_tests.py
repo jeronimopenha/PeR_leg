@@ -16,6 +16,8 @@ def run_connected_graphs(test_name: str):
     n_threads = 6
     seed: int = 0
     arch_type: ArchType = ArchType.ONE_HOP
+    make_shuffle = True
+    distance_table_bits = 2
 
     dot_path_base = os.getcwd() + '/dot_db/'
     dot_connected_path = dot_path_base + 'connected/'
@@ -35,7 +37,7 @@ def run_connected_graphs(test_name: str):
     # dots_list = [['/home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot', 'mac.dot']]
     for dot, dot_name in dots_list:
         per_graph = PeRGraph(dot)
-        yoto = YotoPipeline(per_graph, arch_type, n_threads, seed)
+        yoto = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, n_threads, seed)
         results: dict = yoto.run(10)
         yoto.save_execution_report_json(results, output_path, dot_name)
         report = yoto.get_report(results, output_path, dot_name)

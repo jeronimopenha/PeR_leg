@@ -7,12 +7,15 @@ class Stage4YOTO(object):
     This class is responsible give one possible neighbor cell of 'a'.
     """
 
-    def __init__(self, arch_type: ArchType, n_cells_sqrt: int, len_pipeline: int):
+    def __init__(self, arch_type: ArchType, n_cells_sqrt: int, distance_table_bits: int, make_shuffle: bool):
         self.arch_type = arch_type
         self.n_cells_sqrt: int = n_cells_sqrt
-        self.len_pipeline: int = len_pipeline
+        self.distance_table_bits: int = distance_table_bits
+        self.n_distance_tables = pow(2, self.distance_table_bits)
+        self.make_shuffle = make_shuffle
         self.distance_table: list[list[list]] = [
-            Util.get_distance_table(self.arch_type, self.n_cells_sqrt) for _ in range(self.len_pipeline)]
+            Util.get_distance_table(self.arch_type, self.n_cells_sqrt, self.make_shuffle) for _ in
+            range(self.n_distance_tables)]
 
         self.new_output: dict = {
             'th_idx': 0,

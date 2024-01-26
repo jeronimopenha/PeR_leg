@@ -9,10 +9,13 @@ from src.util.per_graph import PeRGraph
 
 class Traversal(object):
 
-    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, len_pipeline : int, n_threads: int = 1, random_seed: int = 0):
+    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
+                 len_pipeline: int, n_threads: int = 1, random_seed: int = 0):
         self.len_pipeline: int = len_pipeline
         self.per_graph: PeRGraph = per_graph
         self.arch_type: ArchType = arch_type
+        self.distance_table_bits: int = distance_table_bits
+        self.make_shuffle: bool = make_shuffle
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
 
