@@ -1,4 +1,4 @@
-class StageYOTO(object):
+class Stage3YOTO(object):
     """
     This class is responsible give the 'a' node's cell and line and column.
     """
