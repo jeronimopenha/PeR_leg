@@ -3,6 +3,7 @@ class Stage1YOTO(object):
     This class is responsible to generate the edges sections for each thread.
     """
 
+    #FIXME - parei aqui
     def __init__(self, n_threads: int, n_edges: int, len_pipeline: int):
         self.len_pipeline: int = len_pipeline
         self.n_threads: int = n_threads
