@@ -12,7 +12,9 @@ from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 class YotoPipeline(Traversal):
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
                  n_threads: int = 1, random_seed: int = 0):
-        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, n_threads, random_seed)
+        self.len_pipeline: int = 6
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads,
+                         random_seed)
 
     def run(self, n_copies: int = 1) -> dict:
         results: dict = {}
@@ -30,7 +32,8 @@ class YotoPipeline(Traversal):
             st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.n_edges, self.len_pipeline)
             st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.distance_table_bits, self.n_edges)
             st3_n2c: Stage3YOTO = Stage3YOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
-            st4_dist = Stage4YOTO(self.arch_type, self.per_graph.n_cells_sqrt, self.distance_table_bits, self.make_shuffle)
+            st4_dist = Stage4YOTO(self.arch_type, self.per_graph.n_cells_sqrt, self.distance_table_bits,
+                                  self.make_shuffle)
             st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
 
             counter = 0
