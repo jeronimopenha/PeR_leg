@@ -9,13 +9,13 @@ from src.sw.yott_pipeline.stage3_yott import Stage3YOTT
 from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
 from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
 from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
-from src.util.yott.yott import YOTT
+from src.util.traversal import Traversal
 
-class YOTTPipeline(YOTT):
-    def __init__(self,annotations,per_graph: PeRGraph,num_threads: int = 7):
+class YOTTPipeline(Traversal):
+    def __init__(self,annotations,per_graph: PeRGraph,arch_type,num_threads: int = 7):
         self.annotations = annotations
-        super().__init__(per_graph, num_threads)
-        self.ITL = [self.edges_int for i in range(self.latency)]
+        super().__init__(per_graph, arch_type,num_threads,7)
+
         #FIXME retirar
         self.annotations = [[-1,-1] for i in range(len(self.edges_int))]
 
@@ -26,16 +26,17 @@ class YOTTPipeline(YOTT):
             results_key = 'exec_%d' % t
             results[results_key] = []
              
-            N2C, C2N = self.get_initial_position_ij(self.edges_int[0][0], self.latency)
+            first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
+            N2C, C2N = self.get_initial_position_ij(first_nodes, self.len_pipeline)
             
-            stage0 = Stage0YOTT(FIFOQueue(self.n_threads),self.latency)
+            stage0 = Stage0YOTT(FIFOQueue(self.n_threads),self.len_pipeline)
             # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
-            stage1 = Stage1YOTT(self.latency,self.n_threads,len(self.edges_int))
-            stage2 = Stage2YOTT(self.ITL,self.annotations,self.n_threads)
-            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.latency)
-            stage3 = Stage3YOTT(self.latency,N2C)
+            stage1 = Stage1YOTT(self.len_pipeline,self.n_threads,len(self.edges_int))
+            stage2 = Stage2YOTT(self.edges_int,self.annotations,self.n_threads)
+            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline)
+            stage3 = Stage3YOTT(self.len_pipeline,N2C)
             stage5 = Stage5YOTT()
-            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.latency,C2N)
+            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,C2N)
             len_adjacentes_indexes = len(stage4.distance_table[0])
             while not stage1.done:
                 # print(stage6.old_output_stage3)
@@ -73,7 +74,7 @@ class YOTTPipeline(YOTT):
             # print(self.stage4.C2N)
             results[results_key].append('Total execution clocks: %d\n' % stage0.total_pipeline_counter)
             th_dict: dict = {}
-            for th in range(self.latency):
+            for th in range(self.len_pipeline):
                 th_key = 'Time_%d_TH_%d' % (th, t)
                 th_dict[th_key] = []
                 th_dict[th_key].append('thread - %d, loop counter: %d' % (th, stage0.exec_counter[th]))

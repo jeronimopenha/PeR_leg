@@ -9,8 +9,8 @@ from src.util.per_graph import PeRGraph
 
 class Traversal(object):
 
-    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, n_threads: int = 1, random_seed: int = 0):
-        self.len_pipeline: int = 6
+    def __init__(self, per_graph: PeRGraph, arch_type: ArchType, len_pipeline : int, n_threads: int = 1, random_seed: int = 0):
+        self.len_pipeline: int = len_pipeline
         self.per_graph: PeRGraph = per_graph
         self.arch_type: ArchType = arch_type
         self.n_threads: int = n_threads
@@ -94,20 +94,23 @@ class Traversal(object):
         n2c: list[list[list]] = []
         c2n: list[list] = []
         for i in range(len_pipeline):
-            n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
-            c2n_tmp: list[list] = [
-                [
-                    None for _ in range(self.per_graph.n_cells_sqrt)
-                ] for _ in range(self.per_graph.n_cells_sqrt)
-            ]
+            try:
+                n2c_tmp: list[list] = [[None, None] for j in range(self.per_graph.n_cells)]
+                c2n_tmp: list[list] = [
+                    [
+                        None for _ in range(self.per_graph.n_cells_sqrt)
+                    ] for _ in range(self.per_graph.n_cells_sqrt)
+                ]
 
-            idxi, idxj = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
-                                                        self.per_graph.n_cells_sqrt)
-            n2c_tmp[first_node[i]][0] = idxi
-            n2c_tmp[first_node[i]][1] = idxj
-            c2n_tmp[idxi][idxj] = first_node[i]
-            n2c.append(n2c_tmp)
-            c2n.append(c2n_tmp)
+                idxi, idxj = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
+                                                            self.per_graph.n_cells_sqrt)
+                n2c_tmp[first_node[i]][0] = idxi
+                n2c_tmp[first_node[i]][1] = idxj
+                c2n_tmp[idxi][idxj] = first_node[i]
+                n2c.append(n2c_tmp)
+                c2n.append(c2n_tmp)
+            except Exception as e:
+                print(e)
 
         return n2c, c2n
 

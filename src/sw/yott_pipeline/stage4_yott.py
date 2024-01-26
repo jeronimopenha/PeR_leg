@@ -1,9 +1,10 @@
+from src.util.per_enum import ArchType
 from src.util.util import Util as U
 
 class Stage4YOTT:
     def __init__(self, dimension_arch,len_pipeline) -> None:        
         self.dimension_arch: int = dimension_arch
-        self.distance_table: list[list] = [U.get_distance_table(self.dimension_arch) for i in range(len_pipeline)]
+        self.distance_table: list[list] = [U.get_distance_table(ArchType.MESH,self.dimension_arch) for i in range(len_pipeline)]
 
         self.new_output = {
         'thread_index': 0,
