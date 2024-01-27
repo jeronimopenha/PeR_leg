@@ -31,7 +31,7 @@ class Stage1YOTT:
         self.threads_done[thread_index] = thread_done
 
         self.done = sum(self.threads_done) == self.len_pipe
-        
+        print(self.done)
         if thread_done == 1:
              thread_valid = 0
              edge_index = 0

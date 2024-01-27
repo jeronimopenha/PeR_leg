@@ -2,10 +2,10 @@ from src.util.per_enum import ArchType
 from src.util.util import Util as U
 
 class Stage4YOTT:
-    def __init__(self, dimension_arch,len_pipeline) -> None:        
+    def __init__(self, dimension_arch,len_pipeline,distance_table_bits,make_shuffle) -> None:        
         self.dimension_arch: int = dimension_arch
-        self.distance_table: list[list] = [U.get_distance_table(ArchType.MESH,self.dimension_arch) for i in range(len_pipeline)]
-
+        self.distance_table: list[list] = [U.get_distance_table(ArchType.MESH,self.dimension_arch,make_shuffle) for i in range(len_pipeline)]
+        self.dist_table_mask: int = pow(2, distance_table_bits) - 1
         self.new_output = {
         'thread_index': 0,
         'thread_valid': 0,
@@ -23,11 +23,12 @@ class Stage4YOTT:
 
         out_previous_stage = stage3.old_output
         thread_index = out_previous_stage['thread_index']
+        edge_index = out_previous_stage['edge_index']
 
         adj_index = out_previous_stage['adj_index']
         C_A = out_previous_stage['C_A']
 
-        i,j = self.distance_table[thread_index][adj_index]
+        i,j = self.distance_table[(thread_index ^ edge_index) & self.dist_table_mask][adj_index]
         
         C_S = [C_A[0]+i,C_A[1]+j] 
 
@@ -40,7 +41,8 @@ class Stage4YOTT:
         'C_S': C_S,    
         'C_C':out_previous_stage['C_C'],
         'dist_CB': out_previous_stage['dist_CB'],
-        'dist_CA_CS': dist_CA_CS
+        'dist_CA_CS': dist_CA_CS,
+
     } 
 
 

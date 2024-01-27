@@ -12,12 +12,12 @@ from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
 from src.util.traversal import Traversal
 
 class YOTTPipeline(Traversal):
-    def __init__(self,annotations,per_graph: PeRGraph,arch_type,num_threads: int = 7):
+    def __init__(self,annotations,per_graph: PeRGraph,arch_type,distance_table_bits,num_threads: int = 7):
         self.annotations = annotations
-        super().__init__(per_graph, arch_type,num_threads,7)
-
+        super().__init__(per_graph, arch_type,distance_table_bits,True,7,num_threads)
+        self.len_edges = len(self.edges_int[0])
         #FIXME retirar
-        self.annotations = [[-1,-1] for i in range(len(self.edges_int))]
+        self.annotations = [[[-1,-1] for i in range(self.len_edges)] for j in range(self.n_threads)]
 
     def run(self,copies: int = 1):
         results: dict = {}
@@ -31,42 +31,43 @@ class YOTTPipeline(Traversal):
             
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads),self.len_pipeline)
             # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
-            stage1 = Stage1YOTT(self.len_pipeline,self.n_threads,len(self.edges_int))
+            stage1 = Stage1YOTT(self.len_pipeline,self.n_threads,self.len_edges)
             stage2 = Stage2YOTT(self.edges_int,self.annotations,self.n_threads)
-            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline)
+            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,self.distance_table_bits, self.make_shuffle)
             stage3 = Stage3YOTT(self.len_pipeline,N2C)
             stage5 = Stage5YOTT()
             stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,C2N)
+
             len_adjacentes_indexes = len(stage4.distance_table[0])
             while not stage1.done:
-                # print(stage6.old_output_stage3)
+                print(stage6.old_output_stage3)
                 stage0.compute()
-                # print(stage0.new_output)
-                # print()
-                # print(stage0.old_output)
+                print(stage0.new_output)
+                print()
+                print(stage0.old_output)
                 stage1.compute(stage0)
-                # print(stage1.new_output)
-                # print()
-                # print(stage1.old_output)
+                print(stage1.new_output)
+                print()
+                print(stage1.old_output)
                 stage2.compute(stage1)
-                # print(stage2.new_output)
-                # print()
-                # print(stage2.old_output)
+                print(stage2.new_output)
+                print()
+                print(stage2.old_output)
                 stage3.compute(stage2,stage6,len_adjacentes_indexes)
-                # print(stage3.new_output)
-                # print()
-                # print(stage3.old_output)
+                print(stage3.new_output)
+                print()
+                print(stage3.old_output)
                 stage4.compute(stage3)
-                # print(stage4.new_output)
-                # print()
-                # print(stage4.old_output)
+                print(stage4.new_output)
+                print()
+                print(stage4.old_output)
                 stage5.compute(stage4)
-                # print(stage5.new_output)
-                # print()
-                # print(stage5.old_output)
+                print(stage5.new_output)
+                print()
+                print(stage5.old_output)
                 stage6.compute(stage5,stage0)
-                # print(stage6.new_output_stage3)
-                # print()
+                print(stage6.new_output_stage3)
+                print()
 
                 # input()
             self.print_grid(stage6.C2N)

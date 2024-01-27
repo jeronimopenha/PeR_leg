@@ -13,6 +13,8 @@ class Stage2YOTT:
         'B': 0,
         'C':-1,
         'dist_CB': 0,
+        'edge_index':0
+
     }
 
     self.old_output = self.new_output
@@ -25,7 +27,7 @@ class Stage2YOTT:
     edge_index = out_previous_stage['edge_index']
 
     A,B = self.threads_edges[thread_index][edge_index]
-    C,dist_CB = self.annotations[edge_index]
+    C,dist_CB = self.annotations[thread_index][edge_index]
     
     self.new_output = {
     'thread_index':thread_index,
@@ -33,6 +35,7 @@ class Stage2YOTT:
     'A': A,
     'B': B,
     'C': C,
-    'dist_CB': dist_CB
+    'dist_CB': dist_CB,
+    'edge_index':edge_index
 }
 

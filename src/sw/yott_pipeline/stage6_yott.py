@@ -30,7 +30,6 @@ class Stage6YOTT:
       
       if not self.out_of_grid(C_S,self.tam_grid):
          N_C_S = self.C2N[thread_index][C_S[0]][C_S[1]]
-         print(N_C_S)
          if N_C_S == None:
             if dist_CA_CS < 3:
                if cost == 0:

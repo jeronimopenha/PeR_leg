@@ -9,7 +9,9 @@ class Stage3YOTT:
         'B': 0,
         'C_C':[0,0],
         'dist_CB': 1,
-        'adj_index': 0
+        'adj_index': 0,
+        'edge_index': 0
+
     } 
 
     self.old_output = self.new_output
@@ -43,9 +45,11 @@ class Stage3YOTT:
         'thread_valid': thread_valid,
         'C_A':C_A,
         'B': out_previous_stage['B'],
-        'C_C':C_C,
+        'C_C': C_C,
         'dist_CB': out_previous_stage['dist_CB'],
-        'adj_index':adj_index
+        'adj_index': adj_index,
+        'edge_index': out_previous_stage['edge_index']
+
     } 
 
  
