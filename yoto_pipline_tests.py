@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
@@ -30,9 +29,9 @@ def run_connected_graphs(test_name: str):
     # list connected benchmarks
     dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
     # FIXME a linha baixo e apenas para depuracao
-    # dots_list = [['/home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot', 'mac.dot']]
-    for dot, dot_name in dots_list:
-        per_graph = PeRGraph(dot)
+    # dots_list = [['/home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot_path', 'mac.dot_path']]
+    for dot_path, dot_name in dots_list:
+        per_graph = PeRGraph(dot_path, dot_name)
         yoto = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, n_threads, seed)
         results: dict = yoto.run(10)
         yoto.save_execution_report_json(results, output_path, dot_name)

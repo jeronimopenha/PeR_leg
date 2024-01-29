@@ -6,9 +6,10 @@ from math import ceil, sqrt
 
 class PeRGraph:
 
-    def __init__(self, dot: str):
-        self.dot: str = dot
-        self.gv: pgv.AGraph = pgv.AGraph(self.dot, strict=False, directed=True)
+    def __init__(self, dot_path: str, dot_name: str):
+        self.dot_path: str = dot_path
+        self.dot_name: str = dot_name
+        self.gv: pgv.AGraph = pgv.AGraph(self.dot_path, strict=False, directed=True)
         self.g: nx.DiGraph = nx.DiGraph(self.gv)
         self.nodes: list = []
         self.n_nodes: int = 0
