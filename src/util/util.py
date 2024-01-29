@@ -5,6 +5,8 @@ import pandas as pd
 import json
 import traceback
 import random
+from pathlib import Path
+
 import matplotlib
 
 matplotlib.use('TkAgg')
@@ -12,6 +14,11 @@ import matplotlib.pyplot as plt
 
 
 class Util(object):
+
+    @staticmethod
+    def get_project_root() -> str:
+        path = Path(__file__).parent.parent.parent
+        return str(path)
 
     @staticmethod
     def get_line_column_list_sqrt(cells: list, cells_sqrt: int) -> list[tuple[int, int]]:

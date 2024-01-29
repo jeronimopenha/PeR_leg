@@ -1,10 +1,5 @@
 import os
-import sys
-
-base_path = os.getcwd()
-if os.getcwd() not in sys.path:
-    sys.path.append(os.getcwd())
-
+from pathlib import Path
 from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
@@ -13,13 +8,14 @@ from src.util.per_enum import ArchType
 
 def run_connected_graphs(test_name: str):
     # YOTO_1comp_counters TAG
-    n_threads = 6
+    n_threads: int = 6
     seed: int = 0
     arch_type: ArchType = ArchType.ONE_HOP
-    make_shuffle = True
-    distance_table_bits = 2
+    make_shuffle: bool = True
+    distance_table_bits: int = 2
 
-    dot_path_base = os.getcwd() + '/dot_db/'
+    root_path: str = Util.get_project_root()
+    dot_path_base = root_path + '/dot_db/'
     dot_connected_path = dot_path_base + 'connected/'
 
     output_path_base = os.getcwd() + '/results/sw/yoto/yoto_pipeline/%s/' % arch_type

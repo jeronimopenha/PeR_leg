@@ -1,6 +1,5 @@
 import random as rnd
 import numpy as np
-
 from math import sqrt
 from src.util.per_enum import ArchType
 from src.util.util import Util
