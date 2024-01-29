@@ -28,17 +28,6 @@ class Traversal(object):
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
 
-    def get_edges_int(self, edges_str: list[list]) -> list[list]:
-        edges_int: list[list] = []
-        for a, b in edges_str:
-            edges_int.append(
-                [
-                    self.per_graph.nodes_to_idx[a],
-                    self.per_graph.nodes_to_idx[b]
-                ]
-            )
-        return edges_int
-
     @staticmethod
     def reset_random(random_seed: int = 0):
         rnd.seed(random_seed)
@@ -46,27 +35,6 @@ class Traversal(object):
     @staticmethod
     def get_router_edges(self):
         pass
-
-    @staticmethod
-    def get_edges_distances(edges: list[list], n2c: list[list]) -> tuple[dict, list]:
-        dic_edges_dist: dict = {}
-        list_edges_dist: list = []
-        for edge in edges:
-            n1 = edge[0]
-            n2 = edge[1]
-            a: list = n2c[n1]
-            b: list = n2c[n2]
-            edge_distance: int = Util.dist_manhattan(a, b)
-            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
-            list_edges_dist.append(edge_distance)
-        return dic_edges_dist, list_edges_dist
-
-    @staticmethod
-    def get_edge_distance(a: list[int], b: list[int]) -> int:
-        ia, ja = a
-        ib, jb = b
-        edge_distance = abs(ia - ib) + abs(ja - jb)
-        return edge_distance
 
     def get_edges_int(self, edges_str: list[list]) -> list[list]:
         edges_int: list[list] = []
