@@ -6,6 +6,7 @@ class Stage2YOTO(object):
     def __init__(self, edges: list[list[list]], distance_table_bits: int, n_edges: int):
         self.edges: list[list[list]] = edges
         self.n_edges: int = n_edges
+        #print(n_edges)
         self.distance_table_bits: int = distance_table_bits
         self.dist_table_mask: int = pow(2, distance_table_bits) - 1
 

@@ -1,0 +1,22 @@
+name;bench;nodes;edges;ideal_cost;max_degree;avg_degree;g_hub;top_k_hub;percent_multicast;hist_grade
+Cplx8.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/Cplx8.dot; 77; 91; 91; 3; 2.364; {}; []; 0.000; {1: 2, 2: 45, 3: 30} 
+ewf.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/ewf.dot; 66; 79; 79; 5; 2.394; {'ADD_5': 3, 'ADD_8': 3, 'ADD_16': 3, 'ADD_17': 3}; ('ADD_5', 3); 0.061; {2: 48, 3: 13, 4: 2, 5: 3} 
+Fir16.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/Fir16.dot; 77; 91; 91; 3; 2.364; {}; []; 0.000; {1: 2, 2: 45, 3: 30} 
+arf.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/arf.dot; 28; 30; 30; 4; 2.143; {}; []; 0.000; {1: 8, 2: 10, 3: 8, 4: 2} 
+conv3.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/conv3.dot; 28; 30; 30; 5; 2.143; {'add5': 4}; ('add5', 4); 0.036; {1: 9, 2: 8, 3: 10, 5: 1} 
+cosine2.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/cosine2.dot; 81; 91; 91; 5; 2.247; {'12': 3}; ('12', 3); 0.012; {1: 39, 3: 26, 4: 15, 5: 1} 
+FilterRGB.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/FilterRGB.dot; 84; 97; 97; 4; 2.310; {}; []; 0.000; {1: 3, 2: 55, 3: 23, 4: 3} 
+fir1.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/fir1.dot; 44; 43; 43; 3; 1.955; {}; []; 0.000; {1: 23, 3: 21} 
+fir2.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/fir2.dot; 40; 39; 39; 3; 1.950; {}; []; 0.000; {1: 17, 2: 8, 3: 15} 
+h2v2_smooth.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/h2v2_smooth.dot; 62; 65; 65; 4; 2.097; {}; []; 0.000; {1: 17, 2: 24, 3: 19, 4: 2} 
+horner_bs.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/horner_bs.dot; 17; 16; 16; 3; 1.882; {}; []; 0.000; {1: 4, 2: 11, 3: 2} 
+idctcol.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/idctcol.dot; 298; 348; 348; 4; 2.336; {}; []; 0.000; {1: 18, 2: 170, 3: 102, 4: 8} 
+invert_matrix.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/invert_matrix.dot; 357; 378; 378; 6; 2.118; {'SUB_212': 4, 'SUB_244': 4, 'SUB_276': 4, 'SUB_308': 4, 'SUB_340': 4, 'SUB_372': 4}; ('SUB_244', 4); 0.017; {1: 76, 2: 181, 3: 94, 6: 6} 
+k4n4op.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/k4n4op.dot; 59; 74; 74; 4; 2.508; {'8': 4, '9': 4, '10': 4, '11': 4}; ('8', 4); 0.068; {1: 18, 2: 3, 3: 28, 4: 10} 
+mac.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mac.dot; 11; 11; 11; 3; 2.000; {}; []; 0.000; {1: 4, 2: 3, 3: 4} 
+jpeg_idct_ifast.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/jpeg_idct_ifast.dot; 303; 346; 346; 4; 2.284; {}; []; 0.000; {1: 24, 2: 193, 3: 62, 4: 24} 
+jpeg_fdct_islow.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/jpeg_fdct_islow.dot; 217; 254; 254; 4; 2.341; {}; []; 0.000; {1: 24, 2: 114, 3: 60, 4: 19} 
+mults1.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/mults1.dot; 24; 27; 27; 4; 2.250; {'add5': 4}; ('add5', 4); 0.042; {1: 1, 2: 18, 3: 3, 4: 2} 
+matmul.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/matmul.dot; 116; 124; 124; 3; 2.138; {}; []; 0.000; {1: 24, 2: 52, 3: 40} 
+simple.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/simple.dot; 16; 17; 17; 3; 2.125; {}; []; 0.000; {1: 4, 2: 6, 3: 6} 
+t.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/t.dot; 4; 3; 3; 2; 1.500; {}; []; 0.000; {1: 2, 2: 2} 
