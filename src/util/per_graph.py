@@ -193,7 +193,7 @@ class PeRGraph:
                     fanout[a].remove(b)
                     fanin[b].remove(a)
 
-                    if b not in visited:
+                    if b in visited:
                         cycle.append([a, b])
 
                     edges.append([a, b, 'OUT'])

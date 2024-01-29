@@ -30,7 +30,7 @@ def run_connected_graphs():
     # list connected benchmarks
     dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
     # FIXME a linha baixo e apenas para depuracao
-    # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot_path']]
+    dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         Util.get_graph_annotations(per_graph)

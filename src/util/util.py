@@ -327,7 +327,7 @@ class Util(object):
                 if elem_cycle_begin == edges[j][1] and not found_start:
                     value1 = edges[j][0]
                     # print("OPAAA value1 = %s " %(value1))
-                    key:str = Util.func_key(value1, elem_cycle_begin)
+                    key: str = Util.func_key(value1, elem_cycle_begin)
                     walk_key.insert(0, key)
                     dic_cycle[key].append([elem_cycle_end, count])
                     count += 1
@@ -337,7 +337,7 @@ class Util(object):
 
                     value1, value2 = edges[j][0], edges[j][1]
 
-                    key = Util.func_key(value1, value2)
+                    key: str = Util.func_key(value1, value2)
 
                     if value1 != elem_cycle_end and value2 != elem_cycle_end:
                         walk_key.insert(0, key)
@@ -354,7 +354,7 @@ class Util(object):
                                 if (dic_actual[l][0] == elem_cycle_end):
                                     dic_cycle[walk_key[k]][l][1] = k + 1
                         break  # to the next on the vector CYCLE
-
+        # fixme edge_degree
         return dic_cycle, edges, edge_degree
 
     @staticmethod
