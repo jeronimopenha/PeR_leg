@@ -25,11 +25,13 @@ const22[opcode=const];
 store23[opcode=store];
 load2->mul3[operand=0]; //load->mul
 mul3->add12[operand=1]; //mul->add
-add5->mul7[operand=1]; //add->gep_mul
-add5->mul0[operand=1]; //add->gep_mul
+add5->reg4;
+add5->reg5;
+reg4->mul7[operand=1]; //add->gep_mul
+reg4->mul0[operand=1]; //add->gep_mul
 //add5->add5[operand=0]; //add->add
-add5->add13[operand=0]; //add->add
-add5->mul21[operand=1]; //add->gep_mul
+reg5->add13[operand=0]; //add->add
+reg5->mul21[operand=1]; //add->gep_mul
 load9->mul10[operand=0]; //load->mul
 mul10->add12[operand=0]; //mul->add
 add12->add20[operand=0]; //add->add

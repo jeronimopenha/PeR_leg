@@ -40,6 +40,9 @@ def main(_folder: str, _dest_dir: str):
                 max_degree = degree
             avg_degree += degree
 
+            if degree > 4:
+                print(per_graph.dot_name, node, degree)
+
             # creating the degree histogram
             if degree in stat['hist_grade'].keys():
                 stat['hist_grade'][degree] += 1
