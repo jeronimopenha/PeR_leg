@@ -85,6 +85,7 @@ def main(_folder: str, _dest_dir: str):
     wr.write(wr_str)
     wr.close()
 
+    # FIXME
     for j in range(len(stats)):
         wr_str = ''
         for i in range(len(stats[j]['hist_grade'])):

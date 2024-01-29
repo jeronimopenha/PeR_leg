@@ -41,10 +41,10 @@ digraph ewf {
      reg18 -> reg19;
      reg19 -> reg20;
      reg20 -> reg21;
-     reg21 -> ADD_16 [ name = 1 ];
+     reg21 -> reg33 [ name = 1 ];
      reg21 -> reg22;
      reg22 -> ADD_18 [ name = 2 ];
-     ADD_2 -> ADD_5 [ name = 3 ];
+     ADD_2 -> reg32 [ name = 3 ];
      ADD_2 -> reg4;
      reg4 -> reg5;
      reg5 -> ADD_9 [ name = 4 ];
@@ -54,16 +54,18 @@ digraph ewf {
      ADD_3 -> reg0;
      reg0 -> reg1;
      reg1 -> reg2;
-     reg2 -> ADD_8 [ name = 7 ];
+     reg2 -> reg34;
      reg2 -> reg3;
      reg3 ->ADD_10 [ name = 8 ];
-     ADD_4 -> ADD_5 [ name = 9 ];
+     ADD_4 -> reg32 [ name = 9 ];
+     reg32 -> ADD_5 [ name = 9 ];
      ADD_5 -> MUL_6 [ name = 10 ];
      ADD_5 -> MUL_7 [ name = 11 ];
      ADD_5 -> reg7;
      reg7 -> reg8;
      reg8 -> ADD_11 [ name = 12 ];
-     MUL_6 -> ADD_8 [ name = 13 ];
+     MUL_6 -> reg34;
+     reg34 -> ADD_8 [ name = 13 ];
      MUL_7 -> ADD_9 [ name = 14 ];
      ADD_8 -> ADD_10 [ name = 15 ];
      ADD_8 -> ADD_11 [ name = 16 ];
@@ -80,7 +82,8 @@ digraph ewf {
      ADD_10 -> MUL_13 [ name = 21 ];
      ADD_11 -> ADD_14 [ name = 22 ];
      ADD_12 -> MUL_15 [ name = 23 ];
-     MUL_13 -> ADD_16 [ name = 24 ];
+     MUL_13 -> reg33
+     reg33 -> ADD_16 [ name = 24 ];
      MUL_15 -> ADD_17 [ name = 25 ];
      ADD_16 -> ADD_18 [ name = 26 ];
      ADD_16 -> ADD_19 [ name = 27 ];

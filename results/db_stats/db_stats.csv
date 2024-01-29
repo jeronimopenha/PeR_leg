@@ -1,6 +1,6 @@
 name;bench;nodes;edges;ideal_cost;max_degree;avg_degree;g_hub;top_k_hub;percent_multicast;hist_grade
 Cplx8.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/Cplx8.dot; 77; 91; 91; 3; 2.364; {}; []; 0.000; {1: 2, 2: 45, 3: 30} 
-ewf.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/ewf.dot; 66; 79; 79; 5; 2.394; {'ADD_5': 3, 'ADD_8': 3, 'ADD_16': 3, 'ADD_17': 3}; ('ADD_5', 3); 0.061; {2: 48, 3: 13, 4: 2, 5: 3} 
+ewf.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/ewf.dot; 69; 82; 82; 4; 2.377; {'ADD_5': 3, 'ADD_8': 3, 'ADD_16': 3, 'ADD_17': 3}; ('ADD_5', 3); 0.058; {2: 48, 3: 16, 4: 5} 
 Fir16.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/Fir16.dot; 77; 91; 91; 3; 2.364; {}; []; 0.000; {1: 2, 2: 45, 3: 30} 
 arf.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/arf.dot; 28; 30; 30; 4; 2.143; {}; []; 0.000; {1: 8, 2: 10, 3: 8, 4: 2} 
 conv3.dot; /home/jeronimo/Documentos/GIT/PeR/dot_db/connected/conv3.dot; 28; 30; 30; 5; 2.143; {'add5': 4}; ('add5', 4); 0.036; {1: 9, 2: 8, 3: 10, 5: 1} 
