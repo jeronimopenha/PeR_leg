@@ -4,7 +4,7 @@ from src.util.per_graph import PeRGraph
 from src.util.yott.yott import YOTT
 
 
-per_graph = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/arf.dot")
+per_graph = PeRGraph(dot_path="/home/fabio/Mestrado/PeR/dot_db/connected/arf.dot",dot_name="arf.dot")
 annotations = [[0,1],[0,2],[0,3],[0,2],[-1,-1],[-1,-1]]
 yott_pipeline = YOTTPipeline(annotations,per_graph,ArchType.MESH,2,7)
 print(yott_pipeline.run(1))
