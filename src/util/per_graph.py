@@ -93,7 +93,7 @@ class PeRGraph:
                         working = True'''
         return r_edges
 
-    def get_edges_zigzag(self) -> list[list]:
+    def get_edges_zigzag(self, shuffle: bool = True, remove_placed: bool = True) -> tuple[list[list], list[list]]:
         # FIXME docstring
         """_summary_
             Returns a list of edges according
@@ -108,17 +108,21 @@ class PeRGraph:
             if self.g.out_degree(node) == 0:
                 output_list.append([node, 'IN'])
 
-        random.shuffle(output_list)
+        if shuffle:
+            random.shuffle(output_list)
         stack: list = output_list.copy()
         edges: list = []
+        visited: list = []
+        cycle: list = []
 
         fanin: dict = {}
         fanout: dict = {}
         for node in self.g.nodes():
             fanin[node] = list(self.g.predecessors(node))
             fanout[node] = list(self.g.successors(node))
-            random.shuffle(fanin[node])
-            random.shuffle(fanout[node])
+            if shuffle:
+                random.shuffle(fanin[node])
+                random.shuffle(fanout[node])
 
         while stack:
             a, direction = stack.pop(0)  # get the top1
@@ -139,6 +143,9 @@ class PeRGraph:
                     fanout[a].remove(b)
                     fanin[b].remove(a)
 
+                    if b in visited:
+                        cycle.append([a, b])
+
                     edges.append([a, b, 'OUT'])
 
                 elif n_fanin >= 1:  # Case 2
@@ -151,6 +158,9 @@ class PeRGraph:
 
                     fanin[a].remove(b)
                     fanout[b].remove(a)
+
+                    if b in visited:
+                        cycle.append([a, b])
 
                     edges.append([a, b, 'IN'])
 
@@ -167,6 +177,9 @@ class PeRGraph:
                     fanin[a].remove(b)
                     fanout[b].remove(a)
 
+                    if b in visited:
+                        cycle.append([a, b])
+
                     edges.append([a, b, 'IN'])
 
                 elif n_fanout >= 1:  # Case 2
@@ -180,9 +193,15 @@ class PeRGraph:
                     fanout[a].remove(b)
                     fanin[b].remove(a)
 
-                    edges.append([a, b, 'OUT'])
+                    if b not in visited:
+                        cycle.append([a, b])
 
-        return self.remove_nodes_already_placed(edges)
+                    edges.append([a, b, 'OUT'])
+            visited.append(a)
+        if remove_placed:
+            return self.remove_nodes_already_placed(edges), cycle
+        else:
+            return edges, cycle
 
     @staticmethod
     def remove_nodes_already_placed(edges: list[list]) -> list[list]:

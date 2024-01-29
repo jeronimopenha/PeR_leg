@@ -5,9 +5,11 @@ import json
 import traceback
 import random
 from pathlib import Path
+
+from sympy.core.facts import FactKB
+
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-
 import matplotlib
 
 matplotlib.use('TkAgg')
@@ -296,3 +298,69 @@ class Util(object):
     @staticmethod
     def save_execution_report_json(raw_report, path: str, file_name: str) -> None:
         Util.save_json(path, file_name, raw_report)
+
+    @staticmethod
+    def get_graph_annotations(per_graph: PeRGraph) -> dict:
+        dict_id = per_graph.nodes_to_idx
+
+        edges, cycle = per_graph.get_edges_zigzag(False, False)
+        edge_degree: dict = {}
+        dic_cycle: dict = {}
+        # Initialization dictionary
+        for i in range(len(edges)):
+            key: str = Util.func_key(edges[i][0], edges[i][1])
+            dic_cycle[key]: list = []
+            # print(EDGES[i])
+
+        # print("CYCLE")
+        for i in range(len(cycle)):
+            found_start: bool = False
+            count: int = 0
+            value1: str = ''
+            elem_cycle_begin: str = cycle[i][0]
+            elem_cycle_end: str = cycle[i][1]
+
+            # print(elem_cycle_begin, elem_cycle_end)
+            walk_key: list = []
+            for j in range(len(edges) - 1, -1, -1):
+
+                if elem_cycle_begin == edges[j][1] and not found_start:
+                    value1 = edges[j][0]
+                    # print("OPAAA value1 = %s " %(value1))
+                    key:str = Util.func_key(value1, elem_cycle_begin)
+                    walk_key.insert(0, key)
+                    dic_cycle[key].append([elem_cycle_end, count])
+                    count += 1
+                    found_start = True
+
+                elif found_start and (value1 == edges[j][1] or elem_cycle_end == edges[j][0]):
+
+                    value1, value2 = edges[j][0], edges[j][1]
+
+                    key = Util.func_key(value1, value2)
+
+                    if value1 != elem_cycle_end and value2 != elem_cycle_end:
+                        walk_key.insert(0, key)
+                        # dic_CYCLE[key][elem_cycle_end] = count
+                        dic_cycle[key].append([elem_cycle_end, count])
+                        count += 1
+                    else:
+                        found_start = False
+                        # Go back and update values
+                        # print(dic_CYCLE)
+                        for k in range(0, count // 2):
+                            dic_actual = dic_cycle[walk_key[k]]
+                            for l in range(len(dic_actual)):
+                                if (dic_actual[l][0] == elem_cycle_end):
+                                    dic_cycle[walk_key[k]][l][1] = k + 1
+                        break  # to the next on the vector CYCLE
+
+        return dic_cycle, edges, edge_degree
+
+    @staticmethod
+    def func_key(val1, val2):
+        return str(val1) + " " + str(val2)
+
+    @staticmethod
+    def func_unkey(string):
+        return string.split(" ")

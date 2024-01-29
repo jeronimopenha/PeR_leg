@@ -33,6 +33,7 @@ def run_connected_graphs():
     # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot_path']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
+        Util.get_graph_annotations(per_graph)
         print(per_graph.dot_name)
         yoto_pipeline_sw = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, seed)
         raw_report: dict = yoto_pipeline_sw.run(total_threads // threads_per_copy)
