@@ -7,9 +7,9 @@ from src.util.per_enum import ArchType
 
 def run_connected_graphs():
     threads_per_copy: int = 6
-    total_threads: int = 6
-    seed: int = 0
-    arch_type: ArchType = ArchType.MESH
+    total_threads: int = 600
+    random_seed: int = 0
+    arch_type: ArchType = ArchType.ONE_HOP
     make_shuffle: bool = True
     distance_table_bits: int = 4
 
@@ -19,7 +19,6 @@ def run_connected_graphs():
 
     output_path_base = os.getcwd() + '/results/sw/yoto/yoto_pipeline/t_%d/%s/' % (total_threads, arch_type)
 
-    # output_path = output_path_base + test_name + '/'
     output_path = output_path_base
 
     if not os.path.exists(output_path):
@@ -29,15 +28,15 @@ def run_connected_graphs():
     dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
 
     # FIXME the line below is only for debugging
-    dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
+    # dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)
-        yoto_pipeline_sw = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, seed)
+        yoto_pipeline_sw = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, random_seed)
         raw_report: dict = yoto_pipeline_sw.run(total_threads // threads_per_copy)
         formatted_report = Util.get_formatted_report(raw_report)
         Util.save_json(output_path, dot_name, formatted_report)
-        seed += 1
+        random_seed += 1
 
 
 if __name__ == '__main__':
