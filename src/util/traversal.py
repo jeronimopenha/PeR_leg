@@ -9,7 +9,7 @@ from src.util.per_graph import PeRGraph
 class Traversal(object):
 
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
-                 len_pipeline: int, n_threads: int = 1, random_seed: int = 0):
+                 len_pipeline: int, n_threads: int = 1, random_seed: int = 0, shuffled: bool = True):
         self.len_pipeline: int = len_pipeline
         self.per_graph: PeRGraph = per_graph
         self.arch_type: ArchType = arch_type
@@ -17,27 +17,28 @@ class Traversal(object):
         self.make_shuffle: bool = make_shuffle
         self.n_threads: int = n_threads
         self.reset_random(random_seed)
+        self.shuffled: bool = shuffled
 
-        self.edges_str: list[list[list]] = [self.per_graph.get_edges_zigzag() for _ in range(self.len_pipeline)]
+        self.cycle: list[list[list]] = []
+        self.raw_edges: list[list[list]] = []
+        self.edges_str: list[list[list]] = []
+        for _ in range(self.len_pipeline):
+            edges_str, raw_edges, cycle = self.per_graph.get_edges_zigzag(self.shuffled)
+            self.cycle.append(cycle)
+            self.raw_edges.append(raw_edges)
+            self.edges_str.append(edges_str)
+
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
+        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_str[i], self.cycle[i]) for i in
+                                        range(self.len_pipeline)]
 
         self.n_edges = len(self.edges_int[0])
+        self.total_edges = len(self.raw_edges[0])
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
-
-    def get_edges_int(self, edges_str: list[list]) -> list[list]:
-        edges_int: list[list] = []
-        for a, b in edges_str:
-            edges_int.append(
-                [
-                    self.per_graph.nodes_to_idx[a],
-                    self.per_graph.nodes_to_idx[b]
-                ]
-            )
-        return edges_int
 
     @staticmethod
     def reset_random(random_seed: int = 0):
@@ -46,27 +47,6 @@ class Traversal(object):
     @staticmethod
     def get_router_edges(self):
         pass
-
-    @staticmethod
-    def get_edges_distances(edges: list[list], n2c: list[list]) -> tuple[dict, list]:
-        dic_edges_dist: dict = {}
-        list_edges_dist: list = []
-        for edge in edges:
-            n1 = edge[0]
-            n2 = edge[1]
-            a: list = n2c[n1]
-            b: list = n2c[n2]
-            edge_distance: int = Util.dist_manhattan(a, b)
-            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
-            list_edges_dist.append(edge_distance)
-        return dic_edges_dist, list_edges_dist
-
-    @staticmethod
-    def get_edge_distance(a: list[int], b: list[int]) -> int:
-        ia, ja = a
-        ib, jb = b
-        edge_distance = abs(ia - ib) + abs(ja - jb)
-        return edge_distance
 
     def get_edges_int(self, edges_str: list[list]) -> list[list]:
         edges_int: list[list] = []
