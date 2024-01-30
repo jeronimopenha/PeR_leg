@@ -29,7 +29,7 @@ class Stage4YOTT:
         C_A = out_previous_stage['C_A']
 
         i,j = self.distance_table[(thread_index ^ edge_index) & self.dist_table_mask][adj_index]
-        
+      
         C_S = [C_A[0]+i,C_A[1]+j] 
 
         dist_CA_CS = U.dist_manhattan(C_A,C_S) #type:ignore

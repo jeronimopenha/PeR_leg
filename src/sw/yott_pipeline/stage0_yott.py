@@ -2,7 +2,6 @@ from src.sw.yott_pipeline.IFIFO import IFIFO
 
 class Stage0YOTT:
     def __init__(self, fifo: IFIFO,len_pipeline):
-        print(len_pipeline)
         self.fifo = fifo
         self.total_pipeline_counter = 0
         self.exec_counter: list[int] = [0 for i in range(len_pipeline)]

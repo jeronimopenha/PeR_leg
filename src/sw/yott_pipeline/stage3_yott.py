@@ -38,8 +38,8 @@ class Stage3YOTT:
     C_A = self.N2C[thread_index][A] if thread_valid == 1 else [0,0]#type:ignore
     C_C = self.N2C[thread_index][C] if C > -1 else [-1,-1] #type:ignore
 
-    adj_index = self.thread_adj_indexes[thread_index]
-
+    adj_index = self.thread_adj_indexes[thread_index] if thread_valid else 0
+    print(self.N2C[thread_index])
     self.new_output = {
         'thread_index': thread_index,
         'thread_valid': thread_valid,

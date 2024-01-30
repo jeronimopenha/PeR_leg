@@ -1,10 +1,69 @@
+import os
 from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-from src.util.yott.yott import YOTT
+from src.util.util import Util
+
+def run_connected_graphs():
+    threads_per_copy: int = 7
+    total_threads: int = 600
+    seed: int = 0
+    arch_type: ArchType = ArchType.MESH
+    make_shuffle: bool = True
+    distance_table_bits: int = 2
+
+    root_path: str = Util.get_project_root()
+    dot_path_base = root_path + '/dot_db/'
+    dot_connected_path = dot_path_base + 'connected/'
+
+    output_path_base = os.getcwd() + '/results/sw/yoto/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)
+
+    # output_path = output_path_base + test_name + '/'
+    output_path = output_path_base
+
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
+    # list connected benchmarks
+    dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
+    reports: list[dict] = []
+
+    # FIXME the line below is only for debugging
+    # dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
+    for dot_path, dot_name in dots_list:
+        per_graph = PeRGraph(dot_path, dot_name)
+        print(per_graph.dot_name)
+        yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits,7)
+        raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
+        formatted_report = yott_pipeline_sw.get_formatted_report(raw_report, output_path, dot_name)
+        Util.save_execution_report_json(formatted_report, output_path, dot_name)
+        reports.append(formatted_report)
+    min_distance: int = per_graph.n_edges * per_graph.n_cells
+    edges_g0: int = per_graph.n_edges
+    for rkey in raw_report['th_placement_distances'].keys():
+        total_dist: int = 0
+        edg = 0
+        for dist_k in raw_report['th_placement_distances'][rkey].keys():
+            d = raw_report['th_placement_distances'][rkey][dist_k] - 1
+            if d > 0:
+                edg += 1
+            total_dist += d
+        if total_dist < min_distance:
+            min_distance = total_dist
+            edges_g0 = edg
+    print(min_distance, ';', edges_g0)
+    # print(edges_g0)
+    a = 1
+    # box_plot_histogram: dict = {}
+    '''for key in report['th_routed'].keys():
+        if report['th_routed'][key]:
+            box_plot_histogram[key] = report['th_histogram'][key]
+    if box_plot_histogram:
+        Util.get_router_boxplot_graph_from_dict(box_plot_histogram, output_path, dot_name)'''
+    seed += 1
 
 
-per_graph = PeRGraph(dot_path="/home/fabio/Mestrado/PeR/dot_db/connected/arf.dot",dot_name="arf.dot")
-annotations = [[0,1],[0,2],[0,3],[0,2],[-1,-1],[-1,-1]]
-yott_pipeline = YOTTPipeline(annotations,per_graph,ArchType.MESH,2,7)
-print(yott_pipeline.run(1))
+if __name__ == '__main__':
+    per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/mults1.dot","mults1.dot")
+    yott = YOTTPipeline(per,ArchType.MESH,2,7).run(600)
+    # run_connected_graphs()

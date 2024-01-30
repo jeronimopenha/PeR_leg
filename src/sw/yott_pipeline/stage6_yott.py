@@ -27,7 +27,6 @@ class Stage6YOTT:
       dist_CA_CS = out_previous_stage['dist_CA_CS']
 
       was_there_change = dist_CA_CS != self.threads_current_adj_dists[thread_index]
-      
       if not self.out_of_grid(C_S,self.tam_grid):
          N_C_S = self.C2N[thread_index][C_S[0]][C_S[1]]
          if N_C_S == None:
@@ -66,7 +65,7 @@ class Stage6YOTT:
       if should_write == 1:
          self.C2N[thread_index][C_S[0]][C_S[1]] = B
          self.threads_current_adj_dists[thread_index] = 1
-         self.threads_free_cel[thread_index][0] = None #type:ignore
+         self.threads_free_cel[thread_index] = [None,math.inf] #type:ignore
 
       
       if thread_valid == 1:   

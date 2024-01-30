@@ -25,9 +25,10 @@ class Stage5YOTT:
     dist_CB = out_previous_stage['dist_CB']
     C_S = out_previous_stage['C_S']
 
-    
-    cost = self.calc_cost(C_S,C_C,dist_CB) if dist_CB != -1 else 0
-
+    try:
+      cost = self.calc_cost(C_S,C_C,dist_CB) if dist_CB != -1 else 0
+    except:
+      print(C_S,C_C,out_previous_stage['thread_valid'],B,thread_index)
     self.new_output = {
         'thread_index': thread_index,
         'thread_valid': out_previous_stage['thread_valid'],
