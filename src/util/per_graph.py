@@ -95,7 +95,7 @@ class PeRGraph:
                         working = True'''
         return r_edges
 
-    def get_edges_zigzag(self, shuffle: bool = True) -> tuple[list[list], list, list]:
+    def get_edges_zigzag(self, make_shuffle: bool = True) -> tuple[list[list], list, list]:
         # FIXME docstring
         """_summary_
             Returns a list of edges according
@@ -110,7 +110,7 @@ class PeRGraph:
             if self.g.out_degree(node) == 0:
                 output_list.append([node, 'IN'])
 
-        if shuffle:
+        if make_shuffle:
             random.shuffle(output_list)
         stack: list = output_list.copy()
         edges: list = []
@@ -122,7 +122,7 @@ class PeRGraph:
         for node in self.g.nodes():
             fanin[node] = list(self.g.predecessors(node))
             fanout[node] = list(self.g.successors(node))
-            if shuffle:
+            if make_shuffle:
                 random.shuffle(fanin[node])
                 random.shuffle(fanout[node])
 
@@ -201,16 +201,16 @@ class PeRGraph:
                     edges.append([a, b, 'OUT'])
             visited.append(a)
 
-        return self.remove_nodes_already_placed(edges), edges, reconvergence
+        return self.clear_edges(edges), self.clear_edges(edges, False), reconvergence
 
     @staticmethod
-    def remove_nodes_already_placed(edges: list[list]) -> list[list]:
+    def clear_edges(edges: list[list], remove_placed_edges: bool = True) -> list[list]:
         dic: dict = {edges[0][0]: True,
                      edges[0][1]: True}
         new_edges: list[list] = [edges[0][:2]]
         for edge in (edges[1:]):
             n1, n2 = edge[:2]
-            if dic.get(n2) is None:
+            if dic.get(n2) is None or not remove_placed_edges:
                 dic[n2] = True
                 new_edges.append([n1, n2])
         return new_edges
