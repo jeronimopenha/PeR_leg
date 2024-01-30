@@ -1,24 +1,125 @@
 from math import ceil
 import os
-from typing import Tuple, List
-
 import pandas as pd
 import json
 import traceback
 import random
 from pathlib import Path
-
-from sympy.core.facts import FactKB
-
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 import matplotlib
+
+# from src.util.traversal import Traversal
 
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 
 class Util(object):
+
+    @staticmethod
+    def get_formatted_report( raw_report: dict) -> dict:
+        exec_max_clk: int = -1
+        exec_min_clk: int = -1
+        exec_avg_clk: int = 0
+        n_copies = raw_report['n_copies']
+        th_max_clk: int = -1
+        th_min_clk: int = -1
+        th_avg_clk: int = 0
+        # Total threads quantity
+        total_threads: int = raw_report['total_threads']
+        th_placement_distances: dict = {}
+
+        # generate data for reports
+        for report_key in raw_report['reports'].keys():
+            report = raw_report['reports'][report_key]
+
+            total_exec_clk: int = report['total_exec_clk']
+
+            exec_avg_clk += total_exec_clk
+
+            if exec_max_clk == -1:
+                exec_max_clk = total_exec_clk
+            else:
+                if total_exec_clk > exec_max_clk:
+                    exec_max_clk = total_exec_clk
+            if exec_min_clk == -1:
+                exec_min_clk = total_exec_clk
+            else:
+                if total_exec_clk < exec_min_clk:
+                    exec_min_clk = total_exec_clk
+            for th_key in report['th_results'].keys():
+                th_results = report['th_results'][th_key]
+                th_placement_distances[th_key] = th_results['th_placement_distances']
+
+                total_th_clk: int = th_results['total_th_clk']
+
+                th_avg_clk += total_th_clk
+
+                if th_max_clk == -1:
+                    th_max_clk = total_th_clk
+                else:
+                    if total_th_clk > th_max_clk:
+                        th_max_clk = total_th_clk
+                if th_min_clk == -1:
+                    th_min_clk = total_th_clk
+                else:
+                    if total_th_clk < th_min_clk:
+                        th_min_clk = total_th_clk
+        exec_avg_clk /= n_copies
+        th_avg_clk /= total_threads
+
+        formatted_report = raw_report.copy()
+        del formatted_report['reports']
+        del formatted_report['nodes_dict']
+        formatted_report["exec_max_clk"] = exec_max_clk
+        formatted_report["exec_min_clk"] = exec_min_clk
+        formatted_report["exec_avg_clk"] = exec_avg_clk
+        formatted_report["th_max_clk"] = th_max_clk
+        formatted_report["th_min_clk"] = th_min_clk
+        formatted_report["th_avg_clk"] = th_avg_clk
+        formatted_report["th_placement_distances"] = th_placement_distances
+        formatted_report['nodes_dict'] = raw_report['nodes_dict']
+
+        return formatted_report
+
+    @staticmethod
+    def create_report(traversal, algorithm: str, n_copies: int, reports: dict) -> dict:
+        exec_report: dict = {
+            "graph_name": traversal.per_graph.dot_name,
+            "algorithm": algorithm,
+            "arch_type": traversal.arch_type.name,
+            "total_edges": traversal.total_edges,
+            "visited_edges": traversal.visited_edges,
+            "n_copies": n_copies,
+            "total_threads": traversal.n_threads * n_copies,
+            "n_cells": traversal.per_graph.n_cells,
+            "n_lines": traversal.n_lines,
+            "n_columns": traversal.n_columns,
+            "reports": reports,
+            "nodes_dict": traversal.per_graph.nodes_to_idx
+        }
+        return exec_report
+
+    @staticmethod
+    def create_exec_report(traversal, exec_num: int, total_pipeline_counter: int, exec_counter: list,
+                           n2c: list[list[list]]):
+        exec_report: dict = {
+            'total_exec_clk': total_pipeline_counter
+        }
+        th_dict: dict = {}
+        for th in range(traversal.len_pipeline):
+            th_key = 'Exec_%d_TH_%d' % (exec_num, th)
+            th_dict[th_key]: dict = {}
+            th_dict[th_key]['total_th_clk'] = exec_counter[th]
+            th_dict[th_key]['th_placement'] = n2c[th]
+            edges_str = traversal.edges_str
+            edges_int = traversal.get_edges_int(edges_str[th])
+            dic_edges_dist = Util.get_edges_distances(traversal.arch_type, edges_int, n2c[th])[0]
+            dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
+            th_dict[th_key]['th_placement_distances'] = dic_edges_dist
+        exec_report['th_results'] = th_dict
+        return exec_report
 
     @staticmethod
     def get_project_root() -> str:
@@ -300,9 +401,6 @@ class Util(object):
             wr.close()'''
         return stat
 
-    @staticmethod
-    def save_execution_report_json(raw_report, path: str, file_name: str) -> None:
-        Util.save_json(path, file_name, raw_report)
 
     @staticmethod
     def get_graph_annotations(edges: list[list], cycle: list[list]) -> dict:

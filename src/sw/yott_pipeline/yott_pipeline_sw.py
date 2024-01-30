@@ -87,7 +87,7 @@ class YOTTPipeline(Traversal):
             raw_report[results_key]['total_exec_clk'] = stage0.total_pipeline_counter
             raw_report[results_key]['arch_type'] = self.arch_type
             raw_report[results_key]['total_edges'] = self.total_edges
-            raw_report[results_key]['edges_visited'] = self.n_edges
+            raw_report[results_key]['edges_visited'] = self.visited_edges
             raw_report[results_key]['n_cells'] = self.per_graph.n_cells
             raw_report[results_key]['n_cells_sqrt'] = self.per_graph.n_cells_sqrt
             th_dict: dict = {}
