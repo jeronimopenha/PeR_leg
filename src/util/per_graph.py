@@ -115,7 +115,7 @@ class PeRGraph:
         stack: list = output_list.copy()
         edges: list = []
         visited: list = []
-        cycle: list = []
+        reconvergence: list = []
 
         fanin: dict = {}
         fanout: dict = {}
@@ -146,7 +146,7 @@ class PeRGraph:
                     fanin[b].remove(a)
 
                     if b in visited:
-                        cycle.append([a, b])
+                        reconvergence.append([a, b])
 
                     edges.append([a, b, 'OUT'])
 
@@ -162,7 +162,7 @@ class PeRGraph:
                     fanout[b].remove(a)
 
                     if b in visited:
-                        cycle.append([a, b])
+                        reconvergence.append([a, b])
 
                     edges.append([a, b, 'IN'])
 
@@ -180,7 +180,7 @@ class PeRGraph:
                     fanout[b].remove(a)
 
                     if b in visited:
-                        cycle.append([a, b])
+                        reconvergence.append([a, b])
 
                     edges.append([a, b, 'IN'])
 
@@ -196,12 +196,12 @@ class PeRGraph:
                     fanin[b].remove(a)
 
                     if b in visited:
-                        cycle.append([a, b])
+                        reconvergence.append([a, b])
 
                     edges.append([a, b, 'OUT'])
             visited.append(a)
 
-        return self.remove_nodes_already_placed(edges), edges, cycle
+        return self.remove_nodes_already_placed(edges), edges, reconvergence
 
     @staticmethod
     def remove_nodes_already_placed(edges: list[list]) -> list[list]:
