@@ -352,7 +352,7 @@ class Util(object):
                         for k in range(0, count // 2):
                             dic_actual = dic_cycle[walk_key[k]]
                             for l in range(len(dic_actual)):
-                                if (dic_actual[l][0] == elem_cycle_end):
+                                if dic_actual[l][0] == elem_cycle_end:
                                     dic_cycle[walk_key[k]][l][1] = k + 1
                         break  # to the next on the vector CYCLE
 
