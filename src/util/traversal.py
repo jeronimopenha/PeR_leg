@@ -20,20 +20,20 @@ class Traversal(object):
         self.shuffled: bool = shuffled
 
         self.cycle: list[list[list]] = []
-        self.raw_edges: list[list[list]] = []
+        self.edges_raw: list[list[list]] = []
         self.edges_str: list[list[list]] = []
         for _ in range(self.len_pipeline):
-            edges_str, raw_edges, cycle = self.per_graph.get_edges_zigzag(self.shuffled)
+            edges_str, edges_raw, cycle = self.per_graph.get_edges_zigzag(self.shuffled)
             self.cycle.append(cycle)
-            self.raw_edges.append(raw_edges)
+            self.edges_raw.append(edges_raw)
             self.edges_str.append(edges_str)
 
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
-        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_str[i], self.cycle[i]) for i in
+        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.cycle[i]) for i in
                                         range(self.len_pipeline)]
 
         self.n_edges = len(self.edges_int[0])
-        self.total_edges = len(self.raw_edges[0])
+        self.total_edges = len(self.edges_raw[0])
 
         self.n_lines = self.per_graph.n_cells_sqrt
         self.n_columns = self.per_graph.n_cells_sqrt

@@ -115,10 +115,13 @@ class Util(object):
         return cell
 
     @staticmethod
-    def get_files_list_by_extension(path: str, extension: str) -> list[list]:
-        dots_path_list = [[os.path.join(path, name), name] for name in os.listdir(path)]
-        files_list = [file for file in dots_path_list if os.path.isfile(file[0])]
-        files_list_by_extension = [arq for arq in files_list if arq[0].lower().endswith(extension)]
+    def get_files_list_by_extension(path: str, file_extension: str) -> list[list]:
+        files_list_by_extension = [[os.path.join(file_path, file_name), file_name] for file_path, dir_name, filenames in
+                                   os.walk(path) for file_name in filenames if
+                                   os.path.splitext(file_name)[1] == file_extension]
+        # files_path_list = [[os.path.join(path, name), name] for name in os.listdir(path)]
+        # files_list = [file for file in files_path_list if os.path.isfile(file[0])]
+        # files_list_by_extension = [arq for arq in files_list if arq[0].lower().endswith(file_extension)]
         return files_list_by_extension
 
     @staticmethod
@@ -302,7 +305,7 @@ class Util(object):
         Util.save_json(path, file_name, raw_report)
 
     @staticmethod
-    def get_graph_annotations( edges: list[list], cycle: list[list]) -> dict:
+    def get_graph_annotations(edges: list[list], cycle: list[list]) -> dict:
         dic_cycle: dict = {}
         # Initialization dictionary
         for i in range(len(edges)):
@@ -349,7 +352,7 @@ class Util(object):
                         for k in range(0, count // 2):
                             dic_actual = dic_cycle[walk_key[k]]
                             for l in range(len(dic_actual)):
-                                if (dic_actual[l][0] == elem_cycle_end):
+                                if dic_actual[l][0] == elem_cycle_end:
                                     dic_cycle[walk_key[k]][l][1] = k + 1
                         break  # to the next on the vector CYCLE
 

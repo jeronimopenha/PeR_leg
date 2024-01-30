@@ -30,7 +30,7 @@ def run_connected_graphs():
     reports: list[dict] = []
 
     # FIXME the line below is only for debugging
-    # dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
+    dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)
