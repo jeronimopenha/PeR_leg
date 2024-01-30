@@ -13,8 +13,8 @@ from src.util.traversal import Traversal
 from src.util.util import Util
 
 class YOTTPipeline(Traversal):
-    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits,num_threads: int = 7):
-        super().__init__(per_graph, arch_type,distance_table_bits,True,7,num_threads)
+    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits, make_shuffle, num_threads: int = 7):
+        super().__init__(per_graph, arch_type,distance_table_bits,make_shuffle,7,num_threads)
         self.len_edges = len(self.edges_int[0])
         # print(self.annotations)
         # input()
@@ -43,7 +43,7 @@ class YOTTPipeline(Traversal):
             stage2 = Stage2YOTT(self.edges_int,self.per_graph,self.annotations,self.n_threads)
             stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,self.distance_table_bits, self.make_shuffle)
             stage3 = Stage3YOTT(self.len_pipeline,N2C)
-            stage5 = Stage5YOTT()
+            stage5 = Stage5YOTT(self.arch_type)
             stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,C2N)
 
             len_adjacentes_indexes = len(stage4.distance_table[0])

@@ -292,15 +292,19 @@ class Util(object):
             n2 = edge[1]
             a: list = n2c[n1]
             b: list = n2c[n2]
-            edge_distance: int = 0
-            if arch_type == ArchType.MESH:
-                edge_distance: int = Util.dist_manhattan(a, b)
-            elif arch_type == ArchType.ONE_HOP:
-                edge_distance: int = Util.dist_one_hop(a, b)
+            edge_distance : int =  Util.calc_dist(a,b,arch_type)
             dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
             list_edges_dist.append(edge_distance)
         return dic_edges_dist, list_edges_dist
 
+
+    @staticmethod 
+    def calc_dist(a:list[int],b:list[int],arch_type:ArchType):
+        if arch_type == ArchType.MESH:
+            return Util.dist_manhattan(a,b)
+        elif arch_type == ArchType.ONE_HOP:
+            return Util.dist_one_hop(a,b)
+        
     @staticmethod
     def dist_manhattan(a: list[int], b: list[int]) -> int:
         ia, ja = a
