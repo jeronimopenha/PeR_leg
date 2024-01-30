@@ -13,7 +13,6 @@ class YotoPipeline(Traversal):
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
                  n_threads: int = 1, random_seed: int = 0):
         self.len_pipeline: int = 6
-
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads,
                          random_seed)
 
@@ -49,7 +48,10 @@ class YotoPipeline(Traversal):
 
             raw_report[results_key]['total_exec_clk'] = st1_edge_sel.total_pipeline_counter
             raw_report[results_key]['arch_type'] = self.arch_type
-            raw_report[results_key]['edges_visited'] = len(st2_edges.edges[0])
+            raw_report[results_key]['total_edges'] = self.total_edges
+            raw_report[results_key]['edges_visited'] = self.n_edges
+            raw_report[results_key]['n_cells'] = self.per_graph.n_cells
+            raw_report[results_key]['n_cells_sqrt'] = self.per_graph.n_cells_sqrt
             th_dict: dict = {}
             for th in range(self.len_pipeline):
                 th_key = 'Exec_%d_TH_%d' % (t, th)
@@ -82,13 +84,15 @@ class YotoPipeline(Traversal):
 
         return raw_report
 
-
-
-    def get_formatted_report(self, raw_report: dict, path: str, file_name: str) -> dict:
+    def get_formatted_report(self, formatted_report: dict, path: str, file_name: str) -> dict:
         exec_max_clk: int = -1
         exec_min_clk: int = -1
         exec_avg_clk: int = 0
-        n_tests = len(raw_report)
+        exec_total_edges: int = formatted_report['exec_0']['total_edges']
+        exec_visited_edges: int = formatted_report['exec_0']['edges_visited']
+        n_cells: int = formatted_report['exec_0']['n_cells']
+        n_cells_sqrt: int = formatted_report['exec_0']['n_cells_sqrt']
+        n_tests = len(formatted_report)
         th_max_clk: int = -1
         th_min_clk: int = -1
         th_avg_clk: int = 0
@@ -99,8 +103,8 @@ class YotoPipeline(Traversal):
         th_placement_distances: dict = {}
 
         # generate data for reports
-        for report_key in raw_report.keys():
-            report = raw_report[report_key]
+        for report_key in formatted_report.keys():
+            report = formatted_report[report_key]
 
             total_exec_clk: int = report['total_exec_clk']
 
@@ -143,7 +147,11 @@ class YotoPipeline(Traversal):
         formatted_report: dict = {
             'graph_name': file_name,
             'graph_path': path,
+            'total_edges': exec_total_edges,
+            'visited_edges': exec_visited_edges,
             'n_tests': n_tests,
+            'n_cells': n_cells,
+            'n_cells_sqrt': n_cells_sqrt,
             'exec_max_clk': exec_max_clk,
             'exec_min_clk': exec_min_clk,
             'exec_avg_clk': exec_avg_clk,
@@ -151,8 +159,8 @@ class YotoPipeline(Traversal):
             'th_min_clk': th_min_clk,
             'th_avg_clk': th_avg_clk,
             'n_threads': n_threads,
-            #'th_routed': th_routed,
-            #'th_histogram': th_histogram,
+            # 'th_routed': th_routed,
+            # 'th_histogram': th_histogram,
             'th_placement_distances': th_placement_distances,
             'nodes_dict': self.per_graph.nodes_to_idx,
         }

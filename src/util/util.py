@@ -1,5 +1,7 @@
 from math import ceil
 import os
+from typing import Tuple, List
+
 import pandas as pd
 import json
 import traceback
@@ -300,11 +302,7 @@ class Util(object):
         Util.save_json(path, file_name, raw_report)
 
     @staticmethod
-    def get_graph_annotations(per_graph: PeRGraph) -> dict:
-        dict_id = per_graph.nodes_to_idx
-
-        edges, cycle = per_graph.get_edges_zigzag(False, False)
-        edge_degree: dict = {}
+    def get_graph_annotations( edges: list[list], cycle: list[list]) -> dict:
         dic_cycle: dict = {}
         # Initialization dictionary
         for i in range(len(edges)):
@@ -354,8 +352,8 @@ class Util(object):
                                 if (dic_actual[l][0] == elem_cycle_end):
                                     dic_cycle[walk_key[k]][l][1] = k + 1
                         break  # to the next on the vector CYCLE
-        # fixme edge_degree
-        return dic_cycle, edges, edge_degree
+
+        return dic_cycle
 
     @staticmethod
     def func_key(val1, val2):

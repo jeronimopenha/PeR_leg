@@ -1,3 +1,5 @@
+from typing import Tuple, List
+
 import pygraphviz as pgv
 import networkx as nx
 import random
@@ -93,7 +95,7 @@ class PeRGraph:
                         working = True'''
         return r_edges
 
-    def get_edges_zigzag(self, shuffle: bool = True, remove_placed: bool = True) -> tuple[list[list], list[list]]:
+    def get_edges_zigzag(self, shuffle: bool = True) -> tuple[list[list], list, list]:
         # FIXME docstring
         """_summary_
             Returns a list of edges according
@@ -198,10 +200,8 @@ class PeRGraph:
 
                     edges.append([a, b, 'OUT'])
             visited.append(a)
-        if remove_placed:
-            return self.remove_nodes_already_placed(edges), cycle
-        else:
-            return edges, cycle
+
+        return self.remove_nodes_already_placed(edges), edges, cycle
 
     @staticmethod
     def remove_nodes_already_placed(edges: list[list]) -> list[list]:
