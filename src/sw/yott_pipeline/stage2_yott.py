@@ -29,18 +29,18 @@ class Stage2YOTT:
     thread_index = out_previous_stage['thread_index']
     edge_index = out_previous_stage['edge_index']
 
-    print(self.threads_edges[thread_index])
+    # print(self.threads_edges[thread_index])
 
     A,B = self.threads_edges[thread_index][edge_index]
-    print(A,B,edge_index,out_previous_stage['thread_valid'])
+    # print(A,B,edge_index,out_previous_stage['thread_valid'])
     annotations = list(self.annotations[thread_index].values())[edge_index]
-    print(self.annotations[thread_index].values())
+    # print(self.annotations[thread_index].values())
     if len(annotations) == 0:
       annotation = [-1,-1]
     else:
       annotation = [self.per.nodes_to_idx[annotations[0][0]],annotations[0][1] + 1]
     C,dist_CB = annotation
-    print(annotation)
+    # print(annotation)
     
     self.new_output = {
     'thread_index':thread_index,
