@@ -371,13 +371,13 @@ class Util:
         @return:
         @rtype:
         """
-        one_hop_distances: list[list] = []
+        distance_table: list[list] = []
         for dist in range(len(distance_table_raw)):
             if make_shuffle:
                 random.shuffle(distance_table_raw[dist])
             for p in distance_table_raw[dist]:
-                one_hop_distances.append(p)
-        return one_hop_distances
+                distance_table.append(p)
+        return distance_table
 
     @staticmethod
     def get_one_hop_distances(cells_sqrt: int, make_shuffle: bool) -> list[list]:

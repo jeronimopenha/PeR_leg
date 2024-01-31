@@ -49,11 +49,13 @@ class Stage2YOTT:
 
         a, b = self.threads_edges[thread_index][edge_index]
         # print(A,B,edge_index,out_previous_stage['thread_valid'])
+        # fixme Método de anotações acrescentar 1 nas distâncias anotadas pra manter o padrão e ccorriir stage2_yott
         annotations = list(self.annotations[thread_index].values())[edge_index]
         # print(self.annotations[thread_index].values())
         if len(annotations) == 0:
             annotation = [-1, -1]
         else:
+            # fixme Corrigir em traversal para que as anotações fiquem e inteiro
             annotation = [self.per.nodes_to_idx[annotations[0][0]], annotations[0][1] + 1]
         c, dist_cb = annotation
         # print(annotation)

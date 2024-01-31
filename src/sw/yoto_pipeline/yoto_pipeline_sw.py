@@ -1,6 +1,6 @@
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
-from src.util.traversal import Traversal
+from src.util.piplinebase import PiplineBase
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
 from src.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
@@ -9,13 +9,13 @@ from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 from src.util.util import Util
 
 
-class YotoPipeline(Traversal):
+class YotoPipeline(PiplineBase):
     len_pipeline = 6
+
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
-                 n_threads: int = 1, random_seed: int = 0):
+                 n_threads: int = 1):
         self.len_pipeline: int = 6
-        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads,
-                         random_seed)
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
 
@@ -28,7 +28,7 @@ class YotoPipeline(Traversal):
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.get_initial_position_ij(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_placement_tables(first_nodes, self.len_pipeline)
 
             st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
             st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)
@@ -47,6 +47,6 @@ class YotoPipeline(Traversal):
                 counter += 1
 
             reports[exec_key] = Util.create_exec_report(self, exec_num, st1_edge_sel.total_pipeline_counter,
-                                                   st1_edge_sel.exec_counter, st3_n2c.n2c)
+                                                        st1_edge_sel.exec_counter, st3_n2c.n2c)
 
         return Util.create_report(self, "YOTO", n_copies, reports)

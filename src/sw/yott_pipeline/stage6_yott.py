@@ -42,6 +42,7 @@ class Stage6YOTT:
         thread_valid = out_previous_stage['thread_valid']
         dist_ca_cs = out_previous_stage['dist_CA_CS']
 
+        # fixme  dividir em mais estágios. 1 ou 2
         was_there_change = dist_ca_cs != self.threads_current_adj_dists[thread_index]
         if not self.out_of_grid(c_s, self.tam_grid):
             n_c_s = self.c2n[thread_index][c_s[0]][c_s[1]]

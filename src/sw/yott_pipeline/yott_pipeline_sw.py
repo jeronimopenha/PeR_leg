@@ -7,15 +7,15 @@ from src.sw.yott_pipeline.stage3_yott import Stage3YOTT
 from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
 from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
 from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
-from src.util.traversal import Traversal
+from src.util.piplinebase import PiplineBase
 from src.util.util import Util
 
 
-class YOTTPipeline(Traversal):
+class YOTTPipeline(PiplineBase):
     len_pipeline = 7
 
-    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = 7, seed=0):
-        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, 7, num_threads, seed)
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = 7):
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, 7, num_threads)
         self.len_edges = len(self.edges_int[0])
 
     def run(self, n_copies: int = 1) -> dict:
@@ -24,22 +24,19 @@ class YOTTPipeline(Traversal):
         self.reset_random(0)
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
-            first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
 
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.get_initial_position_ij(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_placement_tables(first_nodes, self.len_pipeline)
 
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
-            # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
             stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
             stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads)
-            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, self.distance_table_bits,
-                                self.make_shuffle)
+            stage4 = Stage4YOTT(self.arch_type, self.n_lines, self.len_pipeline,
+                                self.distance_table_bits, self.make_shuffle)
             stage3 = Stage3YOTT(self.len_pipeline, n2c)
             stage5 = Stage5YOTT(self.arch_type)
             stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, c2n)
 
-            len_adjacentes_indexes = len(stage4.distance_table[0])
             counter = 0
             while not stage1.done:
                 # print(stage6.old_output_stage3)

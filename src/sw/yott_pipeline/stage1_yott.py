@@ -37,9 +37,8 @@ class Stage1YOTT:
         should_write = out_previous_stage['should_write']
         thread_valid = out_previous_stage['thread_valid']
 
-        self.edges_indexes[thread_index] += should_write
-
-        edge_index = self.edges_indexes[thread_index]
+        edge_index = self.edges_indexes[thread_index] + should_write
+        self.edges_indexes[thread_index] = edge_index
 
         thread_done = 1 if edge_index == self.len_edges else 0
 

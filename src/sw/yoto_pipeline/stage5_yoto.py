@@ -47,11 +47,6 @@ class Stage5YOTO(object):
         st4_dist_counter: int = st4_input['dist_counter']
         st4_b: int = st4_input['b']
 
-        # FIXME for debugging BEGIN
-        if st4_th_idx == 0 and st4_th_valid:
-            z = 1
-        # FIXME END
-
         place: bool = False
 
         out_of_border = Util.is_out_of_border_sqr(st4_ib, st4_jb, self.n_cells_sqrt)
