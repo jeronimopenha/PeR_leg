@@ -1,5 +1,3 @@
-from typing import Tuple, List
-
 import pygraphviz as pgv
 import networkx as nx
 import random
@@ -9,6 +7,13 @@ from math import ceil, sqrt
 class PeRGraph:
 
     def __init__(self, dot_path: str, dot_name: str):
+        """
+
+        @param dot_path:
+        @type dot_path:
+        @param dot_name:
+        @type dot_name:
+        """
         self.dot_path: str = dot_path
         self.dot_name: str = dot_name
         self.gv: pgv.AGraph = pgv.AGraph(self.dot_path, strict=False, directed=True)
@@ -23,7 +28,10 @@ class PeRGraph:
         self.n_cells_sqrt: int = 0
         self.get_dot_vars()
 
-    def get_dot_vars(self) -> None:
+    def get_dot_vars(self):
+        """
+
+        """
         self.nodes = list(self.g.nodes)
         self.n_nodes = len(self.nodes)
         self.edges_str = list(self.g.edges)
@@ -47,8 +55,6 @@ class PeRGraph:
 
     # FIXME
     def get_edges_depth_first(self) -> list[list]:
-        # FIXME Acertar o algoritmo para grafos não conectados
-        # FIXME docstring
         """_summary_
             Returns a list of edges according
             to the depth first algorithm
@@ -58,8 +64,10 @@ class PeRGraph:
 
         Returns:
             _type_: _description_
+            @return:
+            @rtype:
         """
-        temp_edges: list = list(self.g.edges_str)
+        temp_edges: list = list(self.g.edges)
         r_edges: list = []
 
         # finding the bottom node (with no successors)
@@ -71,8 +79,7 @@ class PeRGraph:
 
         # creating the edges list
         r: str = lower_node
-        q: list = []
-        q.append(r)
+        q: list = [r]
         working: bool = True
         while working:
             working = False
@@ -96,12 +103,15 @@ class PeRGraph:
         return r_edges
 
     def get_edges_zigzag(self, make_shuffle: bool = True) -> tuple[list[list], list, list]:
-        # FIXME docstring
         """_summary_
             Returns a list of edges according
             to the zigzag algorithm
         Returns:
             _type_: _description_
+            @param make_shuffle:
+            @type make_shuffle:
+            @return:
+            @rtype:
         """
 
         output_list: list = []
@@ -117,49 +127,49 @@ class PeRGraph:
         visited: list = []
         reconvergence: list = []
 
-        fanin: dict = {}
-        fanout: dict = {}
+        fan_in: dict = {}
+        fan_out: dict = {}
         for node in self.g.nodes():
-            fanin[node] = list(self.g.predecessors(node))
-            fanout[node] = list(self.g.successors(node))
+            fan_in[node] = list(self.g.predecessors(node))
+            fan_out[node] = list(self.g.successors(node))
             if make_shuffle:
-                random.shuffle(fanin[node])
-                random.shuffle(fanout[node])
+                random.shuffle(fan_in[node])
+                random.shuffle(fan_out[node])
 
         while stack:
             a, direction = stack.pop(0)  # get the top1
 
-            n_fanin: int = len(fanin[a])  # get size n_fanin
-            n_fanout: int = len(fanout[a])  # get size n_fanout
+            n_fan_in: int = len(fan_in[a])  # get size n_fan in
+            n_fanout: int = len(fan_out[a])  # get size n_fanout
 
             if direction == 'IN':  # direction == 'IN'
 
                 if n_fanout >= 1:  # Case 3
 
-                    b: str = fanout[a][-1]  # get the element more the right side
+                    b: str = fan_out[a][-1]  # get the element more the right side
 
-                    for i in range(n_fanin):
+                    for i in range(n_fan_in):
                         stack.insert(0, [a, 'IN'])
                     stack.insert(0, [b, 'OUT'])  # insert into stack
 
-                    fanout[a].remove(b)
-                    fanin[b].remove(a)
+                    fan_out[a].remove(b)
+                    fan_in[b].remove(a)
 
                     if b in visited:
                         reconvergence.append([a, b])
 
                     edges.append([a, b, 'OUT'])
 
-                elif n_fanin >= 1:  # Case 2
+                elif n_fan_in >= 1:  # Case 2
 
-                    b: str = fanin[a][-1]  # get the elem more in the right
+                    b: str = fan_in[a][-1]  # get the elem more in the right
 
                     stack.insert(0, [a, 'IN'])
-                    for i in range(n_fanin):
+                    for i in range(n_fan_in):
                         stack.insert(0, [b, 'IN'])
 
-                    fanin[a].remove(b)
-                    fanout[b].remove(a)
+                    fan_in[a].remove(b)
+                    fan_out[b].remove(a)
 
                     if b in visited:
                         reconvergence.append([a, b])
@@ -168,16 +178,16 @@ class PeRGraph:
 
             else:  # direction == 'OUT'
 
-                if n_fanin >= 1:  # Case 3
+                if n_fan_in >= 1:  # Case 3
 
-                    b = fanin[a][0]  # get the element more left side
+                    b = fan_in[a][0]  # get the element more left side
 
                     for i in range(n_fanout):
                         stack.insert(0, [a, 'OUT'])
                     stack.insert(0, [b, 'IN'])
 
-                    fanin[a].remove(b)
-                    fanout[b].remove(a)
+                    fan_in[a].remove(b)
+                    fan_out[b].remove(a)
 
                     if b in visited:
                         reconvergence.append([a, b])
@@ -186,14 +196,14 @@ class PeRGraph:
 
                 elif n_fanout >= 1:  # Case 2
 
-                    b = fanout[a][0]  # get the element more left side
+                    b = fan_out[a][0]  # get the element more left side
 
                     stack.insert(0, [a, 'OUT'])
                     for i in range(n_fanout):
                         stack.insert(0, [b, 'OUT'])
 
-                    fanout[a].remove(b)
-                    fanin[b].remove(a)
+                    fan_out[a].remove(b)
+                    fan_in[b].remove(a)
 
                     if b in visited:
                         reconvergence.append([a, b])
@@ -205,6 +215,15 @@ class PeRGraph:
 
     @staticmethod
     def clear_edges(edges: list[list], remove_placed_edges: bool = True) -> list[list]:
+        """
+
+        @param edges:
+        @type edges:
+        @param remove_placed_edges:
+        @type remove_placed_edges:
+        @return:
+        @rtype:
+        """
         dic: dict = {edges[0][0]: True,
                      edges[0][1]: True}
         new_edges: list[list] = [edges[0][:2]]

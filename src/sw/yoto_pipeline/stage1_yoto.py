@@ -4,11 +4,20 @@ class Stage1YOTO(object):
     """
 
     def __init__(self, n_threads: int, n_edges: int, len_pipeline: int):
+        """
+
+        @param n_threads:
+        @type n_threads:
+        @param n_edges:
+        @type n_edges:
+        @param len_pipeline:
+        @type len_pipeline:
+        """
         self.len_pipeline: int = len_pipeline
         self.n_threads: int = n_threads
         self.n_edges: int = n_edges
-        self.edge_counter: list[int] = [0 for i in range(self.len_pipeline)]
-        self.exec_counter: list[int] = [0 for i in range(self.len_pipeline)]
+        self.edge_counter: list[int] = [0 for _ in range(self.len_pipeline)]
+        self.exec_counter: list[int] = [0 for _ in range(self.len_pipeline)]
         self.total_pipeline_counter: int = 0
 
         self.thread_valid: list[bool] = [True if i < self.n_threads else False for i in range(self.len_pipeline)]
@@ -26,6 +35,13 @@ class Stage1YOTO(object):
         self.old_output: dict = self.new_output.copy()
 
     def compute(self, st1_input: dict, st5_input: dict):
+        """
+
+        @param st1_input:
+        @type st1_input:
+        @param st5_input:
+        @type st5_input:
+        """
         # Move forward the output
         self.old_output = self.new_output.copy()
 
@@ -46,11 +62,6 @@ class Stage1YOTO(object):
 
         # process the new output
         th_idx: int = self.th_idx
-
-        # FIXME for debugging BEGIN
-        if th_idx == 0:
-            z = 1
-        # FIXME END
 
         # increment the thread index
         self.th_idx = th_idx + 1 if th_idx + 1 < self.len_pipeline else 0

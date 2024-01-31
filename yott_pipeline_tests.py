@@ -2,7 +2,7 @@ import os
 from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-from src.util.util import Util
+from src.util.util import get_project_root, get_files_list_by_extension, save_json
 
 
 def run_connected_graphs():
@@ -15,7 +15,7 @@ def run_connected_graphs():
         make_shuffle: bool = True
         distance_table_bits: int = 2
 
-        root_path: str = Util.get_project_root()
+        root_path: str = get_project_root()
         dot_path_base = root_path + '/dot_db/'
         dot_connected_path = dot_path_base + 'connected/'
 
@@ -28,7 +28,7 @@ def run_connected_graphs():
             os.makedirs(output_path)
 
         # list connected benchmarks
-        dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
+        dots_list = get_files_list_by_extension(dot_connected_path, '.dot')
         reports: list[dict] = []
 
         # FIXME the line below is only for debugging
@@ -39,7 +39,7 @@ def run_connected_graphs():
             yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 7)
             raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
             formatted_report = yott_pipeline_sw.get_formatted_report(raw_report, output_path, dot_name)
-            Util.save_json(output_path, dot_name, formatted_report)
+            save_json(output_path, dot_name, formatted_report)
             reports.append(formatted_report)
             seed += 1
 

@@ -1,6 +1,4 @@
-from src.sw.sa_pipeline import st1
 from src.util.per_graph import PeRGraph
-from src.util.util import Util
 from src.util.per_enum import ArchType
 from src.util.traversal import Traversal
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
@@ -8,6 +6,7 @@ from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
 from src.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
 from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
 from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
+from src.util.util import create_exec_report, create_report
 
 
 class YotoPipeline(Traversal):
@@ -46,9 +45,7 @@ class YotoPipeline(Traversal):
                 st5_c2n.compute(st4_dist.old_output, st5_c2n.old_output)
                 counter += 1
 
-            reports[exec_key] = Util.create_exec_report(self, exec_num, st1_edge_sel.total_pipeline_counter,
-                                                        st1_edge_sel.exec_counter, st3_n2c.n2c)
+            reports[exec_key] = create_exec_report(self, exec_num, st1_edge_sel.total_pipeline_counter,
+                                                   st1_edge_sel.exec_counter, st3_n2c.n2c)
 
-        return Util.create_report(self, "YOTO", n_copies, reports)
-
-
+        return create_report(self, "YOTO", n_copies, reports)

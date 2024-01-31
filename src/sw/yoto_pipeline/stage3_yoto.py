@@ -4,10 +4,19 @@ class Stage3YOTO(object):
     """
 
     def __init__(self, n2c: list[list[list]], n_cells_sqrt: int, len_pipeline: int):
-        self.len_pipeline = len_pipeline
+        """
+
+        @param n2c:
+        @type n2c:
+        @param n_cells_sqrt:
+        @type n_cells_sqrt:
+        @param len_pipeline:
+        @type len_pipeline:
+        """
+        self.len_pipeline: int = len_pipeline
         self.n_cells_sqrt: int = n_cells_sqrt
         self.n2c: list[list[list]] = n2c
-        self.th_dist_table_counter: list[int] = [0 for i in range(self.len_pipeline)]
+        self.th_dist_table_counter: list[int] = [0 for _ in range(self.len_pipeline)]
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -22,6 +31,13 @@ class Stage3YOTO(object):
         self.old_output: dict = self.new_output.copy()
 
     def compute(self, st2_input: dict, st5_input: dict):
+        """
+
+        @param st2_input:
+        @type st2_input:
+        @param st5_input:
+        @type st5_input:
+        """
         # Move forward the output
         self.old_output = self.new_output.copy()
 
@@ -46,11 +62,6 @@ class Stage3YOTO(object):
         st2_dist_table_num: bool = st2_input['dist_table_num']
         st2_a: int = st2_input['a']
         st2_b: int = st2_input['b']
-
-        # FIXME for debugging BEGIN
-        if st2_th_idx == 0 and st2_th_valid:
-            z = 1
-        # FIXME END
 
         ia: int = self.n2c[st2_th_idx][st2_a][0] if self.n2c[st2_th_idx][st2_a][0] is not None else 0
         ja: int = self.n2c[st2_th_idx][st2_a][1] if self.n2c[st2_th_idx][st2_a][1] is not None else 0

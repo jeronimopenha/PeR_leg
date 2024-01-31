@@ -1,8 +1,6 @@
 from src.util.per_graph import PeRGraph
 from src.sw.yott_pipeline.FIFOQueue import FIFOQueue
 from src.sw.yott_pipeline.stage0_yott import Stage0YOTT
-
-from src.sw.yott_pipeline.stage0_yott import Stage0YOTT
 from src.sw.yott_pipeline.stage1_yott import Stage1YOTT
 from src.sw.yott_pipeline.stage2_yott import Stage2YOTT
 from src.sw.yott_pipeline.stage3_yott import Stage3YOTT
@@ -10,24 +8,39 @@ from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
 from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
 from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
 from src.util.traversal import Traversal
-from src.util.util import Util
+from src.util.util import get_edges_distances
+
 
 class YOTTPipeline(Traversal):
-    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits, make_shuffle, num_threads: int = 7):
-        super().__init__(per_graph, arch_type,distance_table_bits,make_shuffle,7,num_threads)
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = 7):
+        """
+
+        @param per_graph:
+        @type per_graph:
+        @param arch_type:
+        @type arch_type:
+        @param distance_table_bits:
+        @type distance_table_bits:
+        @param make_shuffle:
+        @type make_shuffle:
+        @param num_threads:
+        @type num_threads:
+        """
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, 7, num_threads)
         self.len_edges = len(self.edges_int[0])
         # print(self.annotations)
         # input()
-        #FIXME retirar
+        # FIXME retirar
         # self.annotations = [[[-1,-1] for i in range(self.len_edges)] for j in range(self.n_threads)]
 
-
-
     def run(self, n_copies: int = 1) -> dict:
+        """
 
-        # print(self.per_graph.nodes)
-        # print(self.per_graph.neighbors)
-        # print()
+        @param n_copies:
+        @type n_copies:
+        @return:
+        @rtype:
+        """
         raw_report: dict = {}
         self.reset_random(0)
         for t in range(n_copies):
@@ -35,18 +48,19 @@ class YOTTPipeline(Traversal):
             raw_report[results_key] = {}
 
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            N2C, C2N = self.get_initial_position_ij(first_nodes, self.len_pipeline)
-            
-            stage0 = Stage0YOTT(FIFOQueue(self.n_threads),self.len_pipeline)
-            # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
-            stage1 = Stage1YOTT(self.len_pipeline,self.n_threads,self.len_edges)
-            stage2 = Stage2YOTT(self.edges_int,self.per_graph,self.annotations,self.n_threads)
-            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,self.distance_table_bits, self.make_shuffle)
-            stage3 = Stage3YOTT(self.len_pipeline,N2C)
-            stage5 = Stage5YOTT(self.arch_type)
-            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt,self.len_pipeline,C2N)
+            n2c, c2n = self.get_initial_position_ij(first_nodes, self.len_pipeline)
 
-            len_adjacentes_indexes = len(stage4.distance_table[0])
+            stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
+            # FIXME zigzag deve conter apenas arestas que mapeiam todos os nós
+            stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
+            stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads)
+            stage4 = Stage4YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, self.distance_table_bits,
+                                self.make_shuffle)
+            stage3 = Stage3YOTT(self.len_pipeline, n2c)
+            stage5 = Stage5YOTT(self.arch_type)
+            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, c2n)
+
+            len_adjacency_indexes = len(stage4.distance_table[0])
 
             counter = 0
             while not stage1.done:
@@ -63,7 +77,7 @@ class YOTTPipeline(Traversal):
                 # print(stage2.new_output)
                 # print()
                 # print(stage2.old_output)
-                stage3.compute(stage2,stage6,len_adjacentes_indexes)
+                stage3.compute(stage2, stage6)
                 # print(stage3.new_output)
                 # print()
                 # print(stage3.old_output)
@@ -76,10 +90,10 @@ class YOTTPipeline(Traversal):
                 # print(stage5.new_output)
                 # print()
                 # print(stage5.old_output)
-                stage6.compute(stage5,stage0)
+                stage6.compute(stage5, stage0)
                 # print(stage6.new_output_stage3)
                 # print()
-        
+
                 # input()
                 counter += 1
             # self.print_grid(stage6.C2N)
@@ -95,34 +109,30 @@ class YOTTPipeline(Traversal):
                 th_key = 'Exec_%d_TH_%d' % (t, th)
                 th_dict[th_key]: dict = {}
                 th_dict[th_key]['total_th_clk'] = stage0.exec_counter[th]
-                th_dict[th_key]['th_placement'] = stage3.N2C[th]
+                th_dict[th_key]['th_placement'] = stage3.n2c[th]
 
                 graph_edges_str = self.per_graph.edges_str
                 graph_edges_int = self.get_edges_int(graph_edges_str)
-                dic_edges_dist, list_edges_dist = Util.get_edges_distances(self.arch_type, graph_edges_int,
-                                                                           stage3.N2C[th])
+                dic_edges_dist, list_edges_dist = get_edges_distances(self.arch_type, graph_edges_int,
+                                                                      stage3.n2c[th])
                 dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
                 th_dict[th_key]['th_placement_distances'] = dic_edges_dist
-
-                '''router_edges = [graph_edges_int[i] for i in
-                                sorted(range(len(list_edges_dist)), key=lambda i: list_edges_dist[i])]
-
-                routed, grid, dic_path = self.routing_mesh(router_edges, st3_n2c.n2c[th])
-                histogram: dict = {}
-                for path in dic_path.keys():
-                    path_len = len(dic_path[path])
-                    len_key = 'dist_%d' % path_len
-                    if len_key in histogram:
-                        histogram[len_key] += 1
-                    else:
-                        histogram[len_key] = 1
-                th_dict[th_key]['th_routed'] = routed'''
-                # th_dict[th_key]['th_histogram'] = dict(sorted(histogram.items()))
             raw_report[results_key]['th_results'] = th_dict
 
         return raw_report
 
     def get_formatted_report(self, formatted_report: dict, path: str, file_name: str) -> dict:
+        """
+
+        @param formatted_report:
+        @type formatted_report:
+        @param path:
+        @type path:
+        @param file_name:
+        @type file_name:
+        @return:
+        @rtype:
+        """
         exec_max_clk: int = -1
         exec_min_clk: int = -1
         exec_avg_clk: int = 0
@@ -204,8 +214,14 @@ class YOTTPipeline(Traversal):
         }
         return formatted_report
 
-    def print_grid(self,C2N):
-        for idx_thread,thread in enumerate(C2N):
+    @staticmethod
+    def print_grid(c2n: list[list[list]]):
+        """
+
+        @param c2n:
+        @type c2n:
+        """
+        for idx_thread, thread in enumerate(c2n):
             print(f'thread{idx_thread}')
             for row in thread:
                 print(row)

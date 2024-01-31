@@ -1,5 +1,5 @@
-from src.util.util import Util
 from src.util.per_enum import ArchType
+from src.util.util import get_distance_table
 
 
 class Stage4YOTO(object):
@@ -14,7 +14,7 @@ class Stage4YOTO(object):
         self.n_distance_tables = pow(2, self.distance_table_bits)
         self.make_shuffle = make_shuffle
         self.distance_table: list[list[list]] = [
-            Util.get_distance_table(self.arch_type, self.n_cells_sqrt, self.make_shuffle) for _ in
+            get_distance_table(self.arch_type, self.n_cells_sqrt, self.make_shuffle) for _ in
             range(self.n_distance_tables)]
 
         self.new_output: dict = {
