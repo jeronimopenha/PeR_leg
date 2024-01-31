@@ -21,7 +21,7 @@ class Stage2YOTO(object):
         self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
-            'dist_table_num': 0,
+            'dist_table_line': 0,
             'a': 0,
             'b': 0,
         }
@@ -43,14 +43,14 @@ class Stage2YOTO(object):
         st1_edge_n: int = st1_input['edg_n']
 
         edge_n_valid: bool = st1_edge_n < self.n_edges
-        dist_table_num: int = (st1_th_idx ^ st1_edge_n) & self.dist_table_mask
+        dist_table_line: int = (st1_th_idx ^ st1_edge_n) & self.dist_table_mask
 
         a, b = self.edges[st1_th_idx][st1_edge_n] if edge_n_valid else (0, 0)
 
         self.new_output = {
             'th_idx': st1_th_idx,
             'th_valid': st1_th_valid and edge_n_valid,
-            'dist_table_num': dist_table_num,
+            'dist_table_line': dist_table_line,
             'a': a,
             'b': b,
         }

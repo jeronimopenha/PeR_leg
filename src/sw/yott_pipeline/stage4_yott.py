@@ -3,7 +3,7 @@ from src.util.util import Util
 
 
 class Stage4YOTT:
-    def __init__(self, dimension_arch, len_pipeline, distance_table_bits, make_shuffle) -> None:
+    def __init__(self, arch_type: ArchType, dimension_arch, len_pipeline, distance_table_bits, make_shuffle) -> None:
         """
 
         @param dimension_arch:
@@ -15,9 +15,10 @@ class Stage4YOTT:
         @param make_shuffle:
         @type make_shuffle:
         """
+        self.arch_type = arch_type
         self.dimension_arch: int = dimension_arch
-        self.distance_table: list[list] = [Util.get_distance_table(ArchType.MESH, self.dimension_arch, make_shuffle) for
-                                           _ in range(len_pipeline)]
+        self.distance_table: list[list] = [Util.get_distance_table(arch_type, self.dimension_arch, make_shuffle) for
+                                           _ in range(pow(2, distance_table_bits))]
         self.dist_table_mask: int = pow(2, distance_table_bits) - 1
         self.new_output: dict = {
             'thread_index': 0,
@@ -46,11 +47,13 @@ class Stage4YOTT:
         adj_index = out_previous_stage['adj_index']
         c_a = out_previous_stage['C_A']
 
+        # fixme passar o calculo a linha da tabela de distacias para alum estagio anterior
         i, j = self.distance_table[(thread_index ^ edge_index) & self.dist_table_mask][adj_index]
 
         c_s = [c_a[0] + i, c_a[1] + j]
 
-        dist_ca_cs = dist_manhattan(c_a, c_s)  # type:ignore
+        # fixme criam um estágio a frente para calcular as distancias
+        dist_ca_cs = Util.calc_dist(c_a, c_s, self.arch_type)  # type:ignore
 
         self.new_output = {
             'thread_index': thread_index,

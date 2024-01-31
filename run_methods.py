@@ -15,7 +15,7 @@ dot_path_base = root_path + '/dot_db/'
 dot_connected_path = dot_path_base + 'connected/'
 make_shuffle: bool = True
 distance_table_bits: int = 2
-copies = [1, 10, 100]
+copies = [1, 10]
 for i, method in enumerate(methods):
     for arch_type in arch_types:
         len_pipe = method.len_pipeline
@@ -25,9 +25,9 @@ for i, method in enumerate(methods):
             print(method.__name__, arch_type, total_execution)
             print()
             threads_per_copy: int = len_pipe
-            seed: int = 0
 
-            output_path_base = os.getcwd() + '/results/sw/%s/t_%d/%s/' % (path_results[i], total_execution, arch_type)
+            output_path_base = Util.get_project_root() + '/reports/sw/%s/t_%d/%s/' % (
+                path_results[i], total_execution, arch_type.name)
 
             # output_path = output_path_base + test_name + '/'
             output_path = output_path_base
@@ -44,9 +44,8 @@ for i, method in enumerate(methods):
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
                 print(per_graph.dot_name)
-                pipeline_method = method(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe, seed)
+                pipeline_method = method(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
                 raw_report: dict = pipeline_method.run(total_execution // threads_per_copy)
                 formatted_report = Util.get_formatted_report(raw_report)
                 Util.save_json(output_path, dot_name, formatted_report)
                 reports.append(formatted_report)
-                seed += 1

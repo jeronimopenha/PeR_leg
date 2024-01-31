@@ -23,7 +23,7 @@ class Stage3YOTO(object):
             'th_valid': False,
             'ia': 0,
             'ja': 0,
-            'dist_table_num': 0,
+            'dist_table_line': 0,
             'dist_counter': 0,
             'b': 0,
         }
@@ -59,7 +59,7 @@ class Stage3YOTO(object):
         # process the new output
         st2_th_idx: int = st2_input['th_idx']
         st2_th_valid: bool = st2_input['th_valid']
-        st2_dist_table_num: bool = st2_input['dist_table_num']
+        st2_dist_table_line: bool = st2_input['dist_table_line']
         st2_a: int = st2_input['a']
         st2_b: int = st2_input['b']
 
@@ -72,7 +72,7 @@ class Stage3YOTO(object):
             'th_valid': st2_th_valid,
             'ia': ia,
             'ja': ja,
-            'dist_table_num': st2_dist_table_num,
+            'dist_table_line': st2_dist_table_line,
             'dist_counter': dist_counter,
             'b': st2_b,
         }

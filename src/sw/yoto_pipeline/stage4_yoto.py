@@ -37,16 +37,11 @@ class Stage4YOTO(object):
         st3_th_valid: bool = st3_input['th_valid']
         st3_ia: int = st3_input['ia']
         st3_ja: int = st3_input['ja']
-        st3_dist_table_num: int = st3_input['dist_table_num']
+        st3_dist_table_line: int = st3_input['dist_table_line']
         st3_dist_counter: int = st3_input['dist_counter']
         st3_b: int = st3_input['b']
 
-        # FIXME for debugging BEGIN
-        if st3_th_idx == 0 and st3_th_valid:
-            z = 1
-        # FIXME END
-
-        add_i, add_j = self.distance_table[st3_dist_table_num][st3_dist_counter]
+        add_i, add_j = self.distance_table[st3_dist_table_line][st3_dist_counter]
 
         ib: int = st3_ia + add_i
         jb: int = st3_ja + add_j

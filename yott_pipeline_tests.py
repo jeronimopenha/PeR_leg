@@ -12,7 +12,6 @@ def run_connected_graphs():
         print()
         threads_per_copy: int = 7
         total_threads: int = 70
-        seed: int = 0
         make_shuffle: bool = True
         distance_table_bits: int = 4
 
@@ -42,7 +41,7 @@ def run_connected_graphs():
             formatted_report = Util.get_formatted_report(raw_report)
             Util.save_json(output_path, dot_name, formatted_report)
             reports.append(formatted_report)
-            seed += 1
+
 
 
 if __name__ == '__main__':
