@@ -1,5 +1,5 @@
 from src.util.per_enum import ArchType
-from src.util.util import get_distance_table, dist_manhattan
+from src.util.util import Util
 
 
 class Stage4YOTT:
@@ -16,8 +16,8 @@ class Stage4YOTT:
         @type make_shuffle:
         """
         self.dimension_arch: int = dimension_arch
-        self.distance_table: list[list] = [get_distance_table(ArchType.MESH, self.dimension_arch, make_shuffle) for _ in
-                                           range(len_pipeline)]
+        self.distance_table: list[list] = [Util.get_distance_table(ArchType.MESH, self.dimension_arch, make_shuffle) for
+                                           _ in range(len_pipeline)]
         self.dist_table_mask: int = pow(2, distance_table_bits) - 1
         self.new_output: dict = {
             'thread_index': 0,

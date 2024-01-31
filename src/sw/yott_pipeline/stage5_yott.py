@@ -1,5 +1,5 @@
 from src.util.per_enum import ArchType
-from src.util.util import calc_dist
+from src.util.util import Util
 
 
 class Stage5YOTT:
@@ -62,4 +62,4 @@ class Stage5YOTT:
         @return: 
         @rtype: 
         """
-        return abs(calc_dist(c_s, c_c, arch_type) - dist_c_b)
+        return abs(Util.calc_dist(c_s, c_c, arch_type) - dist_c_b)

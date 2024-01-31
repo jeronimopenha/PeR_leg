@@ -1,4 +1,4 @@
-from src.util.util import is_out_of_border_sqr
+from src.util.util import Util
 
 
 class Stage5YOTO(object):
@@ -54,7 +54,7 @@ class Stage5YOTO(object):
 
         place: bool = False
 
-        out_of_border = is_out_of_border_sqr(st4_ib, st4_jb, self.n_cells_sqrt)
+        out_of_border = Util.is_out_of_border_sqr(st4_ib, st4_jb, self.n_cells_sqrt)
 
         cb_content = 0 if out_of_border else self.c2n[st4_th_idx][st4_ib][st4_jb]
 

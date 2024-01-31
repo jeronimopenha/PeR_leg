@@ -2,7 +2,7 @@ import os
 from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
-from src.util.util import get_project_root, get_files_list_by_extension, get_formatted_report, save_json
+from src.util.util import Util
 
 
 def run_connected_graphs():
@@ -13,7 +13,7 @@ def run_connected_graphs():
     make_shuffle: bool = True
     distance_table_bits: int = 4
 
-    root_path: str = get_project_root()
+    root_path: str = Util.get_project_root()
     dot_path_base = root_path + '/dot_db/'
     dot_connected_path = dot_path_base + 'connected/'
 
@@ -25,7 +25,7 @@ def run_connected_graphs():
         os.makedirs(output_path)
 
     # list connected benchmarks
-    dots_list = get_files_list_by_extension(dot_connected_path, '.dot')
+    dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
 
     # FIXME the line below is only for debugging
     # dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
@@ -35,8 +35,8 @@ def run_connected_graphs():
         yoto_pipeline_sw = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy,
                                         random_seed)
         raw_report: dict = yoto_pipeline_sw.run(total_threads // threads_per_copy)
-        formatted_report = get_formatted_report(raw_report)
-        save_json(output_path, dot_name, formatted_report)
+        formatted_report = Util.get_formatted_report(raw_report)
+        Util.save_json(output_path, dot_name, formatted_report)
         random_seed += 1
 
 

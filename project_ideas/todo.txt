@@ -1,0 +1,3 @@
+Olhar o problema dos bits da tabela de distâncias do yott
+os tests podem ser executados juntos
+as classes pipeline

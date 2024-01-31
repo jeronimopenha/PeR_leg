@@ -8,17 +8,17 @@ from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
 from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
 from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
 from src.util.traversal import Traversal
-from src.util.util import get_edges_distances
+from src.util.util import Util
 
 
 class YOTTPipeline(Traversal):
     len_pipeline = 7
-    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits, make_shuffle, num_threads: int = 7,seed = 0):
-        super().__init__(per_graph, arch_type,distance_table_bits,make_shuffle,7,num_threads, seed)
+
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = 7, seed=0):
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, 7, num_threads, seed)
         self.len_edges = len(self.edges_int[0])
 
     def run(self, n_copies: int = 1) -> dict:
-        """
 
         reports = {}
         self.reset_random(0)
@@ -77,15 +77,12 @@ class YOTTPipeline(Traversal):
             # self.print_grid(stage6.C2N)
 
             reports[exec_key] = Util.create_exec_report(self, exec_num, stage0.total_pipeline_counter,
-                                                        stage0.exec_counter, stage3.N2C)
+                                                        stage0.exec_counter, stage3.n2c)
 
         return Util.create_report(self, "YOTT", n_copies, reports)
 
-
-
-
-    def print_grid(self,C2N):
-        for idx_thread,thread in enumerate(C2N):
+    def print_grid(self, C2N):
+        for idx_thread, thread in enumerate(C2N):
             print(f'thread{idx_thread}')
             for row in thread:
                 print(row)
