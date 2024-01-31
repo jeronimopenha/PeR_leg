@@ -215,6 +215,7 @@ class Util(object):
 
         return cell
 
+
     @staticmethod
     def get_files_list_by_extension(path: str, file_extension: str) -> list[list]:
         files_list_by_extension = [[os.path.join(file_path, file_name), file_name] for file_path, dir_name, filenames in
