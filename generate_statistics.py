@@ -6,5 +6,5 @@ new_data_files = []
 for data_file in data_files:
     new_data_files.append(data_file[0])
 df = statistics_generator.generate_statistics_pandas(new_data_files)
-StatisticsGeneratorJSON.write_pandas_to_csv(df,"/home/fabio/Mestrado/PeR/results/sw/",'statistics_sw.csv')
+StatisticsGeneratorJSON.write_df_to_csv(df,"/home/fabio/Mestrado/PeR/results/sw/",'statistics_sw.csv')
 

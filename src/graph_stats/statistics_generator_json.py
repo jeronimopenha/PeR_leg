@@ -34,7 +34,8 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
                 df = df.append(dict_data,ignore_index=True)
         return df
     
-    def write_pandas_to_csv(df:pandas.DataFrame, output_file_path:str ,output_file_name:str):
+    @staticmethod
+    def write_df_to_csv(df:pandas.DataFrame, output_file_path:str ,output_file_name:str):
         arch_types = df['Arch Type'].unique()
         num_archs = len(arch_types)
         algorithms = (df['Algorithm'].unique())
@@ -68,14 +69,18 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
             filter = filter.rename(columns=new_columns)
             filter = filter.drop(['Arch Type','Algorithm','Total Executions'],axis=1)
             updated_filters.append(filter)
-        
-        for i in range(num_algorithms):
+        # print(updated_filters)
+        for i in range(num_exec_per_algorith):
             cur_index = i
             if i == 0:
                 new_df = updated_filters[i]
+            else: 
+                new_df = new_df.merge(updated_filters[i],on=['Bench','N Edges','Visited Edges'])
             while cur_index + num_exec_per_algorith < len(updated_filters):
-                new_df = new_df.merge(updated_filters[cur_index+num_algorithms],on=['Bench','N Edges','Visited Edges'])
+                new_df = new_df.merge(updated_filters[cur_index+num_exec_per_algorith],on=['Bench','N Edges','Visited Edges'])
                 cur_index += num_exec_per_algorith
-
+            # print(new_df.columns)
+            # input()
+        print(new_df.columns)
         new_df.to_csv(output_file_path+output_file_name)
 

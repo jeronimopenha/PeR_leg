@@ -14,8 +14,8 @@ from src.util.util import Util
 
 class YOTTPipeline(Traversal):
     len_pipeline = 7
-    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits, make_shuffle, num_threads: int = 7):
-        super().__init__(per_graph, arch_type,distance_table_bits,make_shuffle,7,num_threads)
+    def __init__(self,per_graph: PeRGraph,arch_type,distance_table_bits, make_shuffle, num_threads: int = 7,seed = 0):
+        super().__init__(per_graph, arch_type,distance_table_bits,make_shuffle,7,num_threads, seed)
         self.len_edges = len(self.edges_int[0])
 
     def run(self, n_copies: int = 1) -> dict:

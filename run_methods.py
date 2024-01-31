@@ -8,18 +8,18 @@ from src.util.util import Util
 
 methods = [YotoPipeline, YOTTPipeline]
 path_results = ["yoto/yoto_pipeline","yott/yott_pipeline"]
-arch_types = [ ArchType.MESH, ArchType.ONE_HOP]
 
+arch_types = [ ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
 dot_path_base = root_path + '/dot_db/'
 dot_connected_path = dot_path_base + 'connected/'
 make_shuffle: bool = True
 distance_table_bits: int = 2
-
+copies = [1,10,100]
 for i,method in enumerate(methods):
     for arch_type in arch_types:        
         len_pipe = method.len_pipeline
-        total_executions = [len_pipe,len_pipe*10]
+        total_executions = [len_pipe * copy for copy in copies]
         for total_execution in total_executions:
             print()
             print(method.__name__,arch_type,total_execution)
@@ -44,7 +44,7 @@ for i,method in enumerate(methods):
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
                 print(per_graph.dot_name)
-                pipeline_method = method(per_graph, arch_type, distance_table_bits,make_shuffle,len_pipe)
+                pipeline_method = method(per_graph, arch_type, distance_table_bits,make_shuffle,len_pipe,seed)
                 raw_report: dict = pipeline_method.run(total_execution // threads_per_copy)
                 formatted_report = Util.get_formatted_report(raw_report)
                 Util.save_json(output_path, dot_name,formatted_report)
