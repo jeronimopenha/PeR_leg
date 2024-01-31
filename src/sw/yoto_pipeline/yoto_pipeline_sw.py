@@ -1,11 +1,11 @@
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
 from src.util.piplinebase import PiplineBase
+from src.sw.yoto_pipeline.stage0_yoto import Stage0YOTO
 from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
 from src.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
 from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
-from src.sw.yoto_pipeline.stage5_yoto import Stage5YOTO
 from src.util.util import Util
 
 
@@ -30,23 +30,23 @@ class YotoPipeline(PiplineBase):
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
             n2c, c2n = self.init_placement_tables(first_nodes, self.len_pipeline)
 
-            st1_edge_sel: Stage1YOTO = Stage1YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
-            st2_edges: Stage2YOTO = Stage2YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)
-            st3_n2c: Stage3YOTO = Stage3YOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
-            st4_dist = Stage4YOTO(self.arch_type, self.per_graph.n_cells_sqrt, self.distance_table_bits,
+            st0_edge_sel: Stage0YOTO = Stage0YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
+            st1_edges: Stage1YOTO = Stage1YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)
+            st2_n2c: Stage2YOTO = Stage2YOTO(n2c, self.per_graph.n_cells_sqrt, self.len_pipeline)
+            st3_dist = Stage3YOTO(self.arch_type, self.per_graph.n_cells_sqrt, self.distance_table_bits,
                                   self.make_shuffle)
-            st5_c2n = Stage5YOTO(c2n, self.per_graph.n_cells_sqrt)
+            st4_c2n = Stage4YOTO(c2n, self.per_graph.n_cells_sqrt)
 
             counter = 0
-            while not st1_edge_sel.done:
-                st1_edge_sel.compute(st1_edge_sel.old_output, st5_c2n.old_output)
-                st2_edges.compute(st1_edge_sel.old_output)
-                st3_n2c.compute(st2_edges.old_output, st5_c2n.old_output)
-                st4_dist.compute(st3_n2c.old_output)
-                st5_c2n.compute(st4_dist.old_output, st5_c2n.old_output)
+            while not st0_edge_sel.done:
+                st0_edge_sel.compute(st0_edge_sel.old_output, st4_c2n.old_output)
+                st1_edges.compute(st0_edge_sel.old_output)
+                st2_n2c.compute(st1_edges.old_output, st4_c2n.old_output)
+                st3_dist.compute(st2_n2c.old_output)
+                st4_c2n.compute(st3_dist.old_output, st4_c2n.old_output)
                 counter += 1
 
-            reports[exec_key] = Util.create_exec_report(self, exec_num, st1_edge_sel.total_pipeline_counter,
-                                                        st1_edge_sel.exec_counter, st3_n2c.n2c)
+            reports[exec_key] = Util.create_exec_report(self, exec_num, st0_edge_sel.total_pipeline_counter,
+                                                        st0_edge_sel.exec_counter, st2_n2c.n2c)
 
         return Util.create_report(self, "YOTO", n_copies, reports)

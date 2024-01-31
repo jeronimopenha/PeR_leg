@@ -1,49 +1,42 @@
-import os
-import sys
-
-if os.getcwd() not in sys.path:
-    sys.path.append(os.getcwd())
-
-import src.sw.th as _th
-import src.sw.st1 as _st1
-import src.sw.st2 as _st2
-import src.sw.st3 as _st3
-import src.sw.st4 as _st4
-import src.sw.sa_pipeline.st5 as _st5
-import src.sw.st6 as _st6
-import src.sw.st7 as _st7
-import src.sw.st8 as _st8
-import src.sw.st9 as _st9
-import src.sw.st10 as _st10
-import src.hw.sa_pipeline.util as _u
-
+from src.sw.sa_pipeline.stage0_sa import Stage0SA
+from src.sw.sa_pipeline.stage1_sa import Stage1SA
+from src.sw.sa_pipeline.stage2_sa import Stage2SA
+from src.sw.sa_pipeline.stage3_sa import Stage3SA
+from src.sw.sa_pipeline.stage4_sa import Stage4SA
+from src.sw.sa_pipeline.stage5_sa import Stage5SA
+from src.sw.sa_pipeline.stage6_sa import Stage6SA
+from src.sw.sa_pipeline.stage7_sa import Stage7SA
+from src.sw.sa_pipeline.stage8_sa import Stage8SA
+from src.sw.sa_pipeline.stage9_sa import Stage9SA
+from src.sw.sa_pipeline.stage10_sa import Stage10SA
+from src.util.util import Util
 
 if __name__ == '__main__':
     n_threads = 6
-    sa_graph = _u.SaGraph(os.getcwd() + '/../../dot_db/mac.dot_db')
+    sa_graph = SaGraph(os.getcwd() + '/../../dot_db/mac.dot_db')
     print(sa_graph.nodes)
     print(sa_graph.neighbors)
 
-    th = _th.Stage1YOTO(sa_graph, n_threads=n_threads)
-    st1 = _st1.St1(sa_graph, n_threads=n_threads)
-    st2 = _st2.St2(sa_graph)
-    st3 = _st3.St3(sa_graph, n_threads=n_threads)
-    st4 = _st4.St4(sa_graph)
-    st5 = _st5.St5(sa_graph)
-    st6 = _st6.St6()
-    st7 = _st7.St7()
-    st8 = _st8.St9()
-    st9 = _st9.St9()
-    st10 = _st10.St10()
+    st0 = Stage0SA(sa_graph, n_threads=n_threads)
+    st1 = Stage1SA(sa_graph, n_threads=n_threads)
+    st2 = Stage2SA(sa_graph)
+    st3 = Stage3SA(sa_graph, n_threads=n_threads)
+    st4 = Stage4SA(sa_graph)
+    st5 = Stage5SA(sa_graph)
+    st6 = Stage6SA()
+    st7 = Stage7SA()
+    st8 = Stage8SA()
+    st9 = Stage9SA()
+    st10 = Stage10SA()
 
     for i in range(288 * 1000):
-        th.compute()
-        st1.compute(th.old_output, st9.old_output, st1.old_output['wb'])
+        st0.compute()
+        st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
         st2.compute(st1.old_output)
         st3.compute(st2.old_output, st3.old_output['wb'])
         st4.compute(st3.old_output)
-        st5.execute(st4.old_output)
-        st6.compute(st5.output)
+        st5.compute(st4.old_output)
+        st6.compute(st5.old_output)
         st7.compute(st6.old_output)
         st8.compute(st7.old_output)
         st9.compute(st8.old_output)

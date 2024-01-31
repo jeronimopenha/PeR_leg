@@ -1,44 +1,43 @@
 from math import ceil, sqrt
-import src.hw.sa_pipeline.util as _u
+from src.util.per_graph import PeRGraph
 
 
-class St1:
+class Stage1SA:
     """
     First Pipe from SA_Verilog. This pipe is responsible to search the content of the two cells selected by threads
     """
 
-    def __init__(self, sa_graph: _u.SaGraph, n_threads: int = 10):
-        self.sa_graph = sa_graph
-        self.sa_graph.reset_random()
+    def __init__(self, per_graph: PeRGraph, n_threads: int = 10):
+        self.per_graph = per_graph
+        # self.per_graph.reset_random()
         self.n_threads = n_threads
-        self.c2n = [sa_graph.get_initial_grid()[0]
+        # fixme
+        self.c2n = [per_graph.get_initial_grid()[0]
                     for i in range(self.n_threads)]
-        self.fifo_a = [{'idx': 0, 'c': 0, 'n': None}
-                       for i in range(self.n_threads-2)]
-        self.fifo_b = [{'idx': 0, 'c': 0, 'n': None}
-                       for i in range(self.n_threads-2)]
+        self.fifo_a = [{'th_idx': 0, 'cell': 0, 'node': None}
+                       for i in range(self.n_threads - 2)]
+        self.fifo_b = [{'th_idx': 0, 'cell': 0, 'node': None}
+                       for i in range(self.n_threads - 2)]
         self.flag = True
 
         self.output_new = {
-            'idx': 0,
-            'v': False,
-            'ca': 0,
-            'cb': 0,
-            'na': None,
-            'nb': None,
+            'th_idx': 0,
+            'th_valid': False,
+            'cell_a': 0,
+            'cell_b': 0,
+            'node_a': None,
+            'node_b': None,
             'sw': {'idx': 0, 'v': False, 'sw': False},
             'wa': {'idx': 0, 'c': 0, 'n': None},
             'wb': {'idx': 0, 'c': 0, 'n': None},
         }
-        self.output = self.output_new.copy()
-        # for i in range(self.n_threads):
-        #for i in range(self.n_threads):
-        self.print_matrix(0)
+        self.old_output = self.output_new.copy()
+        # self.print_matrix(0)
 
     # TODO update logic
-    def execute(self, _in: dict(), _sw: dict(), _wb: dict()):
+    def compute(self, _in: dict, _sw: dict, _wb: dict):
         # moving forward the ready outputs
-        self.output = self.output_new.copy()
+        self.old_output = self.output_new.copy()
 
         # reading pipe inputs
         idx = _in['idx']
@@ -71,7 +70,7 @@ class St1:
             else:
                 self.c2n[uwb['idx']][uwb['c']] = uwb['n']
                 self.flag = not self.flag
-                if(uwb['idx'] == 0):
+                if (uwb['idx'] == 0):
                     self.print_matrix(uwb['idx'])
 
         # fifos outptuts ready to be moved forward

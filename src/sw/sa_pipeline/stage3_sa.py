@@ -2,7 +2,7 @@ from math import ceil, sqrt
 import src.hw.sa_pipeline.util as _u
 
 
-class St3:
+class Stage3SA:
     """
     Third Pipe from SA_Verilog. This pipe is responsible to bring the neighboor's cell from each neighbor node.
     """
@@ -14,7 +14,7 @@ class St3:
         self.n2c = [sa_graph.get_initial_grid()[1]
                     for i in range(self.n_threads)]
         self.flag = True
-        self.output_new = {
+        self.new_output = {
             'idx': 0,
             'v': False,
             'ca': 0,
@@ -25,16 +25,16 @@ class St3:
             'wa': {'idx': 0, 'c': 0, 'n': None},
             'wb': {'idx': 0, 'c': 0, 'n': None},
         }
-        self.output = self.output_new.copy()
+        self.old_output = self.new_output.copy()
         # self.print_matrix(0)
 
-    def execute(self, _in: dict(),  _wb: dict()):
+    def compute(self, _in: dict, _wb: dict):
         # moving forward the ready outputs
-        self.output = self.output_new.copy()
+        self.old_output = self.new_output.copy()
 
         # update memory
-        usw = self.output_new['sw']['sw']
-        uwa = self.output_new['wa']
+        usw = self.new_output['sw']['sw']
+        uwa = self.new_output['wa']
         uwb = _wb
         if usw:
             if self.flag:
@@ -49,17 +49,17 @@ class St3:
                 #    self.print_matrix(uwb['idx'])
 
         # reading pipe inputs
-        self.output_new['idx'] = _in['idx']
-        self.output_new['v'] = _in['v']
-        self.output_new['ca'] = _in['ca']
-        self.output_new['cb'] = _in['cb']
+        self.new_output['idx'] = _in['idx']
+        self.new_output['v'] = _in['v']
+        self.new_output['ca'] = _in['ca']
+        self.new_output['cb'] = _in['cb']
 
-        self.output_new['sw'] = _in['sw']
-        self.output_new['wa'] = _in['wa']
-        self.output_new['wb'] = _in['wb']
+        self.new_output['sw'] = _in['sw']
+        self.new_output['wa'] = _in['wa']
+        self.new_output['wb'] = _in['wb']
 
-        self.output_new['cva'] = [None, None, None, None]
-        self.output_new['cvb'] = [None, None, None, None]
+        self.new_output['cva'] = [None, None, None, None]
+        self.new_output['cvb'] = [None, None, None, None]
 
         idx = _in['idx']
         va = _in['va']
@@ -67,12 +67,12 @@ class St3:
 
         for i in range(len(va)):
             if va[i] is not None:
-                self.output_new['cva'][i] = self.n2c[idx][va[i]]
+                self.new_output['cva'][i] = self.n2c[idx][va[i]]
             else:
                 break
         for i in range(len(vb)):
             if vb[i] is not None:
-                self.output_new['cvb'][i] = self.n2c[idx][vb[i]]
+                self.new_output['cvb'][i] = self.n2c[idx][vb[i]]
             else:
                 break
 
