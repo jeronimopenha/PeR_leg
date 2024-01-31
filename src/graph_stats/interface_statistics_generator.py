@@ -7,14 +7,14 @@ class IStatisticsGenerator(ABC):
         pass
 
     def generate_data_dict(bench:str,n_edges:int,visited_edges:int,dist_total:int,edges_greater_0 :int,arch_type:str, algorithm:str,total_executions:int):
-        return {IStatisticsGenerator.columns[0]:bench,
-                IStatisticsGenerator.columns[1]:n_edges,
-                IStatisticsGenerator.columns[2]:visited_edges,
-                IStatisticsGenerator.columns[3]:dist_total,
-                IStatisticsGenerator.columns[4]:edges_greater_0,
-                IStatisticsGenerator.columns[5]:arch_type,
-                IStatisticsGenerator.columns[6]:algorithm,
-                IStatisticsGenerator.columns[7]:total_executions,
+        return {IStatisticsGenerator.columns[0]: bench,
+                IStatisticsGenerator.columns[1]: n_edges,
+                IStatisticsGenerator.columns[2]: visited_edges,
+                IStatisticsGenerator.columns[3]: dist_total,
+                IStatisticsGenerator.columns[4]: edges_greater_0,
+                IStatisticsGenerator.columns[5]: arch_type,
+                IStatisticsGenerator.columns[6]: algorithm,
+                IStatisticsGenerator.columns[7]: total_executions,
                 }
 
     
