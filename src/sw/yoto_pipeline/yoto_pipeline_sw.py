@@ -10,6 +10,7 @@ from src.util.util import create_exec_report, create_report
 
 
 class YotoPipeline(Traversal):
+    len_pipeline = 6
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
                  n_threads: int = 1, random_seed: int = 0):
         self.len_pipeline: int = 6

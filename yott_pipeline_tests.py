@@ -9,11 +9,12 @@ def run_connected_graphs():
     archs_types = [ArchType.MESH, ArchType.ONE_HOP]
     for arch_type in archs_types:
         print(arch_type.name)
+        print()
         threads_per_copy: int = 7
         total_threads: int = 70
         seed: int = 0
         make_shuffle: bool = True
-        distance_table_bits: int = 2
+        distance_table_bits: int = 4
 
         root_path: str = get_project_root()
         dot_path_base = root_path + '/dot_db/'
@@ -39,9 +40,10 @@ def run_connected_graphs():
             yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 7)
             raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
             formatted_report = yott_pipeline_sw.get_formatted_report(raw_report, output_path, dot_name)
-            save_json(output_path, dot_name, formatted_report)
+            Util.save_json(output_path, dot_name,formatted_report)
             reports.append(formatted_report)
             seed += 1
+
 
 
 if __name__ == '__main__':
