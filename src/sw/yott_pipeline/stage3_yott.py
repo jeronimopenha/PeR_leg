@@ -17,12 +17,12 @@ class Stage3YOTT:
             'C_C': [0, 0],
             'dist_CB': 1,
             'adj_index': 0,
-            'edge_index': 0
+            'index_list_edge': 0
         }
 
         self.old_output: dict = self.new_output
 
-    def compute(self, stage2, stage6):
+    def compute(self, stage2, stage9):
         """
 
         @param stage2:
@@ -32,15 +32,15 @@ class Stage3YOTT:
         """
         self.old_output = self.new_output.copy()
 
-        out_stage6 = stage6.old_output_stage3
-        old_thread_index = out_stage6['thread_index']
+        out_stage9 = stage9.old_output
+        old_thread_index = out_stage9['thread_index']
 
-        if out_stage6['should_write']:
-            old_b = out_stage6['B']
-            old_c_s = out_stage6['C_S']
+        if out_stage9['should_write']:
+            old_b = out_stage9['B']
+            old_c_s = out_stage9['C_S']
             self.n2c[old_thread_index][old_b] = old_c_s  # type:ignore
             self.thread_adj_indexes[old_thread_index] = 0
-        elif out_stage6['thread_valid'] == 1:
+        elif out_stage9['thread_valid'] == 1:
             self.thread_adj_indexes[old_thread_index] += 1
 
         out_previous_stage = stage2.old_output
@@ -53,7 +53,7 @@ class Stage3YOTT:
         c_c = self.n2c[thread_index][c] if c > -1 else [-1, -1]  # type:ignore
 
         adj_index = self.thread_adj_indexes[thread_index] if thread_valid else 0
-        # print(self.N2C[thread_index])
+
         self.new_output = {
             'thread_index': thread_index,
             'thread_valid': thread_valid,
@@ -62,6 +62,5 @@ class Stage3YOTT:
             'C_C': c_c,
             'dist_CB': out_previous_stage['dist_CB'],
             'adj_index': adj_index,
-            'edge_index': out_previous_stage['edge_index']
-
+            'index_list_edge': out_previous_stage['index_list_edge']
         }

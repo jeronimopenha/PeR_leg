@@ -7,15 +7,19 @@ from src.sw.yott_pipeline.stage3_yott import Stage3YOTT
 from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
 from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
 from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
+from src.sw.yott_pipeline.stage7_yott import Stage7YOTT
+from src.sw.yott_pipeline.stage8_yott import Stage8YOTT
+from src.sw.yott_pipeline.stage9_yott import Stage9YOTT
 from src.util.piplinebase import PiplineBase
 from src.util.util import Util
 
 
 class YOTTPipeline(PiplineBase):
-    len_pipeline = 7
+    len_pipeline = 10
 
-    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = 7):
-        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, 7, num_threads)
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads : int = None):
+        num_threads = self.len_pipeline if num_threads == None else num_threads
+        super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
 
     def run(self, n_copies: int = 1) -> dict:
@@ -30,12 +34,15 @@ class YOTTPipeline(PiplineBase):
 
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
             stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
-            stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads)
-            stage4 = Stage4YOTT(self.arch_type, self.n_lines, self.len_pipeline,
-                                self.distance_table_bits, self.make_shuffle)
+            stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads,self.distance_table_bits)
+            stage4 = Stage4YOTT(self.arch_type, self.n_lines,self.distance_table_bits, self.make_shuffle)
             stage3 = Stage3YOTT(self.len_pipeline, n2c)
+            stage4 = Stage4YOTT(self.arch_type,self.n_lines,self.distance_table_bits,self.make_shuffle)
             stage5 = Stage5YOTT(self.arch_type)
-            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, c2n)
+            stage6 = Stage6YOTT(self.arch_type)
+            stage7 = Stage7YOTT(self.n_lines, self.len_pipeline, c2n)
+            stage8 = Stage8YOTT()
+            stage9 = Stage9YOTT(self.len_pipeline)
 
             counter = 0
             while not stage1.done:
@@ -52,7 +59,7 @@ class YOTTPipeline(PiplineBase):
                 # print(stage2.new_output)
                 # print()
                 # print(stage2.old_output)
-                stage3.compute(stage2, stage6)
+                stage3.compute(stage2, stage9)
                 # print(stage3.new_output)
                 # print()
                 # print(stage3.old_output)
@@ -65,13 +72,23 @@ class YOTTPipeline(PiplineBase):
                 # print(stage5.new_output)
                 # print()
                 # print(stage5.old_output)
-                stage6.compute(stage5, stage0)
+                stage6.compute(stage5)
+                # print(stage6.new_output_stage3)
+                # print()
+                # print(stage5.old_output)
+                stage7.compute(stage6, stage9)
+                # print(stage6.new_output_stage3)
+                # print()
+                stage8.compute(stage7)
+                # print(stage6.new_output_stage3)
+                # print()
+                stage9.compute(stage8, stage0)
                 # print(stage6.new_output_stage3)
                 # print()
 
                 # input()
                 counter += 1
-            # self.print_grid(stage6.C2N)
+            # self.print_grid(stage7.c2n)
 
             reports[exec_key] = Util.create_exec_report(self, exec_num, stage0.total_pipeline_counter,
                                                         stage0.exec_counter, stage3.n2c)

@@ -10,8 +10,8 @@ def run_connected_graphs():
     for arch_type in archs_types:
         print(arch_type.name)
         print()
-        threads_per_copy: int = 7
-        total_threads: int = 70
+        threads_per_copy: int = 10
+        total_threads: int = 100
         make_shuffle: bool = True
         distance_table_bits: int = 4
 
@@ -46,5 +46,5 @@ def run_connected_graphs():
 
 if __name__ == '__main__':
     # per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/mults1.dot","mults1.dot")
-    # yott = YOTTPipeline(per,ArchType.MESH,2,7).run(600)
+    # yott = YOTTPipeline(per,ArchType.MESH,2,7).run(100)
     run_connected_graphs()
