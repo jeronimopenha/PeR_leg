@@ -25,7 +25,6 @@ class YOTTPipeline(PiplineBase):
     def run(self, n_copies: int = 1) -> dict:
 
         reports = {}
-        self.reset_random(0)
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
 

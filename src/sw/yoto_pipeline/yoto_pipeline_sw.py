@@ -24,7 +24,6 @@ class YotoPipeline(PiplineBase):
         # print()
 
         reports = {}
-        self.reset_random(0)
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
