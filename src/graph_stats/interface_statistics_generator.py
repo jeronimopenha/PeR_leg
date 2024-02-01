@@ -45,7 +45,6 @@ class IStatisticsGenerator(ABC):
 
         comum_columns = ['Bench','N Edges','Visited Edges']
         head = ",,,"
-        print(final_filter)
         for i in range(num_exec_per_algorithm):
             cur_index = i
             arch_type = final_filter[i]['Arch Type'].unique().tolist()[0]
@@ -68,8 +67,7 @@ class IStatisticsGenerator(ABC):
 
                 new_df = new_df.merge(final_filter[cur_index+num_exec_per_algorithm],on=comum_columns)
                 cur_index += num_exec_per_algorithm
-            # print(new_df.columns)
-            # input()
+
         filename = output_file_path+output_file_name
         head+='\n'
         with open(filename, 'w') as file:
