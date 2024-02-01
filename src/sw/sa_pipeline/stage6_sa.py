@@ -6,8 +6,8 @@ class Stage6SA:
 
     def __init__(self):
         self.new_output = {
-            'idx': 0,
-            'v': False,
+            'th_idx': 0,
+            'th_valid': False,
             'dvac': 0,
             'dvbc': 0,
             'dvas': [0, 0],
@@ -19,8 +19,8 @@ class Stage6SA:
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['idx'] = _in['idx']
-        self.new_output['v'] = _in['v']
+        self.new_output['th_idx'] = _in['th_idx']
+        self.new_output['th_valid'] = _in['th_valid']
 
         dvac = _in['dvac']
         dvbc = _in['dvbc']

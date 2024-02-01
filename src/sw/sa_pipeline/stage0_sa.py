@@ -1,22 +1,19 @@
 import math
 
-from src.util.per_graph import PeRGraph
-
 
 class Stage0SA:
     """
     This class is responsible to generate the values for each thread.
     """
 
-    def __init__(self, per_graph: PeRGraph, n_threads: int = 10):
+    def __init__(self, n_cells: int, n_threads: int):
         """
 
         @param per_graph:
         @param n_threads:
         """
-        self.per_graph: PeRGraph = per_graph
         self.n_threads: int = n_threads
-        self.n_cells: int = per_graph.n_cells
+        self.n_cells: int = n_cells
         self.th_bits: int = math.ceil(math.log2(self.n_threads))
         self.cell_bits: int = math.ceil(math.log2(self.n_cells))
         self.counter_mask = int(pow(math.ceil(math.sqrt(self.n_cells)), 2)) - 1

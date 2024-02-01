@@ -21,12 +21,11 @@ class YOTTPipeline(PiplineBase):
     def run(self, n_copies: int = 1) -> dict:
 
         reports = {}
-        self.reset_random(0)
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
 
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.init_placement_tables(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_traversal_placement_tables(first_nodes, self.len_pipeline)
 
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
             stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
@@ -35,7 +34,7 @@ class YOTTPipeline(PiplineBase):
                                 self.distance_table_bits, self.make_shuffle)
             stage3 = Stage3YOTT(self.len_pipeline, n2c)
             stage5 = Stage5YOTT(self.arch_type)
-            stage6 = Stage6YOTT(self.per_graph.n_cells_sqrt, self.len_pipeline, c2n)
+            stage6 = Stage6YOTT(self.n_lines, self.len_pipeline, c2n)
 
             counter = 0
             while not stage1.done:

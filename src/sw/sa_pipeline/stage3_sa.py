@@ -1,5 +1,4 @@
 from math import ceil, sqrt
-import src.hw.sa_pipeline.util as _u
 
 
 class Stage3SA:
@@ -7,23 +6,20 @@ class Stage3SA:
     Third Pipe from SA_Verilog. This pipe is responsible to bring the neighboor's cell from each neighbor node.
     """
 
-    def __init__(self, sa_graph: _u.SaGraph, n_threads: int = 10):
-        self.sa_graph = sa_graph
-        self.sa_graph.reset_random()
+    def __init__(self, n2c: list[list], n_threads: int = 10):
         self.n_threads = n_threads
-        self.n2c = [sa_graph.get_initial_grid()[1]
-                    for i in range(self.n_threads)]
+        self.n2c = n2c
         self.flag = True
         self.new_output = {
-            'idx': 0,
-            'v': False,
-            'ca': 0,
-            'cb': 0,
+            'th_idx': 0,
+            'th_valid': False,
+            'cell_a': 0,
+            'cell_b': 0,
             'cva': [None, None, None, None],
             'cvb': [None, None, None, None],
-            'sw': {'idx': 0, 'v': False, 'sw': False},
-            'wa': {'idx': 0, 'c': 0, 'n': None},
-            'wb': {'idx': 0, 'c': 0, 'n': None},
+            'sw': {'th_idx': 0, 'th_valid': False, 'sw': False},
+            'wa': {'th_idx': 0, 'cell': 0, 'node': None},
+            'wb': {'th_idx': 0, 'cell': 0, 'node': None},
         }
         self.old_output = self.new_output.copy()
         # self.print_matrix(0)
@@ -39,20 +35,20 @@ class Stage3SA:
         if usw:
             if self.flag:
                 if uwa['n'] is not None:
-                    self.n2c[uwa['idx']][uwa['n']] = uwa['c']
+                    self.n2c[uwa['th_idx']][uwa['node']] = uwa['cell']
                 self.flag = not self.flag
             else:
-                if uwb['n'] is not None:
-                    self.n2c[uwb['idx']][uwb['n']] = uwb['c']
+                if uwb['node'] is not None:
+                    self.n2c[uwb['th_idx']][uwb['node']] = uwb['cell']
                 self.flag = not self.flag
                 # if(uwb['idx'] == 0):
                 #    self.print_matrix(uwb['idx'])
 
         # reading pipe inputs
-        self.new_output['idx'] = _in['idx']
-        self.new_output['v'] = _in['v']
-        self.new_output['ca'] = _in['ca']
-        self.new_output['cb'] = _in['cb']
+        self.new_output['th_idx'] = _in['th_idx']
+        self.new_output['th_valid'] = _in['th_valid']
+        self.new_output['cell_a'] = _in['cell_a']
+        self.new_output['cell_b'] = _in['cell_b']
 
         self.new_output['sw'] = _in['sw']
         self.new_output['wa'] = _in['wa']
@@ -61,7 +57,7 @@ class Stage3SA:
         self.new_output['cva'] = [None, None, None, None]
         self.new_output['cvb'] = [None, None, None, None]
 
-        idx = _in['idx']
+        idx = _in['th_idx']
         va = _in['va']
         vb = _in['vb']
 

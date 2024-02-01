@@ -6,22 +6,20 @@ class Stage2SA:
     Second Pipe from SA_Verilog. This pipe is responsible to bring the neighboor from each node selected in the left pipe in the graph.
     """
 
-    def __init__(self, sa_graph: _u.SaGraph):
-        self.sa_graph = sa_graph
-        self.neighbors = self.sa_graph.neighbors
-
+    def __init__(self, neighbors: dict):
+        self.neighbors = neighbors
         self.new_output = {
-            'idx': 0,
-            'v': False,
-            'ca': 0,
-            'cb': 0,
-            'na': None,
-            'nb': None,
+            'th_idx': 0,
+            'th_valid': False,
+            'cell_a': 0,
+            'cell_b': 0,
+            'node_a': 0,
+            'node_b': 0,
             'va': [None, None, None, None],
             'vb': [None, None, None, None],
-            'sw': {'idx': 0, 'v': False, 'sw': False},
-            'wa': {'idx': 0, 'c': 0, 'n': None},
-            'wb': {'idx': 0, 'c': 0, 'n': None},
+            'sw': {'th_idx': 0, 'th_valid': False, 'sw': False},
+            'wa': {'th_idx': 0, 'cell': 0, 'node': None},
+            'wb': {'th_idx': 0, 'cell': 0, 'node': None},
         }
         self.old_output = self.new_output.copy()
 
@@ -30,18 +28,19 @@ class Stage2SA:
         self.old_output = self.new_output.copy()
 
         # reading pipe inputs
-        self.new_output['idx'] = _in['idx']
-        self.new_output['v'] = _in['v']
-        self.new_output['ca'] = _in['ca']
-        self.new_output['cb'] = _in['cb']
-        self.new_output['na'] = _in['na']
-        self.new_output['nb'] = _in['nb']
-        self.new_output['sw'] = _in['sw']
-        self.new_output['wa'] = _in['wa']
-        self.new_output['wb'] = _in['wb']
-
-        self.new_output['va'] = [None, None, None, None]
-        self.new_output['vb'] = [None, None, None, None]
+        self.new_output = {
+            'th_idx': _in['th_idx'],
+            'th_valid': _in['th_valid'],
+            'cell_a': _in['cell_a'],
+            'cell_b': _in['cell_b'],
+            'node_a': _in['node_a'],
+            'node_b': _in['node_b'],
+            'va': [None, None, None, None],
+            'vb': [None, None, None, None],
+            'sw': _in['sw'],
+            'wa': _in['wa'],
+            'wb': _in['wb']
+        }
 
         na = _in['na']
         nb = _in['nb']

@@ -1,5 +1,4 @@
 from math import ceil, sqrt
-from src.util.per_graph import PeRGraph
 
 
 class Stage1SA:
@@ -7,97 +6,97 @@ class Stage1SA:
     First Pipe from SA_Verilog. This pipe is responsible to search the content of the two cells selected by threads
     """
 
-    def __init__(self, per_graph: PeRGraph, n_threads: int = 10):
-        self.per_graph = per_graph
-        # self.per_graph.reset_random()
+    def __init__(self, c2n: list[list], n_threads: int):
+        self.c2n: list[list] = c2n
         self.n_threads = n_threads
-        # fixme
-        self.c2n = [per_graph.get_initial_grid()[0]
-                    for i in range(self.n_threads)]
         self.fifo_a = [{'th_idx': 0, 'cell': 0, 'node': None}
                        for i in range(self.n_threads - 2)]
         self.fifo_b = [{'th_idx': 0, 'cell': 0, 'node': None}
                        for i in range(self.n_threads - 2)]
         self.flag = True
 
-        self.output_new = {
+        self.new_output = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
             'cell_b': 0,
-            'node_a': None,
-            'node_b': None,
-            'sw': {'idx': 0, 'v': False, 'sw': False},
-            'wa': {'idx': 0, 'c': 0, 'n': None},
-            'wb': {'idx': 0, 'c': 0, 'n': None},
+            'node_a': 0,
+            'node_b': 0,
+            'sw': {'th_idx': 0, 'th_valid': False, 'sw': False},
+            'wa': {'th_idx': 0, 'cell': 0, 'node': 0},
+            'wb': {'th_idx': 0, 'cell': 0, 'node': 0},
         }
-        self.old_output = self.output_new.copy()
+        self.old_output = self.new_output.copy()
         # self.print_matrix(0)
 
     # TODO update logic
     def compute(self, _in: dict, _sw: dict, _wb: dict):
         # moving forward the ready outputs
-        self.old_output = self.output_new.copy()
+        self.old_output = self.new_output.copy()
 
         # reading pipe inputs
-        idx = _in['idx']
-        v = _in['v']
-        ca = _in['ca']
-        cb = _in['cb']
+        th_idx = _in['th_idx']
+        th_valid = _in['th_valid']
+        cell_a = _in['cell_a']
+        cell_b = _in['cell_b']
 
         # enqueuing data
-        if v:
+        if th_valid:
             self.fifo_a.append(
-                {'idx': self.output_new['idx'], 'c': self.output_new['ca'], 'n': self.output_new['nb']})
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_a'],
+                 'node': self.new_output['node_b']})
             self.fifo_b.append(
-                {'idx': self.output_new['idx'], 'c': self.output_new['cb'], 'n': self.output_new['na']})
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_b'],
+                 'node': self.new_output['node_a']})
 
         # Pop Queues
-        wa = self.output_new['wa']
-        wb = self.output_new['wb']
-        if v:
+        wa = self.new_output['wa']
+        wb = self.new_output['wb']
+        if th_valid:
             wa = self.fifo_a.pop(0)
             wb = self.fifo_b.pop(0)
 
         # update memory
-        usw = self.output_new['sw']['sw']
-        uwa = self.output_new['wa']
+        usw = self.new_output['sw']['sw']
+        uwa = self.new_output['wa']
         uwb = _wb
         if usw:
             if self.flag:
-                self.c2n[uwa['idx']][uwa['c']] = wa['n']
+                self.c2n[uwa['th_idx']][uwa['cell']] = wa['node']
                 self.flag = not self.flag
             else:
-                self.c2n[uwb['idx']][uwb['c']] = uwb['n']
+                self.c2n[uwb['th_idx']][uwb['cell']] = uwb['node']
                 self.flag = not self.flag
-                if (uwb['idx'] == 0):
-                    self.print_matrix(uwb['idx'])
+                if uwb['th_idx'] == 0:
+                    self.print_matrix(uwb['th_idx'])
 
-        # fifos outptuts ready to be moved forward
-        self.output_new['wa'] = wa
-        self.output_new['wb'] = wb
-        self.output_new['sw'] = _sw
+        self.new_output = {
+            # fifos outptuts ready to be moved forward
+            'wa': wa,
+            'wb': wb,
+            'sw': _sw,
 
-        # data ready to be moved forward
-        self.output_new['idx'] = idx
-        self.output_new['v'] = v
-        self.output_new['ca'] = ca
-        self.output_new['cb'] = cb
+            # data ready to be moved forward
+            'th_idx': th_idx,
+            'th_valid': th_valid,
+            'cell_a': cell_a,
+            'cell_b': cell_b,
 
-        # cell content ready to be moved forward
-        self.output_new['na'] = self.c2n[idx][ca]
-        self.output_new['nb'] = self.c2n[idx][cb]
+            # cell content ready to be moved forward
+            'node_a': self.c2n[th_idx][cell_a],
+            'node_b': self.c2n[th_idx][cell_b],
+        }
 
     def print_matrix(self, idx: int):
         sqrt_ = ceil(sqrt(len(self.c2n[idx])))
-        cidx = 0
-        str_ = 'c2n_th:%d\n' % idx
+        cell_idx = 0
+        str_to_print = 'c2n_th:%d\n' % idx
         for i in range(sqrt_):
             for j in range(sqrt_):
-                if self.c2n[idx][cidx] is None:
-                    str_ += '   '
+                if self.c2n[idx][cell_idx] is None:
+                    str_to_print += '   '
                 else:
-                    str_ += '%2d ' % self.c2n[idx][cidx]
-                cidx += 1
-            str_ += '\n'
-        print(str_)
+                    str_to_print += '%2d ' % self.c2n[idx][cell_idx]
+                cell_idx += 1
+            str_to_print += '\n'
+        print(str_to_print)

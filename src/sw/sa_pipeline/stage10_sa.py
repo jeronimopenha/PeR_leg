@@ -5,8 +5,8 @@ class Stage10SA:
 
     def __init__(self):
         self.new_output = {
-            'idx': 0,
-            'v': False,
+            'th_idx': 0,
+            'th_valid': False,
             'sw': False
         }
         self.old_output = self.new_output.copy()
@@ -15,6 +15,6 @@ class Stage10SA:
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['idx'] = _in['idx']
-        self.new_output['v'] = _in['v']
+        self.new_output['th_idx'] = _in['th_idx']
+        self.new_output['th_valid'] = _in['th_valid']
         self.new_output['sw'] = _in['sw']

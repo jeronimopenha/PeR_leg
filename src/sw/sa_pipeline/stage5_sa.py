@@ -9,11 +9,10 @@ class Stage5SA:
     for the distances found in the left pipe.
     """
 
-    def __init__(self, sa_graph: _u.SaGraph):
-        self.sa_graph = sa_graph
+    def __init__(self):
         self.new_output = {
-            'idx': 0,
-            'v': False,
+            'th_idx': 0,
+            'th_valid': False,
             'dvac': [0, 0],
             'dvbc': [0, 0],
             'dvas': [0, 0, 0, 0],
@@ -25,11 +24,11 @@ class Stage5SA:
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['idx'] = _in['idx']
-        self.new_output['v'] = _in['v']
+        self.new_output['th_idx'] = _in['th_idx']
+        self.new_output['th_valid'] = _in['th_valid']
 
-        cbs = _in['ca']
-        cas = _in['cb']
+        cbs = _in['cell_a']
+        cas = _in['cell_b']
         cva = _in['cva']
         cvb = _in['cvb']
         dvac = _in['dvac']
@@ -44,10 +43,10 @@ class Stage5SA:
         for i in range(len(cva)):
             if cva[i] is not None:
                 if cas == cva[i]:
-                    self.new_output['dvas'][i] = self.sa_graph.get_manhattan_distance(
+                    self.new_output['dvas'][i] = get_manhattan_distance(
                         cas, cbs)
                 else:
-                    self.new_output['dvas'][i] = self.sa_graph.get_manhattan_distance(
+                    self.new_output['dvas'][i] = get_manhattan_distance(
                         cas, cva[i])
             else:
                 break
@@ -55,10 +54,10 @@ class Stage5SA:
         for i in range(len(cvb)):
             if cvb[i] is not None:
                 if cbs == cvb[i]:
-                    self.new_output['dvbs'][i] = self.sa_graph.get_manhattan_distance(
+                    self.new_output['dvbs'][i] = get_manhattan_distance(
                         cas, cbs)
                 else:
-                    self.new_output['dvbs'][i] = self.sa_graph.get_manhattan_distance(
+                    self.new_output['dvbs'][i] = get_manhattan_distance(
                         cbs, cvb[i])
             else:
                 break
