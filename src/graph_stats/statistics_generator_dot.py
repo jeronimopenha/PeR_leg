@@ -32,7 +32,5 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                                                                paths[-4],
                                                                 paths[-2],
                                                                 )
-            print(dict_data)
-            input()
             df = df.append(dict_data,ignore_index=True)
         return df
