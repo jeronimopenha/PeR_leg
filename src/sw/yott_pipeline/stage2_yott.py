@@ -28,15 +28,15 @@ class Stage2YOTT:
             'thread_valid': 0,
             'A': 0,
             'B': 0,
-            'C': -1,
-            'dist_CB': 0,
+            'Cs': [-1,-1,-1],
+            'dist_CsB': [-1,-1,-1],
             'index_list_edge': 0
 
         }
 
         self.old_output = self.new_output
 
-    def compute(self, stage1):
+    def compute(self, stage1, num_annotations):
         """
 
         @param stage1:
@@ -50,13 +50,18 @@ class Stage2YOTT:
         a, b = self.threads_edges[thread_index][edge_index]
         # fixme Método de anotações acrescentar 1 nas distâncias anotadas pra manter o padrão e ccorriir stage2_yott
         annotations = list(self.annotations[thread_index].values())[edge_index]
+        while len(annotations) < num_annotations:
+            annotations.append([-1,-1])
+        annotations = annotations[0:3]
+        # fixme Corrigir em traversal para que as anotações fiquem em inteiro
+        annotations = [(self.per.nodes_to_idx[annotation[0]], annotation[1] + 1) if annotation[0] != -1 else annotation for annotation in annotations]
 
-        if len(annotations) == 0:
-            annotation = [-1, -1]
-        else:
-            # fixme Corrigir em traversal para que as anotações fiquem em inteiro
-            annotation = [self.per.nodes_to_idx[annotations[0][0]], annotations[0][1] + 1]
-        c, dist_cb = annotation
+        cs = [] 
+        dist_cs_b =[]
+        
+        for (c,dist_c_b) in annotations:
+            cs.append(c)
+            dist_cs_b.append(dist_c_b)
 
         index_list_edge = (thread_index ^ edge_index) & self.dist_table_mask
 
@@ -65,7 +70,7 @@ class Stage2YOTT:
             'thread_valid': out_previous_stage['thread_valid'],
             'A': a,
             'B': b,
-            'C': c,
-            'dist_CB': dist_cb,
+            'Cs': cs,
+            'dist_CsB': dist_cs_b,
             'index_list_edge': index_list_edge
         }

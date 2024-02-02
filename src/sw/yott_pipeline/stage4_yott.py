@@ -23,9 +23,9 @@ class Stage4YOTT:
             'thread_valid': 0,
             'B': 0,
             'C_S': [0, 1],
-            'C_C': [0, 0],
+            'Cs_C': [[0, 0],[0, 0],[0, 0]],
             'C_A': [0,0],
-            'dist_CB': 1,
+            'dist_CsB': [0,0,0],
         }
         self.old_output: dict = self.new_output
 
@@ -55,6 +55,6 @@ class Stage4YOTT:
             'B': out_previous_stage['B'],
             'C_S': c_s,
             'C_A': c_a,
-            'C_C': out_previous_stage['C_C'],
-            'dist_CB': out_previous_stage['dist_CB'],
+            'Cs_C': out_previous_stage['Cs_C'],
+            'dist_CsB': out_previous_stage['dist_CsB'],
         }

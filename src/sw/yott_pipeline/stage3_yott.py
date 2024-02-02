@@ -14,8 +14,8 @@ class Stage3YOTT:
             'thread_valid': 0,
             'C_A': [0, 0],
             'B': 0,
-            'C_C': [0, 0],
-            'dist_CB': 1,
+            'Cs_C': [[0, 0],[0, 0],[0, 0]],
+            'dist_CsB': [0,0,0],
             'adj_index': 0,
             'index_list_edge': 0
         }
@@ -47,10 +47,10 @@ class Stage3YOTT:
         thread_valid = out_previous_stage['thread_valid']
         thread_index = out_previous_stage['thread_index']
         a = out_previous_stage['A']
-        c = out_previous_stage['C']
+        cs = out_previous_stage['Cs']
         # Caso utilize mais anotacoes, em hardware sera necessario uma mmoria para cada 2 leituras
         c_a = self.n2c[thread_index][a] if thread_valid == 1 else [0, 0]  # type:ignore
-        c_c = self.n2c[thread_index][c] if c > -1 else [-1, -1]  # type:ignore
+        cs_c = [self.n2c[thread_index][c] if c > -1 else [-1, -1] for c in cs]  # type:ignore
 
         adj_index = self.thread_adj_indexes[thread_index] if thread_valid else 0
 
@@ -59,8 +59,8 @@ class Stage3YOTT:
             'thread_valid': thread_valid,
             'C_A': c_a,
             'B': out_previous_stage['B'],
-            'C_C': c_c,
-            'dist_CB': out_previous_stage['dist_CB'],
+            'Cs_C': cs_c,
+            'dist_CsB': out_previous_stage['dist_CsB'],
             'adj_index': adj_index,
             'index_list_edge': out_previous_stage['index_list_edge']
         }

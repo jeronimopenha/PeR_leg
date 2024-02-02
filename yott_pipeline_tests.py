@@ -19,7 +19,7 @@ def run_connected_graphs():
         dot_path_base = root_path + '/dot_db/'
         dot_connected_path = dot_path_base + 'connected/'
 
-        output_path_base = os.getcwd() + '/results/sw/yott/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)
+        output_path_base = os.getcwd() + '/reports/sw/yott/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)
 
         # output_path = output_path_base + test_name + '/'
         output_path = output_path_base
@@ -36,7 +36,7 @@ def run_connected_graphs():
         for dot_path, dot_name in dots_list:
             per_graph = PeRGraph(dot_path, dot_name)
             print(per_graph.dot_name)
-            yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
+            yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 3)
             raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
             formatted_report = Util.get_formatted_report(raw_report)
             Util.save_json(output_path, dot_name, formatted_report)
@@ -45,6 +45,6 @@ def run_connected_graphs():
 
 
 if __name__ == '__main__':
-    # per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/mults1.dot","mults1.dot")
-    # yott = YOTTPipeline(per,ArchType.MESH,2,7).run(100)
+    # per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/my_graph.dot","my_graph.dot")
+    # yott = YOTTPipeline(per,ArchType.MESH,4,True,3,10).run(10)
     run_connected_graphs()

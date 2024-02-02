@@ -20,7 +20,7 @@ class Stage6YOTT:
         }
         self.old_output: dict = self.new_output
 
-    def compute(self, stage5):
+    def compute(self, stage5,num_annotations):
 
         """
         @param stage5:
@@ -33,11 +33,11 @@ class Stage6YOTT:
 
         thread_index = out_previous_stage['thread_index']
         b = out_previous_stage['B']
-        c_c = out_previous_stage['C_C']
-        dist_cb = out_previous_stage['dist_CB']
+        cs_c = out_previous_stage['Cs_C']
+        dist_csb = out_previous_stage['dist_CsB']
         c_s = out_previous_stage['C_S']
 
-        cost = self.calc_cost(c_s, c_c, dist_cb, self.arch_type) if dist_cb != -1 else 0
+        cost = self.calc_total_cost(c_s, cs_c, dist_csb, self.arch_type,num_annotations) 
 
         self.new_output = {
             'thread_index': thread_index,
@@ -48,8 +48,11 @@ class Stage6YOTT:
             'dist_CA_CS': out_previous_stage['dist_CA_CS']
         }
 
-    @staticmethod
-    def calc_cost(c_s: list, c_c: list, dist_c_b: int, arch_type: ArchType) -> int:
+    def calc_total_cost(self,c_s:list,cs_c: list,dist_cs_b:int,arch_type:ArchType,num_annotations:int):
+        return sum([self.calc_cost(c_s,c_c,dist_c_b,arch_type) if (dist_c_b != -1 and i < num_annotations) else 0 for i,(c_c,dist_c_b) in enumerate(zip(cs_c,dist_cs_b))])
+
+    
+    def calc_cost(self,c_s: list, c_c: list, dist_c_b: int, arch_type: ArchType) -> int:
         """
         @param c_s: 
         @type c_s: 
