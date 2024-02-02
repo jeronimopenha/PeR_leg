@@ -1,4 +1,3 @@
-from veriloggen import *
 from math import ceil, log2, sqrt
 import subprocess
 import pygraphviz as pgv

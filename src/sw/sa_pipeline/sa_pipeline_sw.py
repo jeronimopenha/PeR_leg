@@ -1,39 +1,47 @@
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
 from src.util.piplinebase import PiplineBase
-from src.sw.yoto_pipeline.stage0_yoto import Stage0YOTO
-from src.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
-from src.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
-from src.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
-from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
+from src.sw.sa_pipeline.stage0_sa import Stage0SA
+from src.sw.sa_pipeline.stage1_sa import Stage1SA
+from src.sw.sa_pipeline.stage2_sa import Stage2SA
+from src.sw.sa_pipeline.stage3_sa import Stage3SA
+from src.sw.sa_pipeline.stage4_sa import Stage4SA
+from src.sw.sa_pipeline.stage5_sa import Stage5SA
+from src.sw.sa_pipeline.stage6_sa import Stage6SA
+from src.sw.sa_pipeline.stage7_sa import Stage7SA
+from src.sw.sa_pipeline.stage8_sa import Stage8SA
+from src.sw.sa_pipeline.stage9_sa import Stage9SA
+from src.sw.sa_pipeline.stage10_sa import Stage10SA
 from src.util.util import Util
 
 
-class YotoPipeline(PiplineBase):
+class SAPipeline(PiplineBase):
     len_pipeline = 6
 
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
                  n_threads: int = 1):
-        self.len_pipeline: int = 6
+        self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
 
-        # print(self.per_graph.nodes)
-        # print(self.per_graph.neighbors)
-        # print()
-
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
-            first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.init_traversal_placement_tables(first_nodes, self.len_pipeline)
 
-            st0_edge_sel: Stage0YOTO = Stage0YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
-            st1_edges: Stage1YOTO = Stage1YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)
-            st2_n2c: Stage2YOTO = Stage2YOTO(n2c, self.n_lines, self.len_pipeline)
-            st3_dist = Stage3YOTO(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
-            st4_c2n = Stage4YOTO(c2n, self.n_lines)
+            n2c, c2n = self.init_sa_placement_tables()
+
+            st0 = Stage0SA(self.n_lines, self.n_threads)
+            st1 = Stage1SA(c2n, self.n_threads)
+            st2 = Stage2SA(self.per_graph.neighbors)
+            st3 = Stage3SA(n2c)
+            st4 = Stage4SA()
+            st5 = Stage5SA(sa_graph)
+            st6 = Stage6SA()
+            st7 = Stage7SA()
+            st8 = Stage8SA()
+            st9 = Stage9SA()
+            st10 = Stage10SA()
 
             counter = 0
             while not st0_edge_sel.done:

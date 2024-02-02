@@ -1,11 +1,8 @@
+import random
 import random as rnd
-from typing import Tuple
-
 import numpy as np
 from math import sqrt
-
 from numpy import ndarray
-
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
@@ -57,7 +54,7 @@ class PiplineBase(object):
         self.total_edges = len(self.edges_raw[0])
 
         self.n_lines = self.per_graph.n_cells_sqrt
-        self.n_columns = self.per_graph.n_cells_sqrt
+        self.n_columns = self.n_lines
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
 
@@ -88,42 +85,48 @@ class PiplineBase(object):
             )
         return edges_int
 
-    def get_initial_position_traversal(self, first_node: int, len_pipeline: int = 5) -> list[list[list]]:
+    def init_sa_placement_tables(self) -> tuple[list[list], list[list]]:
         """
 
-        @param first_node:
-        @type first_node:
-        @param len_pipeline:
-        @type len_pipeline:
         @return:
-        @rtype:
         """
         n2c: list[list] = []
         c2n: list[list] = []
-        for i in range(len_pipeline):
-            n2c_tmp: list = [None for _ in range(self.per_graph.n_cells)]
-            c2n_tmp: list = [None for _ in range(self.per_graph.n_cells)]
-            idx: int = rnd.randint(0, self.per_graph.n_cells - 1)
-            n2c_tmp[first_node] = idx
-            c2n_tmp[idx] = first_node
+        for i in range(self.n_threads):
+            n2c_tmp: list = [None for _ in range(self.n_lines * self.n_columns)]
+            c2n_tmp: list = [None for _ in range(self.n_lines * self.n_columns)]
+
+            nodes = self.per_graph.nodes.copy()
+            cells = [i for i in range(self.n_lines * self.n_columns)]
+            random.shuffle(nodes)
+            random.shuffle(cells)
+
+            while nodes:
+                random_node = nodes[0]
+                random_cell = cells[0]
+                nodes.pop(0)
+                cells.pop(0)
+
+                c2n_tmp[random_cell] = self.per_graph.nodes_to_idx[random_node]
+                n2c_tmp[c2n_tmp[random_cell]] = random_cell
+
             n2c.append(n2c_tmp)
             c2n.append(c2n_tmp)
-        return [n2c, c2n]
+        return n2c, c2n
 
-    def init_placement_tables(self, first_node: list, len_pipeline: int = 5) -> tuple[list[list], list[list]]:
+    def init_traversal_placement_tables(self, first_node: list) -> tuple[list[list], list[list]]:
         n2c: list[list[list]] = []
         c2n: list[list] = []
-        for i in range(len_pipeline):
+        for i in range(self.len_pipeline):
             try:
-                n2c_tmp: list[list] = [[None, None] for _ in range(self.per_graph.n_cells)]
+                n2c_tmp: list[list] = [[None, None] for _ in range(self.n_lines)]
                 c2n_tmp: list[list] = [
                     [
-                        None for _ in range(self.per_graph.n_cells_sqrt)
-                    ] for _ in range(self.per_graph.n_cells_sqrt)
+                        None for _ in range(self.n_lines)
+                    ] for _ in range(self.n_lines)
                 ]
 
-                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1),
-                                                              self.per_graph.n_cells_sqrt)
+                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.n_lines - 1), self.n_lines)
                 n2c_tmp[first_node[i]][0]: int = idx_i
                 n2c_tmp[first_node[i]][1]: int = idx_j
                 c2n_tmp[idx_i][idx_j]: int = first_node[i]
@@ -157,7 +160,7 @@ class PiplineBase(object):
         @rtype:
         """
         n_cells: int = self.per_graph.n_cells
-        n_cells_sqrt: int = self.per_graph.n_cells_sqrt
+        n_cells_sqrt: int = self.n_lines
         grid = np.full((n_cells, 4, 1), -1, dtype=int)
         dic_path: dict = {}
 

@@ -29,7 +29,7 @@ class YOTTPipeline(PiplineBase):
             exec_key = 'exec_%d' % exec_num
 
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.init_placement_tables(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_traversal_placement_tables(first_nodes, self.len_pipeline)
 
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
             stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
