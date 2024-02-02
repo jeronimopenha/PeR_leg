@@ -36,7 +36,7 @@ class SAPipeline(PiplineBase):
             st2 = Stage2SA(self.per_graph.neighbors)
             st3 = Stage3SA(n2c, self.n_threads)
             st4 = Stage4SA(self.n_lines, self.n_columns)
-            st5 = Stage5SA()
+            st5 = Stage5SA(self.n_lines, self.n_columns)
             st6 = Stage6SA()
             st7 = Stage7SA()
             st8 = Stage8SA()
@@ -44,7 +44,7 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while counter < 1000:
+            while counter < (self.n_lines * self.n_columns) * 1000:
                 st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
@@ -58,8 +58,8 @@ class SAPipeline(PiplineBase):
                 st10.compute(st9.old_output)
 
                 counter += 1
-
-            reports[exec_key] = Util.create_exec_report(self, exec_num, st0_edge_sel.total_pipeline_counter,
-                                                        st0_edge_sel.exec_counter, st2_n2c.n2c)
+            a = 1
+            reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
+                                                        counter, st3.n2c)
 
         return Util.create_report(self, "YOTO", n_copies, reports)

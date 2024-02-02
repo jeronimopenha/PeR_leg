@@ -8,14 +8,14 @@ class Stage1SA:
 
     def __init__(self, c2n: list[list], n_threads: int):
         self.c2n: list[list] = c2n
-        self.n_threads = n_threads
-        self.fifo_a = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for _ in range(self.n_threads - 2)]
-        self.fifo_b = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for _ in range(self.n_threads - 2)]
-        self.flag = True
+        self.n_threads: int = n_threads
+        self.fifo_a: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+                                   for _ in range(self.n_threads - 2)]
+        self.fifo_b: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+                                   for _ in range(self.n_threads - 2)]
+        self.flag: bool = True
 
-        self.new_output = {
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
@@ -26,7 +26,7 @@ class Stage1SA:
             'wa': {'th_idx': 0, 'cell': 0, 'node': 0},
             'wb': {'th_idx': 0, 'cell': 0, 'node': 0},
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
         # self.print_matrix(0)
 
     # TODO update logic
@@ -67,8 +67,9 @@ class Stage1SA:
             else:
                 self.c2n[uwb['th_idx']][uwb['cell']] = uwb['node']
                 self.flag = not self.flag
-                if uwb['th_idx'] == 0:
-                    self.print_matrix(uwb['th_idx'])
+                # if uwb['th_idx'] == 0:
+                # print(self.print_matrix)
+                # self.print_matrix(uwb['th_idx'])
 
         self.new_output = {
             # fifos outputs ready to be moved forward

@@ -9,8 +9,8 @@ class Stage2SA:
 
         @param neighbors:
         """
-        self.neighbors = neighbors
-        self.new_output = {
+        self.neighbors: list = neighbors
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
@@ -23,7 +23,7 @@ class Stage2SA:
             'wa': {'th_idx': 0, 'cell': 0, 'node': None},
             'wb': {'th_idx': 0, 'cell': 0, 'node': None},
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
 
     def compute(self, st1_input: dict):
         """
@@ -43,13 +43,15 @@ class Stage2SA:
         st1_wa: list = st1_input['wa']
         st1_wb: list = st1_input['wb']
 
-        va: list = []
-        vb: list = []
+        va: list = [None, None, None, None]
+        vb: list = [None, None, None, None]
 
         if st1_node_a is not None:
-            va = self.neighbors[st1_node_a]
+            for i in range(len(self.neighbors[st1_node_a])):
+                va[i] = self.neighbors[st1_node_a][i]
         if st1_node_b is not None:
-            vb = self.neighbors[st1_node_b]
+            for i in range(len(self.neighbors[st1_node_b])):
+                vb[i] = self.neighbors[st1_node_b][i]
 
         # reading pipe inputs
         self.new_output = {

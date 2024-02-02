@@ -70,7 +70,7 @@ class Stage3SA:
                 cva[i] = self.n2c[st2_th_idx][st2_va[i]]
         for i in range(len(st2_vb)):
             if st2_vb[i] is not None:
-                cvb = self.n2c[st2_th_idx][st2_vb[i]]
+                cvb[i] = self.n2c[st2_th_idx][st2_vb[i]]
 
         self.new_output = {
             'th_idx': st2_th_idx,

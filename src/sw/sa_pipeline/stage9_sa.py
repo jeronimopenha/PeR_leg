@@ -29,6 +29,8 @@ class Stage9SA:
         st8_ds = st8_input['ds']
 
         sw = st8_ds < st8_dc
+        if sw:
+            a=1
 
         self.new_output: dict = {
             'th_idx': st8_th_idx,
