@@ -2,7 +2,7 @@ from src.util.per_graph import PeRGraph
 
 
 class Stage2YOTT:
-    def __init__(self, itl: list[list], per: PeRGraph, annotations: list[dict], num_threads: int):
+    def __init__(self, itl: list[list], per: PeRGraph, annotations: list[dict], num_threads: int,distance_table_bits):
         """
 
         @param itl:
@@ -20,6 +20,8 @@ class Stage2YOTT:
         self.num_threads = num_threads
         self.annotations = annotations
         self.per = per
+        self.dist_table_mask: int = pow(2, distance_table_bits) - 1
+
 
         self.new_output = {
             'thread_index': 0,
@@ -28,7 +30,7 @@ class Stage2YOTT:
             'B': 0,
             'C': -1,
             'dist_CB': 0,
-            'edge_index': 0
+            'index_list_edge': 0
 
         }
 
@@ -45,20 +47,18 @@ class Stage2YOTT:
         thread_index = out_previous_stage['thread_index']
         edge_index = out_previous_stage['edge_index']
 
-        # print(self.threads_edges[thread_index])
-
         a, b = self.threads_edges[thread_index][edge_index]
-        # print(A,B,edge_index,out_previous_stage['thread_valid'])
         # fixme Método de anotações acrescentar 1 nas distâncias anotadas pra manter o padrão e ccorriir stage2_yott
         annotations = list(self.annotations[thread_index].values())[edge_index]
-        # print(self.annotations[thread_index].values())
+
         if len(annotations) == 0:
             annotation = [-1, -1]
         else:
-            # fixme Corrigir em traversal para que as anotações fiquem e inteiro
+            # fixme Corrigir em traversal para que as anotações fiquem em inteiro
             annotation = [self.per.nodes_to_idx[annotations[0][0]], annotations[0][1] + 1]
         c, dist_cb = annotation
-        # print(annotation)
+
+        index_list_edge = (thread_index ^ edge_index) & self.dist_table_mask
 
         self.new_output = {
             'thread_index': thread_index,
@@ -67,5 +67,5 @@ class Stage2YOTT:
             'B': b,
             'C': c,
             'dist_CB': dist_cb,
-            'edge_index': edge_index
+            'index_list_edge': index_list_edge
         }

@@ -1,99 +1,65 @@
-import math
+from src.util.per_enum import ArchType
+from src.util.util import Util
 
 
 class Stage6YOTT:
-    def __init__(self, tam_grid: int, len_pipe: int, c2n: list[list[list]]):
+    def __init__(self, arch_type: ArchType):
         """
 
-        @param tam_grid:
-        @type tam_grid:
-        @param len_pipe:
-        @type len_pipe:
-        @param c2n:
-        @type c2n:
+        @param arch_type:
+        @type arch_type:
         """
-        self.tam_grid: int = tam_grid
-        self.c2n: list[list[list]] = c2n
-        self.threads_current_adj_dists: list = [1 for _ in range(len_pipe)]
-        self.threads_free_cel: list[list] = [[None, math.inf] for _ in range(len_pipe)]
-        self.new_output_stage3: dict = {
-            'should_write': 0,
+        self.arch_type: ArchType = arch_type
+        self.new_output: dict = {
             'thread_index': 0,
             'thread_valid': 0,
             'B': 0,
-            'C_S': [0, 0]
+            'cost': 0,
+            'C_S': [0, 1],
+            'dist_CA_CS': 1
         }
-        self.old_output_stage3: dict = self.new_output_stage3
+        self.old_output: dict = self.new_output
 
-    def compute(self, stage5, stage0):
+    def compute(self, stage5):
+
         """
-
         @param stage5:
         @type stage5:
-        @param stage0:
-        @type stage0:
         """
-        self.old_output_stage3: dict = self.new_output_stage3.copy()
+
+        self.old_output = self.new_output.copy()
+
         out_previous_stage: dict = stage5.old_output
+
         thread_index = out_previous_stage['thread_index']
-        cost = out_previous_stage['cost']
-        c_s = out_previous_stage['C_S']
         b = out_previous_stage['B']
-        thread_valid = out_previous_stage['thread_valid']
-        dist_ca_cs = out_previous_stage['dist_CA_CS']
+        c_c = out_previous_stage['C_C']
+        dist_cb = out_previous_stage['dist_CB']
+        c_s = out_previous_stage['C_S']
 
-        # fixme  dividir em mais estágios. 1 ou 2
-        was_there_change = dist_ca_cs != self.threads_current_adj_dists[thread_index]
-        if not self.out_of_grid(c_s, self.tam_grid):
-            n_c_s = self.c2n[thread_index][c_s[0]][c_s[1]]
-            if n_c_s is None:
-                if dist_ca_cs < 3:
-                    if cost == 0:
-                        should_write = 1
-                    else:
-                        if cost < self.threads_free_cel[thread_index][1]:
-                            self.threads_free_cel[thread_index] = [c_s, cost]
-                        should_write = 0
-                else:
-                    should_write = 1
-            else:
-                should_write = 0
-        else:
-            should_write = 0
+        cost = self.calc_cost(c_s, c_c, dist_cb, self.arch_type) if dist_cb != -1 else 0
 
-        if was_there_change:
-            self.threads_current_adj_dists[thread_index] = dist_ca_cs
-            if self.threads_free_cel[thread_index][0] is not None:
-                c_s = self.threads_free_cel[thread_index][0]
-                should_write = 1
-
-        should_write = should_write and thread_valid
-
-        self.new_output_stage3 = {
-            'should_write': should_write,
+        self.new_output = {
             'thread_index': thread_index,
-            'thread_valid': thread_valid,
+            'thread_valid': out_previous_stage['thread_valid'],
+            'cost': cost,
+            'C_S': c_s,
             'B': b,
-            'C_S': c_s
+            'dist_CA_CS': out_previous_stage['dist_CA_CS']
         }
 
-        if should_write == 1:
-            self.c2n[thread_index][c_s[0]][c_s[1]] = b
-            self.threads_current_adj_dists[thread_index] = 1
-            self.threads_free_cel[thread_index] = [None, math.inf]  # type:ignore
-
-        if thread_valid == 1:
-            stage0.fifo.put(thread_index, should_write)
-
     @staticmethod
-    def out_of_grid(c_s: list, tam_grid: int) -> bool:
+    def calc_cost(c_s: list, c_c: list, dist_c_b: int, arch_type: ArchType) -> int:
         """
-
-        @param c_s:
-        @type c_s:
-        @param tam_grid:
-        @type tam_grid:
-        @return:
-        @rtype:
+        @param c_s: 
+        @type c_s: 
+        @param c_c: 
+        @type c_c: 
+        @param dist_c_b: 
+        @type dist_c_b: 
+        @param arch_type: 
+        @type arch_type: 
+        @return: 
+        @rtype: 
         """
-        return (c_s[0] < 0 or c_s[0] >= tam_grid) or (c_s[1] < 0 or c_s[1] >= tam_grid)
+        return abs(Util.calc_dist(c_s, c_c, arch_type) - dist_c_b)
