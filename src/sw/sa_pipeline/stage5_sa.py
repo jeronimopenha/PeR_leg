@@ -1,3 +1,6 @@
+from src.util.util import Util
+
+
 class Stage5SA:
     """
     Fifth Pipe from SA_Verilog. This pipe is responsible to find the manhandle
@@ -6,10 +9,12 @@ class Stage5SA:
     for the distances found in the left pipe.
     """
 
-    def __init__(self):
+    def __init__(self, n_lines: int, n_columns: int):
         """
 
         """
+        self.n_lines: int = n_lines
+        self.n_columns: int = n_columns
         self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
@@ -29,7 +34,7 @@ class Stage5SA:
         self.old_output = self.new_output.copy()
 
         st4_th_idx: int = st4_input['th_idx']
-        st4_th_valid: bool = st4_input['st4_th_valid']
+        st4_th_valid: bool = st4_input['th_valid']
 
         st4_cbs: int = st4_input['cell_a']
         st4_cas: int = st4_input['cell_b']
@@ -47,9 +52,15 @@ class Stage5SA:
         for i in range(len(st4_cva)):
             if st4_cva[i] is not None:
                 if st4_cas == st4_cva[i]:
-                    dvas[i] = get_manhattan_distance(st4_cas, st4_cbs)
+                    dvas[i] = Util.dist_manhattan(
+                        Util.get_i_j_from_cell(st4_cas, self.n_lines, self.n_columns),
+                        Util.get_i_j_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                    )
                 else:
-                    dvas[i] = get_manhattan_distance(st4_cas, st4_cva[i])
+                    dvas[i] = Util.dist_manhattan(
+                        Util.get_i_j_from_cell(st4_cas, self.n_lines, self.n_columns),
+                        Util.get_i_j_from_cell(st4_cva[i], self.n_lines, self.n_columns)
+                    )
 
         for i in range(len(st4_cvb)):
             if st4_cvb[i] is not None:

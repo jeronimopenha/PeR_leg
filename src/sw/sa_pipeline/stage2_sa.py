@@ -42,16 +42,14 @@ class Stage2SA:
         st1_sw: list = st1_input['sw']
         st1_wa: list = st1_input['wa']
         st1_wb: list = st1_input['wb']
-        st1_na: int = st1_input['na']
-        st1_nb: int = st1_input['nb']
 
         va: list = []
         vb: list = []
 
-        if st1_na is not None:
-            va = self.neighbors[st1_na]
-        if st1_nb is not None:
-            vb = self.neighbors[st1_nb]
+        if st1_node_a is not None:
+            va = self.neighbors[st1_node_a]
+        if st1_node_b is not None:
+            vb = self.neighbors[st1_node_b]
 
         # reading pipe inputs
         self.new_output = {

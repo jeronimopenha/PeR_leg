@@ -1,3 +1,6 @@
+from src.util.util import Util
+
+
 class Stage4SA:
     """
     Fourth Pipe from SA_Verilog. This pipe is responsible to find the manhandle
@@ -5,10 +8,14 @@ class Stage4SA:
     respective neighbors cells before swap.
     """
 
-    def __init__(self):
+    def __init__(self, n_lines: int, n_columns: int):
         """
+        @param n_lines:
+        @param n_columns:
 
         """
+        self.n_lines: int = n_lines
+        self.n_columns: int = n_columns
         self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
@@ -46,11 +53,17 @@ class Stage4SA:
 
         for i in range(len(cva)):
             if cva[i] is not None:
-                dvac[i] = get_manhattan_distance(ca, cva[i])
+                dvac[i] = Util.dist_manhattan(
+                    Util.get_i_j_from_cell(ca, self.n_lines, self.n_columns),
+                    Util.get_i_j_from_cell(cva[i], self.n_lines, self.n_columns)
+                )
 
         for i in range(len(cvb)):
             if cvb[i] is not None:
-                dvbc[i] = get_manhattan_distance(cb, cvb[i])
+                dvbc[i] = Util.dist_manhattan(
+                    Util.get_i_j_from_cell(cb, self.n_lines, self.n_columns),
+                    Util.get_i_j_from_cell(cvb[i], self.n_lines, self.n_columns)
+                )
 
         self.new_output: dict = {
             'th_idx': st3_th_idx,

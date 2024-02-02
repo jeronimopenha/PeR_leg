@@ -24,7 +24,7 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
-
+        exec_times = 1000
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
@@ -35,7 +35,7 @@ class SAPipeline(PiplineBase):
             st1 = Stage1SA(c2n, self.n_threads)
             st2 = Stage2SA(self.per_graph.neighbors)
             st3 = Stage3SA(n2c, self.n_threads)
-            st4 = Stage4SA()
+            st4 = Stage4SA(self.n_lines, self.n_columns)
             st5 = Stage5SA()
             st6 = Stage6SA()
             st7 = Stage7SA()
@@ -44,9 +44,9 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while not st0_edge_sel.done:
+            while counter < 1000:
                 st0.compute()
-                st1.compute(st0.old_output, st9.old_output, st1.old_output['wd'])
+                st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
                 st3.compute(st2.old_output, st3.old_output['wb'])
                 st4.compute(st3.old_output)

@@ -16,6 +16,12 @@ matplotlib.use('TkAgg')
 class Util:
 
     @staticmethod
+    def get_i_j_from_cell(cell_number: int, n_lines: int, n_columns: int) -> list:
+        cell_i = cell_number % n_lines
+        cell_j = cell_number // n_columns
+        return [cell_i, cell_j]
+
+    @staticmethod
     def func_unkey(text: str) -> list:
         """
 
