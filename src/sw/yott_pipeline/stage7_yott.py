@@ -24,13 +24,13 @@ class Stage7YOTT:
             'B': 0,
             'cost': 0,
             'C_S': [0, 0],
-            'cel_free':0,
+            'cel_free': 0,
             'dist_ca_cs': 0
         }
 
         self.old_output: dict = self.new_output
 
-    def compute(self, stage6,stage9):
+    def compute(self, stage6, stage9):
         """
 
         @param stage5:
@@ -44,7 +44,6 @@ class Stage7YOTT:
             old_c_s = out_stage9['C_S']
             self.c2n[old_thread_index][old_c_s[0]][old_c_s[1]] = out_stage9['B']
             self.threads_current_adj_dists[old_thread_index] = 1
-      
 
         self.old_output: dict = self.new_output.copy()
 
@@ -54,10 +53,9 @@ class Stage7YOTT:
         c_s = out_previous_stage['C_S']
         dist_ca_cs = out_previous_stage['dist_CA_CS']
 
+        out_of_border = Util.is_out_of_border_sqr(c_s[0], c_s[1], self.tam_grid)
 
-        out_of_border = Util.is_out_of_border_sqr(c_s[0],c_s[1], self.tam_grid)
-
-        cel_free = self.c2n[thread_index][c_s[0]][c_s[1]] == None if not out_of_border else False 
+        cel_free = self.c2n[thread_index][c_s[0]][c_s[1]] == None if not out_of_border else False
 
         self.new_output = {
             'thread_index': out_previous_stage['thread_index'],
@@ -65,8 +63,6 @@ class Stage7YOTT:
             'B': out_previous_stage['B'],
             'cost': out_previous_stage['cost'],
             'C_S': c_s,
-            'cel_free':cel_free,
+            'cel_free': cel_free,
             'dist_ca_cs': dist_ca_cs
         }
-
-    

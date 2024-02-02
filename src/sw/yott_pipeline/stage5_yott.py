@@ -26,7 +26,10 @@ class Stage5YOTT:
         c_a = out_previous_stage['C_A']
         c_s = out_previous_stage['C_S'] 
 
-        dist_ca_cs = Util.calc_dist(c_a, c_s, self.arch_type)
+        try:
+            dist_ca_cs = Util.calc_dist(c_a, c_s, self.arch_type)
+        except Exception as e:
+            a=1
 
         self.new_output = {
             'thread_index': out_previous_stage['thread_index'],

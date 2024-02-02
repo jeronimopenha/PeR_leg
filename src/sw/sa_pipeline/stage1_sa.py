@@ -30,36 +30,36 @@ class Stage1SA:
         # self.print_matrix(0)
 
     # TODO update logic
-    def compute(self, _in: dict, _sw: dict, _wb: dict):
+    def compute(self, st0_input: dict, st9_sw: dict, st1_wb: dict):
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
         # reading pipe inputs
-        th_idx = _in['th_idx']
-        th_valid = _in['th_valid']
-        cell_a = _in['cell_a']
-        cell_b = _in['cell_b']
+        st0_th_idx = st0_input['th_idx']
+        st0_th_valid = st0_input['th_valid']
+        st0_cell_a = st0_input['cell_a']
+        st0_cell_b = st0_input['cell_b']
 
         # enqueuing data
-        if th_valid:
+        if st0_th_valid:
             self.fifo_a.append(
-                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_a'],
-                 'node': self.new_output['node_b']})
+                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_a'],
+                 'node': self.old_output['node_b']})
             self.fifo_b.append(
-                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_b'],
-                 'node': self.new_output['node_a']})
+                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_b'],
+                 'node': self.old_output['node_a']})
 
         # Pop Queues
-        wa = self.new_output['wa']
-        wb = self.new_output['wb']
-        if th_valid:
+        wa = self.old_output['wa']
+        wb = self.old_output['wb']
+        if st0_th_valid:
             wa = self.fifo_a.pop(0)
             wb = self.fifo_b.pop(0)
 
         # update memory
-        usw = self.new_output['sw']['sw']
-        uwa = self.new_output['wa']
-        uwb = _wb
+        usw = self.old_output['sw']['sw']
+        uwa = self.old_output['wa']
+        uwb = st1_wb
         if usw:
             if self.flag:
                 self.c2n[uwa['th_idx']][uwa['cell']] = wa['node']
@@ -74,17 +74,17 @@ class Stage1SA:
             # fifos outptuts ready to be moved forward
             'wa': wa,
             'wb': wb,
-            'sw': _sw,
+            'sw': st9_sw,
 
             # data ready to be moved forward
-            'th_idx': th_idx,
-            'th_valid': th_valid,
-            'cell_a': cell_a,
-            'cell_b': cell_b,
+            'th_idx': st0_th_idx,
+            'th_valid': st0_th_valid,
+            'cell_a': st0_cell_a,
+            'cell_b': st0_cell_b,
 
             # cell content ready to be moved forward
-            'node_a': self.c2n[th_idx][cell_a],
-            'node_b': self.c2n[th_idx][cell_b],
+            'node_a': self.c2n[st0_th_idx][st0_cell_a],
+            'node_b': self.c2n[st0_th_idx][st0_cell_b],
         }
 
     def print_matrix(self, idx: int):
