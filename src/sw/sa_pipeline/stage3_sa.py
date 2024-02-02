@@ -45,17 +45,17 @@ class Stage3SA:
                 #    self.print_matrix(uwb['idx'])
 
         # reading pipe inputs
-        self.new_output['th_idx'] = _in['th_idx']
-        self.new_output['th_valid'] = _in['th_valid']
-        self.new_output['cell_a'] = _in['cell_a']
-        self.new_output['cell_b'] = _in['cell_b']
-
-        self.new_output['sw'] = _in['sw']
-        self.new_output['wa'] = _in['wa']
-        self.new_output['wb'] = _in['wb']
-
-        self.new_output['cva'] = [None, None, None, None]
-        self.new_output['cvb'] = [None, None, None, None]
+        self.new_output = {
+            'th_idx': _in['th_idx'],
+            'th_valid': _in['th_valid'],
+            'cell_a': _in['cell_a'],
+            'cell_b': _in['cell_b'],
+            'cva': [None, None, None, None],
+            'cvb': [None, None, None, None],
+            'sw': _in['sw'],
+            'wa': _in['wa'],
+            'wb': _in['wb'],
+        }
 
         idx = _in['th_idx']
         va = _in['va']

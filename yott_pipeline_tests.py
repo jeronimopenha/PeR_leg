@@ -36,7 +36,7 @@ def run_connected_graphs():
         for dot_path, dot_name in dots_list:
             per_graph = PeRGraph(dot_path, dot_name)
             print(per_graph.dot_name)
-            yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 7)
+            yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
             raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
             formatted_report = Util.get_formatted_report(raw_report)
             Util.save_json(output_path, dot_name, formatted_report)

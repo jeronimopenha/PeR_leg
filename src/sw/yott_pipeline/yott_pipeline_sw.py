@@ -17,7 +17,7 @@ from src.util.util import Util
 class YOTTPipeline(PiplineBase):
     len_pipeline = 10
 
-    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads : int = None):
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = None):
         num_threads = self.len_pipeline if num_threads == None else num_threads
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
@@ -29,14 +29,14 @@ class YOTTPipeline(PiplineBase):
             exec_key = 'exec_%d' % exec_num
 
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.init_traversal_placement_tables(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_traversal_placement_tables(first_nodes)
 
             stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
             stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
-            stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads,self.distance_table_bits)
-            stage4 = Stage4YOTT(self.arch_type, self.n_lines,self.distance_table_bits, self.make_shuffle)
+            stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads,
+                                self.distance_table_bits)
             stage3 = Stage3YOTT(self.len_pipeline, n2c)
-            stage4 = Stage4YOTT(self.arch_type,self.n_lines,self.distance_table_bits,self.make_shuffle)
+            stage4 = Stage4YOTT(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
             stage5 = Stage5YOTT(self.arch_type)
             stage6 = Stage6YOTT(self.arch_type)
             stage7 = Stage7YOTT(self.n_lines, self.len_pipeline, c2n)

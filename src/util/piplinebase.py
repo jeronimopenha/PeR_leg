@@ -119,14 +119,14 @@ class PiplineBase(object):
         c2n: list[list] = []
         for i in range(self.len_pipeline):
             try:
-                n2c_tmp: list[list] = [[None, None] for _ in range(self.n_lines)]
+                n2c_tmp: list[list] = [[None, None] for _ in range(self.per_graph.n_cells)]
                 c2n_tmp: list[list] = [
                     [
                         None for _ in range(self.n_lines)
                     ] for _ in range(self.n_lines)
                 ]
 
-                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.n_lines - 1), self.n_lines)
+                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1), self.n_lines)
                 n2c_tmp[first_node[i]][0]: int = idx_i
                 n2c_tmp[first_node[i]][1]: int = idx_j
                 c2n_tmp[idx_i][idx_j]: int = first_node[i]

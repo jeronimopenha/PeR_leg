@@ -27,6 +27,13 @@ class Stage2SA:
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
+        th_idx
+        th_valid
+        cell_a
+        cell_b
+        node_a
+        node_b
+
         # reading pipe inputs
         self.new_output = {
             'th_idx': _in['th_idx'],
