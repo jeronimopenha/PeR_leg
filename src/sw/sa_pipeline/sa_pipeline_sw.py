@@ -34,9 +34,9 @@ class SAPipeline(PiplineBase):
             st0 = Stage0SA(self.n_lines, self.n_threads)
             st1 = Stage1SA(c2n, self.n_threads)
             st2 = Stage2SA(self.per_graph.neighbors)
-            st3 = Stage3SA(n2c)
+            st3 = Stage3SA(n2c, self.n_threads)
             st4 = Stage4SA()
-            st5 = Stage5SA(sa_graph)
+            st5 = Stage5SA()
             st6 = Stage6SA()
             st7 = Stage7SA()
             st8 = Stage8SA()
@@ -45,11 +45,18 @@ class SAPipeline(PiplineBase):
 
             counter = 0
             while not st0_edge_sel.done:
-                st0_edge_sel.compute(st0_edge_sel.old_output, st4_c2n.old_output)
-                st1_edges.compute(st0_edge_sel.old_output)
-                st2_n2c.compute(st1_edges.old_output, st4_c2n.old_output)
-                st3_dist.compute(st2_n2c.old_output)
-                st4_c2n.compute(st3_dist.old_output, st4_c2n.old_output)
+                st0.compute()
+                st1.compute(st0.old_output, st9.old_output, st1.old_output['wd'])
+                st2.compute(st1.old_output)
+                st3.compute(st2.old_output, st3.old_output['wb'])
+                st4.compute(st3.old_output)
+                st5.compute(st4.old_output)
+                st6.compute(st5.old_output)
+                st7.compute(st6.old_output)
+                st8.compute(st7.old_output)
+                st9.compute(st8.old_output)
+                st10.compute(st9.old_output)
+
                 counter += 1
 
             reports[exec_key] = Util.create_exec_report(self, exec_num, st0_edge_sel.total_pipeline_counter,

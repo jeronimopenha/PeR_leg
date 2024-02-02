@@ -5,27 +5,42 @@ class Stage7SA:
     """
 
     def __init__(self):
-        self.new_output = {
+        """
+
+        """
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'dc': 0,
             'dvas': 0,
             'dvbs': 0
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
 
-    def compute(self, _in: dict):
+    def compute(self, st6_input: dict):
+        """
+
+        @param st6_input:
+        """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['th_idx'] = _in['th_idx']
-        self.new_output['th_valid'] = _in['th_valid']
+        st6_th_idx: int = st6_input['th_idx']
+        st6_th_valid: bool = st6_input['th_valid']
 
-        dvac = _in['dvac']
-        dvbc = _in['dvbc']
-        dvas = _in['dvas']
-        dvbs = _in['dvbs']
+        st6_dvac: int = st6_input['dvac']
+        st6_dvbc: int = st6_input['dvbc']
+        st6_dvas: list = st6_input['dvas']
+        st6_dvbs: list = st6_input['dvbs']
 
-        self.new_output['dc'] = dvac + dvbc
-        self.new_output['dvas'] = dvas[0] + dvas[1]
-        self.new_output['dvbs'] = dvbs[0] + dvbs[1]
+        dc: int = st6_dvac + st6_dvbc
+        dvas: list = st6_dvas[0] + st6_dvas[1]
+        dvbs: list = st6_dvbs[0] + st6_dvbs[1]
+
+        self.new_output: dict = {
+            'th_idx': st6_th_idx,
+            'th_valid': st6_th_valid,
+            'dc': dc,
+            'dvas': dvas,
+            'dvbs': dvbs
+        }

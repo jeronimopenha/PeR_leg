@@ -3,14 +3,19 @@ from math import ceil, sqrt
 
 class Stage3SA:
     """
-    Third Pipe from SA_Verilog. This pipe is responsible to bring the neighboor's cell from each neighbor node.
+    Third Pipe from SA_Verilog. This pipe is responsible to bring the neighbor's cell from each neighbor node.
     """
 
-    def __init__(self, n2c: list[list], n_threads: int = 10):
-        self.n_threads = n_threads
-        self.n2c = n2c
-        self.flag = True
-        self.new_output = {
+    def __init__(self, n2c: list[list], n_threads: int):
+        """
+
+        @param n2c:
+        @param n_threads:
+        """
+        self.n_threads: int = n_threads
+        self.n2c: list[list] = n2c
+        self.flag: bool = True
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
@@ -21,56 +26,63 @@ class Stage3SA:
             'wa': {'th_idx': 0, 'cell': 0, 'node': None},
             'wb': {'th_idx': 0, 'cell': 0, 'node': None},
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
         # self.print_matrix(0)
 
-    def compute(self, _in: dict, _wb: dict):
+    def compute(self, st2_input: dict, st3_wb: dict):
+        """
+
+        @param st2_input:
+        @param st3_wb:
+        """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
+        st2_th_idx: int = st2_input['th_idx']
+        st2_th_valid: bool = st2_input['th_valid']
+        st2_cell_a: int = st2_input['cell_a']
+        st2_cell_b: int = st2_input['cell_b']
+        st2_sw: list = st2_input['sw']
+        st2_wa: list = st2_input['wa']
+        st2_wb: list = st2_input['wb']
+        st2_va: list = st2_input['va']
+        st2_vb: list = st2_input['vb']
+
         # update memory
-        usw = self.new_output['sw']['sw']
-        uwa = self.new_output['wa']
-        uwb = _wb
+        usw = self.old_output['sw']['sw']
+        uwa = self.old_output['wa']
+        uwb = st3_wb
         if usw:
             if self.flag:
-                if uwa['n'] is not None:
+                if uwa['node'] is not None:
                     self.n2c[uwa['th_idx']][uwa['node']] = uwa['cell']
                 self.flag = not self.flag
             else:
                 if uwb['node'] is not None:
                     self.n2c[uwb['th_idx']][uwb['node']] = uwb['cell']
                 self.flag = not self.flag
-                # if(uwb['idx'] == 0):
-                #    self.print_matrix(uwb['idx'])
 
-        # reading pipe inputs
+        cva: list = [None, None, None, None]
+        cvb: list = [None, None, None, None]
+
+        for i in range(len(st2_va)):
+            if st2_va[i] is not None:
+                cva[i] = self.n2c[st2_th_idx][st2_va[i]]
+        for i in range(len(st2_vb)):
+            if st2_vb[i] is not None:
+                cvb = self.n2c[st2_th_idx][st2_vb[i]]
+
         self.new_output = {
-            'th_idx': _in['th_idx'],
-            'th_valid': _in['th_valid'],
-            'cell_a': _in['cell_a'],
-            'cell_b': _in['cell_b'],
-            'cva': [None, None, None, None],
-            'cvb': [None, None, None, None],
-            'sw': _in['sw'],
-            'wa': _in['wa'],
-            'wb': _in['wb'],
+            'th_idx': st2_th_idx,
+            'th_valid': st2_th_valid,
+            'cell_a': st2_cell_a,
+            'cell_b': st2_cell_b,
+            'cva': cva,
+            'cvb': cvb,
+            'sw': st2_sw,
+            'wa': st2_wa,
+            'wb': st2_wb,
         }
-
-        idx = _in['th_idx']
-        va = _in['va']
-        vb = _in['vb']
-
-        for i in range(len(va)):
-            if va[i] is not None:
-                self.new_output['cva'][i] = self.n2c[idx][va[i]]
-            else:
-                break
-        for i in range(len(vb)):
-            if vb[i] is not None:
-                self.new_output['cvb'][i] = self.n2c[idx][vb[i]]
-            else:
-                break
 
     def print_matrix(self, idx: int):
         sqrt_ = ceil(sqrt(len(self.n2c[idx])))

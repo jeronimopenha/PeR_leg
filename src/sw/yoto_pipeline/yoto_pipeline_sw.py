@@ -32,8 +32,8 @@ class YotoPipeline(PiplineBase):
             st0_edge_sel: Stage0YOTO = Stage0YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
             st1_edges: Stage1YOTO = Stage1YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)
             st2_n2c: Stage2YOTO = Stage2YOTO(n2c, self.n_lines, self.len_pipeline)
-            st3_dist = Stage3YOTO(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
-            st4_c2n = Stage4YOTO(c2n, self.n_lines)
+            st3_dist: Stage3YOTO = Stage3YOTO(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
+            st4_c2n: Stage4YOTO = Stage4YOTO(c2n, self.n_lines)
 
             counter = 0
             while not st0_edge_sel.done:

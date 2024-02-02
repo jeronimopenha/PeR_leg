@@ -1,12 +1,14 @@
-import src.hw.sa_pipeline.util as _u
-
-
 class Stage2SA:
     """
-    Second Pipe from SA_Verilog. This pipe is responsible to bring the neighboor from each node selected in the left pipe in the graph.
+    Second Pipe from SA_Verilog. This pipe is responsible to bring the neighbor from each node selected in the left
+    pipe in the graph.
     """
 
     def __init__(self, neighbors: dict):
+        """
+
+        @param neighbors:
+        """
         self.neighbors = neighbors
         self.new_output = {
             'th_idx': 0,
@@ -23,37 +25,45 @@ class Stage2SA:
         }
         self.old_output = self.new_output.copy()
 
-    def compute(self, _in: dict):
+    def compute(self, st1_input: dict):
+        """
+
+        @param st1_input:
+        """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        th_idx
-        th_valid
-        cell_a
-        cell_b
-        node_a
-        node_b
+        st1_th_idx: int = st1_input['th_idx']
+        st1_th_valid: bool = st1_input['th_valid']
+        st1_cell_a: int = st1_input['cell_a']
+        st1_cell_b: int = st1_input['cell_b']
+        st1_node_a: int = st1_input['node_a']
+        st1_node_b: int = st1_input['node_b']
+        st1_sw: list = st1_input['sw']
+        st1_wa: list = st1_input['wa']
+        st1_wb: list = st1_input['wb']
+        st1_na: int = st1_input['na']
+        st1_nb: int = st1_input['nb']
+
+        va: list = []
+        vb: list = []
+
+        if st1_na is not None:
+            va = self.neighbors[st1_na]
+        if st1_nb is not None:
+            vb = self.neighbors[st1_nb]
 
         # reading pipe inputs
         self.new_output = {
-            'th_idx': _in['th_idx'],
-            'th_valid': _in['th_valid'],
-            'cell_a': _in['cell_a'],
-            'cell_b': _in['cell_b'],
-            'node_a': _in['node_a'],
-            'node_b': _in['node_b'],
-            'va': [None, None, None, None],
-            'vb': [None, None, None, None],
-            'sw': _in['sw'],
-            'wa': _in['wa'],
-            'wb': _in['wb']
+            'th_idx': st1_th_idx,
+            'th_valid': st1_th_valid,
+            'cell_a': st1_cell_a,
+            'cell_b': st1_cell_b,
+            'node_a': st1_node_a,
+            'node_b': st1_node_b,
+            'va': va,
+            'vb': vb,
+            'sw': st1_sw,
+            'wa': st1_wa,
+            'wb': st1_wb
         }
-
-        na = _in['na']
-        nb = _in['nb']
-        if na is not None:
-            for i in range(len(self.neighbors[na])):
-                self.new_output['va'][i] = self.neighbors[na][i]
-        if nb is not None:
-            for i in range(len(self.neighbors[nb])):
-                self.new_output['vb'][i] = self.neighbors[nb][i]

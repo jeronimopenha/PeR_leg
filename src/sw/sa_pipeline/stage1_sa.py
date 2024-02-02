@@ -10,9 +10,9 @@ class Stage1SA:
         self.c2n: list[list] = c2n
         self.n_threads = n_threads
         self.fifo_a = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for i in range(self.n_threads - 2)]
+                       for _ in range(self.n_threads - 2)]
         self.fifo_b = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for i in range(self.n_threads - 2)]
+                       for _ in range(self.n_threads - 2)]
         self.flag = True
 
         self.new_output = {
@@ -71,7 +71,7 @@ class Stage1SA:
                     self.print_matrix(uwb['th_idx'])
 
         self.new_output = {
-            # fifos outptuts ready to be moved forward
+            # fifos outputs ready to be moved forward
             'wa': wa,
             'wb': wb,
             'sw': st9_sw,
