@@ -43,6 +43,10 @@ class Stage4SA:
         st3_cva: list = st3_input['cva']
         st3_cvb: list = st3_input['cvb']
 
+        # fixme only for debugging
+        if st3_th_idx == 0:
+            z = 1
+
         dvac = [0, 0, 0, 0]
         dvbc = [0, 0, 0, 0]
 

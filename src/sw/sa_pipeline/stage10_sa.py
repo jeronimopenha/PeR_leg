@@ -26,6 +26,10 @@ class Stage10SA:
         st9_th_valid = st9_input['th_valid']
         st9_sw = st9_input['sw']
 
+        # fixme only for debugging
+        if st9_th_idx == 0:
+            z = 1
+
         self.new_output: dict = {
             'th_idx': st9_th_idx,
             'th_valid': st9_th_valid,

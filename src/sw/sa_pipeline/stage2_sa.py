@@ -43,6 +43,10 @@ class Stage2SA:
         st1_wa: list = st1_input['wa']
         st1_wb: list = st1_input['wb']
 
+        # fixme only for debugging
+        if st1_th_idx == 0:
+            z = 1
+
         va: list = [None, None, None, None]
         vb: list = [None, None, None, None]
 

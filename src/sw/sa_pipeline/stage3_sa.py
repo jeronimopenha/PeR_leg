@@ -48,6 +48,10 @@ class Stage3SA:
         st2_va: list = st2_input['va']
         st2_vb: list = st2_input['vb']
 
+        # fixme only for debugging
+        if st2_th_idx == 0:
+            z = 1
+
         # update memory
         usw = self.old_output['sw']['sw']
         uwa = self.old_output['wa']

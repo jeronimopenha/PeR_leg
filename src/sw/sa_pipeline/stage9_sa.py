@@ -25,6 +25,10 @@ class Stage9SA:
         st8_th_idx = st8_input['th_idx']
         st8_th_valid = st8_input['th_valid']
 
+        # fixme only for debugging
+        if st8_th_idx == 0:
+            z = 1
+
         st8_dc = st8_input['dc']
         st8_ds = st8_input['ds']
 

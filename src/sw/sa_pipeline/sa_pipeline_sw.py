@@ -44,7 +44,7 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while counter < (self.n_lines * self.n_columns) * 1000:
+            while counter < (self.n_lines * self.n_columns) * 2000:
                 st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)

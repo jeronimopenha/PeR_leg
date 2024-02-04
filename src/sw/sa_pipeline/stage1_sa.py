@@ -40,6 +40,10 @@ class Stage1SA:
         st0_cell_a = st0_input['cell_a']
         st0_cell_b = st0_input['cell_b']
 
+        #fixme only for debugging
+        if st0_th_idx == 0:
+            z=1
+
         # enqueuing data
         if st0_th_valid:
             self.fifo_a.append(

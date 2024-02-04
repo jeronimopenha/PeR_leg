@@ -43,6 +43,10 @@ class Stage5SA:
         st4_dvac: list = st4_input['dvac']
         st4_dvbc: list = st4_input['dvbc']
 
+        # fixme only for debugging
+        if st4_th_idx == 0:
+            z = 1
+
         dvac: list = [st4_dvac[0] + st4_dvac[1], st4_dvac[2] + st4_dvac[3]]
         dvbc: list = [st4_dvbc[0] + st4_dvbc[1], st4_dvbc[2] + st4_dvbc[3]]
 

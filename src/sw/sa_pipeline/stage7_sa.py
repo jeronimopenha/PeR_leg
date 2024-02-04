@@ -28,6 +28,10 @@ class Stage7SA:
         st6_th_idx: int = st6_input['th_idx']
         st6_th_valid: bool = st6_input['th_valid']
 
+        # fixme only for debugging
+        if st6_th_idx == 0:
+            z = 1
+
         st6_dvac: int = st6_input['dvac']
         st6_dvbc: int = st6_input['dvbc']
         st6_dvas: list = st6_input['dvas']

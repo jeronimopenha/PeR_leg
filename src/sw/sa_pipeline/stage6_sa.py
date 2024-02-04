@@ -29,6 +29,10 @@ class Stage6SA:
         st5_th_idx = st5_input['th_idx']
         st5_th_valid = st5_input['th_valid']
 
+        # fixme only for debugging
+        if st5_th_idx == 0:
+            z = 1
+
         st5_dvac = st5_input['dvac']
         st5_dvbc = st5_input['dvbc']
         st5_dvas = st5_input['dvas']
