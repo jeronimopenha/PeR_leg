@@ -20,7 +20,7 @@ digraph g {
 14 -> 4 [port=0; weight=0;]
 3 -> 14 [port=0; weight=0;]
 12 -> 3 [port=0; weight=0;]
-2 -> 16 [port=1; weight=1;]
+2 -> 16 [port=1; weight=0;]
 15 -> 2 [port=0; weight=0;]
 7 -> 15 [port=0; weight=0;]
 5 -> 7 [port=0; weight=0;]
