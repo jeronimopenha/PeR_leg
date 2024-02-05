@@ -27,7 +27,7 @@ class YotoPipeline(PiplineBase):
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
             first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-            n2c, c2n = self.init_traversal_placement_tables(first_nodes, self.len_pipeline)
+            n2c, c2n = self.init_traversal_placement_tables(first_nodes)
 
             st0_edge_sel: Stage0YOTO = Stage0YOTO(self.n_threads, self.visited_edges, self.len_pipeline)
             st1_edges: Stage1YOTO = Stage1YOTO(self.edges_int, self.distance_table_bits, self.visited_edges)

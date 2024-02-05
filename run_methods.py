@@ -15,7 +15,7 @@ dot_path_base = root_path + '/dot_db/'
 dot_connected_path = dot_path_base + 'connected/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1, 10, 100]
+copies = [1,10,100]
 for i, method in enumerate(methods):
     for arch_type in arch_types:
         len_pipe = method.len_pipeline
@@ -44,7 +44,10 @@ for i, method in enumerate(methods):
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
                 print(per_graph.dot_name)
-                pipeline_method = method(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
+                if method == YotoPipeline:
+                    pipeline_method = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle,len_pipe)
+                elif method == YOTTPipeline:
+                    pipeline_method = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle,3,len_pipe)
                 raw_report: dict = pipeline_method.run(total_execution // threads_per_copy)
                 formatted_report = Util.get_formatted_report(raw_report)
                 Util.save_json(output_path, dot_name, formatted_report)

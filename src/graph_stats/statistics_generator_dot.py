@@ -22,15 +22,15 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             for distance in distances:
                 dist_total += distance
                 count_dists_greater_0 += 0 if distance == 0 else 1
-            paths = dot_file.split("/")
-            dict_data = IStatisticsGenerator.generate_data_dict( paths[-1].replace('.dot',''),
+            dirs = dot_file.split("/")
+            dict_data = IStatisticsGenerator.generate_data_dict( dirs[-1].replace('.dot',''),
                                                                -1,
                                                                 -1,
                                                                 dist_total,
                                                                 count_dists_greater_0,
-                                                               paths[-3],
-                                                               paths[-4],
-                                                                paths[-2],
+                                                               dirs[-3],
+                                                               dirs[-4],
+                                                                dirs[-2],
                                                                 )
             df = df.append(dict_data,ignore_index=True)
         return df

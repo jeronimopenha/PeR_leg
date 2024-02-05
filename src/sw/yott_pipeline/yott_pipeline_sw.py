@@ -17,8 +17,9 @@ from src.util.util import Util
 class YOTTPipeline(PiplineBase):
     len_pipeline = 10
 
-    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_threads: int = None):
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_annotations:int = 3,num_threads: int = None,):
         num_threads = self.len_pipeline if num_threads == None else num_threads
+        self.num_annotations = num_annotations
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
 
@@ -54,7 +55,7 @@ class YOTTPipeline(PiplineBase):
                 # print(stage1.new_output)
                 # print()
                 # print(stage1.old_output)
-                stage2.compute(stage1)
+                stage2.compute(stage1,self.num_annotations)
                 # print(stage2.new_output)
                 # print()
                 # print(stage2.old_output)
@@ -71,7 +72,7 @@ class YOTTPipeline(PiplineBase):
                 # print(stage5.new_output)
                 # print()
                 # print(stage5.old_output)
-                stage6.compute(stage5)
+                stage6.compute(stage5,self.num_annotations)
                 # print(stage6.new_output_stage3)
                 # print()
                 # print(stage5.old_output)
