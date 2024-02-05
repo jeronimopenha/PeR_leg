@@ -27,7 +27,8 @@ class Stage10SA:
         st9_sw = st9_input['sw']
 
         # fixme only for debugging
-        if st9_th_idx == 0:
+        if st9_th_idx == 0 and st9_th_valid:
+            #print(st9_input)
             z = 1
 
         self.new_output: dict = {

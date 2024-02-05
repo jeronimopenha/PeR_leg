@@ -58,15 +58,15 @@ class Stage4SA:
         for i in range(len(cva)):
             if cva[i] is not None:
                 dvac[i] = Util.dist_manhattan(
-                    Util.get_i_j_from_cell(ca, self.n_lines, self.n_columns),
-                    Util.get_i_j_from_cell(cva[i], self.n_lines, self.n_columns)
+                    Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                    Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
                 )
 
         for i in range(len(cvb)):
             if cvb[i] is not None:
                 dvbc[i] = Util.dist_manhattan(
-                    Util.get_i_j_from_cell(cb, self.n_lines, self.n_columns),
-                    Util.get_i_j_from_cell(cvb[i], self.n_lines, self.n_columns)
+                    Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                    Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
                 )
 
         self.new_output: dict = {

@@ -31,7 +31,7 @@ class SAPipeline(PiplineBase):
 
             n2c, c2n = self.init_sa_placement_tables()
 
-            st0 = Stage0SA(self.n_lines, self.n_threads)
+            st0 = Stage0SA(self.per_graph.n_cells, self.n_threads)
             st1 = Stage1SA(c2n, self.n_threads)
             st2 = Stage2SA(self.per_graph.neighbors)
             st3 = Stage3SA(n2c, self.n_threads)
@@ -44,7 +44,7 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while counter < (self.n_lines * self.n_columns) * 2000:
+            while counter < pow(self.per_graph.n_cells, 2) * self.len_pipeline * exec_times:
                 st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
@@ -58,8 +58,11 @@ class SAPipeline(PiplineBase):
                 st10.compute(st9.old_output)
 
                 counter += 1
-            a = 1
+            for th_idx in range(self.n_threads):
+                for n_idx in range(len(n2c[th_idx])):
+                    if n2c[th_idx][n_idx] is not None:
+                        n2c[th_idx][n_idx] = Util.get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
+                                                                        self.n_columns)
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
-                                                        counter, st3.n2c)
-
-        return Util.create_report(self, "YOTO", n_copies, reports)
+                                                        [st0.exec_counter for _ in range(self.n_threads)], n2c)
+        return Util.create_report(self, "SA_PIPELINE", n_copies, reports)

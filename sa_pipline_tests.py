@@ -16,7 +16,7 @@ def run_connected_graphs():
     dot_path_base = root_path + '/dot_db/'
     dot_connected_path = dot_path_base + 'connected/'
 
-    output_path = os.getcwd() + '/results/sw/sa/sa_pipeline/t_%d/%s/' % (total_threads, arch_type)
+    output_path = os.getcwd() + '/reports/sw/sa/sa_pipeline/t_%d/%s/' % (total_threads, arch_type)
 
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -25,7 +25,7 @@ def run_connected_graphs():
     dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
 
     # FIXME the line below is only for debugging
-    dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
+    # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)

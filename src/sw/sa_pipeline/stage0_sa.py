@@ -23,6 +23,7 @@ class Stage0SA:
         self.cell_b = [0 for _ in range(self.n_threads)]
         self.th_valid = [True for _ in range(self.n_threads)]
         self.th_idx = 0
+        self.exec_counter = 0
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -57,10 +58,12 @@ class Stage0SA:
                 self.th_idx = 0
         self.th_valid[th_idx] = not self.th_valid[th_idx]
 
-        # th_idx = self.th_idx
+        th_idx = self.th_idx
         self.new_output = {
             'th_idx': self.th_idx,
             'th_valid': self.th_valid[th_idx],
             'cell_a': self.cell_a[th_idx],
             'cell_b': self.cell_b[th_idx]
         }
+        if self.th_valid[th_idx] and self.th_idx == 0:
+            self.exec_counter += 1

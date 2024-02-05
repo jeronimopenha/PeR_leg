@@ -57,26 +57,26 @@ class Stage5SA:
             if st4_cva[i] is not None:
                 if st4_cas == st4_cva[i]:
                     dvas[i] = Util.dist_manhattan(
-                        Util.get_i_j_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_i_j_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
                     )
                 else:
                     dvas[i] = Util.dist_manhattan(
-                        Util.get_i_j_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_i_j_from_cell(st4_cva[i], self.n_lines, self.n_columns)
+                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(st4_cva[i], self.n_lines, self.n_columns)
                     )
 
         for i in range(len(st4_cvb)):
             if st4_cvb[i] is not None:
                 if st4_cbs == st4_cvb[i]:
                     dvbs[i] = Util.dist_manhattan(
-                        Util.get_i_j_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_i_j_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
                     )
                 else:
                     dvbs[i] = Util.dist_manhattan(
-                        Util.get_i_j_from_cell(st4_cbs, self.n_lines, self.n_columns),
-                        Util.get_i_j_from_cell(st4_cvb[i], self.n_lines, self.n_columns)
+                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(st4_cvb[i], self.n_lines, self.n_columns)
                     )
 
         self.new_output: dict = {

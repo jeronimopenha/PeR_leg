@@ -40,29 +40,29 @@ class Stage1SA:
         st0_cell_a = st0_input['cell_a']
         st0_cell_b = st0_input['cell_b']
 
-        #fixme only for debugging
+        # fixme only for debugging
         if st0_th_idx == 0:
-            z=1
+            z = 1
 
         # enqueuing data
         if st0_th_valid:
             self.fifo_a.append(
-                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_a'],
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_a'],
                  'node': self.old_output['node_b']})
             self.fifo_b.append(
-                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_b'],
-                 'node': self.old_output['node_a']})
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_b'],
+                 'node': self.new_output['node_a']})
 
         # Pop Queues
-        wa = self.old_output['wa']
-        wb = self.old_output['wb']
+        wa = self.new_output['wa']
+        wb = self.new_output['wb']
         if st0_th_valid:
             wa = self.fifo_a.pop(0)
             wb = self.fifo_b.pop(0)
 
         # update memory
-        usw = self.old_output['sw']['sw']
-        uwa = self.old_output['wa']
+        usw = self.new_output['sw']['sw']
+        uwa = self.new_output['wa']
         uwb = st1_wb
         if usw:
             if self.flag:
@@ -71,9 +71,9 @@ class Stage1SA:
             else:
                 self.c2n[uwb['th_idx']][uwb['cell']] = uwb['node']
                 self.flag = not self.flag
-                # if uwb['th_idx'] == 0:
-                # print(self.print_matrix)
-                # self.print_matrix(uwb['th_idx'])
+                if uwb['th_idx'] == 0:
+                    pass
+                    # self.print_matrix(uwb['th_idx'])
 
         self.new_output = {
             # fifos outputs ready to be moved forward

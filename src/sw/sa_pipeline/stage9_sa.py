@@ -26,7 +26,7 @@ class Stage9SA:
         st8_th_valid = st8_input['th_valid']
 
         # fixme only for debugging
-        if st8_th_idx == 0:
+        if st8_th_idx == 0 and st8_th_valid:
             z = 1
 
         st8_dc = st8_input['dc']
@@ -34,10 +34,14 @@ class Stage9SA:
 
         sw = st8_ds < st8_dc
         if sw:
-            a=1
+            a = 1
 
         self.new_output: dict = {
             'th_idx': st8_th_idx,
             'th_valid': st8_th_valid,
             'sw': sw
         }
+
+        if st8_th_idx == 0 and sw:
+            #print(self.new_output)
+            z = 1
