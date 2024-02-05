@@ -565,10 +565,10 @@ class Util:
             th_dict[th_key]['th_placement']: list = n2c[th]
             edges_str: list = pipeline_base.edges_str
             edges_int: list = pipeline_base.get_edges_int(edges_str[th])
-            dic_edges_dist: dict = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])[0]
+            dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
             dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
             th_dict[th_key]['th_placement_distances']: dict = dic_edges_dist
-            dist_total = sum(list_edges_dist)-len(dic_edges_dist)
+            dist_total = sum(list_edges_dist) - len(dic_edges_dist)
             th_dict[th_key]['th_dist_total']: dict = dist_total
         exec_report['th_results'] = th_dict
         return exec_report
@@ -626,9 +626,9 @@ class Util:
 
         best_dist = 999999
         best_thread = None
-        #para debug
+        # para debug
         best_placement = None
-        #fim debug
+        # fim debug
         # generate data for reports
         for report_key in raw_report['reports'].keys():
             report: dict = raw_report['reports'][report_key]
@@ -647,12 +647,11 @@ class Util:
             else:
                 if total_exec_clk < exec_min_clk:
                     exec_min_clk = total_exec_clk
-            
 
             for th_key in report['th_results'].keys():
                 th_results: dict = report['th_results'][th_key]
                 th_placement_distances[th_key]: dict = th_results['th_placement_distances']
-                
+
                 total_th_clk: int = th_results['total_th_clk']
 
                 th_avg_clk += total_th_clk
@@ -667,7 +666,7 @@ class Util:
                 else:
                     if total_th_clk < th_min_clk:
                         th_min_clk = total_th_clk
-                
+
                 dist_th = th_results['th_dist_total']
                 if dist_th < best_dist:
                     best_dist = dist_th
@@ -676,30 +675,28 @@ class Util:
 
         exec_avg_clk /= n_copies
         th_avg_clk /= total_threads
-        #para debug
+        # para debug
         sqrt = int(math.sqrt(len(best_placement)))
         matrix = [[-1 for i in range(sqrt)] for j in range(sqrt)]
-        for node,(a,b) in enumerate(best_placement):
-            if a!= None:
+        for node, (a, b) in enumerate(best_placement):
+            if a != None:
                 matrix[a][b] = node
-        #fim debug 
+        # fim debug
         formatted_report = raw_report.copy()
         del formatted_report['reports']
         del formatted_report['nodes_dict']
         formatted_report['best_thread'] = best_thread
         formatted_report['best_dist'] = best_dist
-        #para debug
-        formatted_report['best_placement'] = matrix 
-        #fim debug
         formatted_report["exec_max_clk"]: int = exec_max_clk
         formatted_report["exec_min_clk"]: int = exec_min_clk
         formatted_report["exec_avg_clk"]: int = exec_avg_clk
         formatted_report["th_max_clk"]: int = th_max_clk
         formatted_report["th_min_clk"]: int = th_min_clk
         formatted_report["th_avg_clk"]: int = th_avg_clk
-        formatted_report["th_placement_distances"]: dict = th_placement_distances
+        # para debug
+        formatted_report['best_placement'] = matrix
+        # fim debug
+        formatted_report["th_placement_distances"]: dict = th_placement_distances[best_thread]
         formatted_report['nodes_dict']: dict = raw_report['nodes_dict']
-
-
 
         return formatted_report

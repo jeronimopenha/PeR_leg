@@ -8,7 +8,7 @@ from src.util.util import Util
 def run_connected_graphs():
     threads_per_copy: int = 6
     total_threads: int = 6
-    arch_type: ArchType = ArchType.MESH
+    arch_type: ArchType = ArchType.ONE_HOP
     make_shuffle: bool = True
     distance_table_bits: int = 2
 
@@ -25,7 +25,7 @@ def run_connected_graphs():
     dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
 
     # FIXME the line below is only for debugging
-    # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
+    dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)
