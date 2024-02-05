@@ -68,6 +68,9 @@ class SAPipeline(PiplineBase):
                         n2c[th_idx][n_idx] = [None, None]
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
                                                         [st0.exec_counter for _ in range(self.n_threads)], n2c)
+        report = Util.create_report(self, "SA_PIPELINE", n_copies, reports)
         if exec_id not in return_dict.keys():
-            return_dict[exec_id] = []
-        return_dict[exec_id].append(Util.create_report(self, "SA_PIPELINE", n_copies, reports))
+            return_dict[exec_id] = [report]
+        else:
+            return_dict[exec_id].append(report)
+

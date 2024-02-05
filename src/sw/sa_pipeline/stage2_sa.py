@@ -9,7 +9,7 @@ class Stage2SA:
 
         @param neighbors:
         """
-        self.neighbors: list = neighbors
+        self.neighbors: dict = neighbors
         self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,

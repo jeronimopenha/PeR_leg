@@ -25,49 +25,46 @@ def run_connected_graphs():
     # FIXME the line below is only for debugging
     # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
     PROCESSES = 7
-
-    tasks = []
     jobs_alive = []
-    for arch_type in arch_types:
-        tasks.clear()
-        for th in total_threads:
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            output_path = ""
+    # mp.set_start_method('spawn')
+    manager = mp.Manager()
+    return_dict = manager.dict()
+    # tasks = []
+    for th in total_threads:
+        for arch_type in arch_types:
+            task_counter = 0
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
-                print(dot_name, arch_type, th)
-                output_path = Util.get_project_root() + '/reports/sw/sa/sa_pipeline/t_%d/%s/' % (th, arch_type)
-                if not os.path.exists(output_path):
-                    os.makedirs(output_path)
+                # print(dot_name, arch_type, th)
                 sa_pipeline = SAPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
-                tasks.append([sa_pipeline, th // threads_per_copy])
-            for task_counter, task in enumerate(tasks):
-                p = mp.Process(target=task[0].run,
-                               args=(str(task_counter % PROCESSES), return_dict, task[1],))
+                # tasks.append([sa_pipeline, th // threads_per_copy])
+                # for task_counter, task in enumerate(tasks):
+                p = mp.Process(target=sa_pipeline.run,
+                               args=(str(task_counter), return_dict, th // threads_per_copy,))
+                task_counter += 1
                 jobs_alive.append(p)
                 p.start()
-                while len(jobs_alive) > PROCESSES:
-                    jobs_alive = [job for job in jobs_alive if job.is_alive()]
-                    time.sleep(1)
+                print(len(jobs_alive))
             while len(jobs_alive) > 0:
                 jobs_alive = [job for job in jobs_alive if job.is_alive()]
                 time.sleep(1)
+            print(len(jobs_alive))
+            print(return_dict)
             for j_name in return_dict.keys():
-                print(j_name)  # , return_dict[j_name])
-                raw_report: dict = return_dict[j_name]
-                formatted_report = Util.get_formatted_report(raw_report)
-                # Util.save_json(output_path, dot_name, formatted_report)
-                '''for res in return_dict[j_name]:
-                    r_list.append(res)
-                return_dict[j_name] = []'''
+                print(j_name)
+                for report in return_dict[j_name]:
+                    output_path = (Util.get_project_root() +
+                                   '/reports/sw/sa/sa_pipeline/t_%d/ArchType.%s/' %
+                                   (report['total_threads'], report['arch_type'])
+                                   )
 
-
-# raw_report: dict = sa_pipeline.run(total_threads // threads_per_copy)
-# formatted_report = Util.get_formatted_report(raw_report)
-# Util.save_json(output_path, dot_name, formatted_report)
-# print(return_list)
-# a = 1
+                    if not os.path.exists(output_path):
+                        os.makedirs(output_path)
+                    raw_report: dict = report
+                    formatted_report = Util.get_formatted_report(raw_report)
+                    print(formatted_report['graph_name'])
+                    Util.save_json(output_path, formatted_report['graph_name'], formatted_report)
+            return_dict.clear()
 
 
 if __name__ == '__main__':
