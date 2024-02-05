@@ -4,17 +4,35 @@ class Stage10SA:
     """
 
     def __init__(self):
-        self.new_output = {
+        """
+
+        """
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'sw': False
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
 
-    def compute(self, _in: dict):
+    def compute(self, st9_input: dict):
+        """
+
+        @param st9_input:
+        """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['th_idx'] = _in['th_idx']
-        self.new_output['th_valid'] = _in['th_valid']
-        self.new_output['sw'] = _in['sw']
+        st9_th_idx = st9_input['th_idx']
+        st9_th_valid = st9_input['th_valid']
+        st9_sw = st9_input['sw']
+
+        # fixme only for debugging
+        if st9_th_idx == 0 and st9_th_valid:
+            #print(st9_input)
+            z = 1
+
+        self.new_output: dict = {
+            'th_idx': st9_th_idx,
+            'th_valid': st9_th_valid,
+            'sw': st9_sw
+        }

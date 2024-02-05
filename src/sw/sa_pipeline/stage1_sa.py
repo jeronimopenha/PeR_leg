@@ -8,14 +8,14 @@ class Stage1SA:
 
     def __init__(self, c2n: list[list], n_threads: int):
         self.c2n: list[list] = c2n
-        self.n_threads = n_threads
-        self.fifo_a = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for i in range(self.n_threads - 2)]
-        self.fifo_b = [{'th_idx': 0, 'cell': 0, 'node': None}
-                       for i in range(self.n_threads - 2)]
-        self.flag = True
+        self.n_threads: int = n_threads
+        self.fifo_a: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+                                   for _ in range(self.n_threads - 2)]
+        self.fifo_b: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+                                   for _ in range(self.n_threads - 2)]
+        self.flag: bool = True
 
-        self.new_output = {
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
@@ -26,7 +26,7 @@ class Stage1SA:
             'wa': {'th_idx': 0, 'cell': 0, 'node': 0},
             'wb': {'th_idx': 0, 'cell': 0, 'node': 0},
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
         # self.print_matrix(0)
 
     # TODO update logic
@@ -40,25 +40,29 @@ class Stage1SA:
         st0_cell_a = st0_input['cell_a']
         st0_cell_b = st0_input['cell_b']
 
+        # fixme only for debugging
+        if st0_th_idx == 0:
+            z = 1
+
         # enqueuing data
         if st0_th_valid:
             self.fifo_a.append(
-                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_a'],
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_a'],
                  'node': self.old_output['node_b']})
             self.fifo_b.append(
-                {'th_idx': self.old_output['th_idx'], 'cell': self.old_output['cell_b'],
-                 'node': self.old_output['node_a']})
+                {'th_idx': self.new_output['th_idx'], 'cell': self.new_output['cell_b'],
+                 'node': self.new_output['node_a']})
 
         # Pop Queues
-        wa = self.old_output['wa']
-        wb = self.old_output['wb']
+        wa = self.new_output['wa']
+        wb = self.new_output['wb']
         if st0_th_valid:
             wa = self.fifo_a.pop(0)
             wb = self.fifo_b.pop(0)
 
         # update memory
-        usw = self.old_output['sw']['sw']
-        uwa = self.old_output['wa']
+        usw = self.new_output['sw']['sw']
+        uwa = self.new_output['wa']
         uwb = st1_wb
         if usw:
             if self.flag:
@@ -68,10 +72,11 @@ class Stage1SA:
                 self.c2n[uwb['th_idx']][uwb['cell']] = uwb['node']
                 self.flag = not self.flag
                 if uwb['th_idx'] == 0:
-                    self.print_matrix(uwb['th_idx'])
+                    pass
+                    # self.print_matrix(uwb['th_idx'])
 
         self.new_output = {
-            # fifos outptuts ready to be moved forward
+            # fifos outputs ready to be moved forward
             'wa': wa,
             'wb': wb,
             'sw': st9_sw,

@@ -1,12 +1,22 @@
+from src.util.util import Util
+
+
 class Stage4SA:
     """
-    Fourth Pipe from SA_Verilog. This pipe is responsible to find the manhatan 
+    Fourth Pipe from SA_Verilog. This pipe is responsible to find the manhandle
     distances for each combination between cellA and cellB with their 
-    respective neighboors cells before swap.
+    respective neighbors cells before swap.
     """
 
-    def __init__(self):
-        self.new_output = {
+    def __init__(self, n_lines: int, n_columns: int):
+        """
+        @param n_lines:
+        @param n_columns:
+
+        """
+        self.n_lines: int = n_lines
+        self.n_columns: int = n_columns
+        self.new_output: dict = {
             'th_idx': 0,
             'th_valid': False,
             'cell_a': 0,
@@ -16,37 +26,56 @@ class Stage4SA:
             'dvac': [0, 0, 0, 0],
             'dvbc': [0, 0, 0, 0]
         }
-        self.old_output = self.new_output.copy()
+        self.old_output: dict = self.new_output.copy()
 
-    def compute(self, _in: dict):
+    def compute(self, st3_input: dict):
+        """
+
+        @param st3_input:
+        """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        self.new_output['th_idx'] = _in['th_idx']
-        self.new_output['th_valid'] = _in['th_valid']
-        self.new_output['cell_a'] = _in['cell_a']
-        self.new_output['cell_b'] = _in['cell_b']
-        self.new_output['cva'] = _in['cva']
-        self.new_output['cvb'] = _in['cvb']
+        st3_th_idx: int = st3_input['th_idx']
+        st3_th_valid: bool = st3_input['th_valid']
+        st3_cell_a: int = st3_input['cell_a']
+        st3_cell_b: int = st3_input['cell_b']
+        st3_cva: list = st3_input['cva']
+        st3_cvb: list = st3_input['cvb']
 
-        self.new_output['dvac'] = [0, 0, 0, 0]
-        self.new_output['dvbc'] = [0, 0, 0, 0]
+        # fixme only for debugging
+        if st3_th_idx == 0:
+            z = 1
 
-        ca = _in['cell_a']
-        cb = _in['cell_b']
-        cva = _in['cva']
-        cvb = _in['cvb']
+        dvac = [0, 0, 0, 0]
+        dvbc = [0, 0, 0, 0]
+
+        ca = st3_input['cell_a']
+        cb = st3_input['cell_b']
+        cva = st3_input['cva']
+        cvb = st3_input['cvb']
 
         for i in range(len(cva)):
             if cva[i] is not None:
-                self.new_output['dvac'][i] = get_manhattan_distance(
-                    ca, cva[i])
-            else:
-                break
+                dvac[i] = Util.dist_manhattan(
+                    Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                    Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
+                )
 
         for i in range(len(cvb)):
             if cvb[i] is not None:
-                self.new_output['dvbc'][i] = get_manhattan_distance(
-                    cb, cvb[i])
-            else:
-                break
+                dvbc[i] = Util.dist_manhattan(
+                    Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                    Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
+                )
+
+        self.new_output: dict = {
+            'th_idx': st3_th_idx,
+            'th_valid': st3_th_valid,
+            'cell_a': st3_cell_a,
+            'cell_b': st3_cell_b,
+            'cva': st3_cva,
+            'cvb': st3_cvb,
+            'dvac': dvac,
+            'dvbc': dvbc
+        }

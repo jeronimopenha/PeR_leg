@@ -24,19 +24,19 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
-
+        exec_times = 1000
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
 
             n2c, c2n = self.init_sa_placement_tables()
 
-            st0 = Stage0SA(self.n_lines, self.n_threads)
+            st0 = Stage0SA(self.per_graph.n_cells, self.n_threads)
             st1 = Stage1SA(c2n, self.n_threads)
             st2 = Stage2SA(self.per_graph.neighbors)
-            st3 = Stage3SA(n2c)
-            st4 = Stage4SA()
-            st5 = Stage5SA(sa_graph)
+            st3 = Stage3SA(n2c, self.n_threads)
+            st4 = Stage4SA(self.n_lines, self.n_columns)
+            st5 = Stage5SA(self.n_lines, self.n_columns)
             st6 = Stage6SA()
             st7 = Stage7SA()
             st8 = Stage8SA()
@@ -44,15 +44,25 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while not st0_edge_sel.done:
-                st0_edge_sel.compute(st0_edge_sel.old_output, st4_c2n.old_output)
-                st1_edges.compute(st0_edge_sel.old_output)
-                st2_n2c.compute(st1_edges.old_output, st4_c2n.old_output)
-                st3_dist.compute(st2_n2c.old_output)
-                st4_c2n.compute(st3_dist.old_output, st4_c2n.old_output)
+            while counter < pow(self.per_graph.n_cells, 2) * exec_times:
+                st0.compute()
+                st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
+                st2.compute(st1.old_output)
+                st3.compute(st2.old_output, st3.old_output['wb'])
+                st4.compute(st3.old_output)
+                st5.compute(st4.old_output)
+                st6.compute(st5.old_output)
+                st7.compute(st6.old_output)
+                st8.compute(st7.old_output)
+                st9.compute(st8.old_output)
+                st10.compute(st9.old_output)
+
                 counter += 1
-
-            reports[exec_key] = Util.create_exec_report(self, exec_num, st0_edge_sel.total_pipeline_counter,
-                                                        st0_edge_sel.exec_counter, st2_n2c.n2c)
-
-        return Util.create_report(self, "YOTO", n_copies, reports)
+            for th_idx in range(self.n_threads):
+                for n_idx in range(len(n2c[th_idx])):
+                    if n2c[th_idx][n_idx] is not None:
+                        n2c[th_idx][n_idx] = Util.get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
+                                                                            self.n_columns)
+            reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
+                                                        [st0.exec_counter for _ in range(self.n_threads)], n2c)
+        return Util.create_report(self, "SA_PIPELINE", n_copies, reports)

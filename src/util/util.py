@@ -211,9 +211,11 @@ class Util:
             return Util.dist_one_hop(a, b)
 
     @staticmethod
-    def get_edges_distances(arch_type: ArchType, edges: list[list], n2c: list[list]) -> tuple[dict, list]:
+    def get_edges_distances(arch_type: ArchType, edges: list[list], n2c: list[list]) \
+            -> tuple[dict, list]:
         """
 
+        @param ij:
         @param arch_type:
         @type arch_type:
         @param edges:
@@ -462,7 +464,7 @@ class Util:
             raise Exception("Architecture type not supported")
 
     @staticmethod
-    def get_line_column_cell(cell: int, n_lines: int, n_columns: int) -> list:
+    def get_line_column_from_cell(cell: int, n_lines: int, n_columns: int) -> list:
         """
 
         @param cell:
@@ -489,7 +491,7 @@ class Util:
         @return:
         @rtype:
         """
-        column_cell_sqrt: list = Util.get_line_column_cell(cell, cells_sqrt, cells_sqrt)
+        column_cell_sqrt: list = Util.get_line_column_from_cell(cell, cells_sqrt, cells_sqrt)
         return column_cell_sqrt
 
     @staticmethod
@@ -507,7 +509,7 @@ class Util:
         """
         line_column_list: list = []
         for cell in cells:
-            line_column_list.append(Util.get_line_column_cell(cell, n_lines, n_columns))
+            line_column_list.append(Util.get_line_column_from_cell(cell, n_lines, n_columns))
         return line_column_list
 
     @staticmethod
@@ -535,12 +537,12 @@ class Util:
         return str(path)
 
     @staticmethod
-    def create_exec_report(traversal, exec_num: int, total_pipeline_counter: int, exec_counter: list,
+    def create_exec_report(pipeline_base, exec_num: int, total_pipeline_counter: int, exec_counter: list,
                            n2c: list[list[list]]) -> dict:
         """
 
-        @param traversal:
-        @type traversal:
+        @param pipeline_base:
+        @type pipeline_base:
         @param exec_num:
         @type exec_num:
         @param total_pipeline_counter:
@@ -556,14 +558,14 @@ class Util:
             'total_exec_clk': total_pipeline_counter
         }
         th_dict: dict = {}
-        for th in range(traversal.len_pipeline):
+        for th in range(pipeline_base.n_threads):
             th_key = 'Exec_%d_TH_%d' % (exec_num, th)
             th_dict[th_key]: dict = {}
             th_dict[th_key]['total_th_clk']: int = exec_counter[th]
             th_dict[th_key]['th_placement']: list = n2c[th]
-            edges_str: list = traversal.edges_str
-            edges_int: list = traversal.get_edges_int(edges_str[th])
-            dic_edges_dist, list_edges_dist = Util.get_edges_distances(traversal.arch_type, edges_int, n2c[th])
+            edges_str: list = pipeline_base.edges_str
+            edges_int: list = pipeline_base.get_edges_int(edges_str[th])
+            dic_edges_dist: dict = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])[0]
             dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
             th_dict[th_key]['th_placement_distances']: dict = dic_edges_dist
             dist_total = sum(list_edges_dist)-len(dic_edges_dist)

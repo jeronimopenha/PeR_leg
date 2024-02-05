@@ -9,7 +9,7 @@ class Stage0SA:
     def __init__(self, n_cells: int, n_threads: int):
         """
 
-        @param per_graph:
+
         @param n_threads:
         """
         self.n_threads: int = n_threads
@@ -17,12 +17,13 @@ class Stage0SA:
         self.th_bits: int = math.ceil(math.log2(self.n_threads))
         self.cell_bits: int = math.ceil(math.log2(self.n_cells))
         self.counter_mask = int(pow(math.ceil(math.sqrt(self.n_cells)), 2)) - 1
-        self.counter: list = [0 for i in range(self.n_threads)]
+        self.counter: list = [0 for _ in range(self.n_threads)]
 
-        self.cell_a = [0 for i in range(self.n_threads)]
-        self.cell_b = [0 for i in range(self.n_threads)]
-        self.th_valid = [True for i in range(self.n_threads)]
+        self.cell_a = [0 for _ in range(self.n_threads)]
+        self.cell_b = [0 for _ in range(self.n_threads)]
+        self.th_valid = [True for _ in range(self.n_threads)]
         self.th_idx = 0
+        self.exec_counter = 0
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -57,10 +58,12 @@ class Stage0SA:
                 self.th_idx = 0
         self.th_valid[th_idx] = not self.th_valid[th_idx]
 
-        # th_idx = self.th_idx
+        th_idx = self.th_idx
         self.new_output = {
             'th_idx': self.th_idx,
             'th_valid': self.th_valid[th_idx],
             'cell_a': self.cell_a[th_idx],
             'cell_b': self.cell_b[th_idx]
         }
+        if self.th_valid[th_idx] and self.th_idx == 0:
+            self.exec_counter += 1
