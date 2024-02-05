@@ -91,7 +91,7 @@ class PiplineBase(object):
         @return:
         """
         #fixme retirar a linha abaixo
-        random.seed(0)
+        #random.seed(0)
         n2c: list[list] = []
         c2n: list[list] = []
         for i in range(self.n_threads):
