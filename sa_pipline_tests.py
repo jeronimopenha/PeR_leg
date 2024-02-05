@@ -9,7 +9,7 @@ from src.util.util import Util
 
 def run_connected_graphs():
     arch_types = [ArchType.ONE_HOP, ArchType.MESH]
-    total_threads = [6]
+    total_threads = [6, 60, 600]
 
     threads_per_copy: int = 6
     make_shuffle: bool = True
