@@ -24,7 +24,7 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
-        exec_times = 10
+        exec_times = 1000
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
@@ -44,7 +44,7 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while counter < pow(self.per_graph.n_cells, 2) * self.len_pipeline * exec_times:
+            while counter < pow(self.per_graph.n_cells, 2) * exec_times:
                 st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
@@ -62,7 +62,7 @@ class SAPipeline(PiplineBase):
                 for n_idx in range(len(n2c[th_idx])):
                     if n2c[th_idx][n_idx] is not None:
                         n2c[th_idx][n_idx] = Util.get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
-                                                                        self.n_columns)
+                                                                            self.n_columns)
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
                                                         [st0.exec_counter for _ in range(self.n_threads)], n2c)
         return Util.create_report(self, "SA_PIPELINE", n_copies, reports)
