@@ -1,4 +1,5 @@
 from src.util.util import Util
+from src.util.per_enum import ArchType
 
 
 class Stage5SA:
@@ -9,10 +10,11 @@ class Stage5SA:
     for the distances found in the left pipe.
     """
 
-    def __init__(self, n_lines: int, n_columns: int):
+    def __init__(self, arch_type: ArchType, n_lines: int, n_columns: int):
         """
 
         """
+        self.arch_type: ArchType = arch_type
         self.n_lines: int = n_lines
         self.n_columns: int = n_columns
         self.new_output: dict = {
@@ -55,29 +57,53 @@ class Stage5SA:
 
         for i in range(len(st4_cva)):
             if st4_cva[i] is not None:
-                if st4_cas == st4_cva[i]:
-                    dvas[i] = Util.dist_manhattan(
-                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
-                    )
-                else:
-                    dvas[i] = Util.dist_manhattan(
-                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(st4_cva[i], self.n_lines, self.n_columns)
-                    )
+                if self.arch_type == ArchType.ONE_HOP:
+                    if st4_cas == st4_cva[i]:
+                        dvas[i] = Util.dist_one_hop(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        )
+                    else:
+                        dvas[i] = Util.dist_one_hop(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cva[i], self.n_lines, self.n_columns)
+                        )
+                if self.arch_type == ArchType.MESH:
+                    if st4_cas == st4_cva[i]:
+                        dvas[i] = Util.dist_manhattan(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        )
+                    else:
+                        dvas[i] = Util.dist_manhattan(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cva[i], self.n_lines, self.n_columns)
+                        )
 
         for i in range(len(st4_cvb)):
             if st4_cvb[i] is not None:
-                if st4_cbs == st4_cvb[i]:
-                    dvbs[i] = Util.dist_manhattan(
-                        Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
-                    )
-                else:
-                    dvbs[i] = Util.dist_manhattan(
-                        Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(st4_cvb[i], self.n_lines, self.n_columns)
-                    )
+                if self.arch_type == ArchType.ONE_HOP:
+                    if st4_cbs == st4_cvb[i]:
+                        dvbs[i] = Util.dist_one_hop(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        )
+                    else:
+                        dvbs[i] = Util.dist_one_hop(
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cvb[i], self.n_lines, self.n_columns)
+                        )
+                elif self.arch_type == ArchType.MESH:
+                    if st4_cbs == st4_cvb[i]:
+                        dvbs[i] = Util.dist_manhattan(
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                        )
+                    else:
+                        dvbs[i] = Util.dist_manhattan(
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cvb[i], self.n_lines, self.n_columns)
+                        )
 
         self.new_output: dict = {
             'th_idx': st4_th_idx,

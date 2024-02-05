@@ -35,8 +35,8 @@ class SAPipeline(PiplineBase):
             st1 = Stage1SA(c2n, self.n_threads)
             st2 = Stage2SA(self.per_graph.neighbors)
             st3 = Stage3SA(n2c, self.n_threads)
-            st4 = Stage4SA(self.n_lines, self.n_columns)
-            st5 = Stage5SA(self.n_lines, self.n_columns)
+            st4 = Stage4SA(self.arch_type, self.n_lines, self.n_columns)
+            st5 = Stage5SA(self.arch_type, self.n_lines, self.n_columns)
             st6 = Stage6SA()
             st7 = Stage7SA()
             st8 = Stage8SA()
@@ -44,7 +44,8 @@ class SAPipeline(PiplineBase):
             st10 = Stage10SA()
 
             counter = 0
-            while counter < pow(self.per_graph.n_cells, 2) * exec_times:
+            max_counter = pow(self.per_graph.n_cells, 2) * exec_times
+            while counter < max_counter:
                 st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
@@ -63,6 +64,8 @@ class SAPipeline(PiplineBase):
                     if n2c[th_idx][n_idx] is not None:
                         n2c[th_idx][n_idx] = Util.get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
                                                                             self.n_columns)
+                    else:
+                        n2c[th_idx][n_idx] = [None, None]
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
                                                         [st0.exec_counter for _ in range(self.n_threads)], n2c)
         return Util.create_report(self, "SA_PIPELINE", n_copies, reports)

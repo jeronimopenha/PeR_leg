@@ -1,3 +1,4 @@
+from src.util.per_enum import ArchType
 from src.util.util import Util
 
 
@@ -8,12 +9,13 @@ class Stage4SA:
     respective neighbors cells before swap.
     """
 
-    def __init__(self, n_lines: int, n_columns: int):
+    def __init__(self, arch_type: ArchType, n_lines: int, n_columns: int):
         """
         @param n_lines:
         @param n_columns:
 
         """
+        self.arch_type: ArchType = arch_type
         self.n_lines: int = n_lines
         self.n_columns: int = n_columns
         self.new_output: dict = {
@@ -57,17 +59,29 @@ class Stage4SA:
 
         for i in range(len(cva)):
             if cva[i] is not None:
-                dvac[i] = Util.dist_manhattan(
-                    Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
-                    Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
-                )
+                if self.arch_type == ArchType.ONE_HOP:
+                    dvac[i] = Util.dist_one_hop(
+                        Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
+                    )
+                elif self.arch_type == ArchType.MESH:
+                    dvac[i] = Util.dist_manhattan(
+                        Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
+                    )
 
         for i in range(len(cvb)):
             if cvb[i] is not None:
-                dvbc[i] = Util.dist_manhattan(
-                    Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
-                    Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
-                )
+                if self.arch_type == ArchType.ONE_HOP:
+                    dvbc[i] = Util.dist_one_hop(
+                        Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
+                    )
+                elif self.arch_type == ArchType.MESH:
+                    dvbc[i] = Util.dist_manhattan(
+                        Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
+                    )
 
         self.new_output: dict = {
             'th_idx': st3_th_idx,

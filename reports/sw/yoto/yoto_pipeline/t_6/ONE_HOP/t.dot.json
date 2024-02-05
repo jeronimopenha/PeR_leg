@@ -11,53 +11,26 @@
     "n_columns": 2,
     "best_thread": "Exec_0_TH_0",
     "best_dist": 0,
+    "exec_max_clk": 59,
+    "exec_min_clk": 59,
+    "exec_avg_clk": 59.0,
+    "th_max_clk": 10,
+    "th_min_clk": 8,
+    "th_avg_clk": 9.0,
     "best_placement": [
         [
-            2,
-            3
+            3,
+            2
         ],
         [
-            0,
-            1
+            1,
+            0
         ]
     ],
-    "exec_max_clk": 61,
-    "exec_min_clk": 61,
-    "exec_avg_clk": 61.0,
-    "th_max_clk": 10,
-    "th_min_clk": 6,
-    "th_avg_clk": 7.833333333333333,
     "th_placement_distances": {
-        "Exec_0_TH_0": {
-            "3_2": 1,
-            "2_0": 1,
-            "0_1": 1
-        },
-        "Exec_0_TH_1": {
-            "3_2": 1,
-            "2_0": 1,
-            "0_1": 1
-        },
-        "Exec_0_TH_2": {
-            "1_0": 1,
-            "0_2": 1,
-            "2_3": 1
-        },
-        "Exec_0_TH_3": {
-            "1_0": 1,
-            "0_2": 1,
-            "2_3": 1
-        },
-        "Exec_0_TH_4": {
-            "3_2": 1,
-            "2_0": 1,
-            "0_1": 1
-        },
-        "Exec_0_TH_5": {
-            "1_0": 1,
-            "0_2": 1,
-            "2_3": 1
-        }
+        "3_2": 1,
+        "2_0": 1,
+        "0_1": 1
     },
     "nodes_dict": {
         "a": 0,
