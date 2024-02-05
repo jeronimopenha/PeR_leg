@@ -23,8 +23,8 @@ class SAPipeline(PiplineBase):
         self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
-    def run(self, n_copies: int = 1) -> dict:
-        exec_times = 1000
+    def run(self, exec_id: str, return_dict: dict, n_copies: int = 1):
+        exec_times = 1
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
@@ -68,4 +68,6 @@ class SAPipeline(PiplineBase):
                         n2c[th_idx][n_idx] = [None, None]
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
                                                         [st0.exec_counter for _ in range(self.n_threads)], n2c)
-        return Util.create_report(self, "SA_PIPELINE", n_copies, reports)
+        if exec_id not in return_dict.keys():
+            return_dict[exec_id] = []
+        return_dict[exec_id].append(Util.create_report(self, "SA_PIPELINE", n_copies, reports))
