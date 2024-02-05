@@ -24,7 +24,7 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, exec_id: str, return_dict: dict, n_copies: int = 1):
-        exec_times = 1
+        exec_times = 1000
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num

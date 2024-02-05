@@ -24,21 +24,16 @@ def run_connected_graphs():
 
     # FIXME the line below is only for debugging
     # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
-    PROCESSES = 7
+
     jobs_alive = []
-    # mp.set_start_method('spawn')
     manager = mp.Manager()
     return_dict = manager.dict()
-    # tasks = []
     for th in total_threads:
         for arch_type in arch_types:
             task_counter = 0
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
-                # print(dot_name, arch_type, th)
                 sa_pipeline = SAPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
-                # tasks.append([sa_pipeline, th // threads_per_copy])
-                # for task_counter, task in enumerate(tasks):
                 p = mp.Process(target=sa_pipeline.run,
                                args=(str(task_counter), return_dict, th // threads_per_copy,))
                 task_counter += 1
