@@ -12,6 +12,7 @@ from src.sw.sa_pipeline.stage7_sa import Stage7SA
 from src.sw.sa_pipeline.stage8_sa import Stage8SA
 from src.sw.sa_pipeline.stage9_sa import Stage9SA
 from src.sw.sa_pipeline.stage10_sa import Stage10SA
+from numba import jit
 from src.util.util import Util
 
 
@@ -23,6 +24,8 @@ class SAPipeline(PiplineBase):
         self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
+    # fixme numba tests
+    # @jit
     def run(self, exec_id: str, return_dict: dict, n_copies: int = 1):
         exec_times = 1000
         reports = {}
@@ -73,4 +76,3 @@ class SAPipeline(PiplineBase):
             return_dict[exec_id] = [report]
         else:
             return_dict[exec_id].append(report)
-

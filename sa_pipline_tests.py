@@ -37,7 +37,7 @@ def run_connected_graphs():
                 sa_pipeline = SAPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
                 p = mp.Process(target=sa_pipeline.run,
                                args=(str(local_counter), return_dict, th // threads_per_copy,))
-                print("task:", task_counter,",", "local_task:", local_counter)
+                print("task:", task_counter, ",", "local_task:", local_counter)
                 local_counter += 1
                 task_counter += 1
                 jobs_alive.append(p)
@@ -49,8 +49,8 @@ def run_connected_graphs():
             while len(jobs_alive) > 0:
                 jobs_alive = [job for job in jobs_alive if job.is_alive()]
                 time.sleep(1)
-            print(len(jobs_alive))
-            print(return_dict)
+            # print(len(jobs_alive))
+            # print(return_dict)
             for j_name in return_dict.keys():
                 print(j_name)
                 for report in return_dict[j_name]:
