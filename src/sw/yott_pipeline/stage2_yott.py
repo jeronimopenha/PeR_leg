@@ -52,10 +52,13 @@ class Stage2YOTT:
         annotations = list(self.annotations[thread_index].values())[edge_index]
         while len(annotations) < num_annotations:
             annotations.append([-1,-1])
+        
         annotations = annotations[0:3]
         # fixme Corrigir em traversal para que as anotações fiquem em inteiro
-        annotations = [(self.per.nodes_to_idx[annotation[0]], annotation[1] + 1) if annotation[0] != -1 else annotation for annotation in annotations]
-
+        annotations = [(self.per.nodes_to_idx[annotation[0]], annotation[1] + 1) if (annotation[0] != -1 and annotation[1]<3) else [-1,-1] for annotation in annotations]
+        
+        if out_previous_stage['thread_valid']:
+            print()
         cs = [] 
         dist_cs_b =[]
         

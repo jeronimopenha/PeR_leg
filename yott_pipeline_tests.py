@@ -45,6 +45,6 @@ def run_connected_graphs():
 
 
 if __name__ == '__main__':
-    # per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/connected/my_graph.dot","my_graph.dot")
-    # yott = YOTTPipeline(per,ArchType.MESH,4,True,3,10).run(10)
-    run_connected_graphs()
+    per = PeRGraph("/home/fabio/Mestrado/PeR/dot_db/graphs0/14-4x4.dot","14-4x4.dot")
+    yott = YOTTPipeline(per,ArchType.MESH,4,True,3,1).run(1)
+    # run_connected_graphs()
