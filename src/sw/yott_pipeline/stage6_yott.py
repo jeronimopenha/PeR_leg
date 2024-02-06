@@ -36,7 +36,6 @@ class Stage6YOTT:
         cs_c = out_previous_stage['Cs_C']
         dist_csb = out_previous_stage['dist_CsB']
         c_s = out_previous_stage['C_S']
-
         cost = self.calc_total_cost(c_s, cs_c, dist_csb, self.arch_type,num_annotations) 
 
         self.new_output = {
@@ -58,7 +57,7 @@ class Stage6YOTT:
         @type c_s: 
         @param c_c: 
         @type c_c: 
-        @param dist_c_b: 
+        @param dist_c_b: annotation
         @type dist_c_b: 
         @param arch_type: 
         @type arch_type: 

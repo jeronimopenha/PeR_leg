@@ -700,3 +700,15 @@ class Util:
         formatted_report['nodes_dict']: dict = raw_report['nodes_dict']
 
         return formatted_report
+
+    def clear_invalid_annotations(annotations : dict[str,list[int]]):
+        placed_nodes ={None:True}
+        for k,v in annotations.items():
+            a,b = k.split()
+            placed_nodes[a] = True
+            placed_nodes[b] = True
+            for (c,_) in (v.copy()):
+                if placed_nodes.get(c) == None:
+                    annotations[k].remove([c,_])
+            
+        return annotations
