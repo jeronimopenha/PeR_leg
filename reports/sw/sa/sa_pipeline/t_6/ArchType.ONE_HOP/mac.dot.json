@@ -4,12 +4,12 @@
     "arch_type": "ONE_HOP",
     "total_edges": 11,
     "visited_edges": 10,
-    "n_copies": 10,
-    "total_threads": 60,
+    "n_copies": 1,
+    "total_threads": 6,
     "n_cells": 16,
     "n_lines": 4,
     "n_columns": 4,
-    "best_thread": "Exec_0_TH_1",
+    "best_thread": "Exec_0_TH_4",
     "best_dist": 0,
     "exec_max_clk": 256000,
     "exec_min_clk": 256000,
@@ -19,41 +19,41 @@
     "th_avg_clk": 21333.0,
     "best_placement": [
         [
-            -1,
-            8,
-            -1,
-            10
-        ],
-        [
-            -1,
-            4,
-            5,
-            3
-        ],
-        [
-            -1,
-            7,
             6,
-            9
+            2,
+            7,
+            8
         ],
         [
+            4,
+            10,
             -1,
+            -1
+        ],
+        [
+            5,
+            0,
             1,
-            2,
-            0
+            -1
+        ],
+        [
+            3,
+            9,
+            -1,
+            -1
         ]
     ],
     "th_placement_distances": {
         "8_7": 1,
         "7_6": 1,
-        "6_2": 1,
-        "2_0": 1,
+        "6_5": 1,
+        "5_3": 1,
+        "3_9": 1,
+        "9_0": 1,
         "0_1": 1,
-        "0_9": 1,
-        "9_3": 1,
-        "3_4": 1,
-        "3_5": 1,
-        "9_10": 1
+        "0_2": 1,
+        "9_10": 1,
+        "3_4": 1
     },
     "nodes_dict": {
         "mul0": 0,

@@ -184,7 +184,7 @@ digraph invert_matrix_general_dfg__3 {
     LOD_369;
     MUL_371;
     SUB_372;
-    MUL_375;
+    //MUL_375;
     ADD_378;
     LOD_379;
     MUL_381;
