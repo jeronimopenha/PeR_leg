@@ -11,7 +11,7 @@ from src.util.per_graph import PeRGraph
 import matplotlib
 import matplotlib.pyplot as plt
 
-matplotlib.use('TkAgg')
+# matplotlib.use('TkAgg')
 
 
 class Util:
