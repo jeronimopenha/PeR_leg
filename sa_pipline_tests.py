@@ -28,18 +28,24 @@ def run_connected_graphs():
     jobs_alive = []
     manager = mp.Manager()
     return_dict = manager.dict()
+    task_counter = 0
     for th in total_threads:
         for arch_type in arch_types:
-            task_counter = 0
+            local_counter = 0
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
                 sa_pipeline = SAPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
                 p = mp.Process(target=sa_pipeline.run,
-                               args=(str(task_counter), return_dict, th // threads_per_copy,))
+                               args=(str(local_counter), return_dict, th // threads_per_copy,))
+                print("task:", task_counter,",", "local_task:", local_counter)
+                local_counter += 1
                 task_counter += 1
                 jobs_alive.append(p)
                 p.start()
-                print(len(jobs_alive))
+
+                while len(jobs_alive) >= 8:
+                    jobs_alive = [job for job in jobs_alive if job.is_alive()]
+                    time.sleep(1)
             while len(jobs_alive) > 0:
                 jobs_alive = [job for job in jobs_alive if job.is_alive()]
                 time.sleep(1)
