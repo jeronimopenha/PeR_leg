@@ -49,8 +49,8 @@ def run_connected_graphs():
             while len(jobs_alive) > 0:
                 jobs_alive = [job for job in jobs_alive if job.is_alive()]
                 time.sleep(1)
-            print(len(jobs_alive))
-            print(return_dict)
+            #print(len(jobs_alive))
+            #print(return_dict)
             for j_name in return_dict.keys():
                 print(j_name)
                 for report in return_dict[j_name]:

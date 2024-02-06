@@ -8,7 +8,6 @@ import random
 from pathlib import Path
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-import matplotlib
 import matplotlib.pyplot as plt
 
 
