@@ -13,7 +13,7 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
                 best_thread = json_data["best_thread"]
                 best_dist = json_data["best_dist"]
                 count_dists_greater_0 = 0
-                for distance in json_data['th_placement_distances'][best_thread].values():
+                for distance in json_data['th_placement_distances'].values():
                     count_dists_greater_0 += 0 if distance == 1 else 1
 
                 dict_data = IStatisticsGenerator.generate_data_dict(json_data['graph_name'].replace('.dot',''),
