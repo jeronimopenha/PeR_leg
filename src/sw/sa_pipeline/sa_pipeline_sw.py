@@ -1,3 +1,6 @@
+import time
+from typing import Tuple, List
+
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
 from src.util.piplinebase import PiplineBase
@@ -13,7 +16,7 @@ from src.sw.sa_pipeline.stage8_sa import Stage8SA
 from src.sw.sa_pipeline.stage9_sa import Stage9SA
 from src.sw.sa_pipeline.stage10_sa import Stage10SA
 from src.util.util import Util
-from concurrent.futures.process import ProcessPoolExecutor
+import multiprocessing as mp
 
 
 class SAPipeline(PiplineBase):
@@ -25,25 +28,52 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run(self, n_copies: int = 1) -> dict:
+        max_jobs = 8
         exec_times = 1000
+        max_counter = pow(self.per_graph.n_cells, 2) * exec_times
+        queue = mp.Queue()
         reports = {}
-        # rets = []
-        with ProcessPoolExecutor(max_workers=8) as executor:
-            for exec_num in range(n_copies):
-                exec_key = 'exec_%d' % exec_num
-                max_counter = pow(self.per_graph.n_cells, 2) * exec_times
-                rets = executor.submit(self.exec_pipeline, max_counter=max_counter)
-                # exec_counter, n2c = self.exec_pipeline(max_counter)
-
-                # reports[exec_key] = Util.create_exec_report(self, exec_num, max_counter,
-                #                                            [exec_counter for _ in range(self.n_threads)], n2c)
+        jobs_alive = []
+        for exec_num in range(n_copies):
+            p = mp.Process(target=self.exec_pipeline, args=(exec_num, max_counter, queue))
+            p.start()
+            jobs_alive.append(p)
+            if exec_num == 0:
+                print('Tasks:')
+            if exec_num % 10 == 0 and exec_num != 0:
+                print()
+            print(exec_num, end=" ")
+            while len(jobs_alive) >= max_jobs:
+                new_jobs_alive = []
+                for job in jobs_alive:
+                    if job.is_alive():
+                        new_jobs_alive.append(job)
+                    else:
+                        while not queue.empty():
+                            exec_num, exec_counter, n2c = queue.get()
+                            exec_key = 'exec_%d' % exec_num
+                            reports[exec_key] = Util.create_exec_report(self, exec_num, max_counter,
+                                                                        [exec_counter for _ in range(self.n_threads)],
+                                                                        n2c
+                                                                        )
+                jobs_alive = new_jobs_alive
+                time.sleep(1)
+        while len(jobs_alive) > 0:
+            jobs_alive = [job for job in jobs_alive if job.is_alive()]
+            time.sleep(1)
+        while not queue.empty():
+            exec_num, exec_counter, n2c = queue.get()
+            exec_key = 'exec_%d' % exec_num
+            reports[exec_key] = Util.create_exec_report(self, exec_num, max_counter,
+                                                        [exec_counter for _ in range(self.n_threads)],
+                                                        n2c
+                                                        )
 
         report = Util.create_report(self, "SA_PIPELINE", n_copies, reports)
+        print()
         return report
 
-    # fixme numba tests
-    def exec_pipeline(self, max_counter) -> list:
-
+    def exec_pipeline(self, exec_key, max_counter, queue: mp.Queue):
         n2c, c2n = self.init_sa_placement_tables()
 
         st0 = Stage0SA(self.per_graph.n_cells, self.n_threads)
@@ -80,4 +110,4 @@ class SAPipeline(PiplineBase):
                                                                         self.n_columns)
                 else:
                     n2c[th_idx][n_idx] = [None, None]
-        return st0.exec_counter, n2c
+        queue.put([exec_key, st0.exec_counter, n2c])
