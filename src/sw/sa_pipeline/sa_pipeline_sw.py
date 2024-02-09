@@ -12,8 +12,8 @@ from src.sw.sa_pipeline.stage7_sa import Stage7SA
 from src.sw.sa_pipeline.stage8_sa import Stage8SA
 from src.sw.sa_pipeline.stage9_sa import Stage9SA
 from src.sw.sa_pipeline.stage10_sa import Stage10SA
-from numba import jit
 from src.util.util import Util
+from multiprocessing import Pool
 
 
 class SAPipeline(PiplineBase):
@@ -25,9 +25,8 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     # fixme numba tests
-    # @jit
-    def run(self, exec_id: str, return_dict: dict, n_copies: int = 1):
-        exec_times = 1000
+    def run(self, n_copies: int = 1) -> dict:
+        exec_times = 10
         reports = {}
         for exec_num in range(n_copies):
             exec_key = 'exec_%d' % exec_num
@@ -48,8 +47,20 @@ class SAPipeline(PiplineBase):
 
             counter = 0
             max_counter = pow(self.per_graph.n_cells, 2) * exec_times
+            pool = Pool()
             while counter < max_counter:
-                st0.compute()
+                pool.apply_async(st0.compute)
+                pool.apply_async(st1.compute, st0.old_output, st9.old_output, st1.old_output['wb']).wait()
+                pool.apply_async(st2.compute, st1.old_output).wait()
+                pool.apply_async(st3.compute, st2.old_output, st3.old_output['wb']).wait()
+                pool.apply_async(st4.compute, st3.old_output).wait()
+                pool.apply_async(st5.compute, st4.old_output).wait()
+                pool.apply_async(st6.compute, st5.old_output).wait()
+                pool.apply_async(st7.compute, st6.old_output ).wait()
+                pool.apply_async(st8.compute, st7.old_output ).wait()
+                pool.apply_async(st9.compute, st8.old_output ).wait()
+                pool.apply_async(st10.compute, st9.old_output,).wait()
+                '''st0.compute()
                 st1.compute(st0.old_output, st9.old_output, st1.old_output['wb'])
                 st2.compute(st1.old_output)
                 st3.compute(st2.old_output, st3.old_output['wb'])
@@ -59,7 +70,7 @@ class SAPipeline(PiplineBase):
                 st7.compute(st6.old_output)
                 st8.compute(st7.old_output)
                 st9.compute(st8.old_output)
-                st10.compute(st9.old_output)
+                st10.compute(st9.old_output)'''
 
                 counter += 1
             for th_idx in range(self.n_threads):
@@ -72,7 +83,4 @@ class SAPipeline(PiplineBase):
             reports[exec_key] = Util.create_exec_report(self, exec_num, counter,
                                                         [st0.exec_counter for _ in range(self.n_threads)], n2c)
         report = Util.create_report(self, "SA_PIPELINE", n_copies, reports)
-        if exec_id not in return_dict.keys():
-            return_dict[exec_id] = [report]
-        else:
-            return_dict[exec_id].append(report)
+        return report
