@@ -11,15 +11,15 @@ ext_modules = [
     Extension("src.sw.sa_pipeline.stage4_sa", ["src/sw/sa_pipeline/stage4_sa.pyx"]),
     Extension("src.sw.sa_pipeline.stage5_sa", ["src/sw/sa_pipeline/stage5_sa.pyx"]),
     Extension("src.sw.sa_pipeline.stage6_sa", ["src/sw/sa_pipeline/stage6_sa.pyx"]),
-    # Extension("src.sw.sa_pipeline.stage7_sa", ["src/sw/sa_pipeline/stage7_sa.pyx"]),
-    # Extension("src.sw.sa_pipeline.stage8_sa", ["src/sw/sa_pipeline/stage8_sa.pyx"]),
-    # Extension("src.sw.sa_pipeline.stage9_sa", ["src/sw/sa_pipeline/stage9_sa.pyx"]),
+    Extension("src.sw.sa_pipeline.stage7_sa", ["src/sw/sa_pipeline/stage7_sa.pyx"]),
+    Extension("src.sw.sa_pipeline.stage8_sa", ["src/sw/sa_pipeline/stage8_sa.pyx"]),
+    Extension("src.sw.sa_pipeline.stage9_sa", ["src/sw/sa_pipeline/stage9_sa.pyx"]),
     # Extension("src.sw.sa_pipeline.stage10_sa", ["src/sw/sa_pipeline/stage10_sa.pyx"]),
     Extension("src.sw.sa_pipeline.sa_pipeline_sw", ["src/sw/sa_pipeline/sa_pipeline_sw.pyx"]),
 ]
 
 setup(
-    name='Jeronimo',
+    name='Jeronimo Costa Penha',
     cmdclass={'build_ext': build_ext},
     ext_modules=ext_modules,
 )

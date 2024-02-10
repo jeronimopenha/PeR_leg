@@ -1,3 +1,4 @@
+import os
 import time
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
@@ -15,7 +16,6 @@ from src.sw.sa_pipeline.stage9_sa import Stage9SA
 from src.sw.sa_pipeline.stage10_sa import Stage10SA
 from src.util.util import create_exec_report, get_line_column_from_cell, create_report
 import multiprocessing as mp
-from queue import Queue
 import cython
 
 
@@ -28,49 +28,32 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run_parallel(self, n_copies: cython.int = 1) -> dict:
-        max_jobs: cython.int = 8
+        max_jobs: cython.int = mp.cpu_count() - 1
         exec_times: cython.int = 1000
         max_counter: cython.int = pow(self.per_graph.n_cells, 2) * exec_times
-        queue: mp.Queue = mp.Queue()
+        manager = mp.Manager()
+        dic_man = manager.dict()
         reports: dict = {}
         jobs_alive: list = []
         for exec_num in range(n_copies):
-            if exec_num == 0:
-                print('Tasks:')
-            if exec_num % 10 == 0 and exec_num != 0:
-                print()
-            print(exec_num, end=" ")
 
-            p = mp.Process(target=self.exec_pipeline, args=(exec_num, max_counter, queue))
+            p = mp.Process(target=self.exec_pipeline, args=(exec_num, max_counter, dic_man))
             p.start()
             jobs_alive.append(p)
 
             while len(jobs_alive) >= max_jobs:
-                new_jobs_alive = []
-                for job in jobs_alive:
-                    if job.is_alive():
-                        new_jobs_alive.append(job)
-                    else:
-                        while not queue.empty():
-                            exec_num, exec_counter, n2c = queue.get()
-                            exec_key: str = 'exec_%d' % exec_num
-                            reports[exec_key] = create_exec_report(self, exec_num, max_counter,
-                                                                   [exec_counter for _ in range(self.n_threads)],
-                                                                   n2c
-                                                                   )
-                jobs_alive: list = new_jobs_alive
-                time.sleep(1)
+                jobs_alive: list = [job for job in jobs_alive if job.is_alive()]
+                time.sleep(0.5)
         while len(jobs_alive) > 0:
             jobs_alive: list = [job for job in jobs_alive if job.is_alive()]
-            time.sleep(1)
-        while not queue.empty():
-            exec_num, exec_counter, n2c = queue.get()
+            time.sleep(0.5)
+        for k in dic_man.keys():
+            exec_num, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = create_exec_report(self, exec_num, max_counter,
                                                    [exec_counter for _ in range(self.n_threads)],
                                                    n2c
                                                    )
-
         report: dict = create_report(self, "SA_PIPELINE", n_copies, reports)
         print()
         return report
@@ -78,18 +61,13 @@ class SAPipeline(PiplineBase):
     def run_single(self, n_copies: cython.int = 1) -> dict:
         exec_times: cython.int = 1000
         max_counter: cython.int = pow(self.per_graph.n_cells, 2) * exec_times
-        queue: Queue = Queue()
+        dic_man: dict = {}
         reports: dict = {}
         for exec_num in range(n_copies):
-            if exec_num == 0:
-                print('Tasks:')
-            if exec_num % 10 == 0 and exec_num != 0:
-                print()
-            print(exec_num, end=" ")
+            self.exec_pipeline(exec_num, max_counter, dic_man)
 
-            self.exec_pipeline(exec_num, max_counter, queue)
-
-            exec_num, exec_counter, n2c = queue.get()
+        for k in dic_man.keys():
+            exec_num, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = create_exec_report(self, exec_num, max_counter,
                                                    [exec_counter for _ in range(self.n_threads)],
@@ -100,7 +78,9 @@ class SAPipeline(PiplineBase):
         print()
         return report
 
-    def exec_pipeline(self, exec_key: cython.int, max_counter: cython.int, queue: Queue | mp.Queue):
+    def exec_pipeline(self, exec_key: cython.int, max_counter: cython.int, dic_man):
+        pid = os.getpid()
+        print(f'thread: {pid} starting')
         n2c, c2n = self.init_sa_placement_tables()
 
         st0: Stage0SA = Stage0SA(self.per_graph.n_cells, self.n_threads)
@@ -137,4 +117,5 @@ class SAPipeline(PiplineBase):
                                                                    self.n_columns)
                 else:
                     n2c[th_idx][n_idx] = [-1, -1]
-        queue.put([exec_key, st0.exec_counter, n2c])
+        dic_man[pid] = [exec_key, st0.exec_counter, n2c]
+        print(f'thread: {pid} ending')

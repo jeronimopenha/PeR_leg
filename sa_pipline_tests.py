@@ -7,8 +7,8 @@ from src.util.util import get_project_root, get_files_list_by_extension, get_for
 
 
 def run_connected_graphs():
-    arch_types = [ArchType.ONE_HOP, ArchType.MESH]
-    total_threads = [60, 600]
+    arch_types = [ArchType.ONE_HOP]
+    total_threads = [60]
 
     threads_per_copy: int = 6
     make_shuffle: bool = True
@@ -22,7 +22,7 @@ def run_connected_graphs():
     dots_list = get_files_list_by_extension(dot_connected_path, '.dot')
 
     # FIXME the line below is only for debugging
-    # dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
+    dots_list = [[dot_connected_path + 'mac.dot', 'mac.dot']]
 
     for th in total_threads:
         for arch_type in arch_types:
