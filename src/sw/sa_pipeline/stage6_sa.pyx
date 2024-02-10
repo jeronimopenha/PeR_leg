@@ -1,3 +1,6 @@
+import cython
+
+
 class Stage6SA:
     """
     Sixth Pipe from SA_Verilog. This pipe is responsible to execute the 2-2 
@@ -26,22 +29,22 @@ class Stage6SA:
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
 
-        st5_th_idx = st5_input['th_idx']
-        st5_th_valid = st5_input['th_valid']
+        st5_th_idx: cython.int = st5_input['th_idx']
+        st5_th_valid: cython.bint = st5_input['th_valid']
 
         # fixme only for debugging
-        if st5_th_idx == 0:
-            z = 1
+        # if st5_th_idx == 0:
+        #    z = 1
 
-        st5_dvac = st5_input['dvac']
-        st5_dvbc = st5_input['dvbc']
-        st5_dvas = st5_input['dvas']
-        st5_dvbs = st5_input['dvbs']
+        st5_dvac: list[cython.int] = st5_input['dvac']
+        st5_dvbc: list[cython.int] = st5_input['dvbc']
+        st5_dvas: list[cython.int] = st5_input['dvas']
+        st5_dvbs: list[cython.int] = st5_input['dvbs']
 
-        dvac = st5_dvac[0] + st5_dvac[1]
-        dvbc = st5_dvbc[0] + st5_dvbc[1]
-        dvas = [st5_dvas[0] + st5_dvas[1], st5_dvas[2] + st5_dvas[3]]
-        dvbs = [st5_dvbs[0] + st5_dvbs[1], st5_dvbs[2] + st5_dvbs[3]]
+        dvac: cython.int = st5_dvac[0] + st5_dvac[1]
+        dvbc: cython.int = st5_dvbc[0] + st5_dvbc[1]
+        dvas: list[cython.int] = [st5_dvas[0] + st5_dvas[1], st5_dvas[2] + st5_dvas[3]]
+        dvbs: list[cython.int] = [st5_dvbs[0] + st5_dvbs[1], st5_dvbs[2] + st5_dvbs[3]]
 
         self.new_output = {
             'th_idx': st5_th_idx,

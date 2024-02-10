@@ -1,4 +1,5 @@
 import math
+import cython
 
 
 class Stage0SA:
@@ -6,24 +7,24 @@ class Stage0SA:
     This class is responsible to generate the values for each thread.
     """
 
-    def __init__(self, n_cells: int, n_threads: int):
+    def __init__(self, n_cells: cython.int, n_threads: cython.int):
         """
 
 
         @param n_threads:
         """
-        self.n_threads: int = n_threads
-        self.n_cells: int = n_cells
-        self.th_bits: int = math.ceil(math.log2(self.n_threads))
-        self.cell_bits: int = math.ceil(math.log2(self.n_cells))
-        self.counter_mask = int(pow(math.ceil(math.sqrt(self.n_cells)), 2)) - 1
-        self.counter: list = [0 for _ in range(self.n_threads)]
+        self.n_threads: cython.int = n_threads
+        self.n_cells: cython.int = n_cells
+        self.th_bits: cython.int = math.ceil(math.log2(self.n_threads))
+        self.cell_bits: cython.int = math.ceil(math.log2(self.n_cells))
+        self.counter_mask: cython.int = int(pow(math.ceil(math.sqrt(self.n_cells)), 2)) - 1
+        self.counter: list[cython.int] = [0 for _ in range(self.n_threads)]
 
-        self.cell_a = [0 for _ in range(self.n_threads)]
-        self.cell_b = [0 for _ in range(self.n_threads)]
-        self.th_valid = [True for _ in range(self.n_threads)]
-        self.th_idx = 0
-        self.exec_counter = 0
+        self.cell_a: list[cython.int] = [0 for _ in range(self.n_threads)]
+        self.cell_b: list[cython.int] = [0 for _ in range(self.n_threads)]
+        self.th_valid: list[cython.bint] = [True for _ in range(self.n_threads)]
+        self.th_idx: cython.int = 0
+        self.exec_counter: cython.int = 0
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -38,9 +39,9 @@ class Stage0SA:
         """
 
         """
-        th_idx: int = self.th_idx
-        cell_bits: int = self.cell_bits
-        mask: int = self.counter_mask
+        th_idx: cython.int = self.th_idx
+        cell_bits: cython.int = self.cell_bits
+        mask: cython.int = self.counter_mask
 
         # Move forward the output
         self.old_output = self.new_output.copy()

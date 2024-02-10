@@ -145,7 +145,7 @@ def create_sa_verilog_test_bench(sa_comp: _sa.SAComponents) -> str:
 
     m.to_verilog(os.getcwd() + '/verilog/sa_verilog_test.v')
     sim = simulation.Simulator(m, sim="iverilog")
-    rslt = sim.run()
+    rslt = sim.run_parallel()
     print(rslt)
     _u.create_dot_from_rom_files(
         os.getcwd() + '/rom/c_n.rom', 'ini_th', os.getcwd() + '/rom/', n_threads, n_cells)
