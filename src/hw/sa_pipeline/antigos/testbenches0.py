@@ -66,5 +66,5 @@ def create_sa_test_bench(sa_comp: SAComponents) -> str:
 
     m.to_verilog(os.getcwd() + "/verilog/sa_test_bench_hw.v")
     sim = simulation.Simulator(m, sim="iverilog")
-    rslt = sim.run()
+    rslt = sim.run_parallel()
     print(rslt)

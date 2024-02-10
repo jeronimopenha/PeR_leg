@@ -1,4 +1,4 @@
-from math import ceil, sqrt
+import cython
 
 
 class Stage1SA:
@@ -6,14 +6,14 @@ class Stage1SA:
     First Pipe from SA_Verilog. This pipe is responsible to search the content of the two cells selected by threads
     """
 
-    def __init__(self, c2n: list[list], n_threads: int):
-        self.c2n: list[list] = c2n
-        self.n_threads: int = n_threads
-        self.fifo_a: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+    def __init__(self, c2n: list[list[cython.int]], n_threads: cython.int):
+        self.c2n: list[list[cython.int]] = c2n
+        self.n_threads: cython.int = n_threads
+        self.fifo_a: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': -1}
                                    for _ in range(self.n_threads - 2)]
-        self.fifo_b: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': None}
+        self.fifo_b: list[dict] = [{'th_idx': 0, 'cell': 0, 'node': -1}
                                    for _ in range(self.n_threads - 2)]
-        self.flag: bool = True
+        self.flag: cython.bint = True
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -35,14 +35,14 @@ class Stage1SA:
         self.old_output = self.new_output.copy()
 
         # reading pipe inputs
-        st0_th_idx = st0_input['th_idx']
-        st0_th_valid = st0_input['th_valid']
-        st0_cell_a = st0_input['cell_a']
-        st0_cell_b = st0_input['cell_b']
+        st0_th_idx: cython.int = st0_input['th_idx']
+        st0_th_valid: cython.bint = st0_input['th_valid']
+        st0_cell_a: cython.int = st0_input['cell_a']
+        st0_cell_b: cython.int = st0_input['cell_b']
 
         # fixme only for debugging
-        if st0_th_idx == 0:
-            z = 1
+        # if st0_th_idx == 0:
+        #    z = 1
 
         # enqueuing data
         if st0_th_valid:
@@ -54,16 +54,16 @@ class Stage1SA:
                  'node': self.new_output['node_a']})
 
         # Pop Queues
-        wa = self.new_output['wa']
-        wb = self.new_output['wb']
+        wa: dict = self.new_output['wa']
+        wb: dict = self.new_output['wb']
         if st0_th_valid:
-            wa = self.fifo_a.pop(0)
-            wb = self.fifo_b.pop(0)
+            wa: dict = self.fifo_a.pop(0)
+            wb: dict = self.fifo_b.pop(0)
 
         # update memory
-        usw = self.new_output['sw']['sw']
-        uwa = self.new_output['wa']
-        uwb = st1_wb
+        usw: cython.bint = self.new_output['sw']['sw']
+        uwa: dict = self.new_output['wa']
+        uwb: dict = st1_wb
         if usw:
             if self.flag:
                 self.c2n[uwa['th_idx']][uwa['cell']] = wa['node']
@@ -92,7 +92,7 @@ class Stage1SA:
             'node_b': self.c2n[st0_th_idx][st0_cell_b],
         }
 
-    def print_matrix(self, idx: int):
+    '''def print_matrix(self, idx: int):
         sqrt_ = ceil(sqrt(len(self.c2n[idx])))
         cell_idx = 0
         str_to_print = 'c2n_th:%d\n' % idx
@@ -104,4 +104,4 @@ class Stage1SA:
                     str_to_print += '%2d ' % self.c2n[idx][cell_idx]
                 cell_idx += 1
             str_to_print += '\n'
-        print(str_to_print)
+        print(str_to_print)'''
