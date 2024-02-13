@@ -28,7 +28,7 @@ class SAPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
     def run_parallel(self, n_copies: cython.int = 1) -> dict:
-        max_jobs: cython.int = mp.cpu_count() - 1
+        max_jobs: cython.int = mp.cpu_count()
         exec_times: cython.int = 1000
         max_counter: cython.int = pow(self.per_graph.n_cells, 2) * exec_times
         manager = mp.Manager()

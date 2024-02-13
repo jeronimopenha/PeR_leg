@@ -1,15 +1,15 @@
 {
     "graph_name": "mac.dot",
     "algorithm": "SA_PIPELINE",
-    "arch_type": "ONE_HOP",
+    "arch_type": "MESH",
     "total_edges": 11,
     "visited_edges": 10,
-    "n_copies": 10,
-    "total_threads": 60,
+    "n_copies": 100,
+    "total_threads": 600,
     "n_cells": 16,
     "n_lines": 4,
     "n_columns": 4,
-    "best_thread": "Exec_1_TH_4",
+    "best_thread": "Exec_18_TH_2",
     "best_dist": 0,
     "exec_max_clk": 256000,
     "exec_min_clk": 256000,
@@ -19,27 +19,27 @@
     "th_avg_clk": 21333,
     "best_placement": [
         [
+            1,
             -1,
-            7,
-            8,
+            -1,
             -1
         ],
         [
             0,
-            1,
-            9,
-            10
-        ],
-        [
             2,
             6,
-            4,
-            -1
+            7
         ],
         [
-            -1,
-            5,
+            9,
             3,
+            5,
+            8
+        ],
+        [
+            10,
+            4,
+            -1,
             15
         ]
     ],
@@ -48,12 +48,12 @@
         "7_6": 1,
         "6_5": 1,
         "5_3": 1,
+        "3_4": 1,
         "3_9": 1,
         "9_0": 1,
         "0_1": 1,
         "0_2": 1,
-        "9_10": 1,
-        "3_4": 1
+        "9_10": 1
     },
     "nodes_dict": {
         "mul0": 0,

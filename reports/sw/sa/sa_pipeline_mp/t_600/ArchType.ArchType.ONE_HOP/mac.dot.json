@@ -4,12 +4,12 @@
     "arch_type": "ONE_HOP",
     "total_edges": 11,
     "visited_edges": 10,
-    "n_copies": 10,
-    "total_threads": 60,
+    "n_copies": 100,
+    "total_threads": 600,
     "n_cells": 16,
     "n_lines": 4,
     "n_columns": 4,
-    "best_thread": "Exec_1_TH_4",
+    "best_thread": "Exec_4_TH_0",
     "best_dist": 0,
     "exec_max_clk": 256000,
     "exec_min_clk": 256000,
@@ -20,26 +20,26 @@
     "best_placement": [
         [
             -1,
-            7,
-            8,
-            -1
+            5,
+            3,
+            4
         ],
         [
-            0,
-            1,
+            8,
+            -1,
             9,
             10
         ],
         [
-            2,
+            7,
             6,
-            4,
+            2,
             -1
         ],
         [
+            1,
             -1,
-            5,
-            3,
+            0,
             15
         ]
     ],
