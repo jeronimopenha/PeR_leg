@@ -1,5 +1,5 @@
 import os
-from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
+from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 from src.util.per_graph import PeRGraph
 from src.util.per_enum import ArchType
 from src.util.util import Util
@@ -32,8 +32,8 @@ def run_connected_graphs():
     for dot_path, dot_name in dots_list:
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)
-        yoto_pipeline_sw = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy,
-                                        random_seed)
+        yoto_pipeline_sw = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy,
+                                          random_seed)
         raw_report: dict = yoto_pipeline_sw.run(total_threads // threads_per_copy)
         formatted_report = Util.get_formatted_report(raw_report)
         Util.save_json(output_path, dot_name, formatted_report)

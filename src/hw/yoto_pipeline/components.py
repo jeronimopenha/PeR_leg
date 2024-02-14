@@ -15,6 +15,12 @@ class Components:
         self.n_threads = n_threads
         self.cache = {}
 
+    def create_stage0_yoto(self):
+        name = 'stage0_yoto'
+        if name in self.cache.keys():
+            return self.cache[name]
+        m = Module
+
     def create_fecth_data(self, input_data_width, output_data_width):
         name = 'fecth_data_%d_%d' % (input_data_width, output_data_width)
         if name in self.cache.keys():
