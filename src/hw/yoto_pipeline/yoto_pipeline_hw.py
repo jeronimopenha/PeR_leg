@@ -256,6 +256,42 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
+    def create_stage3_yoto(self, init_file: str, mem_out_file: str) -> Module:
+        name = 'stage3_yoto'
+        m = Module(name)
+
+        th_bits = Util.get_n_bits(self.n_threads)
+        dst_tbl_bits = self.distance_table_bits
+        node_bits = Util.get_n_bits(self.per_graph.n_cells)
+        ij_bits = Util.get_n_bits(self.n_lines)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        th_idx = m.OutputReg('th_idx', th_bits)
+        th_valid = m.OutputReg('th_valid')
+        ia = m.OutputReg('ia', ij_bits)
+        ja = m.OutputReg('ja', ij_bits)
+        dist_table_line = m.OutputReg('dist_table_line', dst_tbl_bits)
+        dist_counter = m.OutputReg('dist_counter', 6)
+        b = m.OutputReg('b', node_bits)
+
+        st1_th_idx = m.Input('st1_th_idx', th_bits)
+        st1_th_valid = m.Input('st1_th_valid')
+        st1_dist_table_line = m.Input('st1_dist_table_line', dst_tbl_bits)
+        st1_a = m.Input('st1_a', node_bits)
+        st1_b = m.Input('st1_b', node_bits)
+
+        st4_th_idx = m.Input('st4_th_idx', th_bits)
+        st4_th_valid = m.Input('st4_th_valid')
+        st4_place = m.Input('st4_place')
+        st4_dist_counter = m.Input('st4_dist_counter', 6)
+        st4_ib = m.Input('st4_ib', ij_bits)
+        st4_jb = m.Input('st4_jb', ij_bits)
+        st4_b = m.Input('st4_b', node_bits)
+
+        return m
+
 
 threads_per_copy: int = 6
 total_threads: int = 6
