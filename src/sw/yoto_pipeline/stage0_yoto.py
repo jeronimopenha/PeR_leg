@@ -34,29 +34,29 @@ class Stage0YOTO(object):
 
         self.old_output: dict = self.new_output.copy()
 
-    def compute(self, st1_input: dict, st5_input: dict):
+    def compute(self, st0_input: dict, st4_input: dict):
         """
 
-        @param st1_input:
-        @type st1_input:
-        @param st5_input:
-        @type st5_input:
+        @param st0_input:
+        @type st0_input:
+        @param st4_input:
+        @type st4_input:
         """
         # Move forward the output
         self.old_output = self.new_output.copy()
 
         # return update
-        st4_place: bool = st5_input['place']
+        st4_place: bool = st4_input['place']
 
-        st1_edg_n: int = st1_input['edg_n']
-        st1_th_idx: int = st1_input['th_idx']
-        st1_th_valid: int = st1_input['th_valid']
-        st1_incr_edge: int = st1_input['incr_edge']
+        st0_edg_n: int = st0_input['edg_n']
+        st0_th_idx: int = st0_input['th_idx']
+        st0_th_valid: int = st0_input['th_valid']
+        st0_incr_edge: int = st0_input['incr_edge']
 
-        if st1_incr_edge:
-            self.edge_counter[st1_th_idx] = st1_edg_n
-        if st1_th_valid:
-            self.exec_counter[st1_th_idx] += 1
+        if st0_incr_edge:
+            self.edge_counter[st0_th_idx] = st0_edg_n
+        if st0_th_valid:
+            self.exec_counter[st0_th_idx] += 1
 
         self.total_pipeline_counter += 1
 
@@ -67,9 +67,9 @@ class Stage0YOTO(object):
         self.th_idx = th_idx + 1 if th_idx + 1 < self.len_pipeline else 0
 
         # done condition
-        if st1_th_valid and st1_edg_n == self.n_edges and st1_incr_edge:
-            self.thread_valid[st1_th_idx] = False
-            self.thread_done[st1_th_idx] = True
+        if st0_th_valid and st0_edg_n == self.n_edges and st0_incr_edge:
+            self.thread_valid[st0_th_idx] = False
+            self.thread_done[st0_th_idx] = True
 
         # process done condition
         self.done = True

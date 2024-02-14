@@ -119,6 +119,59 @@ class HwComponents:
         self.cache[name] = m
         return m
 
+    def create_memory_1r_1w(self) -> Module:
+        name = 'mem_1r_1w'
+        if name in self.cache.keys():
+            return self.cache[name]
+
+        m = Module(name)
+        width = m.Parameter('width', 8)
+        depth = m.Parameter('depth', 4)
+        read_f = m.Parameter('read_f', 0)
+        init_file = m.Parameter('init_file', 'mem_file.txt')
+        write_f = m.Parameter('write_f', 0)
+        output_file = m.Parameter('output_file', 'mem_out_file.txt')
+
+        clk = m.Input('clk')
+        # rd = m.Input('rd')
+        rd_addr = m.Input('rd_addr', depth)
+        out = m.Output('out', width)
+
+        wr = m.Input('wr')
+        wr_addr = m.Input('wr_addr', depth)
+        wr_data = m.Input('wr_data', width)
+
+        # m.EmbeddedCode(
+        #    '(*rom_style = "block" *) reg [%d-1:0] mem[0:2**%d-1];' % (width, depth))
+        # m.EmbeddedCode('/*')
+        mem = m.Reg('mem', width, Power(2, depth))
+        # m.EmbeddedCode('*/')
+
+        out.assign(mem[rd_addr])
+
+        m.Always(Posedge(clk))(
+            If(wr)(
+                mem[wr_addr](wr_data)
+            ),
+        )
+
+        m.EmbeddedCode('//synthesis translate_off')
+        m.Always(Posedge(clk))(
+            If(AndList(wr, write_f))(
+                Systask('writememb', output_file, mem)
+            ),
+        )
+        m.EmbeddedCode('//synthesis translate_on')
+
+        m.Initial(
+            If(read_f)(
+                Systask('readmemb', init_file, mem),
+            )
+        )
+
+        self.cache[name] = m
+        return m
+
     def create_memory_2r_1w(self) -> Module:
         name = 'mem_2r_1w'
         if name in self.cache.keys():

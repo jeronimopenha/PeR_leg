@@ -23,45 +23,45 @@ class Stage4YOTO(object):
 
         self.old_output: dict = self.new_output.copy()
 
-    def compute(self, st4_input: dict, st5_input: dict):
+    def compute(self, st3_input: dict, st4_input: dict):
         # Move forward the output
         self.old_output = self.new_output.copy()
 
         # return update
-        st5_th_idx: int = st5_input['th_idx']
-        st5_place: bool = st5_input['place']
-        st5_ib: int = st5_input['ib']
-        st5_jb: int = st5_input['jb']
-        st5_b: int = st5_input['b']
-        if st5_place:
-            self.c2n[st5_th_idx][st5_ib][st5_jb] = st5_b
-            # for l in self.c2n[st5_th_idx]:
+        st4_th_idx: int = st4_input['th_idx']
+        st4_place: bool = st4_input['place']
+        st4_ib: int = st4_input['ib']
+        st4_jb: int = st4_input['jb']
+        st4_b: int = st4_input['b']
+        if st4_place:
+            self.c2n[st4_th_idx][st4_ib][st4_jb] = st4_b
+            # for l in self.c2n[st4_th_idx]:
             # print(l)pass
             # print()
 
         # process the new output
-        st4_th_idx: int = st4_input['th_idx']
-        st4_th_valid: bool = st4_input['th_valid']
-        st4_ib: int = st4_input['ib']
-        st4_jb: int = st4_input['jb']
-        st4_dist_counter: int = st4_input['dist_counter']
-        st4_b: int = st4_input['b']
+        st3_th_idx: int = st3_input['th_idx']
+        st3_th_valid: bool = st3_input['th_valid']
+        st3_ib: int = st3_input['ib']
+        st3_jb: int = st3_input['jb']
+        st3_dist_counter: int = st3_input['dist_counter']
+        st3_b: int = st3_input['b']
 
         place: bool = False
 
-        out_of_border = Util.is_out_of_border_sqr(st4_ib, st4_jb, self.n_cells_sqrt)
+        out_of_border = Util.is_out_of_border_sqr(st3_ib, st3_jb, self.n_cells_sqrt)
 
-        cb_content = 0 if out_of_border else self.c2n[st4_th_idx][st4_ib][st4_jb]
+        cb_content = 0 if out_of_border else self.c2n[st3_th_idx][st3_ib][st3_jb]
 
-        if st4_th_valid and cb_content is None and not out_of_border:
+        if st3_th_valid and cb_content is None and not out_of_border:
             place = True
 
         self.new_output = {
-            'th_idx': st4_th_idx,
-            'th_valid': st4_th_valid,
+            'th_idx': st3_th_idx,
+            'th_valid': st3_th_valid,
             'place': place,
-            'dist_counter': st4_dist_counter,
-            'b': st4_b,
-            'ib': st4_ib,
-            'jb': st4_jb,
+            'dist_counter': st3_dist_counter,
+            'b': st3_b,
+            'ib': st3_ib,
+            'jb': st3_jb,
         }

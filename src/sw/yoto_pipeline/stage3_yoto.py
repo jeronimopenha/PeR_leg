@@ -28,29 +28,29 @@ class Stage3YOTO(object):
 
         self.old_output: dict = self.new_output.copy()
 
-    def compute(self, st3_input: dict):
+    def compute(self, st2_input: dict):
         # Move forward the output
         self.old_output = self.new_output.copy()
 
         # process the new output
-        st3_th_idx: int = st3_input['th_idx']
-        st3_th_valid: bool = st3_input['th_valid']
-        st3_ia: int = st3_input['ia']
-        st3_ja: int = st3_input['ja']
-        st3_dist_table_line: int = st3_input['dist_table_line']
-        st3_dist_counter: int = st3_input['dist_counter']
-        st3_b: int = st3_input['b']
+        st2_th_idx: int = st2_input['th_idx']
+        st2_th_valid: bool = st2_input['th_valid']
+        st2_ia: int = st2_input['ia']
+        st2_ja: int = st2_input['ja']
+        st2_dist_table_line: int = st2_input['dist_table_line']
+        st2_dist_counter: int = st2_input['dist_counter']
+        st2_b: int = st2_input['b']
 
-        add_i, add_j = self.distance_table[st3_dist_table_line][st3_dist_counter]
+        add_i, add_j = self.distance_table[st2_dist_table_line][st2_dist_counter]
 
-        ib: int = st3_ia + add_i
-        jb: int = st3_ja + add_j
+        ib: int = st2_ia + add_i
+        jb: int = st2_ja + add_j
 
         self.new_output = {
-            'th_idx': st3_th_idx,
-            'th_valid': st3_th_valid,
+            'th_idx': st2_th_idx,
+            'th_valid': st2_th_valid,
             'ib': ib,
             'jb': jb,
-            'dist_counter': st3_dist_counter,
-            'b': st3_b,
+            'dist_counter': st2_dist_counter,
+            'b': st2_b,
         }

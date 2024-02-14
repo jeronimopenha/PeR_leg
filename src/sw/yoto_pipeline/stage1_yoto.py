@@ -28,28 +28,28 @@ class Stage1YOTO(object):
 
         self.old_output: dict = self.new_output.copy()
 
-    def compute(self, st1_input: dict):
+    def compute(self, st0_input: dict):
         """
 
-        @param st1_input:
-        @type st1_input:
+        @param st0_input:
+        @type st0_input:
         """
         # Move forward the output
         self.old_output = self.new_output.copy()
 
         # process the new output
-        st1_th_idx: int = st1_input['th_idx']
-        st1_th_valid: bool = st1_input['th_valid']
-        st1_edge_n: int = st1_input['edg_n']
+        st0_th_idx: int = st0_input['th_idx']
+        st0_th_valid: bool = st0_input['th_valid']
+        st0_edge_n: int = st0_input['edg_n']
 
-        edge_n_valid: bool = st1_edge_n < self.n_edges
-        dist_table_line: int = (st1_th_idx ^ st1_edge_n) & self.dist_table_mask
+        edge_n_valid: bool = st0_edge_n < self.n_edges
+        dist_table_line: int = (st0_th_idx ^ st0_edge_n) & self.dist_table_mask
 
-        a, b = self.edges[st1_th_idx][st1_edge_n] if edge_n_valid else (0, 0)
+        a, b = self.edges[st0_th_idx][st0_edge_n] if edge_n_valid else (0, 0)
 
         self.new_output = {
-            'th_idx': st1_th_idx,
-            'th_valid': st1_th_valid and edge_n_valid,
+            'th_idx': st0_th_idx,
+            'th_valid': st0_th_valid and edge_n_valid,
             'dist_table_line': dist_table_line,
             'a': a,
             'b': b,
