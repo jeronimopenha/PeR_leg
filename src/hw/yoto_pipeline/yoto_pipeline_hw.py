@@ -256,7 +256,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage3_yoto(self, init_file: str, mem_out_file: str) -> Module:
+    def create_stage3_yoto(self, init_file: str) -> Module:
         name = 'stage3_yoto'
         m = Module(name)
 
@@ -270,25 +270,90 @@ class YotoPipelineHw(PiplineBase):
 
         th_idx = m.OutputReg('th_idx', th_bits)
         th_valid = m.OutputReg('th_valid')
-        ia = m.OutputReg('ia', ij_bits)
-        ja = m.OutputReg('ja', ij_bits)
-        dist_table_line = m.OutputReg('dist_table_line', dst_tbl_bits)
+        ib = m.OutputReg('ib', ij_bits + 1)
+        jb = m.OutputReg('jb', ij_bits + 1)
         dist_counter = m.OutputReg('dist_counter', 6)
         b = m.OutputReg('b', node_bits)
 
-        st1_th_idx = m.Input('st1_th_idx', th_bits)
-        st1_th_valid = m.Input('st1_th_valid')
-        st1_dist_table_line = m.Input('st1_dist_table_line', dst_tbl_bits)
-        st1_a = m.Input('st1_a', node_bits)
-        st1_b = m.Input('st1_b', node_bits)
+        st2_th_idx = m.Input('st2_th_idx', th_bits)
+        st2_th_valid = m.Input('st2_th_valid')
+        st2_ia = m.Input('st2_ia', ij_bits)
+        st2_ja = m.Input('st2_ja', ij_bits)
+        st2_dist_table_line = m.Input('st2_dist_table_line', dst_tbl_bits)
+        st2_dist_counter = m.Input('st2_dist_counter', 6)
+        st2_b = m.Input('st2_b', node_bits)
 
-        st4_th_idx = m.Input('st4_th_idx', th_bits)
-        st4_th_valid = m.Input('st4_th_valid')
-        st4_place = m.Input('st4_place')
-        st4_dist_counter = m.Input('st4_dist_counter', 6)
-        st4_ib = m.Input('st4_ib', ij_bits)
-        st4_jb = m.Input('st4_jb', ij_bits)
-        st4_b = m.Input('st4_b', node_bits)
+        add_i_t = m.Wire('add_i_t', ij_bits + 1)
+        add_j_t = m.Wire('add_j_t', ij_bits + 1)
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                th_idx(Int(0, th_idx.width, 10)),
+                th_valid(Int(0, 1, 10)),
+                ib(Int(0, ib.width, 10)),
+                jb(Int(0, jb.width, 10)),
+                dist_counter(Int(0, dist_counter.width, 10)),
+                b(Int(0, b.width, 10)),
+            ).Else(
+                th_idx(st2_th_idx),
+                th_valid(st2_th_valid),
+                dist_counter(st2_dist_counter),
+                b(st2_b),
+                ib(Cat(Int(0, 1, 10), st2_ia) + add_i_t),
+                jb(Cat(Int(0, 1, 10), st2_ja) + add_j_t),
+            )
+        )
+
+        par = [
+            ('width', (ij_bits + 1) * 2),
+            ('depth', 6 + dst_tbl_bits),
+            ('read_f', 1),
+            ('init_file', init_file),
+            ('write_f', 0),
+            ('output_file', 'mem_out_file.rom'),
+        ]
+        con = [
+            ('rd_addr', Cat(st2_dist_table_line, st2_dist_counter)),
+            ('out', Cat(add_i_t, add_j_t)),
+            ('wr', Int(0, 1, 10)),
+            ('wr_addr', Int(0, 6 + dst_tbl_bits, 10)),
+            ('wr_data', Int(0, (ij_bits + 1) * 2, 10)),
+        ]
+
+        distance_table_m = self.hw_components.create_memory_1r_1w()
+        m.Instance(distance_table_m, distance_table_m.name, par, con)
+
+        return m
+
+    def create_stage4_yoto(self, init_file: str) -> Module:
+        name = 'stage4_yoto'
+        m = Module(name)
+
+        th_bits = Util.get_n_bits(self.n_threads)
+        dst_tbl_bits = self.distance_table_bits
+        node_bits = Util.get_n_bits(self.per_graph.n_cells)
+        ij_bits = Util.get_n_bits(self.n_lines)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        th_idx = m.OutputReg('th_idx', th_bits)
+        th_valid = m.OutputReg('th_valid')
+        ib = m.OutputReg('ib', ij_bits + 1)
+        jb = m.OutputReg('jb', ij_bits + 1)
+        dist_counter = m.OutputReg('dist_counter', 6)
+        b = m.OutputReg('b', node_bits)
+
+        st2_th_idx = m.Input('st2_th_idx', th_bits)
+        st2_th_valid = m.Input('st2_th_valid')
+        st2_ia = m.Input('st2_ia', ij_bits)
+        st2_ja = m.Input('st2_ja', ij_bits)
+        st2_dist_table_line = m.Input('st2_dist_table_line', dst_tbl_bits)
+        st2_dist_counter = m.Input('st2_dist_counter', 6)
+        st2_b = m.Input('st2_b', node_bits)
+
+        add_i_t = m.Wire('add_i_t', ij_bits + 1)
+        add_j_t = m.Wire('add_j_t', ij_bits + 1)
 
         return m
 
@@ -306,4 +371,4 @@ dot_connected_path = dot_path_base + 'connected/'
 dots_list = [dot_connected_path + 'mac.dot', 'mac.dot']
 per_graph = PeRGraph(dots_list[0], dots_list[1])
 yoto_pipeline_hw = YotoPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
-yoto_pipeline_hw.create_stage2_yoto('test.rom', 'test.rom').to_verilog('teste.v')
+yoto_pipeline_hw.create_stage3_yoto('test.rom').to_verilog('teste.v')
