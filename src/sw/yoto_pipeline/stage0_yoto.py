@@ -79,7 +79,7 @@ class Stage0YOTO(object):
                 break
 
         incr_edge = st5_place
-        edge_n: int = self.edge_counter[th_idx] if not incr_edge else self.edge_counter[th_idx] + 1
+        edge_n: int = self.edge_counter[th_idx] if not st5_place else self.edge_counter[th_idx] + 1
         th_valid: int = self.thread_valid[th_idx]
 
         self.new_output = {

@@ -1,7 +1,7 @@
 from veriloggen import *
 
 
-class VerilogUtil(object):
+class HwUtil(object):
     _instance = None
 
     @classmethod

@@ -1,6 +1,6 @@
 from veriloggen import *
-from src.util.verilog_util import sa_fsm_create_rom_files, initialize_regs
-from src.util.verilog_util import VerilogUtil as Vu
+from src.util.hw_util import sa_fsm_create_rom_files, initialize_regs
+from src.util.hw_util import HwUtil as Vu
 from src.util.per_graph import PeRGraph
 from src.hw.sa_fsm.sa_components import SAComponents
 
