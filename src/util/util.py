@@ -565,7 +565,10 @@ class Util:
             th_dict[th_key]['th_placement']: list = n2c[th]
             edges_str: list = pipeline_base.edges_str
             edges_int: list = pipeline_base.get_edges_int(edges_str[th])
-            dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
+            try:
+                dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
+            except Exception as e:
+                print('s')
             dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
             th_dict[th_key]['th_placement_distances']: dict = dic_edges_dist
             dist_total = sum(list_edges_dist) - len(dic_edges_dist)
