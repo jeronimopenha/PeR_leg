@@ -12,6 +12,7 @@ class YotoPipelineHw(PiplineBase):
                  n_threads: int = 1):
         self.len_pipeline: int = 6
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
+        self.hw_components = HwComponents()
 
     def create_stage0_yoto(self) -> Module:
         name = 'stage0_yoto'
@@ -104,43 +105,62 @@ class YotoPipelineHw(PiplineBase):
         )
         return m
 
-    def create_stage1_yoto(self) -> Module:
+    def create_stage1_yoto(self, init_file: str) -> Module:
         name = 'stage1_yoto'
         m = Module(name)
 
         th_bits = Util.get_n_bits(self.n_threads)
         edge_bits = Util.get_n_bits(self.per_graph.n_cells)
+        dst_tbl_bits = self.distance_table_bits
+        node_bits = Util.get_n_bits(self.per_graph.n_cells)
 
         clk = m.Input('clk')
         rst = m.Input('rst')
-        start = m.Input('start')
-        done = m.OutputReg('done')
-
-        visited_edges = m.Input('visited_edges', edge_bits)
 
         th_idx = m.OutputReg('th_idx', th_bits)
         th_valid = m.OutputReg('th_valid')
-        edg_n = m.OutputReg('edg_n', edge_bits)
-        incr_edg = m.OutputReg('incr_edg')
-        total_pipeline_counter = m.OutputReg('total_pipeline_counter', 32)
-        st5_place = m.Input('st5_place')
+        dist_table_line = m.OutputReg('dist_table_line', dst_tbl_bits)
+        a = m.OutputReg('a', node_bits)
+        b = m.OutputReg('b', node_bits)
 
-        st1_th_idx = m.Wire('st1_th_idx', th_bits)
-        st1_th_valid = m.Wire('st1_th_valid')
-        st1_edg_n = m.Wire('st1_edg_n', edge_bits)
-        st1_incr_edge = m.Wire('st1_incr_edge')
+        st1_th_idx = m.Input('st1_th_idx', th_bits)
+        st1_th_valid = m.Input('st1_th_valid')
+        st1_edg_n = m.Input('st1_edg_n', edge_bits)
 
-        edge_counter = m.Reg('edge_counter', edge_bits + 1, self.n_threads)
-        thread_valid = m.Reg('thread_valid', self.n_threads)
-        thread_done = m.Reg('thread_done', self.n_threads)
-        next_th_idx = m.Reg('next_th_idx', th_bits + 1)
-        runnning = m.Reg('runnning')
+        a_t = m.Wire('a_t', node_bits)
+        b_t = m.Wire('b_t', node_bits)
 
-        m.EmbeddedCode('')
-        st1_th_idx.assign(th_idx)
-        st1_th_valid.assign(th_valid)
-        st1_edg_n.assign(edg_n)
-        st1_incr_edge.assign(incr_edg)
+        m.Always(Posedge(clk))(
+            If(rst)(
+                th_idx(Int(0, th_idx.width, 10)),
+                th_valid(Int(0, th_valid.width, 10)),
+                dist_table_line(Int(0, dist_table_line.width, 10)),
+                a(Int(0, a.width, 10)),
+                b(Int(0, b.width, 10)),
+            ).Else(
+                a(a_t),
+                b(b_t)
+            )
+        )
+        par = [
+            ('width', node_bits * 2),
+            ('depth', edge_bits),
+            ('read_f', 1),
+            ('init_file', init_file),
+            ('write_f', 0),
+            ('output_file', 'mem_out_file.txt'),
+        ]
+        con = [
+            ('rd_addr0', st1_edg_n),
+            ('rd_addr1', Int(0, edge_bits, 10)),
+            ('out0', Cat(a_t, b_t)),
+            ('wr', Int(0, 1, 10)),
+            ('wr_addr', Int(0, edge_bits, 10)),
+            ('wr_data', Int(0, node_bits * 2, 10)),
+        ]
+
+        edges_m = self.hw_components.create_memory_2r_1w()
+        m.Instance(edges_m, edges_m.name, par, con)
 
         return m
 
