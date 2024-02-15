@@ -1,5 +1,4 @@
-from math import ceil
-import math
+from math import ceil, log2, sqrt
 import os
 import pandas as pd
 import json
@@ -676,10 +675,10 @@ class Util:
         exec_avg_clk /= n_copies
         th_avg_clk /= total_threads
         # para debug
-        sqrt = int(math.sqrt(len(best_placement)))
-        matrix = [[-1 for i in range(sqrt)] for j in range(sqrt)]
+        sqr = int(sqrt(len(best_placement)))
+        matrix = [[-1 for i in range(sqr)] for j in range(sqr)]
         for node, (a, b) in enumerate(best_placement):
-            if a != None:
+            if a is not None:
                 matrix[a][b] = node
         # fim debug
         formatted_report = raw_report.copy()
@@ -700,3 +699,10 @@ class Util:
         formatted_report['nodes_dict']: dict = raw_report['nodes_dict']
 
         return formatted_report
+
+    @staticmethod
+    def get_n_bits(n):
+        if n < 2:
+            return 1
+        else:
+            return int(ceil(log2(n)))

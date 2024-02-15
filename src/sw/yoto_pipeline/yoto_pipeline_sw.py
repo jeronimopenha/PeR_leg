@@ -9,7 +9,7 @@ from src.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
 from src.util.util import Util
 
 
-class YotoPipeline(PiplineBase):
+class YotoPipelineSw(PiplineBase):
     len_pipeline = 6
 
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,

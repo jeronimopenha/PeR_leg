@@ -1,7 +1,7 @@
 from math import ceil, log2, sqrt
 
 from veriloggen import *
-from src.util.verilog_util import VerilogUtil as Vu
+from src.util.hw_util import HwUtil as Vu
 from src.util.per_graph import PeRGraph
 
 

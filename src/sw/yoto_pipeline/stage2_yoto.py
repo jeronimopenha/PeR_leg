@@ -30,49 +30,49 @@ class Stage2YOTO(object):
 
         self.old_output: dict = self.new_output.copy()
 
-    def compute(self, st2_input: dict, st5_input: dict):
+    def compute(self, st1_input: dict, st4_input: dict):
         """
 
-        @param st2_input:
-        @type st2_input:
-        @param st5_input:
-        @type st5_input:
+        @param st1_input:
+        @type st1_input:
+        @param st4_input:
+        @type st4_input:
         """
         # Move forward the output
         self.old_output = self.new_output.copy()
 
         # return update
-        st5_th_idx: int = st5_input['th_idx']
-        st5_th_valid = st5_input['th_valid']
-        st5_place: bool = st5_input['place']
-        st5_dist_counter: int = st5_input['dist_counter']
-        st5_ib: int = st5_input['ib']
-        st5_jb: int = st5_input['jb']
-        st5_b: int = st5_input['b']
-        if st5_place:
-            self.n2c[st5_th_idx][st5_b][0] = st5_ib
-            self.n2c[st5_th_idx][st5_b][1] = st5_jb
-            self.th_dist_table_counter[st5_th_idx] = 0
-        elif st5_th_valid:
-            self.th_dist_table_counter[st5_th_idx] = st5_dist_counter + 1
+        st4_th_idx: int = st4_input['th_idx']
+        st4_th_valid = st4_input['th_valid']
+        st4_place: bool = st4_input['place']
+        st4_dist_counter: int = st4_input['dist_counter']
+        st4_ib: int = st4_input['ib']
+        st4_jb: int = st4_input['jb']
+        st4_b: int = st4_input['b']
+        if st4_place:
+            self.n2c[st4_th_idx][st4_b][0] = st4_ib
+            self.n2c[st4_th_idx][st4_b][1] = st4_jb
+            self.th_dist_table_counter[st4_th_idx] = 0
+        elif st4_th_valid:
+            self.th_dist_table_counter[st4_th_idx] = st4_dist_counter + 1
 
         # process the new output
-        st2_th_idx: int = st2_input['th_idx']
-        st2_th_valid: bool = st2_input['th_valid']
-        st2_dist_table_line: bool = st2_input['dist_table_line']
-        st2_a: int = st2_input['a']
-        st2_b: int = st2_input['b']
+        st1_th_idx: int = st1_input['th_idx']
+        st1_th_valid: bool = st1_input['th_valid']
+        st1_dist_table_line: bool = st1_input['dist_table_line']
+        st1_a: int = st1_input['a']
+        st1_b: int = st1_input['b']
 
-        ia: int = self.n2c[st2_th_idx][st2_a][0] if self.n2c[st2_th_idx][st2_a][0] is not None else 0
-        ja: int = self.n2c[st2_th_idx][st2_a][1] if self.n2c[st2_th_idx][st2_a][1] is not None else 0
-        dist_counter = self.th_dist_table_counter[st2_th_idx]
+        ia: int = self.n2c[st1_th_idx][st1_a][0] if self.n2c[st1_th_idx][st1_a][0] is not None else 0
+        ja: int = self.n2c[st1_th_idx][st1_a][1] if self.n2c[st1_th_idx][st1_a][1] is not None else 0
+        dist_counter = self.th_dist_table_counter[st1_th_idx]
 
         self.new_output = {
-            'th_idx': st2_th_idx,
-            'th_valid': st2_th_valid,
+            'th_idx': st1_th_idx,
+            'th_valid': st1_th_valid,
             'ia': ia,
             'ja': ja,
-            'dist_table_line': st2_dist_table_line,
+            'dist_table_line': st1_dist_table_line,
             'dist_counter': dist_counter,
-            'b': st2_b,
+            'b': st1_b,
         }

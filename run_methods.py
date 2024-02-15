@@ -1,12 +1,12 @@
 import os
 from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipeline
+from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
 
-methods = [YotoPipeline, YOTTPipeline]
+methods = [YotoPipelineSw, YOTTPipeline]
 path_results = ["yoto/yoto_pipeline", "yott/yott_pipeline"]
 
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
@@ -44,8 +44,8 @@ for i, method in enumerate(methods):
             for dot_path, dot_name in dots_list:
                 per_graph = PeRGraph(dot_path, dot_name)
                 print(per_graph.dot_name)
-                if method == YotoPipeline:
-                    pipeline_method = YotoPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
+                if method == YotoPipelineSw:
+                    pipeline_method = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
                 elif method == YOTTPipeline:
                     pipeline_method = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 3, len_pipe)
                 raw_report: dict = pipeline_method.run(total_execution // threads_per_copy)
