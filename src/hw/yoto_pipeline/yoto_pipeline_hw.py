@@ -45,10 +45,27 @@ class YotoPipelineHw(PiplineBase):
                 n2c_file_content[idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
                 break
 
+        # dst_table rom file
+        dts_table_file_bits = 2 * (self.ij_bits + 1)
+        dts_table_addr_bits = self.distance_table_bits + 5
+        dts_table_file_content = ['{0:b}'.format(0).zfill(dts_table_file_bits) for _ in
+                                  range(pow(2, dts_table_addr_bits))]
+        dst_table: list[list[list]] = [
+            Util.get_distance_table(self.arch_type, self.n_lines, self.make_shuffle) for _ in
+            range(self.distance_table_bits)]
+        for line, n2cs in enumerate(n2c):
+            for node_idx, n2c_ in enumerate(n2cs):
+                if n2c_[0] is None:
+                    continue
+                idx: int = th << self.node_bits | node_idx
+                idx_s: str = '{0:b}'.format(idx).zfill(n2c_addr_bits)
+                n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
+                n2c_file_content[idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
+                break
+
         pass
 
     def create_yoto_pipeline_hw_test_bench(self, v_output_base: str, simul: bool):
-
         edges_rom_f: str = f'{v_output_base}%s_edges.rom' % self.per_graph.dot_name
         n2c_rom_f: str = f'{v_output_base}%s_n2c.rom' % self.per_graph.dot_name
         n2c_out_f: str = f'{v_output_base}%s_n2c_out.txt' % self.per_graph.dot_name
