@@ -135,13 +135,6 @@ def commands_getoutput(cmd):
     return str_out
 
 
-def get_n_bits(n):
-    if n < 2:
-        return 1
-    else:
-        return int(ceil(log2(n)))
-
-
 def create_rom_files(sa_comp, path: str):
     sa_graph = sa_comp.per_graph
     n_cells = sa_comp.per_graph.n_cells

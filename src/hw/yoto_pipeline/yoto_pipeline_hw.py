@@ -18,7 +18,76 @@ class YotoPipelineHw(PiplineBase):
         self.node_bits = Util.get_n_bits(self.per_graph.n_cells)
         self.ij_bits = Util.get_n_bits(self.n_lines)
 
-    def create_yoto_pipeline_hw(self, edges_rom: str, n2c_rom: str, dst_tbl_rom: str, cell_content: str) -> Module:
+    def create_rom_files(self, edges_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
+                         cell_content_f: str, n2c: list[list[list]]):
+        # edges rom file
+        edges_file_bits = self.node_bits * 2
+        edges_addr_bits = self.th_bits + self.edge_bits
+        edges_file_content = ['{0:b}'.format(0).zfill(edges_file_bits) for _ in range(pow(2, edges_addr_bits))]
+        for th, edges in enumerate(self.edges_int):
+            for edg_idx, edge in enumerate(edges):
+                idx: int = th << self.edge_bits | edg_idx
+                idx_s: str = '{0:b}'.format(idx).zfill(edges_addr_bits)
+                edg_content = edge[0] << self.node_bits | edge[1]
+                edges_file_content[idx] = '{0:b}'.format(edg_content).zfill(edges_file_bits)
+
+        # n2c rom file
+        n2c_file_bits = 2 * self.ij_bits
+        n2c_addr_bits = self.th_bits + self.node_bits
+        n2c_file_content = ['{0:b}'.format(0).zfill(n2c_file_bits) for _ in range(pow(2, n2c_addr_bits))]
+        for th, n2cs in enumerate(n2c):
+            for node_idx, n2c_ in enumerate(n2cs):
+                if n2c_[0] is None:
+                    continue
+                idx: int = th << self.node_bits | node_idx
+                idx_s: str = '{0:b}'.format(idx).zfill(n2c_addr_bits)
+                n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
+                n2c_file_content[idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
+                break
+
+        pass
+
+    def create_yoto_pipeline_hw_test_bench(self, v_output_base: str, simul: bool):
+
+        edges_rom_f: str = f'{v_output_base}%s_edges.rom' % self.per_graph.dot_name
+        n2c_rom_f: str = f'{v_output_base}%s_n2c.rom' % self.per_graph.dot_name
+        n2c_out_f: str = f'{v_output_base}%s_n2c_out.txt' % self.per_graph.dot_name
+        dst_tbl_rom_f: str = f'{v_output_base}%s_dst_tbl.rom' % self.per_graph.dot_name
+        cell_content_f: str = f'{v_output_base}%s_cell_content.rom' % self.per_graph.dot_name
+
+        first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
+        n2c, c2n = self.init_traversal_placement_tables(first_nodes)
+
+        self.create_rom_files(edges_rom_f, n2c_rom_f, dst_tbl_rom_f, cell_content_f, n2c)
+
+        name = '%s_yoto_pip_hw_test_bench' % self.per_graph.dot_name
+        m = Module(name)
+
+        clk = m.Reg('clk')
+        rst = m.Reg('rst')
+        start = m.Reg('start')
+
+        yoto_visited_edges = m.Wire('yoto_visited_edges', self.edge_bits)
+        yoto_done = m.Wire('yoto_done')
+        yoto_total_pipeline_counter = m.Wire('yoto_total_pipeline_counter', 32)
+
+        par = []
+        con = [
+            ('clk', clk),
+            ('rst', rst),
+            ('start', start),
+            ('yoto_visited_edges', yoto_visited_edges),
+            ('yoto_done', yoto_done),
+            ('yoto_total_pipeline_counter', yoto_total_pipeline_counter),
+        ]
+        yoto = self.create_yoto_pipeline_hw(edges_rom_f, n2c_rom_f, n2c_out_f, dst_tbl_rom_f, cell_content_f, simul)
+        m.Instance(yoto, yoto.name, par, con)
+
+        verilog_f: str = f'{v_output_base}{m.name}.v'
+        m.to_verilog(verilog_f)
+
+    def create_yoto_pipeline_hw(self, edges_rom_f: str, n2c_rom_f: str, n2c_out_f: str, dst_tbl_rom_f: str,
+                                cell_content_f: str, simul: bool) -> Module:
         name = "yoto_pipeline_hw"
         m = Module(name)
 
@@ -98,7 +167,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St1 instantiation')
-        stage1_m = self.create_stage1_yoto(edges_rom)
+        stage1_m = self.create_stage1_yoto(edges_rom_f, simul)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -115,7 +184,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St2 instantiation')
-        stage2_m = self.create_stage2_yoto(f'{n2c_rom}_in.rom', f'{n2c_rom}_out.rom')
+        stage2_m = self.create_stage2_yoto(n2c_rom_f, n2c_out_f, simul)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -143,7 +212,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St3 instantiation')
-        stage3_m = self.create_stage3_yoto(f'{dst_tbl_rom}_in.rom')
+        stage3_m = self.create_stage3_yoto(dst_tbl_rom_f, simul)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -165,7 +234,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St4 instantiation')
-        stage4_m = self.create_stage4_yoto(f'{cell_content}_in.rom')
+        stage4_m = self.create_stage4_yoto(cell_content_f, simul)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -273,7 +342,7 @@ class YotoPipelineHw(PiplineBase):
         )
         return m
 
-    def create_stage1_yoto(self, init_file: str) -> Module:
+    def create_stage1_yoto(self, edges_rom_f: str, simul: bool) -> Module:
         name = 'stage1_yoto'
         m = Module(name)
 
@@ -309,14 +378,15 @@ class YotoPipelineHw(PiplineBase):
                                     st0_edg_n[0:self.distance_table_bits])),
             )
         )
+
         par = [
             ('width', self.node_bits * 2),
             ('depth', self.th_bits + self.edge_bits),
-            ('read_f', 1),
-            ('init_file', init_file),
-            ('write_f', 0),
-            ('output_file', 'mem_out_file.txt'),
         ]
+        if simul:
+            par.append(('read_f', 1))
+            par.append(('init_file', edges_rom_f), )
+
         con = [
             ('rd_addr', Cat(st0_th_idx, st0_edg_n)),
             ('out', Cat(a_t, b_t)),
@@ -330,7 +400,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage2_yoto(self, init_file: str, mem_out_file: str) -> Module:
+    def create_stage2_yoto(self, n2c_rom_f: str, n2c_out_f: str, simul: bool) -> Module:
         name = 'stage2_yoto'
         m = Module(name)
 
@@ -399,12 +469,14 @@ class YotoPipelineHw(PiplineBase):
 
         par = [
             ('width', self.ij_bits * 2),
-            ('depth', self.th_bits + self.node_bits),
-            ('read_f', 1),
-            ('init_file', init_file),
-            ('write_f', 1),
-            ('output_file', mem_out_file),
+            ('depth', self.th_bits + self.node_bits)
         ]
+        if simul:
+            par.append(('read_f', 1))
+            par.append(('init_file', n2c_rom_f))
+            par.append(('write_f', 1))
+            par.append(('output_file', n2c_out_f))
+
         con = [
             ('rd_addr', Cat(st1_th_idx, st1_a)),
             ('out', Cat(ia_t, ja_t)),
@@ -418,7 +490,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage3_yoto(self, init_file: str) -> Module:
+    def create_stage3_yoto(self, dst_tbl_rom_f: str, simul: bool) -> Module:
         name = 'stage3_yoto'
         m = Module(name)
 
@@ -463,12 +535,11 @@ class YotoPipelineHw(PiplineBase):
 
         par = [
             ('width', (self.ij_bits + 1) * 2),
-            ('depth', 6 + self.distance_table_bits),
-            ('read_f', 1),
-            ('init_file', init_file),
-            ('write_f', 0),
-            ('output_file', 'mem_out_file.rom'),
+            ('depth', 6 + self.distance_table_bits)
         ]
+        if simul:
+            par.append(('read_f', 1))
+            par.append(('init_file', dst_tbl_rom_f))
         con = [
             ('rd_addr', Cat(st2_dist_table_line, st2_dist_counter)),
             ('out', Cat(add_i_t, add_j_t)),
@@ -482,7 +553,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage4_yoto(self, init_file: str) -> Module:
+    def create_stage4_yoto(self, cell_content_f: str, simul: bool) -> Module:
         name = 'stage4_yoto'
         m = Module(name)
 
@@ -553,11 +624,10 @@ class YotoPipelineHw(PiplineBase):
         par = [
             ('width', 1),
             ('depth', self.th_bits + self.ij_bits * 2),
-            ('read_f', 1),
-            ('init_file', init_file),
-            ('write_f', 0),
-            ('output_file', 'mem_out_file.rom'),
         ]
+        if simul:
+            par.append(('read_f', 1))
+            par.append(('init_file', cell_content_f))
         con = [
             ('rd_addr', Cat(st3_th_idx, st3_ib[0:self.ij_bits], st3_jb[0:self.ij_bits])),
             ('out', content),
@@ -570,19 +640,3 @@ class YotoPipelineHw(PiplineBase):
         m.Instance(cells_m, cells_m.name, par, con)
 
         return m
-
-
-threads_per_copy: int = 6
-total_threads: int = 6
-arch_type: ArchType = ArchType.ONE_HOP
-make_shuffle: bool = True
-distance_table_bits: int = 4
-
-root_path: str = Util.get_project_root()
-dot_path_base = root_path + '/dot_db/'
-dot_connected_path = dot_path_base + 'connected/'
-
-dots_list = [dot_connected_path + 'mac.dot', 'mac.dot']
-per_graph = PeRGraph(dots_list[0], dots_list[1])
-yoto_pipeline_hw = YotoPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
-yoto_pipeline_hw.create_yoto_pipeline_hw('', '', '', '').to_verilog('teste.v')
