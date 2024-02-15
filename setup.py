@@ -3,7 +3,7 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext_modules = [
-    Extension("src.util.util", ["src/util/util.pyx"]),
+    # Extension("src.util.util", ["src/util/util.pyx"]),
     Extension("src.sw.sa_pipeline.stage0_sa", ["src/sw/sa_pipeline/stage0_sa.pyx"]),
     Extension("src.sw.sa_pipeline.stage1_sa", ["src/sw/sa_pipeline/stage1_sa.pyx"]),
     Extension("src.sw.sa_pipeline.stage2_sa", ["src/sw/sa_pipeline/stage2_sa.pyx"]),
