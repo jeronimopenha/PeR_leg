@@ -1,2 +1,6 @@
 os tests podem ser executados juntos
 as classes pipeline
+
+
+Total time: 210052.8325135708
+Total time: 129417.28456997871

@@ -1,0 +1,94 @@
+{
+    "graph_name": "horner_bs.dot",
+    "algorithm": "SA_PIPELINE",
+    "arch_type": "MESH",
+    "total_edges": 16,
+    "visited_edges": 16,
+    "n_copies": 10,
+    "total_threads": 60,
+    "n_cells": 25,
+    "n_lines": 5,
+    "n_columns": 5,
+    "best_thread": "Exec_6_TH_2",
+    "best_dist": 21,
+    "exec_max_clk": 625000,
+    "exec_min_clk": 625000,
+    "exec_avg_clk": 625000,
+    "th_max_clk": 52083,
+    "th_min_clk": 52083,
+    "th_avg_clk": 52083,
+    "best_placement": [
+        [
+            15,
+            -1,
+            4,
+            9,
+            -1
+        ],
+        [
+            2,
+            -1,
+            5,
+            -1,
+            0
+        ],
+        [
+            16,
+            14,
+            13,
+            -1,
+            -1
+        ],
+        [
+            -1,
+            6,
+            1,
+            12,
+            8
+        ],
+        [
+            -1,
+            7,
+            10,
+            3,
+            24
+        ]
+    ],
+    "th_placement_distances": {
+        "2_16": 1,
+        "11_8": 1,
+        "8_12": 1,
+        "12_1": 1,
+        "7_10": 1,
+        "13_4": 2,
+        "4_15": 2,
+        "1_3": 2,
+        "3_7": 2,
+        "6_2": 3,
+        "16_5": 3,
+        "8_13": 3,
+        "13_9": 3,
+        "15_14": 3,
+        "11_6": 4,
+        "10_0": 5
+    },
+    "nodes_dict": {
+        "MUL_0": 0,
+        "LOD_6": 1,
+        "MUL_21": 2,
+        "ADD_5": 3,
+        "LOD_15": 4,
+        "MUL_19": 5,
+        "ADD_24": 6,
+        "MUL_2": 7,
+        "ADD_18": 8,
+        "MUL_10": 9,
+        "ADD_1": 10,
+        "STR_25": 11,
+        "MUL_8": 12,
+        "MUL_17": 13,
+        "MUL_11": 14,
+        "ADD_14": 15,
+        "ADD_20": 16
+    }
+}

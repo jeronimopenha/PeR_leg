@@ -8,9 +8,8 @@ from pathlib import Path
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 import matplotlib.pyplot as plt
-
-
-# matplotlib.use('TkAgg')
+from math import ceil
+import math
 
 
 class Util:
@@ -168,8 +167,11 @@ class Util:
         @return:
         @rtype:
         """
-        ia, ja = a
-        ib, jb = b
+
+        ia: int = a[0]
+        ja: int = a[1]
+        ib: int = b[0]
+        jb: int = b[1]
         i: int = abs(ia - ib)
         j: int = abs(ja - jb)
         edge_distance: int = ceil(i / 2) + ceil(j / 2)
@@ -186,6 +188,7 @@ class Util:
         @return:
         @rtype:
         """
+
         ia, ja = a
         ib, jb = b
         edge_distance: int = abs(ia - ib) + abs(ja - jb)
@@ -210,11 +213,9 @@ class Util:
             return Util.dist_one_hop(a, b)
 
     @staticmethod
-    def get_edges_distances(arch_type: ArchType, edges: list[list], n2c: list[list]) \
+    def get_edges_distances(arch_type: ArchType, edges: list[list[int]], n2c: list[list[int]]) \
             -> tuple[dict, list]:
         """
-
-        @param ij:
         @param arch_type:
         @type arch_type:
         @param edges:
@@ -225,12 +226,12 @@ class Util:
         @rtype:
         """
         dic_edges_dist: dict = {}
-        list_edges_dist: list = []
+        list_edges_dist: list[int] = []
         for edge in edges:
             n1: int = edge[0]
             n2: int = edge[1]
-            a: list = n2c[n1]
-            b: list = n2c[n2]
+            a: list[int] = n2c[n1]
+            b: list[int] = n2c[n2]
             edge_distance: int = Util.calc_dist(a, b, arch_type)
             dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
             list_edges_dist.append(edge_distance)
@@ -359,6 +360,7 @@ class Util:
         @return:
         @rtype:
         """
+
         cell: int = cell_line * n_lines + cell_column
         return cell
 
@@ -373,7 +375,7 @@ class Util:
         @return:
         @rtype:
         """
-        distance_table: list[list] = []
+        distance_table: list[list[int]] = []
         for dist in range(len(distance_table_raw)):
             if make_shuffle:
                 random.shuffle(distance_table_raw[dist])
@@ -382,7 +384,7 @@ class Util:
         return distance_table
 
     @staticmethod
-    def get_one_hop_distances(cells_sqrt: int, make_shuffle: bool) -> list[list]:
+    def get_one_hop_distances(cells_sqrt: int, make_shuffle: bool) -> list[list[int]]:
         """
 
         @param cells_sqrt:
@@ -411,11 +413,11 @@ class Util:
                     distance_table_raw[dist - 1].append([-i, j])
                     distance_table_raw[dist - 1].append([-i, -j])
 
-        one_hop_distances: list[list] = Util.format_distance_table(distance_table_raw, make_shuffle)
+        one_hop_distances: list[list[int]] = Util.format_distance_table(distance_table_raw, make_shuffle)
         return one_hop_distances
 
     @staticmethod
-    def get_mesh_distances(cells_sqrt: int, make_shuffle: bool) -> list[list]:
+    def get_mesh_distances(cells_sqrt: int, make_shuffle: bool) -> list[list[int]]:
         """
 
         @param cells_sqrt:
@@ -439,11 +441,11 @@ class Util:
                     distance_table_raw[dist - 1].append([-i, -j])
                 if [-i, j] not in distance_table_raw[dist - 1]:
                     distance_table_raw[dist - 1].append([-i, j])
-        mesh_distances: list[list] = Util.format_distance_table(distance_table_raw, make_shuffle)
+        mesh_distances: list[list[int]] = Util.format_distance_table(distance_table_raw, make_shuffle)
         return mesh_distances
 
     @staticmethod
-    def get_distance_table(arch_type: ArchType, cells_sqrt: int, make_shuffle: bool) -> list[list]:
+    def get_distance_table(arch_type: ArchType, cells_sqrt: int, make_shuffle: bool) -> list[list[int]]:
         """
 
         @param arch_type:
@@ -463,7 +465,7 @@ class Util:
             raise Exception("Architecture type not supported")
 
     @staticmethod
-    def get_line_column_from_cell(cell: int, n_lines: int, n_columns: int) -> list:
+    def get_line_column_from_cell(cell: int, n_lines: int, n_columns: int) -> list[int]:
         """
 
         @param cell:
@@ -480,7 +482,7 @@ class Util:
         return [line, column]
 
     @staticmethod
-    def get_line_column_cell_sqrt(cell: int, cells_sqrt: int) -> list:
+    def get_line_column_cell_sqrt(cell: int, cells_sqrt: int) -> list[int]:
         """
 
         @param cell:
@@ -490,11 +492,11 @@ class Util:
         @return:
         @rtype:
         """
-        column_cell_sqrt: list = Util.get_line_column_from_cell(cell, cells_sqrt, cells_sqrt)
+        column_cell_sqrt: list[int] = Util.get_line_column_from_cell(cell, cells_sqrt, cells_sqrt)
         return column_cell_sqrt
 
     @staticmethod
-    def get_line_column_list(cells: list, n_lines: int, n_columns: int) -> list:
+    def get_line_column_list(cells: list[int], n_lines: int, n_columns: int) -> list[int]:
         """
 
         @param cells:
@@ -512,7 +514,7 @@ class Util:
         return line_column_list
 
     @staticmethod
-    def get_line_column_list_sqrt(cells: list, cells_sqrt: int) -> list:
+    def get_line_column_list_sqrt(cells: list[int], cells_sqrt: int) -> list[int]:
         """
 
         @param cells:
@@ -522,7 +524,7 @@ class Util:
         @return:
         @rtype:
         """
-        line_column_list_sqrt: list = Util.get_line_column_list(cells, cells_sqrt, cells_sqrt)
+        line_column_list_sqrt: list[int] = Util.get_line_column_list(cells, cells_sqrt, cells_sqrt)
         return line_column_list_sqrt
 
     @staticmethod
@@ -536,8 +538,8 @@ class Util:
         return str(path)
 
     @staticmethod
-    def create_exec_report(pipeline_base, exec_num: int, total_pipeline_counter: int, exec_counter: list,
-                           n2c: list[list[list]]) -> dict:
+    def create_exec_report(pipeline_base, exec_num: int, total_pipeline_counter: int,
+                           exec_counter: list[int], n2c: list[list[list[int]]]) -> dict:
         """
 
         @param pipeline_base:
@@ -561,8 +563,8 @@ class Util:
             th_key = 'Exec_%d_TH_%d' % (exec_num, th)
             th_dict[th_key]: dict = {}
             th_dict[th_key]['total_th_clk']: int = exec_counter[th]
-            th_dict[th_key]['th_placement']: list = n2c[th]
-            edges_str: list = pipeline_base.edges_str
+            th_dict[th_key]['th_placement']: list[int] = n2c[th]
+            edges_str: list[str] = pipeline_base.edges_str
             edges_int: list = pipeline_base.get_edges_int(edges_str[th])
             dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
             dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
