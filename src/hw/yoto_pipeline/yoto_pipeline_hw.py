@@ -13,69 +13,68 @@ class YotoPipelineHw(PiplineBase):
         self.len_pipeline: int = 6
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
         self.hw_components = HwComponents()
+        self.th_bits = Util.get_n_bits(self.n_threads)
+        self.edge_bits = Util.get_n_bits(self.per_graph.n_cells)
+        self.node_bits = Util.get_n_bits(self.per_graph.n_cells)
+        self.ij_bits = Util.get_n_bits(self.n_lines)
 
     def create_yoto_pipeline_hw(self, edges_rom: str, n2c_rom: str, dst_tbl_rom: str, cell_content: str) -> Module:
         name = "yoto_pipeline_hw"
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        node_bits = edge_bits = Util.get_n_bits(self.per_graph.n_cells)
-        dst_tbl_bits = self.distance_table_bits
-        ij_bits = Util.get_n_bits(self.n_lines)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
         start = m.Input('start')
-        visited_edges = m.Input('visited_edges', edge_bits)
+        visited_edges = m.Input('visited_edges', self.edge_bits)
         done = m.Output('done')
         total_pipeline_counter = m.Output('total_pipeline_counter', 32)
 
         m.EmbeddedCode('// St0 wires')
-        st0_th_idx = m.Wire('st0_th_idx', th_bits)
+        st0_th_idx = m.Wire('st0_th_idx', self.th_bits)
         st0_th_valid = m.Wire('st0_th_valid')
-        st0_edg_n = m.Wire('st0_edg_n', edge_bits)
+        st0_edg_n = m.Wire('st0_edg_n', self.edge_bits)
         st0_incr_edg = m.Wire('st0_incr_edg')
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St1 wires')
-        st1_th_idx = m.Wire('st1_th_idx', th_bits)
+        st1_th_idx = m.Wire('st1_th_idx', self.th_bits)
         st1_th_valid = m.Wire('st1_th_valid')
-        st1_dist_table_line = m.Wire('st1_dist_table_line', dst_tbl_bits)
-        st1_a = m.Wire('st1_a', node_bits)
-        st1_b = m.Wire('st1_b', node_bits)
+        st1_dist_table_line = m.Wire('st1_dist_table_line', self.distance_table_bits)
+        st1_a = m.Wire('st1_a', self.node_bits)
+        st1_b = m.Wire('st1_b', self.node_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St2 wires')
-        st2_th_idx = m.Wire('st2_th_idx', th_bits)
+        st2_th_idx = m.Wire('st2_th_idx', self.th_bits)
         st2_th_valid = m.Wire('st2_th_valid')
-        st2_ia = m.Wire('st2_ia', ij_bits)
-        st2_ja = m.Wire('st2_ja', ij_bits)
-        st2_dist_table_line = m.Wire('st2_dist_table_line', dst_tbl_bits)
+        st2_ia = m.Wire('st2_ia', self.ij_bits)
+        st2_ja = m.Wire('st2_ja', self.ij_bits)
+        st2_dist_table_line = m.Wire('st2_dist_table_line', self.distance_table_bits)
         st2_dist_counter = m.Wire('st2_dist_counter', 6)
-        st2_b = m.Wire('st2_b', node_bits)
+        st2_b = m.Wire('st2_b', self.node_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St3 wires')
-        st3_th_idx = m.Wire('st3_th_idx', th_bits)
+        st3_th_idx = m.Wire('st3_th_idx', self.th_bits)
         st3_th_valid = m.Wire('st3_th_valid')
-        st3_ib = m.Wire('st3_ib', ij_bits + 1)
-        st3_jb = m.Wire('st3_jb', ij_bits + 1)
+        st3_ib = m.Wire('st3_ib', self.ij_bits + 1)
+        st3_jb = m.Wire('st3_jb', self.ij_bits + 1)
         st3_dist_counter = m.Wire('st3_dist_counter', 6)
-        st3_b = m.Wire('st3_b', node_bits)
+        st3_b = m.Wire('st3_b', self.node_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St4 wires')
-        st4_th_idx = m.Wire('st4_th_idx', th_bits)
+        st4_th_idx = m.Wire('st4_th_idx', self.th_bits)
         st4_th_valid = m.Wire('st4_th_valid')
         st4_place = m.Wire('st4_place')
         st4_dist_counter = m.Wire('st4_dist_counter', 6)
-        st4_ib = m.Wire('st4_ib', ij_bits)
-        st4_jb = m.Wire('st4_jb', ij_bits)
-        st4_b = m.Wire('st4_b', node_bits)
+        st4_ib = m.Wire('st4_ib', self.ij_bits)
+        st4_jb = m.Wire('st4_jb', self.ij_bits)
+        st4_b = m.Wire('st4_b', self.node_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -193,32 +192,29 @@ class YotoPipelineHw(PiplineBase):
         name = 'stage0_yoto'
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        edge_bits = Util.get_n_bits(self.per_graph.n_cells)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
         start = m.Input('start')
         done = m.OutputReg('done')
 
-        visited_edges = m.Input('visited_edges', edge_bits)
+        visited_edges = m.Input('visited_edges', self.edge_bits)
 
-        th_idx = m.OutputReg('th_idx', th_bits)
+        th_idx = m.OutputReg('th_idx', self.th_bits)
         th_valid = m.OutputReg('th_valid')
-        edg_n = m.OutputReg('edg_n', edge_bits)
+        edg_n = m.OutputReg('edg_n', self.edge_bits)
         incr_edg = m.OutputReg('incr_edg')
         total_pipeline_counter = m.OutputReg('total_pipeline_counter', 32)
         st4_place = m.Input('st4_place')
 
-        st0_th_idx = m.Wire('st0_th_idx', th_bits)
+        st0_th_idx = m.Wire('st0_th_idx', self.th_bits)
         st0_th_valid = m.Wire('st0_th_valid')
-        st0_edg_n = m.Wire('st0_edg_n', edge_bits)
+        st0_edg_n = m.Wire('st0_edg_n', self.edge_bits)
         st0_incr_edge = m.Wire('st0_incr_edge')
 
-        edge_counter = m.Reg('edge_counter', edge_bits + 1, self.n_threads)
+        edge_counter = m.Reg('edge_counter', self.edge_bits + 1, self.n_threads)
         thread_valid = m.Reg('thread_valid', self.n_threads)
         thread_done = m.Reg('thread_done', self.n_threads)
-        next_th_idx = m.Reg('next_th_idx', th_bits + 1)
+        next_th_idx = m.Reg('next_th_idx', self.th_bits + 1)
         running = m.Reg('running')
 
         m.EmbeddedCode('')
@@ -281,26 +277,21 @@ class YotoPipelineHw(PiplineBase):
         name = 'stage1_yoto'
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        edge_bits = Util.get_n_bits(self.per_graph.n_cells)
-        dst_tbl_bits = self.distance_table_bits
-        node_bits = Util.get_n_bits(self.per_graph.n_cells)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
 
-        th_idx = m.OutputReg('th_idx', th_bits)
+        th_idx = m.OutputReg('th_idx', self.th_bits)
         th_valid = m.OutputReg('th_valid')
-        dist_table_line = m.OutputReg('dist_table_line', dst_tbl_bits)
-        a = m.OutputReg('a', node_bits)
-        b = m.OutputReg('b', node_bits)
+        dist_table_line = m.OutputReg('dist_table_line', self.distance_table_bits)
+        a = m.OutputReg('a', self.node_bits)
+        b = m.OutputReg('b', self.node_bits)
 
-        st0_th_idx = m.Input('st0_th_idx', th_bits)
+        st0_th_idx = m.Input('st0_th_idx', self.th_bits)
         st0_th_valid = m.Input('st0_th_valid')
-        st0_edg_n = m.Input('st0_edg_n', edge_bits)
+        st0_edg_n = m.Input('st0_edg_n', self.edge_bits)
 
-        a_t = m.Wire('a_t', node_bits)
-        b_t = m.Wire('b_t', node_bits)
+        a_t = m.Wire('a_t', self.node_bits)
+        b_t = m.Wire('b_t', self.node_bits)
 
         m.Always(Posedge(clk))(
             If(rst)(
@@ -314,12 +305,13 @@ class YotoPipelineHw(PiplineBase):
                 th_valid(st0_th_valid),
                 a(a_t),
                 b(b_t),
-                dist_table_line(Xor(Cat(Int(0, dst_tbl_bits - th_bits, 10), st0_th_idx), st0_edg_n[0:dst_tbl_bits])),
+                dist_table_line(Xor(Cat(Int(0, self.distance_table_bits - self.th_bits, 10), st0_th_idx),
+                                    st0_edg_n[0:self.distance_table_bits])),
             )
         )
         par = [
-            ('width', node_bits * 2),
-            ('depth', th_bits + edge_bits),
+            ('width', self.node_bits * 2),
+            ('depth', self.th_bits + self.edge_bits),
             ('read_f', 1),
             ('init_file', init_file),
             ('write_f', 0),
@@ -329,8 +321,8 @@ class YotoPipelineHw(PiplineBase):
             ('rd_addr', Cat(st0_th_idx, st0_edg_n)),
             ('out', Cat(a_t, b_t)),
             ('wr', Int(0, 1, 10)),
-            ('wr_addr', Int(0, edge_bits + th_bits, 10)),
-            ('wr_data', Int(0, node_bits * 2, 10)),
+            ('wr_addr', Int(0, self.edge_bits + self.th_bits, 10)),
+            ('wr_data', Int(0, self.node_bits * 2, 10)),
         ]
 
         edges_m = self.hw_components.create_memory_1r_1w()
@@ -342,40 +334,35 @@ class YotoPipelineHw(PiplineBase):
         name = 'stage2_yoto'
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        dst_tbl_bits = self.distance_table_bits
-        node_bits = Util.get_n_bits(self.per_graph.n_cells)
-        ij_bits = Util.get_n_bits(self.n_lines)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
 
-        th_idx = m.OutputReg('th_idx', th_bits)
+        th_idx = m.OutputReg('th_idx', self.th_bits)
         th_valid = m.OutputReg('th_valid')
-        ia = m.OutputReg('ia', ij_bits)
-        ja = m.OutputReg('ja', ij_bits)
-        dist_table_line = m.OutputReg('dist_table_line', dst_tbl_bits)
+        ia = m.OutputReg('ia', self.ij_bits)
+        ja = m.OutputReg('ja', self.ij_bits)
+        dist_table_line = m.OutputReg('dist_table_line', self.distance_table_bits)
         dist_counter = m.OutputReg('dist_counter', 6)
-        b = m.OutputReg('b', node_bits)
+        b = m.OutputReg('b', self.node_bits)
 
-        st1_th_idx = m.Input('st1_th_idx', th_bits)
+        st1_th_idx = m.Input('st1_th_idx', self.th_bits)
         st1_th_valid = m.Input('st1_th_valid')
-        st1_dist_table_line = m.Input('st1_dist_table_line', dst_tbl_bits)
-        st1_a = m.Input('st1_a', node_bits)
-        st1_b = m.Input('st1_b', node_bits)
+        st1_dist_table_line = m.Input('st1_dist_table_line', self.distance_table_bits)
+        st1_a = m.Input('st1_a', self.node_bits)
+        st1_b = m.Input('st1_b', self.node_bits)
 
-        st4_th_idx = m.Input('st4_th_idx', th_bits)
+        st4_th_idx = m.Input('st4_th_idx', self.th_bits)
         st4_th_valid = m.Input('st4_th_valid')
         st4_place = m.Input('st4_place')
         st4_dist_counter = m.Input('st4_dist_counter', 6)
-        st4_ib = m.Input('st4_ib', ij_bits)
-        st4_jb = m.Input('st4_jb', ij_bits)
-        st4_b = m.Input('st4_b', node_bits)
+        st4_ib = m.Input('st4_ib', self.ij_bits)
+        st4_jb = m.Input('st4_jb', self.ij_bits)
+        st4_b = m.Input('st4_b', self.node_bits)
 
         th_dist_table_counter = m.Reg('th_dist_table_counter', 6, self.n_threads)
         running = m.Reg('running')
-        ia_t = m.Wire('ia_t', ij_bits)
-        ja_t = m.Wire('ja_t', ij_bits)
+        ia_t = m.Wire('ia_t', self.ij_bits)
+        ja_t = m.Wire('ja_t', self.ij_bits)
 
         m.Always(Posedge(clk))(
             If(rst)(
@@ -411,8 +398,8 @@ class YotoPipelineHw(PiplineBase):
         )
 
         par = [
-            ('width', ij_bits * 2),
-            ('depth', th_bits + node_bits),
+            ('width', self.ij_bits * 2),
+            ('depth', self.th_bits + self.node_bits),
             ('read_f', 1),
             ('init_file', init_file),
             ('write_f', 1),
@@ -435,31 +422,26 @@ class YotoPipelineHw(PiplineBase):
         name = 'stage3_yoto'
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        dst_tbl_bits = self.distance_table_bits
-        node_bits = Util.get_n_bits(self.per_graph.n_cells)
-        ij_bits = Util.get_n_bits(self.n_lines)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
 
-        th_idx = m.OutputReg('th_idx', th_bits)
+        th_idx = m.OutputReg('th_idx', self.th_bits)
         th_valid = m.OutputReg('th_valid')
-        ib = m.OutputReg('ib', ij_bits + 1)
-        jb = m.OutputReg('jb', ij_bits + 1)
+        ib = m.OutputReg('ib', self.ij_bits + 1)
+        jb = m.OutputReg('jb', self.ij_bits + 1)
         dist_counter = m.OutputReg('dist_counter', 6)
-        b = m.OutputReg('b', node_bits)
+        b = m.OutputReg('b', self.node_bits)
 
-        st2_th_idx = m.Input('st2_th_idx', th_bits)
+        st2_th_idx = m.Input('st2_th_idx', self.th_bits)
         st2_th_valid = m.Input('st2_th_valid')
-        st2_ia = m.Input('st2_ia', ij_bits)
-        st2_ja = m.Input('st2_ja', ij_bits)
-        st2_dist_table_line = m.Input('st2_dist_table_line', dst_tbl_bits)
+        st2_ia = m.Input('st2_ia', self.ij_bits)
+        st2_ja = m.Input('st2_ja', self.ij_bits)
+        st2_dist_table_line = m.Input('st2_dist_table_line', self.distance_table_bits)
         st2_dist_counter = m.Input('st2_dist_counter', 6)
-        st2_b = m.Input('st2_b', node_bits)
+        st2_b = m.Input('st2_b', self.node_bits)
 
-        add_i_t = m.Wire('add_i_t', ij_bits + 1)
-        add_j_t = m.Wire('add_j_t', ij_bits + 1)
+        add_i_t = m.Wire('add_i_t', self.ij_bits + 1)
+        add_j_t = m.Wire('add_j_t', self.ij_bits + 1)
 
         m.Always(Posedge(clk))(
             If(rst)(
@@ -480,8 +462,8 @@ class YotoPipelineHw(PiplineBase):
         )
 
         par = [
-            ('width', (ij_bits + 1) * 2),
-            ('depth', 6 + dst_tbl_bits),
+            ('width', (self.ij_bits + 1) * 2),
+            ('depth', 6 + self.distance_table_bits),
             ('read_f', 1),
             ('init_file', init_file),
             ('write_f', 0),
@@ -491,8 +473,8 @@ class YotoPipelineHw(PiplineBase):
             ('rd_addr', Cat(st2_dist_table_line, st2_dist_counter)),
             ('out', Cat(add_i_t, add_j_t)),
             ('wr', Int(0, 1, 10)),
-            ('wr_addr', Int(0, 6 + dst_tbl_bits, 10)),
-            ('wr_data', Int(0, (ij_bits + 1) * 2, 10)),
+            ('wr_addr', Int(0, 6 + self.distance_table_bits, 10)),
+            ('wr_data', Int(0, (self.ij_bits + 1) * 2, 10)),
         ]
 
         distance_table_m = self.hw_components.create_memory_1r_1w()
@@ -504,32 +486,28 @@ class YotoPipelineHw(PiplineBase):
         name = 'stage4_yoto'
         m = Module(name)
 
-        th_bits = Util.get_n_bits(self.n_threads)
-        node_bits = Util.get_n_bits(self.per_graph.n_cells)
-        ij_bits = Util.get_n_bits(self.n_lines)
-
         clk = m.Input('clk')
         rst = m.Input('rst')
 
-        th_idx = m.OutputReg('th_idx', th_bits)
+        th_idx = m.OutputReg('th_idx', self.th_bits)
         th_valid = m.OutputReg('th_valid')
         place = m.OutputReg('place')
-        ib = m.OutputReg('ib', ij_bits)
-        jb = m.OutputReg('jb', ij_bits)
+        ib = m.OutputReg('ib', self.ij_bits)
+        jb = m.OutputReg('jb', self.ij_bits)
         dist_counter = m.OutputReg('dist_counter', 6)
-        b = m.OutputReg('b', node_bits)
+        b = m.OutputReg('b', self.node_bits)
 
-        st3_th_idx = m.Input('st3_th_idx', th_bits)
+        st3_th_idx = m.Input('st3_th_idx', self.th_bits)
         st3_th_valid = m.Input('st3_th_valid')
-        st3_ib = m.Input('st3_ib', ij_bits + 1)
-        st3_jb = m.Input('st3_jb', ij_bits + 1)
+        st3_ib = m.Input('st3_ib', self.ij_bits + 1)
+        st3_jb = m.Input('st3_jb', self.ij_bits + 1)
         st3_dist_counter = m.Input('st3_dist_counter', 6)
-        st3_b = m.Input('st3_b', node_bits)
+        st3_b = m.Input('st3_b', self.node_bits)
 
-        st4_th_idx = m.Wire('st4_th_idx', th_bits)
+        st4_th_idx = m.Wire('st4_th_idx', self.th_bits)
         st4_place = m.Wire('st4_place')
-        st4_ib = m.Wire('st4_ib', ij_bits)
-        st4_jb = m.Wire('st4_jb', ij_bits)
+        st4_ib = m.Wire('st4_ib', self.ij_bits)
+        st4_jb = m.Wire('st4_jb', self.ij_bits)
 
         m.EmbeddedCode('')
         content = m.Wire('content')
@@ -538,10 +516,10 @@ class YotoPipelineHw(PiplineBase):
 
         m.EmbeddedCode('')
         out_of_border_t.assign(OrList(
-            st3_ib[ij_bits],
-            st3_jb[ij_bits],
-            st3_ib[0:ij_bits] > Int(self.n_lines - 1, ij_bits, 10),
-            st3_jb[0:ij_bits] > Int(self.n_lines - 1, ij_bits, 10)
+            st3_ib[self.ij_bits],
+            st3_jb[self.ij_bits],
+            st3_ib[0:self.ij_bits] > Int(self.n_lines - 1, self.ij_bits, 10),
+            st3_jb[0:self.ij_bits] > Int(self.n_lines - 1, self.ij_bits, 10)
         ))
         place_t.assign(Uand(Cat(~content, out_of_border_t)))
         # i > n_cells_sqrt - 1 or j > n_cells_sqrt - 1 or i < 0 or j < 0
@@ -565,8 +543,8 @@ class YotoPipelineHw(PiplineBase):
                 th_idx(st3_th_idx),
                 th_valid(st3_th_valid),
                 place(place_t),
-                ib(st3_ib[0:ij_bits]),
-                jb(st3_jb[0:ij_bits]),
+                ib(st3_ib[0:self.ij_bits]),
+                jb(st3_jb[0:self.ij_bits]),
                 dist_counter(st3_dist_counter),
                 b(st3_b),
             )
@@ -574,14 +552,14 @@ class YotoPipelineHw(PiplineBase):
 
         par = [
             ('width', 1),
-            ('depth', th_bits + ij_bits * 2),
+            ('depth', self.th_bits + self.ij_bits * 2),
             ('read_f', 1),
             ('init_file', init_file),
             ('write_f', 0),
             ('output_file', 'mem_out_file.rom'),
         ]
         con = [
-            ('rd_addr', Cat(st3_th_idx, st3_ib[0:ij_bits], st3_jb[0:ij_bits])),
+            ('rd_addr', Cat(st3_th_idx, st3_ib[0:self.ij_bits], st3_jb[0:self.ij_bits])),
             ('out', content),
             ('wr', st4_place),
             ('wr_addr', Cat(st4_th_idx, st4_ib, st4_jb)),
@@ -594,7 +572,7 @@ class YotoPipelineHw(PiplineBase):
         return m
 
 
-'''threads_per_copy: int = 6
+threads_per_copy: int = 6
 total_threads: int = 6
 arch_type: ArchType = ArchType.ONE_HOP
 make_shuffle: bool = True
@@ -607,4 +585,4 @@ dot_connected_path = dot_path_base + 'connected/'
 dots_list = [dot_connected_path + 'mac.dot', 'mac.dot']
 per_graph = PeRGraph(dots_list[0], dots_list[1])
 yoto_pipeline_hw = YotoPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy)
-yoto_pipeline_hw.create_yoto_pipeline_hw('', '', '', '').to_verilog('teste.v')'''
+yoto_pipeline_hw.create_yoto_pipeline_hw('', '', '', '').to_verilog('teste.v')

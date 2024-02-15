@@ -5,7 +5,7 @@ from math import sqrt
 from numpy import ndarray
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-from src.util.util import get_graph_annotations, get_line_column_cell_sqrt
+from src.util.util import Util
 
 
 class PiplineBase(object):
@@ -47,7 +47,7 @@ class PiplineBase(object):
             self.edges_str.append(edges_str)
 
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
-        self.annotations: list[dict] = [get_graph_annotations(self.edges_raw[i], self.cycle[i]) for i in
+        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.cycle[i]) for i in
                                         range(self.len_pipeline)]
 
         self.visited_edges = len(self.edges_int[0])
@@ -126,7 +126,7 @@ class PiplineBase(object):
                     ] for _ in range(self.n_lines)
                 ]
 
-                idx_i, idx_j = get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1), self.n_lines)
+                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1), self.n_lines)
                 n2c_tmp[first_node[i]][0]: int = idx_i
                 n2c_tmp[first_node[i]][1]: int = idx_j
                 c2n_tmp[idx_i][idx_j]: int = first_node[i]
