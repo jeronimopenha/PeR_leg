@@ -93,9 +93,9 @@ class YotoPipelineHw(PiplineBase):
             ('clk', clk),
             ('rst', rst),
             ('start', start),
-            ('yoto_visited_edges', yoto_visited_edges),
-            ('yoto_done', yoto_done),
-            ('yoto_total_pipeline_counter', yoto_total_pipeline_counter),
+            ('visited_edges', yoto_visited_edges),
+            ('done', yoto_done),
+            ('total_pipeline_counter', yoto_total_pipeline_counter),
         ]
         yoto = self.create_yoto_pipeline_hw(edges_rom_f, n2c_rom_f, n2c_out_f, dst_tbl_rom_f, cell_content_f, simul)
         m.Instance(yoto, yoto.name, par, con)

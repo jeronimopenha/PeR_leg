@@ -37,29 +37,19 @@ class PiplineBase(object):
         self.n_threads: int = n_threads
         # self.reset_random(random_seed)
 
-        self.cycle: list[list[list]] = []
+        self.reconvergence: list[list[list]] = []
         self.edges_raw: list[list[list]] = []
         self.edges_str: list[list[list]] = []
         for _ in range(self.len_pipeline):
-            edges_str, edges_raw, cycle = self.per_graph.get_edges_zigzag(self.make_shuffle)
-            self.cycle.append(cycle)
+            edges_str, edges_raw, rec = self.per_graph.get_edges_zigzag(self.make_shuffle)
+            self.reconvergence.append(rec)
             self.edges_raw.append(edges_raw)
             self.edges_str.append(edges_str)
 
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
+        self.verify_edges_len()
 
-        max_len = 0
-        for th_n in self.edges_int:
-            len_ = len(th_n)
-            if len_ > max_len:
-                max_len = len_
-        for th_n in self.edges_int:
-            len_ = len(th_n)
-            if len_ < max_len:
-                for _ in range(max_len - len_):
-                    th_n.append([-1, -1])
-
-        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.cycle[i]) for i in
+        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.reconvergence[i]) for i in
                                         range(self.len_pipeline)]
 
         self.visited_edges = len(self.edges_int[0])
@@ -69,6 +59,14 @@ class PiplineBase(object):
         self.n_columns = self.n_lines
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
+
+    def verify_edges_len(self):
+        max_len = max([len(edges) for edges in self.edges_int])
+        for edge in self.edges_int:
+            len_ = len(edge)
+            if len_ < max_len:
+                for _ in range(max_len - len_):
+                    edge.append([-1, -1])
 
     @staticmethod
     def reset_random(random_seed: int = 0):
@@ -88,7 +86,7 @@ class PiplineBase(object):
         @rtype:
         """
         edges_int: list[list] = []
-        for a, b in edges_str:
+        for (a, b) in edges_str:
             edges_int.append(
                 [
                     self.per_graph.nodes_to_idx[a],
@@ -130,22 +128,19 @@ class PiplineBase(object):
         n2c: list[list[list]] = []
         c2n: list[list] = []
         for i in range(self.len_pipeline):
-            try:
-                n2c_tmp: list[list] = [[None, None] for _ in range(self.per_graph.n_cells)]
-                c2n_tmp: list[list] = [
-                    [
-                        None for _ in range(self.n_lines)
-                    ] for _ in range(self.n_lines)
-                ]
+            n2c_tmp: list[list] = [[None, None] for _ in range(self.per_graph.n_cells)]
+            c2n_tmp: list[list] = [
+                [
+                    None for _ in range(self.n_lines)
+                ] for _ in range(self.n_lines)
+            ]
 
-                idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1), self.n_lines)
-                n2c_tmp[first_node[i]][0]: int = idx_i
-                n2c_tmp[first_node[i]][1]: int = idx_j
-                c2n_tmp[idx_i][idx_j]: int = first_node[i]
-                n2c.append(n2c_tmp)
-                c2n.append(c2n_tmp)
-            except Exception as e:
-                print(e)
+            idx_i, idx_j = Util.get_line_column_cell_sqrt(rnd.randint(0, self.per_graph.n_cells - 1), self.n_lines)
+            n2c_tmp[first_node[i]][0]: int = idx_i
+            n2c_tmp[first_node[i]][1]: int = idx_j
+            c2n_tmp[idx_i][idx_j]: int = first_node[i]
+            n2c.append(n2c_tmp)
+            c2n.append(c2n_tmp)
 
         return n2c, c2n
 

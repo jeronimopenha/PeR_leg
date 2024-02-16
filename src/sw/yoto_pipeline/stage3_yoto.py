@@ -46,6 +46,9 @@ class Stage3YOTO(object):
         ib: int = st2_ia + add_i
         jb: int = st2_ja + add_j
 
+        if st2_b == 10:
+            z=1
+
         self.new_output = {
             'th_idx': st2_th_idx,
             'th_valid': st2_th_valid,

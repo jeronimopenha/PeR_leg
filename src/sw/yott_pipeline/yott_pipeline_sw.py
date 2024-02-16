@@ -27,7 +27,7 @@ class YOTTPipeline(PiplineBase):
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
 
-    def run(self, n_copies: int = 1) -> dict:
+    def run_parallel(self, n_copies: int = 1) -> dict:
         max_jobs: int = mp.cpu_count()
         manager = mp.Manager()
         dic_man = manager.dict()
@@ -45,6 +45,20 @@ class YOTTPipeline(PiplineBase):
         while len(jobs_alive) > 0:
             jobs_alive: list = [job for job in jobs_alive if job.is_alive()]
             time.sleep(1)
+        for k in dic_man.keys():
+            exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
+            exec_key: str = 'exec_%d' % exec_num
+            reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
+        report: dict = Util.create_report(self, "YOTT", n_copies, reports)
+        # print()
+        return report
+
+    def run_single(self, n_copies: int = 1) -> dict:
+        dic_man = {}
+        reports: dict = {}
+
+        for exec_num in range(n_copies):
+            self.exec_pipeline(exec_num, dic_man)
         for k in dic_man.keys():
             exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num

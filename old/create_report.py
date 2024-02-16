@@ -71,7 +71,7 @@ def create_report(resources_report, timing_report):
         DSPP = 100.0 * (DSP / int(supply_resources['DSP']))
 
         fp.write(values % (
-        arch_name, LUT, LUTP, REG, REGP, LUTAsMem, LUTAsMemP, BRAM, BRAMP, URAM, URAMP, DSP, DSPP, tc, fmax))
+            arch_name, LUT, LUTP, REG, REGP, LUTAsMem, LUTAsMemP, BRAM, BRAMP, URAM, URAMP, DSP, DSPP, tc, fmax))
 
         fp.close()
 
@@ -82,7 +82,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except Exception as e:
-        print(e)
+    main()

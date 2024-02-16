@@ -223,20 +223,17 @@ class Util:
         @return:
         @rtype:
         """
-        try:
-            dic_edges_dist: dict = {}
-            list_edges_dist: list[int] = []
-            for edge in edges:
-                n1: int = edge[0]
-                n2: int = edge[1]
-                a: list[int] = n2c[n1]
-                b: list[int] = n2c[n2]
-                edge_distance: int = Util.calc_dist(a, b, arch_type)
-                dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
-                list_edges_dist.append(edge_distance)
-            return dic_edges_dist, list_edges_dist
-        except Exception as e:
-            print(e)
+        dic_edges_dist: dict = {}
+        list_edges_dist: list[int] = []
+        for edge in edges:
+            n1: int = edge[0]
+            n2: int = edge[1]
+            a: list[int] = n2c[n1]
+            b: list[int] = n2c[n2]
+            edge_distance: int = Util.calc_dist(a, b, arch_type)
+            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
+            list_edges_dist.append(edge_distance)
+        return dic_edges_dist, list_edges_dist
 
     @staticmethod
     def is_out_of_border_sqr(i: int, j: int, n_cells_sqrt: int) -> bool:
@@ -567,10 +564,7 @@ class Util:
             th_dict[th_key]['th_placement']: list[int] = n2c[th]
             edges_str: list[str] = pipeline_base.edges_str
             edges_int: list = pipeline_base.get_edges_int(edges_str[th])
-            try:
-                dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
-            except Exception as e:
-                print('s')
+            dic_edges_dist, list_edges_dist = Util.get_edges_distances(pipeline_base.arch_type, edges_int, n2c[th])
             dic_edges_dist = dict(sorted(dic_edges_dist.items(), key=lambda x: x[1]))
             th_dict[th_key]['th_placement_distances']: dict = dic_edges_dist
             dist_total = sum(list_edges_dist) - len(dic_edges_dist)

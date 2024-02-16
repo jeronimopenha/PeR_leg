@@ -56,6 +56,9 @@ class Stage4YOTO(object):
         if st3_th_valid and cb_content is None and not out_of_border:
             place = True
 
+        if st3_b == 10:
+            z=1
+
         self.new_output = {
             'th_idx': st3_th_idx,
             'th_valid': st3_th_valid,

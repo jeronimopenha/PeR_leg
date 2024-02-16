@@ -67,6 +67,9 @@ class Stage2YOTO(object):
         ja: int = self.n2c[st1_th_idx][st1_a][1] if self.n2c[st1_th_idx][st1_a][1] is not None else 0
         dist_counter = self.th_dist_table_counter[st1_th_idx]
 
+        if st1_b == 10:
+            z=1
+
         self.new_output = {
             'th_idx': st1_th_idx,
             'th_valid': st1_th_valid,

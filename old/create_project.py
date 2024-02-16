@@ -52,12 +52,12 @@ def create_project(sa_root, dot_file, copies, name, output_path):
     m.to_verilog(hw_path + 'src/%s.v' % name)
 
     acc_config = '#define NUM_CHANNELS (%d)\n' % sa_acc.copies
-    #acc_config += '#define NUM_THREADS (%d)\n' % sa_acc.threads
-    #acc_config += '#define NUM_NOS (%d)\n' % sa_acc.nodes_qty
-    #acc_config += '#define STATE_SIZE_WORDS (%d)\n' % ceil(sa_acc.nodes_qty / 8)
-    #acc_config += '#define BUS_WIDTH_BYTES (%d)\n' % (sa_acc.bus_width // 8)
-    #acc_config += '#define OUTPUT_DATA_BYTES (%d)\n' % (ceil(bits_width / bus_width) * bus_width // 8)
-    #acc_config += '#define ACC_DATA_BYTES (%d)\n' % (sa_acc.axi_bus_data_width // 8)
+    # acc_config += '#define NUM_THREADS (%d)\n' % sa_acc.threads
+    # acc_config += '#define NUM_NOS (%d)\n' % sa_acc.nodes_qty
+    # acc_config += '#define STATE_SIZE_WORDS (%d)\n' % ceil(sa_acc.nodes_qty / 8)
+    # acc_config += '#define BUS_WIDTH_BYTES (%d)\n' % (sa_acc.bus_width // 8)
+    # acc_config += '#define OUTPUT_DATA_BYTES (%d)\n' % (ceil(bits_width / bus_width) * bus_width // 8)
+    # acc_config += '#define ACC_DATA_BYTES (%d)\n' % (sa_acc.axi_bus_data_width // 8)
 
     num_axis_str = 'NUM_M_AXIS=%d' % sa_acc.get_num_in()
     conn_str = acc_axi.get_connectivity_config(name)
@@ -82,7 +82,7 @@ def main():
         args.output = running_path
 
     if args.dot:
-        #args.dot_db = running_path + '/' + args.dot_db
+        # args.dot_db = running_path + '/' + args.dot_db
         create_project(sa_root, args.dot, args.copies, args.name, args.output)
         print('Project successfully created in %s/%s' % (args.output, args.name))
     else:
@@ -91,8 +91,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except Exception as e:
-        print(e)
-        traceback.print_exc()
+    main()

@@ -46,6 +46,8 @@ class Stage1YOTO(object):
         dist_table_line: int = (st0_th_idx ^ st0_edge_n) & self.dist_table_mask
 
         a, b = self.edges[st0_th_idx][st0_edge_n] if edge_n_valid else (0, 0)
+        if b == 10:
+            z=1
 
         self.new_output = {
             'th_idx': st0_th_idx,

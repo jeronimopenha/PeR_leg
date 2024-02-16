@@ -43,8 +43,7 @@ def run_connected_graphs():
             reports.append(formatted_report)
 
 
-
 if __name__ == '__main__':
-    # per = PeRGraph(Util.get_project_root() +"/dot_db/graphs0/14-4x4.dot","14-4x4.dot")
-    # yott = YOTTPipeline(per,ArchType.MESH,4,True,3,1).run(1)
-    run_connected_graphs()
+    per = PeRGraph(Util.get_project_root() + "/dot_db/graphs0_dag/5x5 - 24.dot", "5x5 - 24.dot")
+    yott = YOTTPipeline(per, ArchType.MESH, 4, True, 3, 10).run_single(1)
+    # run_connected_graphs()

@@ -140,14 +140,15 @@ class PeRGraph:
             a, direction = stack.pop(0)  # get the top1
 
             n_fan_in: int = len(fan_in[a])  # get size n_fan in
-            n_fanout: int = len(fan_out[a])  # get size n_fanout
+            n_fan_out: int = len(fan_out[a])  # get size n_fan_out
 
             if direction == 'IN':  # direction == 'IN'
 
-                if n_fanout >= 1:  # Case 3
+                if n_fan_out >= 1:  # Case 3
 
                     b: str = fan_out[a][-1]  # get the element more the right side
 
+                    stack.insert(0, [a, 'IN'])
                     for i in range(n_fan_in):
                         stack.insert(0, [a, 'IN'])
                     stack.insert(0, [b, 'OUT'])  # insert into stack
@@ -182,7 +183,8 @@ class PeRGraph:
 
                     b = fan_in[a][0]  # get the element more left side
 
-                    for i in range(n_fanout):
+                    stack.insert(0, [a, 'OUT'])
+                    for i in range(n_fan_out):
                         stack.insert(0, [a, 'OUT'])
                     stack.insert(0, [b, 'IN'])
 
@@ -194,12 +196,12 @@ class PeRGraph:
 
                     edges.append([a, b, 'IN'])
 
-                elif n_fanout >= 1:  # Case 2
+                elif n_fan_out >= 1:  # Case 2
 
                     b = fan_out[a][0]  # get the element more left side
 
                     stack.insert(0, [a, 'OUT'])
-                    for i in range(n_fanout):
+                    for i in range(n_fan_out):
                         stack.insert(0, [b, 'OUT'])
 
                     fan_out[a].remove(b)
@@ -211,7 +213,9 @@ class PeRGraph:
                     edges.append([a, b, 'OUT'])
             visited.append(a)
 
-        return self.clear_edges(edges), self.clear_edges(edges, False), reconvergence
+        a, b, c = self.clear_edges(edges), self.clear_edges(edges, False), reconvergence
+
+        return a, b, c
 
     @staticmethod
     def clear_edges(edges: list[list], remove_placed_edges: bool = True) -> list[list]:
@@ -226,7 +230,7 @@ class PeRGraph:
         """
         dic: dict = {edges[0][0]: True,
                      edges[0][1]: True}
-        new_edges: list[list] = [edges[0][:2]]
+        new_edges: list[list] = [[edges[0][0], edges[0][1]]]
         for edge in (edges[1:]):
             n1, n2 = edge[:2]
             if dic.get(n2) is None or not remove_placed_edges:

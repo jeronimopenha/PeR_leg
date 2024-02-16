@@ -5,17 +5,21 @@ from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
+import time
 
-methods = [YotoPipelineSw, YOTTPipeline]
-path_results = ["yoto/yoto_pipeline", "yott/yott_pipeline"]
+methods = [YOTTPipeline, YotoPipelineSw]
+path_results = ["yott/yott_pipeline", "yoto/yoto_pipeline"]
 
+run_parallel = True
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
 dot_path_base = root_path + '/dot_db/'
 dot_connected_path = dot_path_base + 'graphs0_dag/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1, 10, 100]
+copies = [100]
+
+start = time.time()
 for i, method in enumerate(methods):
     for arch_type in arch_types:
         len_pipe = method.len_pipeline
@@ -37,6 +41,7 @@ for i, method in enumerate(methods):
 
             # list connected benchmarks
             dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
+            # dots_list = [[Util.get_project_root() + "/dot_db/graphs0_dag/5x5 - 24.dot", "5x5 - 24.dot"]]
             reports: list[dict] = []
 
             # FIXME the line below is only for debugging
@@ -46,9 +51,15 @@ for i, method in enumerate(methods):
                 print(per_graph.dot_name)
                 if method == YotoPipelineSw:
                     pipeline_method = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
-                else:  # method == YOTTPipeline:
+                elif method == YOTTPipeline:
                     pipeline_method = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 3, len_pipe)
-                raw_report: dict = pipeline_method.run(total_execution // threads_per_copy)
+                if run_parallel:
+                    raw_report: dict = pipeline_method.run_parallel(total_execution // threads_per_copy)
+                else:
+                    raw_report: dict = pipeline_method.run_single(total_execution // threads_per_copy)
                 formatted_report = Util.get_formatted_report(raw_report)
                 Util.save_json(output_path, dot_name, formatted_report)
                 reports.append(formatted_report)
+end = time.time()
+
+print(f'elapsed time = {end - start}')
