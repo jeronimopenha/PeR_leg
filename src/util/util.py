@@ -8,7 +8,6 @@ from pathlib import Path
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 import matplotlib.pyplot as plt
-import math
 
 
 class Util:
@@ -224,17 +223,20 @@ class Util:
         @return:
         @rtype:
         """
-        dic_edges_dist: dict = {}
-        list_edges_dist: list[int] = []
-        for edge in edges:
-            n1: int = edge[0]
-            n2: int = edge[1]
-            a: list[int] = n2c[n1]
-            b: list[int] = n2c[n2]
-            edge_distance: int = Util.calc_dist(a, b, arch_type)
-            dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
-            list_edges_dist.append(edge_distance)
-        return dic_edges_dist, list_edges_dist
+        try:
+            dic_edges_dist: dict = {}
+            list_edges_dist: list[int] = []
+            for edge in edges:
+                n1: int = edge[0]
+                n2: int = edge[1]
+                a: list[int] = n2c[n1]
+                b: list[int] = n2c[n2]
+                edge_distance: int = Util.calc_dist(a, b, arch_type)
+                dic_edges_dist['%d_%d' % (n1, n2)] = edge_distance
+                list_edges_dist.append(edge_distance)
+            return dic_edges_dist, list_edges_dist
+        except Exception as e:
+            print(e)
 
     @staticmethod
     def is_out_of_border_sqr(i: int, j: int, n_cells_sqrt: int) -> bool:
@@ -716,14 +718,14 @@ class Util:
         if not os.path.exists(folder):
             os.makedirs(folder)
 
-    def clear_invalid_annotations(annotations : dict[str,list[int]]):
-        placed_nodes ={None:True}
-        for k,v in annotations.items():
-            a,b = k.split()
+    def clear_invalid_annotations(annotations: dict[str, list[int]]):
+        placed_nodes = {None: True}
+        for k, v in annotations.items():
+            a, b = k.split()
             placed_nodes[a] = True
             placed_nodes[b] = True
-            for (c,_) in (v.copy()):
+            for (c, _) in (v.copy()):
                 if placed_nodes.get(c) == None:
-                    annotations[k].remove([c,_])
-            
+                    annotations[k].remove([c, _])
+
         return annotations

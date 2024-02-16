@@ -14,7 +14,7 @@ from src.sw.sa_pipeline.stage7_sa import Stage7SA
 from src.sw.sa_pipeline.stage8_sa import Stage8SA
 from src.sw.sa_pipeline.stage9_sa import Stage9SA
 from src.sw.sa_pipeline.stage10_sa import Stage10SA
-from src.util.util import create_exec_report, get_line_column_from_cell, create_report
+from src.util.util import Util
 import multiprocessing as mp
 import cython
 
@@ -27,7 +27,7 @@ class SAPipeline(PiplineBase):
         self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
-    def run_parallel(self, n_copies: cython.int = 1) -> dict:
+    def run(self, n_copies: cython.int = 1) -> dict:
         max_jobs: cython.int = mp.cpu_count()
         exec_times: cython.int = 1000
         max_counter: cython.int = pow(self.per_graph.n_cells, 2) * exec_times
@@ -43,18 +43,18 @@ class SAPipeline(PiplineBase):
 
             while len(jobs_alive) >= max_jobs:
                 jobs_alive: list = [job for job in jobs_alive if job.is_alive()]
-                time.sleep(0.5)
+                time.sleep(1)
         while len(jobs_alive) > 0:
             jobs_alive: list = [job for job in jobs_alive if job.is_alive()]
-            time.sleep(0.5)
+            time.sleep(1)
         for k in dic_man.keys():
             exec_num, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
-            reports[exec_key] = create_exec_report(self, exec_num, max_counter,
-                                                   [exec_counter for _ in range(self.n_threads)],
-                                                   n2c
-                                                   )
-        report: dict = create_report(self, "SA_PIPELINE", n_copies, reports)
+            reports[exec_key] = Util.create_exec_report(self, exec_num, max_counter,
+                                                        [exec_counter for _ in range(self.n_threads)],
+                                                        n2c
+                                                        )
+        report: dict = Util.create_report(self, "SA_PIPELINE", n_copies, reports)
         print()
         return report
 
@@ -69,12 +69,12 @@ class SAPipeline(PiplineBase):
         for k in dic_man.keys():
             exec_num, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
-            reports[exec_key] = create_exec_report(self, exec_num, max_counter,
-                                                   [exec_counter for _ in range(self.n_threads)],
-                                                   n2c
-                                                   )
+            reports[exec_key] = Util.create_exec_report(self, exec_num, max_counter,
+                                                        [exec_counter for _ in range(self.n_threads)],
+                                                        n2c
+                                                        )
 
-        report: dict = create_report(self, "SA_PIPELINE", n_copies, reports)
+        report: dict = Util.create_report(self, "SA_PIPELINE", n_copies, reports)
         print()
         return report
 
@@ -113,8 +113,8 @@ class SAPipeline(PiplineBase):
         for th_idx in range(self.n_threads):
             for n_idx in range(len(n2c[th_idx])):
                 if n2c[th_idx][n_idx] != -1:
-                    n2c[th_idx][n_idx] = get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
-                                                                   self.n_columns)
+                    n2c[th_idx][n_idx] = Util.get_line_column_from_cell(n2c[th_idx][n_idx], self.n_lines,
+                                                                        self.n_columns)
                 else:
                     n2c[th_idx][n_idx] = [-1, -1]
         dic_man[pid] = [exec_key, st0.exec_counter, n2c]
