@@ -29,8 +29,14 @@ class Router:
                             routing.append((cur_pe,neighboor))
                             father[neighboor] = cur_pe
                         else:
-                            if random.random() <= 0.3:
+                            prob = random.random()
+                            if  prob <= 0.3:
                                 routing.append((cur_pe,neighboor))
+                            elif prob <= 0.6:
+                                routing.append((cur_pe,neighboor))
+                                routing.remove((father[neighboor],neighboor))
+                                father[neighboor] = cur_pe
+                                
 
                         if pes_alocated_in_fifo.get(neighboor) is None:
                             fila.append(neighboor)
