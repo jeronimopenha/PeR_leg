@@ -9,38 +9,38 @@
     "n_cells": 16,
     "n_lines": 4,
     "n_columns": 4,
-    "best_thread": "Exec_5_TH_0",
+    "best_thread": "Exec_6_TH_0",
     "best_dist": 1,
-    "exec_max_clk": 731,
-    "exec_min_clk": 428,
-    "exec_avg_clk": 574.5,
-    "th_max_clk": 122,
-    "th_min_clk": 31,
-    "th_avg_clk": 71.5,
+    "exec_max_clk": 715,
+    "exec_min_clk": 502,
+    "exec_avg_clk": 586.0,
+    "th_max_clk": 119,
+    "th_min_clk": 33,
+    "th_avg_clk": 73.68333333333334,
     "best_placement": [
         [
-            8,
-            14,
-            0,
+            3,
+            5,
+            6,
             2
         ],
         [
-            7,
-            13,
+            12,
+            4,
             1,
-            6
+            0
         ],
         [
-            9,
+            11,
             15,
-            4,
-            5
+            13,
+            14
         ],
         [
             10,
-            11,
-            12,
-            3
+            9,
+            7,
+            8
         ]
     ],
     "th_placement_distances": {
@@ -48,7 +48,6 @@
         "11_10": 1,
         "10_9": 1,
         "9_7": 1,
-        "7_8": 1,
         "7_13": 1,
         "13_14": 1,
         "14_0": 1,
@@ -58,6 +57,7 @@
         "6_5": 1,
         "5_3": 1,
         "13_15": 1,
+        "7_8": 1,
         "3_4": 2
     },
     "nodes_dict": {

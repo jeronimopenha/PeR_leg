@@ -11,26 +11,26 @@
     "n_columns": 3,
     "best_thread": "Exec_0_TH_0",
     "best_dist": 0,
-    "exec_max_clk": 127,
-    "exec_min_clk": 127,
-    "exec_avg_clk": 127.0,
-    "th_max_clk": 21,
-    "th_min_clk": 13,
-    "th_avg_clk": 16.5,
+    "exec_max_clk": 112,
+    "exec_min_clk": 112,
+    "exec_avg_clk": 112.0,
+    "th_max_clk": 19,
+    "th_min_clk": 11,
+    "th_avg_clk": 15.0,
     "best_placement": [
         [
+            3,
+            1,
+            2
+        ],
+        [
             4,
-            5,
+            -1,
             -1
         ],
         [
-            2,
-            1,
-            0
-        ],
-        [
-            3,
-            -1,
+            5,
+            0,
             -1
         ]
     ],

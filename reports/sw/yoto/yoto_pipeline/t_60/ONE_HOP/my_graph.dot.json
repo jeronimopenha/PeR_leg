@@ -11,26 +11,26 @@
     "n_columns": 3,
     "best_thread": "Exec_0_TH_0",
     "best_dist": 0,
-    "exec_max_clk": 127,
-    "exec_min_clk": 75,
-    "exec_avg_clk": 95.2,
+    "exec_max_clk": 126,
+    "exec_min_clk": 90,
+    "exec_avg_clk": 100.1,
     "th_max_clk": 21,
     "th_min_clk": 7,
-    "th_avg_clk": 12.566666666666666,
+    "th_avg_clk": 12.95,
     "best_placement": [
         [
-            2,
             5,
+            -1,
             -1
         ],
         [
+            3,
             1,
-            -1,
-            0
+            2
         ],
         [
-            3,
             4,
+            0,
             -1
         ]
     ],

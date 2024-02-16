@@ -12,10 +12,10 @@ path_results = ["yoto/yoto_pipeline", "yott/yott_pipeline"]
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
 dot_path_base = root_path + '/dot_db/'
-dot_connected_path = dot_path_base + 'connected/'
+dot_connected_path = dot_path_base + 'graphs0_dag/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1, 10]
+copies = [1, 10,100]
 for i, method in enumerate(methods):
     for arch_type in arch_types:
         len_pipe = method.len_pipeline

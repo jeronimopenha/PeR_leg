@@ -52,6 +52,10 @@ class Stage3YOTT:
         c_a = self.n2c[thread_index][a] if thread_valid == 1 else [0, 0]  # type:ignore
         cs_c = [self.n2c[thread_index][c] if c > -1 else [-1, -1] for c in cs]  # type:ignore
 
+        for c in cs_c:
+            if c == [None,None]:
+                z=1
+
         adj_index = self.thread_adj_indexes[thread_index] if thread_valid else 0
 
         self.new_output = {

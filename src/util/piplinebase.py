@@ -47,6 +47,18 @@ class PiplineBase(object):
             self.edges_str.append(edges_str)
 
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
+
+        max_len = 0
+        for th_n in self.edges_int:
+            len_ = len(th_n)
+            if len_ > max_len:
+                max_len = len_
+        for th_n in self.edges_int:
+            len_ = len(th_n)
+            if len_ < max_len:
+                for _ in range(max_len - len_):
+                    th_n.append([-1, -1])
+
         self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.cycle[i]) for i in
                                         range(self.len_pipeline)]
 
