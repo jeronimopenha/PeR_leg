@@ -8,7 +8,6 @@ from pathlib import Path
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
 import matplotlib.pyplot as plt
-from math import ceil
 import math
 
 
@@ -708,3 +707,8 @@ class Util:
             return 1
         else:
             return int(ceil(log2(n)))
+
+    @staticmethod
+    def create_folder_if_not_exist(folder: str):
+        if not os.path.exists(folder):
+            os.makedirs(folder)
