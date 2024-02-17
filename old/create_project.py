@@ -5,12 +5,11 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import argparse
-import traceback
 from veriloggen import *
 
 from old.src.hw import AccAXIInterface
 import old.src.hw.sa_pipeline.sa_acelerator as _sa
-import src.hw.sa_pipeline.util as _u
+import old.sa_pipeline.util as _u
 
 
 # p = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

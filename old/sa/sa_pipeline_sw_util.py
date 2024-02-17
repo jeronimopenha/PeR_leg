@@ -1,6 +1,5 @@
-import random as rnd
 from src.util.per_graph import PeRGraph
-from src.util.sa.sa_util import SaUtil
+from old.sa.sa_util import SaUtil
 
 
 class SaPipelineSwlUtil(SaUtil):

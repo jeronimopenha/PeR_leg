@@ -1,5 +1,7 @@
 import random
 import random as rnd
+from typing import List, Tuple
+
 import numpy as np
 from math import sqrt
 from numpy import ndarray
@@ -11,23 +13,17 @@ from src.util.util import Util
 class PiplineBase(object):
 
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
-                 len_pipeline: int, n_threads: int):
+                 len_pipeline: int, n_threads: int) -> None:
         """
+        Initializes PipelineBase.
 
-        @param per_graph: 
-        @type per_graph: 
-        @param arch_type: 
-        @type arch_type: 
-        @param distance_table_bits: 
-        @type distance_table_bits: 
-        @param make_shuffle: 
-        @type make_shuffle: 
-        @param len_pipeline: 
-        @type len_pipeline: 
-        @param n_threads: 
-        @type n_threads: 
-        @param random_seed: 
-        @type random_seed: 
+        Args:
+            per_graph (PeRGraph): The PeRGraph object.
+            arch_type (ArchType): The architecture type.
+            distance_table_bits (int): Number of bits for the distance table.
+            make_shuffle (bool): Flag indicating whether to shuffle.
+            len_pipeline (int): Length of the pipeline.
+            n_threads (int): Number of threads.
         """
         self.len_pipeline: int = len_pipeline
         self.per_graph: PeRGraph = per_graph
@@ -37,20 +33,17 @@ class PiplineBase(object):
         self.n_threads: int = n_threads
         # self.reset_random(random_seed)
 
-        self.convergence: list[list[list]] = []
-        self.edges_raw: list[list[list]] = []
-        self.edges_str: list[list[list]] = []
+        self.edges_raw: List[List[List]] = []
+        self.edges_str: List[List[List]] = []
+        self.edges_int: List[List[List]] = []
+        self.annotations: List[dict] = []
+
         for _ in range(self.len_pipeline):
             edges_str, edges_raw, rec = self.per_graph.get_edges_zigzag(self.make_shuffle)
-            self.convergence.append(rec)
             self.edges_raw.append(edges_raw)
             self.edges_str.append(edges_str)
-
-        self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
-        self.verify_edges_len()
-
-        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.convergence[i]) for i in
-                                        range(self.len_pipeline)]
+            self.edges_int.append(self.get_edges_int(edges_str))
+            self.annotations.append(Util.get_graph_annotations(edges_raw, rec))
 
         self.visited_edges = len(self.edges_int[0])
         self.total_edges = len(self.edges_raw[0])
@@ -60,76 +53,75 @@ class PiplineBase(object):
         self.line_bits = int(sqrt(self.per_graph.n_cells))
         self.column_bits = self.line_bits
 
-    def verify_edges_len(self):
+    '''def verify_edges_len(self):
         max_len = max([len(edges) for edges in self.edges_int])
         for edge in self.edges_int:
             len_ = len(edge)
             if len_ < max_len:
                 for _ in range(max_len - len_):
-                    edge.append([-1, -1])
+                    edge.append([-1, -1])'''
 
-    @staticmethod
+    '''@staticmethod
     def reset_random(random_seed: int = 0):
         """
 
         @param random_seed:
         @type random_seed:
         """
-        rnd.seed(random_seed)
+        rnd.seed(random_seed)'''
 
-    def get_edges_int(self, edges_str: list[list]) -> list[list]:
+    def get_edges_int(self, edges_str: List[List]) -> List[List]:
         """
+        Convert string edges to integer edges.
 
-        @param edges_str:
-        @type edges_str:
-        @return:
-        @rtype:
+        Args:
+            edges_str (List[List]): List of string edges.
+
+        Returns:
+            List[List]: List of integer edges.
         """
-        edges_int: list[list] = []
-        for (a, b) in edges_str:
-            edges_int.append(
-                [
-                    self.per_graph.nodes_to_idx[a],
-                    self.per_graph.nodes_to_idx[b]
-                ]
-            )
-        return edges_int
+        return [[self.per_graph.nodes_to_idx[a], self.per_graph.nodes_to_idx[b]] for a, b in edges_str]
 
-    def init_sa_placement_tables(self) -> tuple[list[list], list[list]]:
+    def init_sa_placement_tables(self) -> Tuple[List[List[int]], List[List[int]]]:
         """
+        Initialize the tables for SA placement.
 
-        @return:
+        Returns:
+            Tuple[List[List[int]], List[List[int]]]: Tables n2c and c2n.
         """
         n2c: list[list] = []
         c2n: list[list] = []
         for i in range(self.n_threads):
-            n2c_tmp: list = [-1 for _ in range(self.n_lines * self.n_columns)]
-            c2n_tmp: list = [-1 for _ in range(self.n_lines * self.n_columns)]
+            n2c_tmp: List[int] = [-1] * (self.n_lines * self.n_columns)
+            c2n_tmp: List[int] = [-1] * (self.n_lines * self.n_columns)
 
-            nodes = self.per_graph.nodes.copy()
-            cells = [i for i in range(self.n_lines * self.n_columns)]
-            random.shuffle(nodes)
+            cells = list(range(self.n_lines * self.n_columns))
             random.shuffle(cells)
 
-            while nodes:
-                random_node = nodes[0]
-                random_cell = cells[0]
-                nodes.pop(0)
-                cells.pop(0)
-
-                c2n_tmp[random_cell] = self.per_graph.nodes_to_idx[random_node]
+            for node in self.per_graph.nodes:
+                random_cell = cells.pop(0)
+                c2n_tmp[random_cell] = self.per_graph.nodes_to_idx[node]
                 n2c_tmp[c2n_tmp[random_cell]] = random_cell
 
             n2c.append(n2c_tmp)
             c2n.append(c2n_tmp)
         return n2c, c2n
 
-    def init_traversal_placement_tables(self, first_node: list) -> tuple[list[list], list[list]]:
-        n2c: list[list[list]] = []
-        c2n: list[list] = []
+    def init_traversal_placement_tables(self, first_node: List[int]) -> Tuple[List[List[List[int]]], List[List[int]]]:
+        """
+        Initialize the traversal placement tables.
+
+        Args:
+            first_node (List[int]): List of first nodes for each pipeline.
+
+        Returns:
+            Tuple[List[List[List[int]]], List[List[int]]]: Tables n2c and c2n.
+        """
+        n2c: List[List[List]] = []
+        c2n: List[List] = []
         for i in range(self.len_pipeline):
-            n2c_tmp: list[list] = [[None, None] for _ in range(self.per_graph.n_cells)]
-            c2n_tmp: list[list] = [
+            n2c_tmp: List[List] = [[None, None] for _ in range(self.per_graph.n_cells)]
+            c2n_tmp: List[List] = [
                 [
                     None for _ in range(self.n_lines)
                 ] for _ in range(self.n_lines)
@@ -144,8 +136,8 @@ class PiplineBase(object):
 
         return n2c, c2n
 
-    # FIXME
-    '''
+    def routing_mesh(self, edges: list[list], positions: list[list]) -> tuple[bool, ndarray, dict]:
+        """
             Input:
                 list_edge: edges list [[0,1],[1,2],...] 0 -> 1 e 1->2, ...
                 GRID_SIZE: size of grid
@@ -154,17 +146,6 @@ class PiplineBase(object):
             Output:
                 True: routed
                 False: router error
-    '''
-
-    def routing_mesh(self, edges: list[list], positions: list[list]) -> tuple[bool, ndarray, dict]:
-        """
-
-        @param edges:
-        @type edges:
-        @param positions:
-        @type positions:
-        @return:
-        @rtype:
         """
         n_cells: int = self.per_graph.n_cells
         n_cells_sqrt: int = self.n_lines

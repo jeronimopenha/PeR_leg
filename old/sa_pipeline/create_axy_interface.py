@@ -1,6 +1,6 @@
 from veriloggen import *
 
-import src.hw.sa_pipeline.util as _u
+import old.sa_pipeline.util as _u
 
 
 class AccAXIInterface:

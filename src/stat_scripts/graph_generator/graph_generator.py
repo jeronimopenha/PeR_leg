@@ -1,7 +1,7 @@
 from math import log2, sqrt, ceil
 from random import choice
-from src.graph_generator.placement import Placement
-from src.graph_generator.router import Router
+from src.stat_scripts.graph_generator.placement import Placement
+from src.stat_scripts.graph_generator.router import Router
 
 
 class GraphGenerator:

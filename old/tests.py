@@ -30,8 +30,60 @@ acc.get().to_verilog(os.getcwd() + "/verilog/sa_aws_10x10_10c")
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-with ThreadPoolExecutor(max_workers=20) as executor:
+'''with ThreadPoolExecutor(max_workers=20) as executor:
     future1 = executor.submit(time.sleep, 2)
     future2 = executor.submit(time.sleep, 10)
     print(future1.result())
     print(future2.result())
+'''
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample data
+data = {
+    'Column1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Column2': [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    'Column3': [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    'Column4': [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+}
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample data
+data = {
+    'Column1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Column2': [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    'Column3': [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    'Column4': [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+}
+
+# Creating DataFrame
+df = pd.DataFrame(data)
+
+# Create boxplot
+plt.figure(figsize=(10, 6))
+bp = df.boxplot()
+
+# Customize median line color to red
+for box in bp['boxes']:
+    box.set(color='blue')  # Change box color to blue
+for median in bp['medians']:
+    median.set(color='red')  # Change median line color to red
+
+# Add labels and title
+plt.title('Boxplot of Four Columns')
+plt.ylabel('Values')
+plt.xlabel('Columns')
+
+# Show plot
+plt.show()
+
+# Add labels and title
+plt.title('Boxplot of Four Columns')
+plt.ylabel('Values')
+plt.xlabel('Columns')
+
+# Show plot
+plt.show()

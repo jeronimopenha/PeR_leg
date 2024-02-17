@@ -1,6 +1,15 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class ArchType(Enum):
-    MESH: int = 1
-    ONE_HOP: int = 2
+    """
+    Enumeration for architecture types.
+    """
+    MESH: int = auto()
+    """
+    Mesh architecture type.
+    """
+    ONE_HOP: int = auto()
+    """
+    One-hop architecture type.
+    """

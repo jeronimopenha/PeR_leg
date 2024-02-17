@@ -2159,11 +2159,11 @@ typedef struct {
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_n_s_compute;
   PyObject *__pyx_n_s_copy;
-  PyObject *__pyx_n_s_dc;
+  PyObject *__pyx_n_u_dc;
   PyObject *__pyx_n_s_dict;
   PyObject *__pyx_n_s_dict_2;
   PyObject *__pyx_n_s_doc;
-  PyObject *__pyx_n_s_ds;
+  PyObject *__pyx_n_u_ds;
   PyObject *__pyx_n_s_init;
   PyObject *__pyx_n_s_init_subclass;
   PyObject *__pyx_n_s_is_coroutine;
@@ -2186,9 +2186,10 @@ typedef struct {
   PyObject *__pyx_n_s_st8_th_valid;
   PyObject *__pyx_n_s_super;
   PyObject *__pyx_n_s_sw;
+  PyObject *__pyx_n_u_sw;
   PyObject *__pyx_n_s_test;
-  PyObject *__pyx_n_s_th_idx;
-  PyObject *__pyx_n_s_th_valid;
+  PyObject *__pyx_n_u_th_idx;
+  PyObject *__pyx_n_u_th_valid;
   PyObject *__pyx_int_0;
   PyObject *__pyx_tuple_;
   PyObject *__pyx_tuple__3;
@@ -2245,11 +2246,11 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_n_s_compute);
   Py_CLEAR(clear_module_state->__pyx_n_s_copy);
-  Py_CLEAR(clear_module_state->__pyx_n_s_dc);
+  Py_CLEAR(clear_module_state->__pyx_n_u_dc);
   Py_CLEAR(clear_module_state->__pyx_n_s_dict);
   Py_CLEAR(clear_module_state->__pyx_n_s_dict_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_doc);
-  Py_CLEAR(clear_module_state->__pyx_n_s_ds);
+  Py_CLEAR(clear_module_state->__pyx_n_u_ds);
   Py_CLEAR(clear_module_state->__pyx_n_s_init);
   Py_CLEAR(clear_module_state->__pyx_n_s_init_subclass);
   Py_CLEAR(clear_module_state->__pyx_n_s_is_coroutine);
@@ -2272,9 +2273,10 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_st8_th_valid);
   Py_CLEAR(clear_module_state->__pyx_n_s_super);
   Py_CLEAR(clear_module_state->__pyx_n_s_sw);
+  Py_CLEAR(clear_module_state->__pyx_n_u_sw);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
-  Py_CLEAR(clear_module_state->__pyx_n_s_th_idx);
-  Py_CLEAR(clear_module_state->__pyx_n_s_th_valid);
+  Py_CLEAR(clear_module_state->__pyx_n_u_th_idx);
+  Py_CLEAR(clear_module_state->__pyx_n_u_th_valid);
   Py_CLEAR(clear_module_state->__pyx_int_0);
   Py_CLEAR(clear_module_state->__pyx_tuple_);
   Py_CLEAR(clear_module_state->__pyx_tuple__3);
@@ -2309,11 +2311,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_n_s_compute);
   Py_VISIT(traverse_module_state->__pyx_n_s_copy);
-  Py_VISIT(traverse_module_state->__pyx_n_s_dc);
+  Py_VISIT(traverse_module_state->__pyx_n_u_dc);
   Py_VISIT(traverse_module_state->__pyx_n_s_dict);
   Py_VISIT(traverse_module_state->__pyx_n_s_dict_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_doc);
-  Py_VISIT(traverse_module_state->__pyx_n_s_ds);
+  Py_VISIT(traverse_module_state->__pyx_n_u_ds);
   Py_VISIT(traverse_module_state->__pyx_n_s_init);
   Py_VISIT(traverse_module_state->__pyx_n_s_init_subclass);
   Py_VISIT(traverse_module_state->__pyx_n_s_is_coroutine);
@@ -2336,9 +2338,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_st8_th_valid);
   Py_VISIT(traverse_module_state->__pyx_n_s_super);
   Py_VISIT(traverse_module_state->__pyx_n_s_sw);
+  Py_VISIT(traverse_module_state->__pyx_n_u_sw);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
-  Py_VISIT(traverse_module_state->__pyx_n_s_th_idx);
-  Py_VISIT(traverse_module_state->__pyx_n_s_th_valid);
+  Py_VISIT(traverse_module_state->__pyx_n_u_th_idx);
+  Py_VISIT(traverse_module_state->__pyx_n_u_th_valid);
   Py_VISIT(traverse_module_state->__pyx_int_0);
   Py_VISIT(traverse_module_state->__pyx_tuple_);
   Py_VISIT(traverse_module_state->__pyx_tuple__3);
@@ -2385,11 +2388,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_n_s_compute __pyx_mstate_global->__pyx_n_s_compute
 #define __pyx_n_s_copy __pyx_mstate_global->__pyx_n_s_copy
-#define __pyx_n_s_dc __pyx_mstate_global->__pyx_n_s_dc
+#define __pyx_n_u_dc __pyx_mstate_global->__pyx_n_u_dc
 #define __pyx_n_s_dict __pyx_mstate_global->__pyx_n_s_dict
 #define __pyx_n_s_dict_2 __pyx_mstate_global->__pyx_n_s_dict_2
 #define __pyx_n_s_doc __pyx_mstate_global->__pyx_n_s_doc
-#define __pyx_n_s_ds __pyx_mstate_global->__pyx_n_s_ds
+#define __pyx_n_u_ds __pyx_mstate_global->__pyx_n_u_ds
 #define __pyx_n_s_init __pyx_mstate_global->__pyx_n_s_init
 #define __pyx_n_s_init_subclass __pyx_mstate_global->__pyx_n_s_init_subclass
 #define __pyx_n_s_is_coroutine __pyx_mstate_global->__pyx_n_s_is_coroutine
@@ -2412,9 +2415,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_st8_th_valid __pyx_mstate_global->__pyx_n_s_st8_th_valid
 #define __pyx_n_s_super __pyx_mstate_global->__pyx_n_s_super
 #define __pyx_n_s_sw __pyx_mstate_global->__pyx_n_s_sw
+#define __pyx_n_u_sw __pyx_mstate_global->__pyx_n_u_sw
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
-#define __pyx_n_s_th_idx __pyx_mstate_global->__pyx_n_s_th_idx
-#define __pyx_n_s_th_valid __pyx_mstate_global->__pyx_n_s_th_valid
+#define __pyx_n_u_th_idx __pyx_mstate_global->__pyx_n_u_th_idx
+#define __pyx_n_u_th_valid __pyx_mstate_global->__pyx_n_u_th_valid
 #define __pyx_int_0 __pyx_mstate_global->__pyx_int_0
 #define __pyx_tuple_ __pyx_mstate_global->__pyx_tuple_
 #define __pyx_tuple__3 __pyx_mstate_global->__pyx_tuple__3
@@ -2422,7 +2426,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__4 __pyx_mstate_global->__pyx_codeobj__4
 /* #### Code section: module_code ### */
 
-/* "src/sw/sa_pipeline/stage9_sa.pyx":9
+/* "src/sw/sa_pipeline/stage9_sa.pyx":10
  *     """
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
@@ -2484,12 +2488,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 9, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 10, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -2500,7 +2504,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 9, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 10, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2539,55 +2543,55 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA___init__(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":14
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":15
  *         """
  *         self.new_output: dict = {
  *             'th_idx': 0,             # <<<<<<<<<<<<<<
  *             'th_valid': False,
  *             'sw': False
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_th_idx, __pyx_int_0) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_th_idx, __pyx_int_0) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":15
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":16
  *         self.new_output: dict = {
  *             'th_idx': 0,
  *             'th_valid': False,             # <<<<<<<<<<<<<<
  *             'sw': False
  *         }
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_th_valid, Py_False) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_th_valid, Py_False) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":16
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":17
  *             'th_idx': 0,
  *             'th_valid': False,
  *             'sw': False             # <<<<<<<<<<<<<<
  *         }
  *         self.old_output: dict = self.new_output.copy()
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_sw, Py_False) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_sw, Py_False) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":13
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":14
  * 
  *         """
  *         self.new_output: dict = {             # <<<<<<<<<<<<<<
  *             'th_idx': 0,
  *             'th_valid': False,
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_new_output, __pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_new_output, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":18
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":19
  *             'sw': False
  *         }
  *         self.old_output: dict = self.new_output.copy()             # <<<<<<<<<<<<<<
  * 
  *     def compute(self, st8_input: dict):
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_new_output); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_new_output); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2608,14 +2612,14 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA___init__(C
     PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_old_output, __pyx_t_1) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_old_output, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":9
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":10
  *     """
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
@@ -2638,7 +2642,7 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA___init__(C
   return __pyx_r;
 }
 
-/* "src/sw/sa_pipeline/stage9_sa.pyx":20
+/* "src/sw/sa_pipeline/stage9_sa.pyx":21
  *         self.old_output: dict = self.new_output.copy()
  * 
  *     def compute(self, st8_input: dict):             # <<<<<<<<<<<<<<
@@ -2703,7 +2707,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -2711,14 +2715,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("compute", 1, 2, 2, 1); __PYX_ERR(0, 20, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("compute", 1, 2, 2, 1); __PYX_ERR(0, 21, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "compute") < 0)) __PYX_ERR(0, 20, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "compute") < 0)) __PYX_ERR(0, 21, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -2731,7 +2735,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("compute", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 20, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("compute", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 21, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2745,7 +2749,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_st8_input), (&PyDict_Type), 0, "st8_input", 1))) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_st8_input), (&PyDict_Type), 0, "st8_input", 1))) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_r = __pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_2compute(__pyx_self, __pyx_v_self, __pyx_v_st8_input);
 
   /* function exit code */
@@ -2780,16 +2784,16 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_2compute(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compute", 1);
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":26
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":27
  *         """
  *         # moving forward the ready outputs
  *         self.old_output = self.new_output.copy()             # <<<<<<<<<<<<<<
  * 
  *         st8_th_idx: cython.int = st8_input['th_idx']
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_new_output); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_new_output); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2810,66 +2814,66 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_2compute(C
     PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_old_output, __pyx_t_1) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_old_output, __pyx_t_1) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":28
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":29
  *         self.old_output = self.new_output.copy()
  * 
  *         st8_th_idx: cython.int = st8_input['th_idx']             # <<<<<<<<<<<<<<
  *         st8_th_valid: cython.int = st8_input['th_valid']
  * 
  */
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_s_th_idx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_u_th_idx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_st8_th_idx = __pyx_t_4;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":29
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":30
  * 
  *         st8_th_idx: cython.int = st8_input['th_idx']
  *         st8_th_valid: cython.int = st8_input['th_valid']             # <<<<<<<<<<<<<<
  * 
  *         # fixme only for debugging
  */
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_s_th_valid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_u_th_valid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_st8_th_valid = __pyx_t_4;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":35
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":36
  *         #    z = 1
  * 
  *         st8_dc: cython.int = st8_input['dc']             # <<<<<<<<<<<<<<
  *         st8_ds: cython.int = st8_input['ds']
  * 
  */
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_s_dc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_u_dc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_st8_dc = __pyx_t_4;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":36
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":37
  * 
  *         st8_dc: cython.int = st8_input['dc']
  *         st8_ds: cython.int = st8_input['ds']             # <<<<<<<<<<<<<<
  * 
  *         sw: cython.bint = st8_ds < st8_dc
  */
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_s_ds); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_st8_input, __pyx_n_u_ds); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_st8_ds = __pyx_t_4;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":38
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":39
  *         st8_ds: cython.int = st8_input['ds']
  * 
  *         sw: cython.bint = st8_ds < st8_dc             # <<<<<<<<<<<<<<
@@ -2878,55 +2882,55 @@ static PyObject *__pyx_pf_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_2compute(C
  */
   __pyx_v_sw = (__pyx_v_st8_ds < __pyx_v_st8_dc);
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":43
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":44
  * 
  *         self.new_output: dict = {
  *             'th_idx': st8_th_idx,             # <<<<<<<<<<<<<<
  *             'th_valid': st8_th_valid,
  *             'sw': sw
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_st8_th_idx); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_st8_th_idx); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_th_idx, __pyx_t_3) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_th_idx, __pyx_t_3) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":44
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":45
  *         self.new_output: dict = {
  *             'th_idx': st8_th_idx,
  *             'th_valid': st8_th_valid,             # <<<<<<<<<<<<<<
  *             'sw': sw
  *         }
  */
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_st8_th_valid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_st8_th_valid); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_th_valid, __pyx_t_3) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_th_valid, __pyx_t_3) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":45
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":46
  *             'th_idx': st8_th_idx,
  *             'th_valid': st8_th_valid,
  *             'sw': sw             # <<<<<<<<<<<<<<
  *         }
  * 
  */
-  __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_v_sw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_v_sw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_sw, __pyx_t_3) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_sw, __pyx_t_3) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":42
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":43
  *         #    a = 1
  * 
  *         self.new_output: dict = {             # <<<<<<<<<<<<<<
  *             'th_idx': st8_th_idx,
  *             'th_valid': st8_th_valid,
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_new_output, __pyx_t_1) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_new_output, __pyx_t_1) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":20
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":21
  *         self.old_output: dict = self.new_output.copy()
  * 
  *     def compute(self, st8_input: dict):             # <<<<<<<<<<<<<<
@@ -2974,11 +2978,11 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
     {&__pyx_n_s_compute, __pyx_k_compute, sizeof(__pyx_k_compute), 0, 0, 1, 1},
     {&__pyx_n_s_copy, __pyx_k_copy, sizeof(__pyx_k_copy), 0, 0, 1, 1},
-    {&__pyx_n_s_dc, __pyx_k_dc, sizeof(__pyx_k_dc), 0, 0, 1, 1},
+    {&__pyx_n_u_dc, __pyx_k_dc, sizeof(__pyx_k_dc), 0, 1, 0, 1},
     {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
     {&__pyx_n_s_dict_2, __pyx_k_dict_2, sizeof(__pyx_k_dict_2), 0, 0, 1, 1},
     {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
-    {&__pyx_n_s_ds, __pyx_k_ds, sizeof(__pyx_k_ds), 0, 0, 1, 1},
+    {&__pyx_n_u_ds, __pyx_k_ds, sizeof(__pyx_k_ds), 0, 1, 0, 1},
     {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
     {&__pyx_n_s_init_subclass, __pyx_k_init_subclass, sizeof(__pyx_k_init_subclass), 0, 0, 1, 1},
     {&__pyx_n_s_is_coroutine, __pyx_k_is_coroutine, sizeof(__pyx_k_is_coroutine), 0, 0, 1, 1},
@@ -3001,9 +3005,10 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_st8_th_valid, __pyx_k_st8_th_valid, sizeof(__pyx_k_st8_th_valid), 0, 0, 1, 1},
     {&__pyx_n_s_super, __pyx_k_super, sizeof(__pyx_k_super), 0, 0, 1, 1},
     {&__pyx_n_s_sw, __pyx_k_sw, sizeof(__pyx_k_sw), 0, 0, 1, 1},
+    {&__pyx_n_u_sw, __pyx_k_sw, sizeof(__pyx_k_sw), 0, 1, 0, 1},
     {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
-    {&__pyx_n_s_th_idx, __pyx_k_th_idx, sizeof(__pyx_k_th_idx), 0, 0, 1, 1},
-    {&__pyx_n_s_th_valid, __pyx_k_th_valid, sizeof(__pyx_k_th_valid), 0, 0, 1, 1},
+    {&__pyx_n_u_th_idx, __pyx_k_th_idx, sizeof(__pyx_k_th_idx), 0, 1, 0, 1},
+    {&__pyx_n_u_th_valid, __pyx_k_th_valid, sizeof(__pyx_k_th_valid), 0, 1, 0, 1},
     {0, 0, 0, 0, 0, 0, 0}
   };
   return __Pyx_InitStrings(__pyx_string_tab);
@@ -3018,29 +3023,29 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":9
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":10
  *     """
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         """
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_sw_sa_pipeline_stage9_sa_pyx, __pyx_n_s_init, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_sw_sa_pipeline_stage9_sa_pyx, __pyx_n_s_init, 10, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 10, __pyx_L1_error)
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":20
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":21
  *         self.old_output: dict = self.new_output.copy()
  * 
  *     def compute(self, st8_input: dict):             # <<<<<<<<<<<<<<
  *         """
  * 
  */
-  __pyx_tuple__3 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_st8_input, __pyx_n_s_st8_th_idx, __pyx_n_s_st8_th_valid, __pyx_n_s_st8_dc, __pyx_n_s_st8_ds, __pyx_n_s_sw); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_st8_input, __pyx_n_s_st8_th_idx, __pyx_n_s_st8_th_valid, __pyx_n_s_st8_dc, __pyx_n_s_st8_ds, __pyx_n_s_sw); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_sw_sa_pipeline_stage9_sa_pyx, __pyx_n_s_compute, 20, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_sw_sa_pipeline_stage9_sa_pyx, __pyx_n_s_compute, 21, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -3407,61 +3412,61 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":4
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":5
  * 
  * 
  * class Stage9SA:             # <<<<<<<<<<<<<<
  *     """
  *     Ninth Pipe from SA_Verilog. This pipe is responsible to take the decision to do the swap or not.
  */
-  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Stage9SA, __pyx_n_s_Stage9SA, (PyObject *) NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_kp_s_Ninth_Pipe_from_SA_Verilog_This); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Stage9SA, __pyx_n_s_Stage9SA, (PyObject *) NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_kp_s_Ninth_Pipe_from_SA_Verilog_This); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":9
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":10
  *     """
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         """
  * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_1__init__, 0, __pyx_n_s_Stage9SA___init, NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_1__init__, 0, __pyx_n_s_Stage9SA___init, NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":20
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":21
  *         self.old_output: dict = self.new_output.copy()
  * 
  *     def compute(self, st8_input: dict):             # <<<<<<<<<<<<<<
  *         """
  * 
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_st8_input, __pyx_n_s_dict) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_3compute, 0, __pyx_n_s_Stage9SA_compute, NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_st8_input, __pyx_n_s_dict) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_3src_2sw_11sa_pipeline_9stage9_sa_8Stage9SA_3compute, 0, __pyx_n_s_Stage9SA_compute, NULL, __pyx_n_s_src_sw_sa_pipeline_stage9_sa, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_3);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_compute, __pyx_t_4) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_compute, __pyx_t_4) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "src/sw/sa_pipeline/stage9_sa.pyx":4
+  /* "src/sw/sa_pipeline/stage9_sa.pyx":5
  * 
  * 
  * class Stage9SA:             # <<<<<<<<<<<<<<
  *     """
  *     Ninth Pipe from SA_Verilog. This pipe is responsible to take the decision to do the swap or not.
  */
-  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_Stage9SA, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_Stage9SA, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Stage9SA, __pyx_t_4) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Stage9SA, __pyx_t_4) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "src/sw/sa_pipeline/stage9_sa.pyx":1
- * import cython             # <<<<<<<<<<<<<<
- * 
+ * # cython: language_level=3             # <<<<<<<<<<<<<<
+ * import cython
  * 
  */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)

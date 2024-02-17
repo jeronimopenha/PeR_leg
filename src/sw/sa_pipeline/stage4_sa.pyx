@@ -1,25 +1,22 @@
-from src.util.per_enum import ArchType
-from src.util.util import Util
+# cython: language_level=3
 import cython
 
+from src.util.per_enum import ArchType
+from src.util.util import Util
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
+
 class Stage4SA:
     """
-    Fourth Pipe from SA_Verilog. This pipe is responsible for finding the manhandle
-    distances for each combination between cellA and cellB with their respective
-    neighbor cells before swap.
+    Fourth Pipe from SA_Verilog. This pipe is responsible to find the manhandle
+    distances for each combination between cellA and cellB with their
+    respective neighbors cells before swap.
     """
 
     def __init__(self, arch_type: ArchType, n_lines: cython.int, n_columns: cython.int):
         """
-        Initializes Stage4SA.
+        @param n_lines:
+        @param n_columns:
 
-        Args:
-            arch_type (ArchType): The architecture type.
-            n_lines (cython.int): The number of lines.
-            n_columns (cython.int): The number of columns.
         """
         self.arch_type: ArchType = arch_type
         self.n_lines: cython.int = n_lines
@@ -38,11 +35,8 @@ class Stage4SA:
 
     def compute(self, st3_input: dict):
         """
-        Computes distances between cellA and cellB and their respective neighbor cells.
 
-        Args:
-            st3_input (dict): The input dictionary containing 'th_idx', 'th_valid', 'cell_a', 'cell_b',
-                              'cva', and 'cvb'.
+        @param st3_input:
         """
         # moving forward the ready outputs
         self.old_output = self.new_output.copy()
@@ -51,17 +45,46 @@ class Stage4SA:
         st3_th_valid: cython.bint = st3_input['th_valid']
         st3_cell_a: cython.int = st3_input['cell_a']
         st3_cell_b: cython.int = st3_input['cell_b']
-        st3_cva: list[cython.int] = st3_input['cva']
-        st3_cvb: list[cython.int] = st3_input['cvb']
+        st3_cva: list = st3_input['cva']
+        st3_cvb: list = st3_input['cvb']
+
+        # fixme only for debugging
+        # if st3_th_idx == 0:
+        #    z = 1
 
         dvac: list[cython.int] = [0, 0, 0, 0]
         dvbc: list[cython.int] = [0, 0, 0, 0]
 
-        # Compute distances for cellA
-        self.compute_distances(st3_cell_a, st3_cva, dvac)
+        ca: cython.int = st3_input['cell_a']
+        cb: cython.int = st3_input['cell_b']
+        cva: list[cython.int] = st3_input['cva']
+        cvb: list[cython.int] = st3_input['cvb']
 
-        # Compute distances for cellB
-        self.compute_distances(st3_cell_b, st3_cvb, dvbc)
+        for i in range(len(cva)):
+            if cva[i] != -1:
+                if self.arch_type == ArchType.ONE_HOP:
+                    dvac[i] = Util.dist_one_hop(
+                        Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
+                    )
+                elif self.arch_type == ArchType.MESH:
+                    dvac[i] = Util.dist_manhattan(
+                        Util.get_line_column_from_cell(ca, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cva[i], self.n_lines, self.n_columns)
+                    )
+
+        for i in range(len(cvb)):
+            if cvb[i] != -1:
+                if self.arch_type == ArchType.ONE_HOP:
+                    dvbc[i] = Util.dist_one_hop(
+                        Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
+                    )
+                elif self.arch_type == ArchType.MESH:
+                    dvbc[i] = Util.dist_manhattan(
+                        Util.get_line_column_from_cell(cb, self.n_lines, self.n_columns),
+                        Util.get_line_column_from_cell(cvb[i], self.n_lines, self.n_columns)
+                    )
 
         self.new_output: dict = {
             'th_idx': st3_th_idx,
@@ -73,25 +96,3 @@ class Stage4SA:
             'dvac': dvac,
             'dvbc': dvbc
         }
-
-    def compute_distances(self, cell: cython.int, neighbors: list[cython.int], distances: list[cython.int]):
-        """
-        Computes distances between a cell and its neighbor cells.
-
-        Args:
-            cell (cython.int): The index of the cell.
-            neighbors (list[cython.int]): The list of neighbor cell indices.
-            distances (list[cython.int]): The list to store computed distances.
-        """
-        for i in range(len(neighbors)):
-            if neighbors[i] != -1:
-                if self.arch_type == ArchType.ONE_HOP:
-                    distances[i] = Util.dist_one_hop(
-                        Util.get_line_column_from_cell(cell, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(neighbors[i], self.n_lines, self.n_columns)
-                    )
-                elif self.arch_type == ArchType.MESH:
-                    distances[i] = Util.dist_manhattan(
-                        Util.get_line_column_from_cell(cell, self.n_lines, self.n_columns),
-                        Util.get_line_column_from_cell(neighbors[i], self.n_lines, self.n_columns)
-                    )

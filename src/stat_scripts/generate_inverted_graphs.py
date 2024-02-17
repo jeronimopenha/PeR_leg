@@ -1,5 +1,5 @@
-from src.graph_exporter.graph_exporter import GraphExporter
-from src.graph_generator.graph_inverter import GraphInverter
+from src.stat_scripts.graph_exporter.graph_exporter import GraphExporter
+from src.stat_scripts.graph_generator.graph_inverter import GraphInverter
 from src.util.util import Util
 import pygraphviz as pgv
 

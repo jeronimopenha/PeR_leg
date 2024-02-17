@@ -1,4 +1,4 @@
-from src.graph_stats.statistics_generator_dot import StatisticsGeneratorDot
+from src.stat_scripts.graph_stats.statistics_generator_dot import StatisticsGeneratorDot
 from src.util.util import Util
 
 data_files = Util.get_files_list_by_extension(Util.get_project_root() + "/reports/results_michael/", ".dot")

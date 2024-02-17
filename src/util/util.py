@@ -1,15 +1,16 @@
-from math import ceil, log2, sqrt
-import os
-import pandas as pd
 import json
-import traceback
+import os
 import random
+import traceback
+from math import ceil, log2
 from pathlib import Path
+from typing import List, Dict, Tuple, Any
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
 from src.util.per_enum import ArchType
 from src.util.per_graph import PeRGraph
-from typing import List, Dict, Tuple, Any
-import matplotlib.pyplot as plt
-import cython
 
 
 class Util:

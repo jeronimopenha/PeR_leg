@@ -1,4 +1,4 @@
-from src.graph_stats.statistics_generator_json import StatisticsGeneratorJSON
+from src.stat_scripts.graph_stats.statistics_generator_json import StatisticsGeneratorJSON
 from src.util.util import Util
 
 data_files = Util.get_files_list_by_extension(Util.get_project_root() + "/reports/sw/", ".json")

@@ -1,4 +1,4 @@
-from src.graph_stats.interface_statistics_generator import IStatisticsGenerator
+from src.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
 import pandas
 import json
 

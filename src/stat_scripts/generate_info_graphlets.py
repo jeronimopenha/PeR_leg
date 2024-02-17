@@ -1,7 +1,6 @@
-from copy import deepcopy
 import math
-from src.graph_exporter.graph_exporter import GraphExporter
-from src.graphlets.graphlets_generator import GraphletsGenerator
+from src.stat_scripts.graph_exporter.graph_exporter import GraphExporter
+from src.stat_scripts.graphlets.graphlets_generator import GraphletsGenerator
 from src.util.per_enum import ArchType
 from src.util.util import Util
 

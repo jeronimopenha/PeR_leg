@@ -1,6 +1,6 @@
 from src.hw.sa_fsm.sa_components import SAComponents
 from src.util.per_graph import PeRGraph
-from src.util.sa.sa_util import SaUtil
+from old.sa.sa_util import SaUtil
 
 
 class SaFsmHwUtil(SaUtil):

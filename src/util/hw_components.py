@@ -1,14 +1,27 @@
 from veriloggen import *
-from math import ceil, sqrt, log2
 from src.util.hw_util import HwUtil
 
 
 class HwComponents:
+    """
+        Collection of hardware components.
+    """
+
     def __init__(self, ):
         self.cache = {}
 
     def create_fetch_data(self, input_data_width, output_data_width):
-        name = 'fetch_data_%d_%d' % (input_data_width, output_data_width)
+        """
+                Creates a module for fetching data.
+
+                Args:
+                    input_data_width (int): Width of the input data.
+                    output_data_width (int): Width of the output data.
+
+                Returns:
+                    Module: Fetch data module.
+        """
+        name = f'fetch_data_{input_data_width}_{output_data_width}'
         if name in self.cache.keys():
             return self.cache[name]
         m = Module(name)
@@ -326,97 +339,5 @@ class HwComponents:
                 )
             )
         )
-        self.cache[name] = m
-        return m
-
-    def create_threads_controller(self) -> Module:
-        sa_graph = self.per_graph
-        n_cells = self.per_graph.n_cells
-        n_neighbors = self.n_neighbors
-        align_bits = self.align_bits
-        n_threads = self.n_threads
-
-        name = 'th_controller_%dth_%dcells' % (n_threads, n_cells)
-        if name in self.cache.keys():
-            return self.cache[name]
-
-        c_bits = ceil(log2(n_cells))
-        t_bits = ceil(log2(n_threads))
-        t_bits = 1 if t_bits == 0 else t_bits
-        node_bits = c_bits
-        lines = columns = int(sqrt(n_cells))
-        w_bits = t_bits + c_bits + node_bits + 1
-        dist_bits = c_bits + ceil(log2(n_neighbors * 2))
-
-        m = Module(name)
-
-        clk = m.Input('clk')
-        rst = m.Input('rst')
-        start = m.Input('start')
-        done = m.Input('done')
-
-        idx_out = m.OutputReg('idx_out', t_bits)
-        v_out = m.OutputReg('v_out')
-        ca_out = m.OutputReg('ca_out', c_bits)
-        cb_out = m.OutputReg('cb_out', c_bits)
-
-        flag_f_exec = m.Reg('flag_f_exec', n_threads)
-        v_r = m.Reg('v_r', n_threads)
-        idx_r = m.Reg('idx_r', t_bits)
-        counter = m.Wire('counter', c_bits * 2)
-        counter_t = m.Wire('counter_t', c_bits * 2)
-        counter_wr = m.Wire('counter_wr', c_bits * 2)
-        ca_out_t = m.Wire('ca_out_t', c_bits)
-        cb_out_t = m.Wire('cb_out_t', c_bits)
-
-        counter_t.assign(Mux(flag_f_exec[idx_r], 0, counter))
-        counter_wr.assign(Mux(Uand(counter_t), 0, counter_t + 1))
-        ca_out_t.assign(counter_t[0:c_bits])
-        cb_out_t.assign(counter_t[c_bits:c_bits * 2])
-
-        m.Always(Posedge(clk))(
-            If(rst)(
-                idx_out(0),
-                v_out(0),
-                ca_out(0),
-                cb_out(0),
-                idx_r(0),
-                flag_f_exec(Int((1 << n_threads) - 1, n_threads, 2)),
-                v_r(Int((1 << n_threads) - 1, n_threads, 2))
-            ).Elif(start)(
-                idx_out(idx_r),
-                v_out(Mux(done, Int(0, 1, 2), v_r[idx_r])),
-                ca_out(ca_out_t),
-                cb_out(cb_out_t),
-                v_r[idx_r](~v_r[idx_r]),
-                If(Not(v_r[idx_r]))(
-                    flag_f_exec[idx_r](0),
-                    If(idx_r == self.n_threads - 1)(
-                        idx_r(0),
-                    ).Else(
-                        idx_r.inc(),
-                    ),
-                ),
-            )
-        )
-
-        par = [
-            ('init_file', './th.rom'),
-            ('read_f', 1),
-            ('write_f', 0)
-        ]
-        con = [
-            ('clk', clk),
-            ('rd_addr0', idx_r),
-            ('out0', counter),
-            ('wr', ~v_r[idx_r]),
-            ('wr_addr', idx_r),
-            ('wr_data', counter_wr),
-        ]
-        aux = self.create_memory_2r_1w(c_bits * 2, t_bits)
-        m.Instance(aux, aux.name, par, con)
-
-        HwUtil.initialize_regs(m)
-
         self.cache[name] = m
         return m

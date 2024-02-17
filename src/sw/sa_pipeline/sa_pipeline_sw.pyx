@@ -1,9 +1,12 @@
+# cython: language_level=3
 import os
 import time
-from src.util.per_graph import PeRGraph
-from src.util.per_enum import ArchType
-from src.util.piplinebase import PiplineBase
+
+import cython
+import multiprocessing as mp
+
 from src.sw.sa_pipeline.stage0_sa import Stage0SA
+from src.sw.sa_pipeline.stage10_sa import Stage10SA
 from src.sw.sa_pipeline.stage1_sa import Stage1SA
 from src.sw.sa_pipeline.stage2_sa import Stage2SA
 from src.sw.sa_pipeline.stage3_sa import Stage3SA
@@ -13,10 +16,10 @@ from src.sw.sa_pipeline.stage6_sa import Stage6SA
 from src.sw.sa_pipeline.stage7_sa import Stage7SA
 from src.sw.sa_pipeline.stage8_sa import Stage8SA
 from src.sw.sa_pipeline.stage9_sa import Stage9SA
-from src.sw.sa_pipeline.stage10_sa import Stage10SA
+from src.util.per_enum import ArchType
+from src.util.per_graph import PeRGraph
+from src.util.piplinebase import PiplineBase
 from src.util.util import Util
-import multiprocessing as mp
-import cython
 
 
 class SAPipeline(PiplineBase):
@@ -27,7 +30,16 @@ class SAPipeline(PiplineBase):
         self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
 
-    def run(self, n_copies: cython.int = 1) -> dict:
+    def run_parallel(self, n_copies: cython.int = 1) -> dict:
+        """
+                Run the pipeline in parallel.
+
+                Args:
+                    n_copies (int): Number of pipeline copies to execute in parallel. Default is 1.
+
+                Returns:
+                    dict: Pipeline execution report.
+        """
         max_jobs: cython.int = mp.cpu_count()
         exec_times: cython.int = 1000
         max_counter: cython.int = pow(self.per_graph.n_cells, 2) * exec_times

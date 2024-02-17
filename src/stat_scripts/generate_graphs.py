@@ -1,7 +1,6 @@
 import random
-from src.graph_exporter.graph_exporter import GraphExporter
-from src.graph_generator.graph_generator import GraphGenerator
-import pygraphviz as pgv
+from src.stat_scripts.graph_exporter.graph_exporter import GraphExporter
+from src.stat_scripts.graph_generator.graph_generator import GraphGenerator
 
 from src.util.util import Util
 

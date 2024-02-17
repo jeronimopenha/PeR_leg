@@ -2,10 +2,19 @@ from veriloggen import *
 
 
 class HwUtil(object):
+    """
+        Utility class for hardware-related operations.
+    """
     _instance = None
 
     @classmethod
-    def instance(cls):
+    def instance(cls) -> 'HwUtil':
+        """
+        Returns the singleton instance of the HwUtil class.
+
+        Returns:
+            HwUtil: The singleton instance of HwUtil.
+        """
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
@@ -15,6 +24,13 @@ class HwUtil(object):
 
     @staticmethod
     def initialize_regs(module: Module, values=None):
+        """
+                Initializes registers in a Verilog module.
+
+                Args:
+                    module (Module): The Verilog module containing registers to initialize.
+                    values (dict, optional): Dictionary containing initial values for registers. Defaults to None.
+        """
         regs = []
         if values is None:
             values = {}

@@ -1,6 +1,6 @@
 from math import ceil, log2, sqrt
 from veriloggen import *
-from src.hw.sa_pipeline.util import initialize_regs, SaGraph
+from old.sa_pipeline.util import initialize_regs, SaGraph
 
 
 class SAComponents:
