@@ -7,11 +7,11 @@ class SAComponents:
     _instance = None
 
     def __init__(
-        self,
-        sa_graph: SaGraph,
-        n_threads: int = 4,
-        n_neighbors: int = 4,
-        align_bits: int = 8,
+            self,
+            sa_graph: SaGraph,
+            n_threads: int = 4,
+            n_neighbors: int = 4,
+            align_bits: int = 8,
     ):
         self.sa_graph = sa_graph
         self.n_cells = sa_graph.n_cells
@@ -91,10 +91,10 @@ class SAComponents:
         m_rd = m.Reg("m_rd")
         m_rd_addr = m.Reg("m_rd_addr", t_bits)
         m_out = m.Wire("m_out", m_width)
-        #m_wr = m.Reg("m_wr")
-        #m_wr_addr = m.Reg("m_wr_addr", t_bits)
-        #m_wr_data = m.Reg("m_wr_data", m_width)
-        #sum = m.Wire('sum', m_width)
+        # m_wr = m.Reg("m_wr")
+        # m_wr_addr = m.Reg("m_wr_addr", t_bits)
+        # m_wr_data = m.Reg("m_wr_data", m_width)
+        # sum = m.Wire('sum', m_width)
         init_mem = m.Reg("init_mem", n_threads)
         # done_mem = m.Reg("done_mem", n_threads)
 
@@ -109,14 +109,12 @@ class SAComponents:
         m.Always(Posedge(clk))(
             If(rst)(
                 done(0),
-            )  # .Else(
-            #    done(Uand(done_mem))
-            # ),
+            )
         )
 
         m.Always(Posedge(clk))(
             If(rst)(
-                m_rd_addr(n_threads-1),
+                m_rd_addr(n_threads - 1),
                 m_rd(0),
                 p_rd(0),
                 p_addr(0),
@@ -145,7 +143,7 @@ class SAComponents:
                     If(init_mem[p_addr])(
                         # cell0(m_out[0:cell0.width]),
                         # cell1(m_out[cell0.width:m_out.width]),
-                        #m_wr_data(m_out + 1),
+                        # m_wr_data(m_out + 1),
                     ).Else(
                         init_mem[p_addr](1),
                         # cell0(1),
@@ -157,7 +155,7 @@ class SAComponents:
                     # ),
                     # m_wr_addr(p_addr),
                     # th(p_addr),
-                    #v(Mux(done_mem[p_addr], 0, 1)),
+                    # v(Mux(done_mem[p_addr], 0, 1)),
                 ),
             )
         )
@@ -171,7 +169,7 @@ class SAComponents:
             ("wr", p_rd),
             ("wr_addr", p_addr),
             ("wr_data", Mux(init_mem[p_addr],
-             m_out+Int(1, m_out.width, 2), Int(1, m_out.width, 2))),
+                            m_out + Int(1, m_out.width, 2), Int(1, m_out.width, 2))),
         ]
         aux = self.create_memory_2r_1w(m_width, t_bits)
         m.Instance(aux, aux.name, par, con)
@@ -252,7 +250,7 @@ class SAComponents:
 
         ch_wr = m.Reg('ch_wr')
         ch_wr_addr = m.Reg('ch_wr_addr', t_bits)
-        ch_wr_data = m.Reg('ch_wr_data', (node_bits*2) + (c_bits*2) + 2)
+        ch_wr_data = m.Reg('ch_wr_data', (node_bits * 2) + (c_bits * 2) + 2)
         ch_out = m.Wire('ch_out', ch_wr_data.width)
 
         m.EmbeddedCode('')
@@ -276,13 +274,13 @@ class SAComponents:
         idx += 1
         p1.assign(ch_out[idx])
         idx += 1
-        n0.assign(ch_out[idx:idx+node_bits])
+        n0.assign(ch_out[idx:idx + node_bits])
         idx += node_bits
-        n1.assign(ch_out[idx:idx+node_bits])
+        n1.assign(ch_out[idx:idx + node_bits])
         idx += node_bits
-        ch_cell0.assign(ch_out[idx:idx+c_bits])
+        ch_cell0.assign(ch_out[idx:idx + c_bits])
         idx += c_bits
-        ch_cell1.assign(ch_out[idx:idx+c_bits])
+        ch_cell1.assign(ch_out[idx:idx + c_bits])
 
         m.Always(Posedge(clk))(
             ch_wr(0),
@@ -447,7 +445,7 @@ class SAComponents:
 
         m_out0 = m.Wire('m_out0', node_bits)
         m.EmbeddedCode('')
-        neighbor.assign(Mux(th_node0_out[th_node0_out.width-1], m_out0, 0))
+        neighbor.assign(Mux(th_node0_out[th_node0_out.width - 1], m_out0, 0))
 
         # passing pipeline data
         m.Always(Posedge(clk))(
@@ -546,7 +544,7 @@ class SAComponents:
 
         ch_wr = m.Reg('ch_wr')
         ch_wr_addr = m.Reg('ch_wr_addr', t_bits)
-        ch_wr_data = m.Reg('ch_wr_data', (node_bits*2) + (c_bits*2) + 2)
+        ch_wr_data = m.Reg('ch_wr_data', (node_bits * 2) + (c_bits * 2) + 2)
         ch_out = m.Wire('ch_out', ch_wr_data.width)
 
         m.EmbeddedCode('')
@@ -567,17 +565,17 @@ class SAComponents:
         idx += 1
         p1.assign(ch_out[idx])
         idx += 1
-        n0.assign(ch_out[idx:idx+c_bits])
+        n0.assign(ch_out[idx:idx + c_bits])
         idx += c_bits
         n0_v.assign(ch_out[idx])
         idx += 1
-        n1.assign(ch_out[idx:idx+c_bits])
+        n1.assign(ch_out[idx:idx + c_bits])
         idx += c_bits
         n1_v.assign(ch_out[idx])
         idx += 1
-        ch_cell0.assign(ch_out[idx:idx+c_bits])
+        ch_cell0.assign(ch_out[idx:idx + c_bits])
         idx += c_bits
-        ch_cell1.assign(ch_out[idx:idx+c_bits])
+        ch_cell1.assign(ch_out[idx:idx + c_bits])
 
         m.EmbeddedCode('')
         flag_ch_p = m.Reg('flag_ch_p')
@@ -587,15 +585,15 @@ class SAComponents:
 
         m.EmbeddedCode('')
 
-        neighbor_cell[neighbor_cell.width-1].assign(neighbor_v_p)
+        neighbor_cell[neighbor_cell.width - 1].assign(neighbor_v_p)
         neighbor_cell[:c_bits].assign(Mux(p_out0, m1_out0, m0_out0))
         node0_v.assign(n0_v_p)
 
         m.Always(Posedge(clk))(
             flag_ch_p(flag_ch_in),
             th_ch_p(th_in),
-            n0_v_p(th_node0_in[th_node0_in.width-1]),
-            neighbor_v_p(th_neighbor_in[th_neighbor_in.width-1])
+            n0_v_p(th_node0_in[th_node0_in.width - 1]),
+            neighbor_v_p(th_neighbor_in[th_neighbor_in.width - 1])
         )
 
         m.Always(Posedge(clk))(
@@ -647,7 +645,7 @@ class SAComponents:
         con = [
             ('clk', clk),
             ('rd', Int(1, 1, 2)),
-            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width-1])),
+            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width - 1])),
             ('out0', m0_out0),
             ('wr', m0_wr),
             ('wr_addr', m0_wr_addr),
@@ -661,7 +659,7 @@ class SAComponents:
         con = [
             ('clk', clk),
             ('rd', Int(1, 1, 2)),
-            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width-1])),
+            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width - 1])),
             ('out0', m1_out0),
             ('wr', m1_wr),
             ('wr_addr', m1_wr_addr),
@@ -675,7 +673,7 @@ class SAComponents:
         con = [
             ('clk', clk),
             ('rd', Int(1, 1, 2)),
-            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width-1])),
+            ('rd_addr0', Cat(th_in, th_neighbor_in[:th_neighbor_in.width - 1])),
             ('out0', p_out0),
             ('wr', p_wr),
             ('wr_addr', p_wr_addr),
@@ -732,8 +730,8 @@ class SAComponents:
         neighbor_v = m.Wire('neighbor_v')
         neighbor_cell = m.Wire('neighbor_cell', c_bits)
 
-        neighbor_v.assign(th_neighbor_cell_in[th_neighbor_cell_in.width-1])
-        neighbor_cell.assign(th_neighbor_cell_in[:th_neighbor_cell_in.width-1])
+        neighbor_v.assign(th_neighbor_cell_in[th_neighbor_cell_in.width - 1])
+        neighbor_cell.assign(th_neighbor_cell_in[:th_neighbor_cell_in.width - 1])
 
         m.EmbeddedCode('')
 
@@ -746,7 +744,7 @@ class SAComponents:
 
         opa0.assign(th_cell1_in)
         opa1.assign(Mux(neighbor_cell == th_cell1_in,
-                    th_cell0_in, neighbor_cell))
+                        th_cell0_in, neighbor_cell))
 
         initialize_regs(m)
         self.cache[name] = m
@@ -772,7 +770,7 @@ class SAComponents:
         node_bits = c_bits + 1
 
         # shortest Manhattan distance
-        d_width = ceil(log2(lines+columns))
+        d_width = ceil(log2(lines + columns))
         d_width += ceil(log2(n_neighbors))
 
         m = Module(name)
@@ -804,7 +802,7 @@ class SAComponents:
             for y1 in range(r):
                 for x2 in range(r):
                     for y2 in range(r):
-                        d = abs(y1-y2) + abs(x1-x2)
+                        d = abs(y1 - y2) + abs(x1 - x2)
                         mem[c].assign(Int(d, d_width, 10))
                         c = c + 1
 
@@ -829,7 +827,7 @@ class SAComponents:
         t_bits = ceil(log2(n_threads))
         t_bits = 1 if t_bits == 0 else t_bits
         node_bits = c_bits + 1
-        d_width = ceil(log2(lines+columns))
+        d_width = ceil(log2(lines + columns))
         d_width += ceil(log2(n_neighbors))
 
         m = Module(name)
@@ -840,7 +838,7 @@ class SAComponents:
         s = m.OutputReg('s', d_width)
 
         m.Always(Posedge(clk))(
-            s(a+b)
+            s(a + b)
         )
 
         initialize_regs(m)
@@ -902,7 +900,7 @@ class SAComponents:
         t_bits = 1 if t_bits == 0 else t_bits
         node_bits = c_bits + 1
         lines = columns = int(sqrt(n_cells))
-        d_width = ceil(log2(lines+columns))
+        d_width = ceil(log2(lines + columns))
         d_width += ceil(log2(n_neighbors))
 
         m = Module(name)
@@ -959,7 +957,7 @@ class SAComponents:
         con.append(('node1', cn_node1))
 
         aux = self.create_cell_node_pipe()
-        m.Instance(aux, 'cn0_'+aux.name, par, con)
+        m.Instance(aux, 'cn0_' + aux.name, par, con)
 
         n_th_done_out = m.Wire('n_th_done_out', n_neighbors)
         n_th_v_out = m.Wire('n_th_v_out', n_neighbors)
@@ -1013,15 +1011,15 @@ class SAComponents:
                 con.append(('th_ch_in', cn_th_ch_out))
                 con.append(('flag_ch_in', cn_flag_ch_out))
             else:
-                con.append(('th_done_in', n_th_done_out[i-1]))
-                con.append(('th_v_in', n_th_v_out[i-1]))
-                con.append(('th_in', n_th_out[i-1]))
-                con.append(('th_cell0_in', n_th_cell0_out[i-1]))
-                con.append(('th_cell1_in', n_th_cell1_out[i-1]))
-                con.append(('th_node0_in', n_th_node0_out[i-1]))
-                con.append(('th_node1_in', n_th_node1_out[i-1]))
-                con.append(('th_ch_in', n_th_ch_out[i-1]))
-                con.append(('flag_ch_in', n_flag_ch_out[i-1]))
+                con.append(('th_done_in', n_th_done_out[i - 1]))
+                con.append(('th_v_in', n_th_v_out[i - 1]))
+                con.append(('th_in', n_th_out[i - 1]))
+                con.append(('th_cell0_in', n_th_cell0_out[i - 1]))
+                con.append(('th_cell1_in', n_th_cell1_out[i - 1]))
+                con.append(('th_node0_in', n_th_node0_out[i - 1]))
+                con.append(('th_node1_in', n_th_node1_out[i - 1]))
+                con.append(('th_ch_in', n_th_ch_out[i - 1]))
+                con.append(('flag_ch_in', n_flag_ch_out[i - 1]))
             con.append(('th_done_out', n_th_done_out[i]))
             con.append(('th_v_out', n_th_v_out[i]))
             con.append(('th_out', n_th_out[i]))
@@ -1094,7 +1092,7 @@ class SAComponents:
             if i == 0:
                 con.append(('a', Int(0, d_width, 2)))
             else:
-                con.append(('a', s_sb[i-1]))
+                con.append(('a', s_sb[i - 1]))
             con.append(('b', dm_d0[i]))
             con.append(('s', s_sb[i]))
 
@@ -1107,7 +1105,7 @@ class SAComponents:
             if i == 0:
                 con.append(('a', Int(0, d_width, 2)))
             else:
-                con.append(('a', s_sa[i-1]))
+                con.append(('a', s_sa[i - 1]))
             con.append(('b', dm_d1[i]))
             con.append(('s', s_sa[i]))
 
@@ -1146,8 +1144,8 @@ class SAComponents:
         th_v_out.assign(reg_pipe_out[idx])
         idx += 1
         th_done_out.assign(reg_pipe_out[idx])
-        sb.assign(s_sb[n_neighbors-1])
-        sa.assign(s_sa[n_neighbors-1])
+        sb.assign(s_sb[n_neighbors - 1])
+        sa.assign(s_sa[n_neighbors - 1])
 
         par = [
             ('num_stages', 3),
@@ -1162,32 +1160,6 @@ class SAComponents:
         aux = self.create_register_pipeline()
         m.Instance(aux, aux.name, par, con)
 
-        '''
-        #c-n
-        m.Always(Posedge(clk))(
-            If(AndList(cn_th_v_out, cn_th_out == 0))(
-                Display("th:%d, c0:%d, c1:%d, nodes:%d %d",
-                        cn_th_out, cn_th_cell0_out, 
-                        cn_th_cell1_out, cn_node0, cn_node1)
-            )
-        )
-        '''
-        '''# neighboors
-        m.Always(Posedge(clk))(
-            If(AndList(n_th_v_out[0], n_th_out[0] == 0))(
-                Display("th:%d, c0:%d, c1:%d, nodes:%d %d, neighbor:%d",
-                        n_th_out[0], n_th_cell0_out[0],
-                        n_th_cell1_out[0], n_th_node0_out[0], n_th_node1_out[0], n_neighbor[0])
-            )
-        )'''
-        '''m.Always(Posedge(clk))(
-            If(AndList(n_th_v_out[1], n_th_out[1] == 0))(
-                Display("th:%d, c0:%d, c1:%d, nodes:%d %d, neighbor:%d",
-                        n_th_out[1], n_th_cell0_out[1],
-                        n_th_cell1_out[1], n_th_node0_out[1], n_th_node1_out[1], n_neighbor[1])
-            )
-        )'''
-        
         initialize_regs(m)
         return m
 
@@ -1208,7 +1180,7 @@ class SAComponents:
         t_bits = 1 if t_bits == 0 else t_bits
         node_bits = c_bits + 1
         lines = columns = int(sqrt(n_cells))
-        d_width = ceil(log2(lines+columns))
+        d_width = ceil(log2(lines + columns))
         d_width += ceil(log2(n_neighbors))
 
         m = Module(name)

@@ -18,33 +18,33 @@ class YotoPipelineHw(PiplineBase):
         self.node_bits = Util.get_n_bits(self.per_graph.n_cells)
         self.ij_bits = Util.get_n_bits(self.n_lines)
 
+    # todo under construction
     def create_rom_files(self, edges_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
                          cell_content_f: str, n2c: list[list[list]]):
+        # Function to create ROM content
+        def generate_rom_content(addr_bits: int, file_bits: int, data: list[list]):
+            file_content = ['{0:b}'.format(0).zfill(file_bits) for _ in range(pow(2, addr_bits))]
+            for i, entries in enumerate(data):
+                for entry_idx, entry in enumerate(entries):
+                    if entry[0] is None:
+                        continue
+                    idx = (i << addr_bits) | entry_idx
+                    idx_str = '{0:b}'.format(idx).zfill(addr_bits)
+                    content = (entry[0] << file_bits // 2) | entry[1]
+                    file_content[idx] = '{0:b}'.format(content).zfill(file_bits)
+            return file_content
+
         # edges rom file
         edges_file_bits = self.node_bits * 2
         edges_addr_bits = self.th_bits + self.edge_bits
-        edges_file_content = ['{0:b}'.format(0).zfill(edges_file_bits) for _ in range(pow(2, edges_addr_bits))]
-        for th, edges in enumerate(self.edges_int):
-            for edg_idx, edge in enumerate(edges):
-                idx: int = th << self.edge_bits | edg_idx
-                idx_s: str = '{0:b}'.format(idx).zfill(edges_addr_bits)
-                edg_content = edge[0] << self.node_bits | edge[1]
-                edges_file_content[idx] = '{0:b}'.format(edg_content).zfill(edges_file_bits)
+        edges_file_content = generate_rom_content(edges_addr_bits, edges_file_bits, self.edges_int)
 
         # n2c rom file
         n2c_file_bits = 2 * self.ij_bits
         n2c_addr_bits = self.th_bits + self.node_bits
-        n2c_file_content = ['{0:b}'.format(0).zfill(n2c_file_bits) for _ in range(pow(2, n2c_addr_bits))]
-        for th, n2cs in enumerate(n2c):
-            for node_idx, n2c_ in enumerate(n2cs):
-                if n2c_[0] is None:
-                    continue
-                idx: int = th << self.node_bits | node_idx
-                idx_s: str = '{0:b}'.format(idx).zfill(n2c_addr_bits)
-                n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
-                n2c_file_content[idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
-                break
+        n2c_file_content = generate_rom_content(n2c_addr_bits, n2c_file_bits, n2c)
 
+        '''
         # dst_table rom file
         dts_table_file_bits = 2 * (self.ij_bits + 1)
         dts_table_addr_bits = self.distance_table_bits + 5
@@ -61,11 +61,9 @@ class YotoPipelineHw(PiplineBase):
                 idx_s: str = '{0:b}'.format(idx).zfill(n2c_addr_bits)
                 n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
                 n2c_file_content[idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
-                break
+                break'''
 
-        pass
-
-    def create_yoto_pipeline_hw_test_bench(self, v_output_base: str, simul: bool):
+    def create_yoto_pipeline_hw_test_bench(self, v_output_base: str, simulate: bool):
         edges_rom_f: str = f'{v_output_base}%s_edges.rom' % self.per_graph.dot_name
         n2c_rom_f: str = f'{v_output_base}%s_n2c.rom' % self.per_graph.dot_name
         n2c_out_f: str = f'{v_output_base}%s_n2c_out.txt' % self.per_graph.dot_name
@@ -97,14 +95,14 @@ class YotoPipelineHw(PiplineBase):
             ('done', yoto_done),
             ('total_pipeline_counter', yoto_total_pipeline_counter),
         ]
-        yoto = self.create_yoto_pipeline_hw(edges_rom_f, n2c_rom_f, n2c_out_f, dst_tbl_rom_f, cell_content_f, simul)
+        yoto = self.create_yoto_pipeline_hw(edges_rom_f, n2c_rom_f, n2c_out_f, dst_tbl_rom_f, cell_content_f, simulate)
         m.Instance(yoto, yoto.name, par, con)
 
         verilog_f: str = f'{v_output_base}{m.name}.v'
         m.to_verilog(verilog_f)
 
     def create_yoto_pipeline_hw(self, edges_rom_f: str, n2c_rom_f: str, n2c_out_f: str, dst_tbl_rom_f: str,
-                                cell_content_f: str, simul: bool) -> Module:
+                                cell_content_f: str, simulate: bool) -> Module:
         name = "yoto_pipeline_hw"
         m = Module(name)
 
@@ -184,7 +182,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St1 instantiation')
-        stage1_m = self.create_stage1_yoto(edges_rom_f, simul)
+        stage1_m = self.create_stage1_yoto(edges_rom_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -201,7 +199,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St2 instantiation')
-        stage2_m = self.create_stage2_yoto(n2c_rom_f, n2c_out_f, simul)
+        stage2_m = self.create_stage2_yoto(n2c_rom_f, n2c_out_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -229,7 +227,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St3 instantiation')
-        stage3_m = self.create_stage3_yoto(dst_tbl_rom_f, simul)
+        stage3_m = self.create_stage3_yoto(dst_tbl_rom_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -251,7 +249,7 @@ class YotoPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St4 instantiation')
-        stage4_m = self.create_stage4_yoto(cell_content_f, simul)
+        stage4_m = self.create_stage4_yoto(cell_content_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
@@ -359,7 +357,7 @@ class YotoPipelineHw(PiplineBase):
         )
         return m
 
-    def create_stage1_yoto(self, edges_rom_f: str, simul: bool) -> Module:
+    def create_stage1_yoto(self, edges_rom_f: str, simulate: bool) -> Module:
         name = 'stage1_yoto'
         m = Module(name)
 
@@ -400,7 +398,7 @@ class YotoPipelineHw(PiplineBase):
             ('width', self.node_bits * 2),
             ('depth', self.th_bits + self.edge_bits),
         ]
-        if simul:
+        if simulate:
             par.append(('read_f', 1))
             par.append(('init_file', edges_rom_f), )
 
@@ -417,7 +415,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage2_yoto(self, n2c_rom_f: str, n2c_out_f: str, simul: bool) -> Module:
+    def create_stage2_yoto(self, n2c_rom_f: str, n2c_out_f: str, simulate: bool) -> Module:
         name = 'stage2_yoto'
         m = Module(name)
 
@@ -488,7 +486,7 @@ class YotoPipelineHw(PiplineBase):
             ('width', self.ij_bits * 2),
             ('depth', self.th_bits + self.node_bits)
         ]
-        if simul:
+        if simulate:
             par.append(('read_f', 1))
             par.append(('init_file', n2c_rom_f))
             par.append(('write_f', 1))
@@ -507,7 +505,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage3_yoto(self, dst_tbl_rom_f: str, simul: bool) -> Module:
+    def create_stage3_yoto(self, dst_tbl_rom_f: str, simulate: bool) -> Module:
         name = 'stage3_yoto'
         m = Module(name)
 
@@ -554,7 +552,7 @@ class YotoPipelineHw(PiplineBase):
             ('width', (self.ij_bits + 1) * 2),
             ('depth', 6 + self.distance_table_bits)
         ]
-        if simul:
+        if simulate:
             par.append(('read_f', 1))
             par.append(('init_file', dst_tbl_rom_f))
         con = [
@@ -570,7 +568,7 @@ class YotoPipelineHw(PiplineBase):
 
         return m
 
-    def create_stage4_yoto(self, cell_content_f: str, simul: bool) -> Module:
+    def create_stage4_yoto(self, cell_content_f: str, simulate: bool) -> Module:
         name = 'stage4_yoto'
         m = Module(name)
 
@@ -642,7 +640,7 @@ class YotoPipelineHw(PiplineBase):
             ('width', 1),
             ('depth', self.th_bits + self.ij_bits * 2),
         ]
-        if simul:
+        if simulate:
             par.append(('read_f', 1))
             par.append(('init_file', cell_content_f))
         con = [

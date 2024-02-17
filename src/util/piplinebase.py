@@ -37,19 +37,19 @@ class PiplineBase(object):
         self.n_threads: int = n_threads
         # self.reset_random(random_seed)
 
-        self.reconvergence: list[list[list]] = []
+        self.convergence: list[list[list]] = []
         self.edges_raw: list[list[list]] = []
         self.edges_str: list[list[list]] = []
         for _ in range(self.len_pipeline):
             edges_str, edges_raw, rec = self.per_graph.get_edges_zigzag(self.make_shuffle)
-            self.reconvergence.append(rec)
+            self.convergence.append(rec)
             self.edges_raw.append(edges_raw)
             self.edges_str.append(edges_str)
 
         self.edges_int: list[list[list]] = [self.get_edges_int(self.edges_str[i]) for i in range(self.len_pipeline)]
         self.verify_edges_len()
 
-        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.reconvergence[i]) for i in
+        self.annotations: list[dict] = [Util.get_graph_annotations(self.edges_raw[i], self.convergence[i]) for i in
                                         range(self.len_pipeline)]
 
         self.visited_edges = len(self.edges_int[0])

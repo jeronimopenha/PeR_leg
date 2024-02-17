@@ -22,7 +22,7 @@ class YOTTPipeline(PiplineBase):
 
     def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, num_annotations: int = 3,
                  num_threads: int = None, ):
-        num_threads = self.len_pipeline if num_threads == None else num_threads
+        num_threads = self.len_pipeline if num_threads is None else num_threads
         self.num_annotations = num_annotations
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
@@ -138,8 +138,9 @@ class YOTTPipeline(PiplineBase):
         dic_man[pid] = [exec_key, stage0.total_pipeline_counter, stage0.exec_counter, n2c]
         # print(f'thread: {pid} ending')
 
-    def print_grid(self, C2N):
-        for idx_thread, thread in enumerate(C2N):
+    @staticmethod
+    def print_grid(c2n):
+        for idx_thread, thread in enumerate(c2n):
             print(f'thread{idx_thread}')
             for row in thread:
                 print(row)

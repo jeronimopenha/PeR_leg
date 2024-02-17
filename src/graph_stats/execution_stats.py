@@ -1,11 +1,11 @@
 from src.util.util import Util
 
-root_path: str = get_project_root()
+root_path: str = Util.get_project_root()
 base_path: str = root_path + "/results/sw/"
-report_files: list = get_files_list_by_extension(base_path, '.json')
+report_files: list = Util.get_files_list_by_extension(base_path, '.json')
 exec_stats: dict = {}
 for report_file, file_name in report_files:
-    json_dict: dict = read_json(report_file)
+    json_dict: dict = Util.read_json(report_file)
     graph_name: str = json_dict["graph_name"]
     n_threads: int = json_dict["n_threads"]
     if graph_name not in exec_stats.keys():

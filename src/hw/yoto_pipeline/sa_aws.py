@@ -72,8 +72,8 @@ class SaAws:
         fsm_sd_n_idle = m.Localparam('fsm_sd_n_idle', 6, 4)
         fsm_sd_n_send_data = m.Localparam('fsm_sd_n_send_data', 7, 4)
         fsm_sd_n_verify = m.Localparam('fsm_sd_n_verify', 8, 4)
-        fsm_sd_nexec_idle = m.Localparam('fsm_sd_nexec_idle', 9, 4)
-        fsm_sd_nexec_send_data = m.Localparam('fsm_sd_nexec_send_data', 10, 4)
+        fsm_sd_n_exec_idle = m.Localparam('fsm_sd_n_exec_idle', 9, 4)
+        fsm_sd_n_exec_send_data = m.Localparam('fsm_sd_n_exec_send_data', 10, 4)
         fsm_sd_done = m.Localparam('fsm_sd_done', 11, 4)
 
         sa_done = m.Wire('sa_done')
@@ -167,7 +167,7 @@ class SaAws:
                     When(fsm_sd_n_verify)(
                         If(Uand(st2_wr_addr))(
                             If(st2_mem_sel[n_neighbors-1])(
-                                fsm_sd(fsm_sd_nexec_idle)
+                                fsm_sd(fsm_sd_n_exec_idle)
                             ).Else(
                                 st2_mem_sel(st2_mem_sel << 1),
                                 st2_wr_addr.inc(),
@@ -178,13 +178,13 @@ class SaAws:
                             fsm_sd(fsm_sd_n_idle)
                         ),
                     ),
-                    When(fsm_sd_nexec_idle)(
+                    When(fsm_sd_n_exec_idle)(
                         If(available_pop)(
                             pop_data(1),
-                            fsm_sd(fsm_sd_nexec_send_data)
+                            fsm_sd(fsm_sd_n_exec_send_data)
                         )
                     ),
-                    When(fsm_sd_nexec_send_data)(
+                    When(fsm_sd_n_exec_send_data)(
                         config_data(data_out),
                         fsm_sd(fsm_sd_done)
                     ),

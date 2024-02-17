@@ -35,28 +35,28 @@ class SAComponents:
             return self.cache[name]
 
         m = Module(name)
-        READ_F = m.Parameter('READ_F', 0)
-        INIT_FILE = m.Parameter('INIT_FILE', 'mem_file.txt')
-        WRITE_F = m.Parameter('WRITE_F', 0)
-        OUTPUT_FILE = m.Parameter('OUTPUT_FILE', 'mem_out_file.txt')
-        WIDTH = m.Parameter('WIDTH', 8)
-        DEPTH = m.Parameter('DEPTH', 3)
+        read_f = m.Parameter('read_f', 0)
+        init_file = m.Parameter('init_file', 'mem_file.txt')
+        write_f = m.Parameter('write_f', 0)
+        output_file = m.Parameter('output_file', 'mem_out_file.txt')
+        width = m.Parameter('width', 8)
+        depth = m.Parameter('depth', 3)
 
         clk = m.Input('clk')
         rd = m.Input('rd')
-        rd_addr0 = m.Input('rd_addr0', DEPTH)
-        rd_addr1 = m.Input('rd_addr1', DEPTH)
-        out0 = m.Output('out0', WIDTH)
-        out1 = m.Output('out1', WIDTH)
+        rd_addr0 = m.Input('rd_addr0', depth)
+        rd_addr1 = m.Input('rd_addr1', depth)
+        out0 = m.Output('out0', width)
+        out1 = m.Output('out1', width)
 
         wr = m.Input('wr')
-        wr_addr = m.Input('wr_addr', DEPTH)
-        wr_data = m.Input('wr_data', WIDTH)
+        wr_addr = m.Input('wr_addr', depth)
+        wr_data = m.Input('wr_data', width)
 
         # m.EmbeddedCode(
         #    '(*rom_style = "block" *) reg [%d-1:0] mem[0:2**%d-1];' % (width, depth))
         # m.EmbeddedCode('/*')
-        mem = m.Reg('mem', width, Power(2, DEPTH))
+        mem = m.Reg('mem', width, Power(2, depth))
         # m.EmbeddedCode('*/')
 
         # FIXME
@@ -71,15 +71,15 @@ class SAComponents:
 
         m.EmbeddedCode('//synthesis translate_off')
         m.Always(Posedge(clk))(
-            If(AndList(wr, WRITE_F))(
-                Systask('writememb', OUTPUT_FILE, mem)
+            If(AndList(wr, write_f))(
+                Systask('writememb', output_file, mem)
             ),
         )
         m.EmbeddedCode('//synthesis translate_on')
 
         m.Initial(
-            If(READ_F)(
-                Systask('readmemb', INIT_FILE, mem),
+            If(read_f)(
+                Systask('readmemb', init_file, mem),
             )
         )
         self.cache[name] = m
@@ -137,10 +137,10 @@ class SAComponents:
 
         opa0 = m.Input('opa0', lc_bits)
         opa1 = m.Input('opa1', lc_bits)
-        opav = m.Input('opav')
-        opb0 = m.Input('opb0', lc_bits)
-        opb1 = m.Input('opb1', lc_bits)
-        opbv = m.Input('opbv')
+        opa_v = m.Input('opa_v')
+        opb_0 = m.Input('opb_0', lc_bits)
+        opb_1 = m.Input('opb_1', lc_bits)
+        opb_v = m.Input('opb_v')
         da = m.Output('da', dist_bits)
         db = m.Output('db', dist_bits)
 
@@ -152,12 +152,12 @@ class SAComponents:
         m.EmbeddedCode('')
         da_t.assign(dist_table[Cat(opa1[:w], opa0[:w])] +
                     dist_table[Cat(opa1[w:], opa0[w:])])
-        db_t.assign(dist_table[Cat(opb1[:w], opb0[:w])] +
-                    dist_table[Cat(opb1[w:], opb0[w:])])
+        db_t.assign(dist_table[Cat(opb_1[:w], opb_0[:w])] +
+                    dist_table[Cat(opb_1[w:], opb_0[w:])])
 
         m.EmbeddedCode('')
-        da.assign(Mux(opav, da_t, 0))
-        db.assign(Mux(opbv, db_t, 0))
+        da.assign(Mux(opa_v, da_t, 0))
+        db.assign(Mux(opb_v, db_t, 0))
 
         m.EmbeddedCode('')
         for i in range(lines):
@@ -213,19 +213,19 @@ class SAComponents:
 
         m.EmbeddedCode('// SA single thread states declaration')
         fsm_sa = m.Reg('fsm_sa', 4)
-        SELECT_CELLS = m.Localparam('SELECT_CELLS', Int(0, fsm_sa.width, 10))
-        CELL_TO_NODES = m.Localparam('CELL_TO_NODES', Int(1, fsm_sa.width, 10))
-        NEIGHBORHOOD = m.Localparam('NEIGHBORHOOD', Int(2, fsm_sa.width, 10))
-        NODES_TO_CELL = m.Localparam('NODES_TO_CELL', Int(3, fsm_sa.width, 10))
-        LINE_COLUMN_FINDER = m.Localparam('LINE_COLUMN_FINDER', Int(4, fsm_sa.width, 10))
-        DISTANCE_CALCULATOR = m.Localparam('DISTANCE_CALCULATOR', Int(5, fsm_sa.width, 10))
-        SUM_REDUCTION_P = m.Localparam('SUM_REDUCTION_P', Int(6, fsm_sa.width, 10))
-        SUM_REDUCTION = m.Localparam('SUM_REDUCTION', Int(7, fsm_sa.width, 10))
-        TOTAL_COST = m.Localparam('TOTAL_COST', Int(8, fsm_sa.width, 10))
-        DECISION = m.Localparam('DECISION', Int(9, fsm_sa.width, 10))
-        WRITE_A = m.Localparam('WRITE_A', Int(10, fsm_sa.width, 10))
-        WRITE_B = m.Localparam('WRITE_B', Int(11, fsm_sa.width, 10))
-        END = m.Localparam('END', Int(12, fsm_sa.width, 10))
+        select_cells = m.Localparam('select_cells', Int(0, fsm_sa.width, 10))
+        cell_to_nodes = m.Localparam('cell_to_nodes', Int(1, fsm_sa.width, 10))
+        neighborhood = m.Localparam('neighborhood', Int(2, fsm_sa.width, 10))
+        nodes_to_cell = m.Localparam('nodes_to_cell', Int(3, fsm_sa.width, 10))
+        line_column_finder = m.Localparam('line_column_finder', Int(4, fsm_sa.width, 10))
+        distance_calculator = m.Localparam('distance_calculator', Int(5, fsm_sa.width, 10))
+        sum_reduction_p = m.Localparam('sum_reduction_p', Int(6, fsm_sa.width, 10))
+        sum_reduction = m.Localparam('sum_reduction', Int(7, fsm_sa.width, 10))
+        total_cost = m.Localparam('total_cost', Int(8, fsm_sa.width, 10))
+        decision = m.Localparam('decision', Int(9, fsm_sa.width, 10))
+        write_a = m.Localparam('write_a', Int(10, fsm_sa.width, 10))
+        write_b = m.Localparam('write_b', Int(11, fsm_sa.width, 10))
+        end = m.Localparam('end', Int(12, fsm_sa.width, 10))
         m.EmbeddedCode('// #####')
 
         m.EmbeddedCode('')
@@ -284,17 +284,17 @@ class SAComponents:
 
         m.EmbeddedCode('')
         m.EmbeddedCode('// line column finder stage variables')
-        lca = m.Reg('lca', lc_bits)
-        lcb = m.Reg('lcb', lc_bits)
-        lcva = m.Reg('lcva', lc_bits * n_neighbors)
-        lcva_v = m.Reg('lcva_v', n_neighbors)
-        lcvb = m.Reg('lcvb', lc_bits * n_neighbors)
-        lcvb_v = m.Reg('lcvb_v', n_neighbors)
+        lc_a = m.Reg('lc_a', lc_bits)
+        lc_b = m.Reg('lc_b', lc_bits)
+        lc_va = m.Reg('lc_va', lc_bits * n_neighbors)
+        lc_va_v = m.Reg('lc_va_v', n_neighbors)
+        lc_vb = m.Reg('lc_vb', lc_bits * n_neighbors)
+        lc_vb_v = m.Reg('lc_vb_v', n_neighbors)
 
-        lca_t = m.Wire('lca_t', lc_bits)
+        lc_a_t = m.Wire('lc_a_t', lc_bits)
         lcb_t = m.Wire('lcb_t', lc_bits)
-        lcva_t = m.Wire('lcva_t', lc_bits * n_neighbors)
-        lcvb_t = m.Wire('lcvb_t', lc_bits * n_neighbors)
+        lc_va_t = m.Wire('lc_va_t', lc_bits * n_neighbors)
+        lc_vb_t = m.Wire('lc_vb_t', lc_bits * n_neighbors)
         m.EmbeddedCode('// #####')
 
         m.EmbeddedCode('')
@@ -308,8 +308,8 @@ class SAComponents:
         dvb_before_t = m.Wire('dvb_before_t', n_neighbors * dist_bits)
 
         m.EmbeddedCode('')
-        lca_before.assign(lca)
-        lcb_before.assign(lcb)
+        lca_before.assign(lc_a)
+        lcb_before.assign(lc_b)
 
         m.EmbeddedCode('')
         m.EmbeddedCode('// After changes')
@@ -323,20 +323,20 @@ class SAComponents:
         dvb_after_t = m.Wire('dvb_after_t', n_neighbors * dist_bits)
 
         m.EmbeddedCode('')
-        lca_after.assign(lcb)
-        lcb_after.assign(lca)
+        lca_after.assign(lc_b)
+        lcb_after.assign(lc_a)
         for i in range(n_neighbors):
             opva_after[i * lc_bits:lc_bits * (i + 1)].assign(
-                Mux(lcva[i * lc_bits:lc_bits * (i + 1)]
+                Mux(lc_va[i * lc_bits:lc_bits * (i + 1)]
                     == lca_after, lcb_after,
-                    lcva[i * lc_bits:lc_bits * (i + 1)])
+                    lc_va[i * lc_bits:lc_bits * (i + 1)])
             )
 
         for i in range(n_neighbors):
             opvb_after[i * lc_bits:lc_bits * (i + 1)].assign(
-                Mux(lcvb[i * lc_bits:lc_bits * (i + 1)]
+                Mux(lc_vb[i * lc_bits:lc_bits * (i + 1)]
                     == lcb_after, lca_after,
-                    lcvb[i * lc_bits:lc_bits * (i + 1)])
+                    lc_vb[i * lc_bits:lc_bits * (i + 1)])
             )
         m.EmbeddedCode('// #####')
 
@@ -491,12 +491,12 @@ class SAComponents:
                 va_v(Int(0, va_v.width, 10)),
                 vb(Int(0, vb.width, 10)),
                 vb_v(Int(0, vb_v.width, 10)),
-                lca(Int(0, lca.width, 10)),
-                lcb(Int(0, lcb.width, 10)),
-                lcva(Int(0, lcva.width, 10)),
-                lcva_v(Int(0, lcva_v.width, 10)),
-                lcvb(Int(0, lcvb.width, 10)),
-                lcvb_v(Int(0, lcvb_v.width, 10)),
+                lc_a(Int(0, lc_a.width, 10)),
+                lc_b(Int(0, lc_b.width, 10)),
+                lc_va(Int(0, lc_va.width, 10)),
+                lc_va_v(Int(0, lc_va_v.width, 10)),
+                lc_vb(Int(0, lc_vb.width, 10)),
+                lc_vb_v(Int(0, lc_vb_v.width, 10)),
                 dva_before(Int(0, dva_before.width, 10)),
                 dvb_before(Int(0, dvb_before.width, 10)),
                 dva_after(Int(0, dva_after.width, 10)),
@@ -517,115 +517,115 @@ class SAComponents:
                 fsm_mem_c2n_wr_data(Int(0, fsm_mem_c2n_wr_data.width, 10)),
                 fsm_mem_n2c_wr_addr(Int(0, fsm_mem_n2c_wr_addr.width, 10)),
                 fsm_mem_n2c_wr_data(Int(0, fsm_mem_n2c_wr_data.width, 10)),
-                fsm_sa(CELL_TO_NODES),
+                fsm_sa(cell_to_nodes),
             ).Elif(start)(
                 fsm_c2n_wr_signal(Int(0, 1, 10)),
                 fsm_n2c_wr_signal(Int(0, 1, 10)),
                 Case(fsm_sa)(
-                    When(SELECT_CELLS)(
+                    When(select_cells)(
                         If(ca == Int(n_cells_sqrt, ca.width, 10))(
                             ca(Int(0, ca.width, 10)),
                             If(cb == Int(n_cells_sqrt, cb.width, 10))(
                                 cb(Int(0, cb.width, 10)),
                                 n_exec_counter(n_exec_counter + Int(1, n_exec_counter.width, 10)),
-                                fsm_sa(END)
+                                fsm_sa(end)
                             ).Else(
                                 cb(cb + Int(1, cb.width, 10)),
-                                fsm_sa(CELL_TO_NODES),
+                                fsm_sa(cell_to_nodes),
                             )
                         ).Else(
                             ca(ca + Int(1, ca.width, 10)),
-                            fsm_sa(CELL_TO_NODES),
+                            fsm_sa(cell_to_nodes),
                         ),
                     ),
-                    When(CELL_TO_NODES)(
+                    When(cell_to_nodes)(
                         If(Uand(Cat(~na_v_t, ~nb_v_t)))(
-                            fsm_sa(SELECT_CELLS),
+                            fsm_sa(select_cells),
                         ).Else(
                             na(na_t),
                             na_v(na_v_t),
                             nb(nb_t),
                             nb_v(nb_v_t),
-                            fsm_sa(NEIGHBORHOOD),
+                            fsm_sa(neighborhood),
                         ),
                     ),
-                    When(NEIGHBORHOOD)(
+                    When(neighborhood)(
                         va(va_t),
                         va_v(va_v_t),
                         vb(vb_t),
                         vb_v(vb_v_t),
-                        fsm_sa(NODES_TO_CELL),
+                        fsm_sa(nodes_to_cell),
                     ),
-                    When(NODES_TO_CELL)(
+                    When(nodes_to_cell)(
                         cva_v(cva_v_t),
                         cva(cva_t),
                         cvb_v(cvb_v_t),
                         cvb(cvb),
-                        fsm_sa(LINE_COLUMN_FINDER)
+                        fsm_sa(line_column_finder)
                     ),
-                    When(LINE_COLUMN_FINDER)(
-                        lca(lca_t),
-                        lcb(lcb_t),
-                        lcva(lcva_t),
-                        lcva_v(cva_v),
-                        lcvb(lcvb_t),
-                        lcvb_v(cvb_v),
-                        fsm_sa(DISTANCE_CALCULATOR),
+                    When(line_column_finder)(
+                        lc_a(lc_a_t),
+                        lc_b(lcb_t),
+                        lc_va(lc_va_t),
+                        lc_va_v(cva_v),
+                        lc_vb(lc_vb_t),
+                        lc_vb_v(cvb_v),
+                        fsm_sa(distance_calculator),
                     ),
-                    When(DISTANCE_CALCULATOR)(
+                    When(distance_calculator)(
                         dva_before(dva_before_t),
                         dvb_before(dvb_before_t),
                         dva_after(dva_after_t),
                         dvb_after(dvb_after_t),
-                        fsm_sa(SUM_REDUCTION_P)
+                        fsm_sa(sum_reduction_p)
                     ),
-                    When(SUM_REDUCTION_P)(
+                    When(sum_reduction_p)(
                         sum_dva_before_p(sum_dva_before_p_t),
                         sum_dvb_before_p(sum_dvb_before_p_t),
                         sum_dva_after_p(sum_dva_after_p_t),
                         sum_dvb_after_p(sum_dvb_after_p_t),
-                        fsm_sa(SUM_REDUCTION)
+                        fsm_sa(sum_reduction)
                     ),
-                    When(SUM_REDUCTION)(
+                    When(sum_reduction)(
                         sum_dva_before(sum_dva_before_t),
                         sum_dvb_before(sum_dvb_before_t),
                         sum_dva_after(sum_dva_after_t),
                         sum_dvb_after(sum_dvb_after_t),
-                        fsm_sa(TOTAL_COST)
+                        fsm_sa(total_cost)
                     ),
-                    When(TOTAL_COST)(
+                    When(total_cost)(
                         total_cost_before(total_cost_before_t),
                         total_cost_after(total_cost_after_t),
-                        fsm_sa(DECISION)
+                        fsm_sa(decision)
                     ),
-                    When(DECISION)(
+                    When(decision)(
                         If(decision)(
-                            fsm_sa(WRITE_A),
+                            fsm_sa(write_a),
                         ).Else(
-                            fsm_sa(SELECT_CELLS)
+                            fsm_sa(select_cells)
                         ),
                     ),
-                    When(WRITE_A)(
+                    When(write_a)(
                         fsm_c2n_wr_signal(Int(1, 1, 10)),
                         fsm_mem_c2n_wr_addr(cb),
                         fsm_mem_c2n_wr_data(Cat(na_v, na)),
                         fsm_n2c_wr_signal(na_v),
                         fsm_mem_n2c_wr_addr(na),
                         fsm_mem_n2c_wr_data(cb),
-                        fsm_sa(WRITE_B)
+                        fsm_sa(write_b)
                     ),
-                    When(WRITE_B)(
+                    When(write_b)(
                         fsm_c2n_wr_signal(Int(1, 1, 10)),
                         fsm_mem_c2n_wr_addr(ca),
                         fsm_mem_c2n_wr_data(Cat(nb_v, nb)),
                         fsm_n2c_wr_signal(nb_v),
                         fsm_mem_n2c_wr_addr(nb),
                         fsm_mem_n2c_wr_data(ca),
-                        fsm_sa(SELECT_CELLS)
+                        fsm_sa(select_cells)
                     ),
-                    When(END)(
+                    When(end)(
                         If(n_exec_counter == n_exec)(
-                            fsm_sa(SELECT_CELLS)
+                            fsm_sa(select_cells)
                         ).Else(
                             done(Int(1, 1, 10))
                         ),
@@ -711,8 +711,8 @@ class SAComponents:
         con = [
             ('ca', ca),
             ('cb', cb),
-            ('lca', lca_t),
-            ('lcb', lcb_t),
+            ('lc_a', lc_a_t),
+            ('lc_b', lcb_t),
         ]
         m.Instance(aux, "%s_c" % aux.name, par, con)
 
@@ -721,24 +721,24 @@ class SAComponents:
             con = [
                 ('ca', cva[i * cell_bits:cell_bits * (i + 1)]),
                 ('cb', cvb[i * cell_bits:cell_bits * (i + 1)]),
-                ('lca', lcva_t[i * lc_bits:lc_bits * (i + 1)]),
-                ('lcb', lcvb_t[i * lc_bits:lc_bits * (i + 1)]),
+                ('lc_a', lc_va_t[i * lc_bits:lc_bits * (i + 1)]),
+                ('lc_b', lc_vb_t[i * lc_bits:lc_bits * (i + 1)]),
             ]
             m.Instance(aux, '%s_v_%d' % (aux.name, i), par, con)
         m.EmbeddedCode('// #####')
 
         m.EmbeddedCode('')
-        m.EmbeddedCode('// Distance calculator stage distance talbles instantiation')
+        m.EmbeddedCode('// Distance calculator stage distance tables instantiation')
         m.EmbeddedCode('// Distance before change')
         for i in range(0, (n_neighbors // 2) + 1, 2):
             par = []
             con = [
                 ('opa0', lca_before),
-                ('opa1', lcva[i * lc_bits:lc_bits * (i + 1)]),
-                ('opav', lcva_v[i]),
+                ('opa1', lc_va[i * lc_bits:lc_bits * (i + 1)]),
+                ('opav', lc_va_v[i]),
                 ('opb0', lca_before),
-                ('opb1', lcva[lc_bits * (i + 1):lc_bits * (i + 2)]),
-                ('opbv', lcva_v[i + 1]),
+                ('opb1', lc_va[lc_bits * (i + 1):lc_bits * (i + 2)]),
+                ('opbv', lc_va_v[i + 1]),
                 ('da', dva_before_t[i * dist_bits:dist_bits * (i + 1)]),
                 ('db', dva_before_t[dist_bits * (i + 1):dist_bits * (i + 2)]),
             ]
@@ -749,11 +749,11 @@ class SAComponents:
             par = []
             con = [
                 ('opa0', lcb_before),
-                ('opa1', lcvb[i * lc_bits:lc_bits * (i + 1)]),
-                ('opav', lcvb_v[i]),
+                ('opa1', lc_vb[i * lc_bits:lc_bits * (i + 1)]),
+                ('opav', lc_vb_v[i]),
                 ('opb0', lcb_before),
-                ('opb1', lcvb[lc_bits * (i + 1):lc_bits * (i + 2)]),
-                ('opbv', lcvb_v[i + 1]),
+                ('opb1', lc_vb[lc_bits * (i + 1):lc_bits * (i + 2)]),
+                ('opbv', lc_vb_v[i + 1]),
                 ('da', dvb_before_t[i * dist_bits:dist_bits * (i + 1)]),
                 ('db', dvb_before_t[dist_bits * (i + 1):dist_bits * (i + 2)]),
             ]
@@ -767,10 +767,10 @@ class SAComponents:
             con = [
                 ('opa0', lca_after),
                 ('opa1', opva_after[i * lc_bits:lc_bits * (i + 1)]),
-                ('opav', lcva_v[i]),
+                ('opav', lc_va_v[i]),
                 ('opb0', lca_after),
                 ('opb1', opva_after[lc_bits * (i + 1):lc_bits * (i + 2)]),
-                ('opbv', lcva_v[i + 1]),
+                ('opbv', lc_va_v[i + 1]),
                 ('da', dva_after_t[i * dist_bits:dist_bits * (i + 1)]),
                 ('db', dva_after_t[dist_bits * (i + 1):dist_bits * (i + 2)]),
             ]
@@ -782,10 +782,10 @@ class SAComponents:
             con = [
                 ('opa0', lcb_after),
                 ('opa1', opvb_after[i * lc_bits:lc_bits * (i + 1)]),
-                ('opav', lcvb_v[i]),
+                ('opav', lc_vb_v[i]),
                 ('opb0', lcb_after),
                 ('opb1', opvb_after[lc_bits * (i + 1):lc_bits * (i + 2)]),
-                ('opbv', lcvb_v[i + 1]),
+                ('opbv', lc_vb_v[i + 1]),
                 ('da', dvb_after_t[i * dist_bits:dist_bits * (i + 1)]),
                 ('db', dvb_after_t[dist_bits * (i + 1):dist_bits * (i + 2)]),
             ]

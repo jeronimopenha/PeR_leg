@@ -3,7 +3,6 @@ import random
 
 
 def sa(sa_graph: SaGraph, t_min: int):
-    # FIXME n_threads estranho aqui
     n_threads = sa_graph.n_cells
     sa_graph.reset_random()
     random.seed(0)
@@ -15,7 +14,7 @@ def sa(sa_graph: SaGraph, t_min: int):
         n_c.append(n_c_i)
 
     t = 100.0
-    # execução do SA
+    # SA execution
     for thread in range(n_threads):
         actual_cost = sa_graph.get_total_cost(c_n[thread], n_c[thread])
         # print(actual_cost)
@@ -27,8 +26,8 @@ def sa(sa_graph: SaGraph, t_min: int):
             for cell1 in range(sa_graph.n_cells):
                 for cell2 in range(sa_graph.n_cells):
                     i = 1
-                    #cell1 = random.randint(0,sa_graph.n_cells-1)
-                    #cell2 = random.randint(0,sa_graph.n_cells-1)
+                    # cell1 = random.randint(0,sa_graph.n_cells-1)
+                    # cell2 = random.randint(0,sa_graph.n_cells-1)
                     # if cell1 == cell2:
                     #    continue
                     next_cost = actual_cost
@@ -47,9 +46,9 @@ def sa(sa_graph: SaGraph, t_min: int):
                     next_cost += cost_cell1_a
                     next_cost += cost_cell2_a
 
-                    #valor = abs(next_cost - actual_cost)
-                    #valor = exp((-1 * valor / t))
-                    #rnd = random.random()
+                    # valor = abs(next_cost - actual_cost)
+                    # valor = exp((-1 * valor / t))
+                    # rnd = random.random()
                     '''
                     try:
                         valor = exp((-1 * (next_cost - actual_cost) / t))
@@ -71,4 +70,4 @@ def sa(sa_graph: SaGraph, t_min: int):
 
                 # print(actual_cost)
             t *= 0.999
-    #print(sa_graph.get_total_cost(c_n[thread], n_c[thread]))
+    # print(sa_graph.get_total_cost(c_n[thread], n_c[thread]))

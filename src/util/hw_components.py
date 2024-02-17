@@ -7,8 +7,8 @@ class HwComponents:
     def __init__(self, ):
         self.cache = {}
 
-    def create_fecth_data(self, input_data_width, output_data_width):
-        name = 'fecth_data_%d_%d' % (input_data_width, output_data_width)
+    def create_fetch_data(self, input_data_width, output_data_width):
+        name = 'fetch_data_%d_%d' % (input_data_width, output_data_width)
         if name in self.cache.keys():
             return self.cache[name]
         m = Module(name)

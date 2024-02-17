@@ -125,7 +125,7 @@ class PeRGraph:
         stack: list = output_list.copy()
         edges: list = []
         visited: list = []
-        reconvergence: list = []
+        convergence: list = []
 
         fan_in: dict = {}
         fan_out: dict = {}
@@ -157,7 +157,7 @@ class PeRGraph:
                     fan_in[b].remove(a)
 
                     if b in visited:
-                        reconvergence.append([a, b])
+                        convergence.append([a, b])
 
                     edges.append([a, b, 'OUT'])
 
@@ -173,7 +173,7 @@ class PeRGraph:
                     fan_out[b].remove(a)
 
                     if b in visited:
-                        reconvergence.append([a, b])
+                        convergence.append([a, b])
 
                     edges.append([a, b, 'IN'])
 
@@ -192,7 +192,7 @@ class PeRGraph:
                     fan_out[b].remove(a)
 
                     if b in visited:
-                        reconvergence.append([a, b])
+                        convergence.append([a, b])
 
                     edges.append([a, b, 'IN'])
 
@@ -208,12 +208,12 @@ class PeRGraph:
                     fan_in[b].remove(a)
 
                     if b in visited:
-                        reconvergence.append([a, b])
+                        convergence.append([a, b])
 
                     edges.append([a, b, 'OUT'])
             visited.append(a)
 
-        a, b, c = self.clear_edges(edges), self.clear_edges(edges, False), reconvergence
+        a, b, c = self.clear_edges(edges), self.clear_edges(edges, False), convergence
 
         return a, b, c
 

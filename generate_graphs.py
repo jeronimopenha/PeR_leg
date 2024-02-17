@@ -5,14 +5,15 @@ import pygraphviz as pgv
 
 from src.util.util import Util
 
-graph_generator =  GraphGenerator
-dim_archs = [i for i in range(5,20+1)]
+graph_generator = GraphGenerator
+dim_archs = [i for i in range(5, 20 + 1)]
 for dim_arch in dim_archs:
-    print(f'dim arch {dim_arch} - qtd_pe {dim_arch*dim_arch}')
-    min_len_vertex = dim_arch*dim_arch - 1
-    max_len_vertex = dim_arch*dim_arch
-    num_vertexes = random.randint(min_len_vertex,max_len_vertex)
-    vertexes, edges_dfg, placement_c2n = graph_generator.generate_random_dag_graph(num_vertexes,[(0,1),(0,-1),(1,0),(-1,0)])
+    print(f'dim arch {dim_arch} - qtd_pe {dim_arch * dim_arch}')
+    min_len_vertex = dim_arch * dim_arch - 1
+    max_len_vertex = dim_arch * dim_arch
+    num_vertexes = random.randint(min_len_vertex, max_len_vertex)
+    vertexes, edges_dfg, placement_c2n = graph_generator.generate_random_dag_graph(num_vertexes,
+                                                                                   [(0, 1), (0, -1), (1, 0), (-1, 0)])
     # matrix = [[-1 for i in range(dim_arch)] for j in range(dim_arch)]
     # for k,v in placement_c2n.items():
     #     i,j = k
@@ -25,7 +26,7 @@ for dim_arch in dim_archs:
     path = Util.get_project_root() + f'/dot_db/graphs0_dag/'
     filename = f'{dim_arch}x{dim_arch} - {num_vertexes}'
 
-    GraphExporter.export_dot_graph(vertexes,edges_dfg,path,filename)
+    GraphExporter.export_dot_graph(vertexes, edges_dfg, path, filename)
 
 #######
 # import random

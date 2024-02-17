@@ -25,12 +25,9 @@ class SaGraph:
     def reset_random(self):
         random.seed(0)
 
-    def get_initial_grid(self) -> list():
-        n_nodes = len(self.nodes)
-        n_edges = len(self.edges)
-
-        c_n = [None for i in range(self.n_cells)]
-        n_c = [None for i in range(self.n_cells)]
+    def get_initial_grid(self) -> list:
+        c_n = [None for _ in range(self.n_cells)]
+        n_c = [None for _ in range(self.n_cells)]
 
         unsorted_nodes = [n for n in self.nodes]
         unsorted_cells = [i for i in range(self.n_cells)]
@@ -46,7 +43,7 @@ class SaGraph:
             unsorted_cells.pop(r_c)
             unsorted_nodes.pop(r_n)
 
-        return c_n, n_c
+        return [c_n, n_c]
 
     def get_dot_vars(self):
         dot = self.dot
@@ -139,16 +136,12 @@ def create_rom_files(sa_comp, path: str):
     sa_graph = sa_comp.per_graph
     n_cells = sa_comp.per_graph.n_cells
     n_neighbors = sa_comp.n_neighbors
-    align_bits = sa_comp.align_bits
     n_threads = sa_comp.n_threads
 
     c_bits = ceil(log2(n_cells))
     t_bits = ceil(log2(n_threads))
     t_bits = 1 if t_bits == 0 else t_bits
     node_bits = c_bits
-    lines = columns = int(sqrt(n_cells))
-    w_bits = t_bits + c_bits + node_bits + 1
-    dist_bits = c_bits + ceil(log2(n_neighbors * 2))
 
     sa_graph.reset_random()
 
@@ -160,22 +153,21 @@ def create_rom_files(sa_comp, path: str):
         n_c.append(n_c_i)
 
     cn_str_f = '{:0%db}' % (node_bits + 1)
-    nc_str_f = '{:0%db}' % (c_bits)
+    nc_str_f = '{:0%db}' % c_bits
     n_str_f = '{:0%db}' % (node_bits + 1)
-    t_str = '{:0%db}' % (t_bits)
+    t_str = '{:0%db}' % t_bits
 
     cn_w = []  # [cn_str_f.format(0) for i in range(n_cells)]
     nc_w = []  # [nc_str_f.format(0) for i in range(n_cells)]
-    p_w = []  # [p_str_f.format(0) for i in range(n_cells)]
     n_w = []
     for t in range(pow(2, ceil(sqrt(n_threads)))):
         cn_w.append([cn_str_f.format(0)
-                     for i in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
+                     for _ in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
         nc_w.append([nc_str_f.format(0)
-                     for i in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
+                     for _ in range(ceil(sqrt(n_cells)) * ceil(sqrt(n_cells)))])
 
     for c in range(pow(2, ceil(sqrt(n_cells)))):
-        n_w.append([n_str_f.format(0) for i in range(n_neighbors)])
+        n_w.append([n_str_f.format(0) for _ in range(n_neighbors)])
     for k in sa_graph.neighbors.keys():
         idx = 0
         for n in sa_graph.neighbors[k]:
@@ -228,9 +220,9 @@ def create_rom_files(sa_comp, path: str):
 
 
 def create_dot_from_rom_files(rom_file: str, prefix: str, output_path: str, n_threads: int, n_cells: int):
-    c_bits = ceil(log2(n_cells))
     output_dot_files = [prefix + '%d.dot_db' % i for i in range(n_threads)]
-    dot_head = 'digraph layout{\n rankdir=TB;\n splines=ortho;\n node [style=filled shape=square fixedsize=true width=0.6];\n'
+    dot_head = ('digraph layout{\n rankdir=TB;\n splines=ortho;\n node [style=filled shape=square fixedsize=true '
+                'width=0.6];\n')
     dot_foot = 'edge [constraint=true, style=invis];\n'
     sqrt_cells = ceil(sqrt(n_cells))
 
@@ -253,14 +245,14 @@ def create_dot_from_rom_files(rom_file: str, prefix: str, output_path: str, n_th
 
     dot_foot = dot_foot + '}'
 
-    str_out = [dot_head for i in range(n_threads)]
+    str_out = [dot_head for _ in range(n_threads)]
     file_lines = []
     with open(rom_file) as f:
         file_lines = f.readlines()
         f.close()
     for t in range(n_threads):
         c = 0
-        while (c < n_cells):
+        while c < n_cells:
             c_content = file_lines.pop(0)
             if '//' in c_content:
                 continue

@@ -5,7 +5,7 @@ from src.util.per_graph import PeRGraph
 from src.hw.sa_fsm.sa_components import SAComponents
 
 
-def create_sa_single_test_bench(base_path: str, sa_graph: PeRGraph, test_number: int = 0) -> str:
+def create_sa_single_test_bench(base_path: str, sa_graph: PeRGraph, test_number: int = 0):
     name = 'test_bench_sa_single_%d' % test_number
     dumpfile = base_path + "/verilog/%s.vcd" % name
     verilog_file = base_path + "/verilog/%s.v" % name
@@ -78,6 +78,6 @@ def create_sa_single_test_bench(base_path: str, sa_graph: PeRGraph, test_number:
     m.to_verilog(verilog_file)
     main_module_file = base_path + "/verilog/%s.v" % sa_single.name
     sa_single.to_verilog(main_module_file)
-    #sim = simulation.Simulator(m, sim='iverilog')
-    #rslt = sim.run(outputfile=output_file)
-    #print(rslt)
+    # sim = simulation.Simulator(m, sim='iverilog')
+    # rslt = sim.run(outputfile=output_file)
+    # print(rslt)

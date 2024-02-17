@@ -12,15 +12,15 @@ class SAComponents:
         return cls._instance
 
     def __init__(
-        self, n_cells: int = 16, n_neighbors: int = 5, align_bits: int = 8
+            self, n_cells: int = 16, n_neighbors: int = 5, align_bits: int = 8
     ):
         self.cache = {}
         self.n_cells = n_cells
         self.n_neighbors = n_neighbors
         self.align_bits = align_bits
 
-    def create_fecth_data(self, input_data_width, output_data_width):
-        name = "fecth_data_%d_%d" % (input_data_width, output_data_width)
+    def create_fetch_data(self, input_data_width, output_data_width):
+        name = "fetch_data_%d_%d" % (input_data_width, output_data_width)
         if name in self.cache.keys():
             return self.cache[name]
         m = Module(name)
@@ -130,7 +130,7 @@ class SAComponents:
             If(rst)(rnd(seed)).Elif(en)(
                 rnd(
                     Cat(
-                        rnd[0 : rnd.width - 1],
+                        rnd[0: rnd.width - 1],
                         Not(Xor(Xor(Xor(rnd[10], rnd[9]), rnd[7]), rnd[1])),
                     )
                 )
@@ -154,14 +154,14 @@ class SAComponents:
         wr = m.Input("wr")
         rd = m.Input("rd")
 
-        waddr = m.Input("waddr", bits)
+        w_addr = m.Input("w_addr", bits)
         din = m.Input("din", bits + 1)
 
-        raddr1 = m.Input("raddr1", bits)
-        dout1 = m.OutputReg("dout1", bits + 1)
+        r_addr1 = m.Input("r_addr1", bits)
+        d_out1 = m.OutputReg("d_out1", bits + 1)
 
-        raddr2 = m.Input("raddr2", bits)
-        dout2 = m.OutputReg("dout2", bits + 1)
+        r_addr2 = m.Input("r_addr2", bits)
+        d_out2 = m.OutputReg("d_out2", bits + 1)
 
         # m.EmbeddedCode(
         #    '(* ramstyle = "AUTO, no_rw_check" *) reg  [data_width-1:0] mem[0:2**addr_width-1];')
@@ -171,19 +171,19 @@ class SAComponents:
 
         m.Always(Posedge(clk))(
             If(wr)(
-                mem_data[waddr](din),
+                mem_data[w_addr](din),
             ),
             If(rd)(
-                dout1(mem_data[raddr1]),
-                dout2(mem_data[raddr2]),
+                d_out1(mem_data[r_addr1]),
+                d_out2(mem_data[r_addr2]),
             ),
         )
         m.EmbeddedCode("//synthesis translate_off")
 
         i = m.Integer("i")
         m.Initial(
-            dout1(0),
-            dout2(0),
+            d_out1(0),
+            d_out2(0),
             For(i(0), i < Power(2, bits), i.inc())(
                 mem_data[i](0),
             ),
@@ -201,9 +201,9 @@ class SAComponents:
         n_neighbors = self.n_neighbors
         bits_mem = ceil(log2(n_cells))
         bits_word = (
-            ceil((ceil(log2(n_cells)) + 1) / self.align_bits)
-            * self.align_bits
-            * n_neighbors
+                ceil((ceil(log2(n_cells)) + 1) / self.align_bits)
+                * self.align_bits
+                * n_neighbors
         )
         m = Module(name)
 
@@ -245,8 +245,8 @@ class SAComponents:
         self.cache[name] = m
         return m
 
-    def create_manhatan_dist_calc(self) -> Module:
-        name = "manhatan_dist_calc"
+    def create_manhattan_dist_calc(self) -> Module:
+        name = "manhattan_dist_calc"
         if name in self.cache.keys():
             return self.cache[name]
 
@@ -258,12 +258,12 @@ class SAComponents:
         clk = m.Input("clk")
         cell1 = m.Input("cell1", bits)
         cell2 = m.Input("cell2", bits)
-        manhatan = m.OutputReg("manhatan", bits)
+        manhattan = m.OutputReg("manhattan", bits)
 
-        manhatan_rom = m.Wire("manhatan_rom", bits, n_cells * n_cells)
+        manhattan_rom = m.Wire("manhattan_rom", bits, n_cells * n_cells)
 
         m.Always(Posedge(clk))(
-            manhatan(manhatan_rom[Cat(cell1, cell2)]),
+            manhattan(manhattan_rom[Cat(cell1, cell2)]),
         )
 
         r = int(sqrt(int(n_cells)))
@@ -274,27 +274,8 @@ class SAComponents:
                 for x2 in range(r):
                     for y2 in range(r):
                         d = abs(y1 - y2) + abs(x1 - x2)
-                        manhatan_rom[c].assign(Int(d, bits, 10))
+                        manhattan_rom[c].assign(Int(d, bits, 10))
                         c = c + 1
-
-        # parc_1 = m.Reg('parc_1', bits)
-        # parc_2 = m.Reg('parc_2', bits)
-        # l1 = m.Wire('l1', bits)
-        # l2 = m.Wire('l2', bits)
-        # c1 = m.Wire('c1', bits)
-        # c2 = m.Wire('c2', bits)
-
-        # l1.assign(Cat(Int(0, int(bits/2), 2), cell1[0:2]))
-        # l2.assign(Cat(Int(0, int(bits/2), 2), cell2[0:2]))
-        # c1.assign(Cat(Int(0, int(bits/2), 2), cell1[2:cell1.width]))
-        # c2.assign(Cat(Int(0, int(bits/2), 2), cell2[2:cell2.width]))
-
-        # TODO try to make it with 1 clock
-        # m.Always(Posedge(clk))(
-        #    parc_1(Mux(l1 < l2, l2-l1, l1-l2)),
-        #    parc_2(Mux(c1 < c2, c2-c1, c1-c2)),
-        #    manhatan(parc_1 + parc_2),
-        # )
 
         initialize_regs(m)
         self.cache[name] = m
@@ -326,9 +307,9 @@ class SAComponents:
 
         m.EmbeddedCode("//graph memory regs and wires")
         gm_data_bits = (
-            ceil((ceil(log2(n_cells)) + 1) / align_bits)
-            * align_bits
-            * n_neighbors
+                ceil((ceil(log2(n_cells)) + 1) / align_bits)
+                * align_bits
+                * n_neighbors
         )
         gm_rd = m.Reg("gm_rd")
         gm_node1 = m.Reg("gm_node1", bits)
@@ -348,7 +329,7 @@ class SAComponents:
             conf_g_out(conf_g_in),
             conf_g_out_v(conf_g_in_v),
             gm_wr(0),
-            If(rst)(conf_g_counter(0), gm_wr_addr(0),).Elif(conf_g_in_v)(
+            If(rst)(conf_g_counter(0), gm_wr_addr(0), ).Elif(conf_g_in_v)(
                 If(conf_g_counter == n_conf - 1)(
                     conf_g_counter(0),
                     gm_wr(1),
@@ -357,7 +338,7 @@ class SAComponents:
                 ),
                 gm_data_in(
                     Cat(
-                        gm_data_in[conf_g_in.width : gm_data_in.width],
+                        gm_data_in[conf_g_in.width: gm_data_in.width],
                         conf_g_in,
                     )
                 ),
@@ -369,31 +350,31 @@ class SAComponents:
         cnm_wr = m.Wire("cnm_wr")
         cnm_conf_o_wr = m.Reg("cnm_conf_o_wr")
         cnm_exec_wr = m.Reg("cnm_exec_wr")
-        cnm_waddr = m.Wire("cnm_waddr", bits)
-        cnm_conf_o_waddr = m.Reg("cnm_conf_o_waddr", bits)
-        cnm_exec_waddr = m.Reg("cnm_exec_waddr", bits)
+        cnm_w_addr = m.Wire("cnm_w_addr", bits)
+        cnm_conf_o_w_addr = m.Reg("cnm_conf_o_w_addr", bits)
+        cnm_exec_w_addr = m.Reg("cnm_exec_w_addr", bits)
         cnm_din = m.Wire("cnm_din", bits + 1)
         cnm_conf_o_din = m.Wire("cnm_conf_o_din", bits)
         cnm_exec_din = m.Reg("cnm_exec_din", bits + 1)
         cnm_rd = m.Reg("cnm_rd")
-        cnm_raddr1 = m.Reg("cnm_raddr1", bits)
-        cnm_raddr2 = m.Reg("cnm_raddr2", bits)
-        cnm_dout1 = m.Wire("cnm_dout1", bits + 1)
-        cnm_dout2 = m.Wire("cnm_dout2", bits + 1)
+        cnm_r_addr1 = m.Reg("cnm_r_addr1", bits)
+        cnm_r_addr2 = m.Reg("cnm_r_addr2", bits)
+        cnm_d_out1 = m.Wire("cnm_d_out1", bits + 1)
+        cnm_d_out2 = m.Wire("cnm_d_out2", bits + 1)
         m.EmbeddedCode("//----------------")
         m.EmbeddedCode("//n - c memories")
         m.EmbeddedCode("//----------------")
         m.EmbeddedCode("// cnc memories configuration")
         is_configured = m.Reg("is_configured")
         cnm_wr.assign(Mux(is_configured, cnm_exec_wr, cnm_conf_o_wr))
-        cnm_waddr.assign(Mux(is_configured, cnm_exec_waddr, cnm_conf_o_waddr))
+        cnm_w_addr.assign(Mux(is_configured, cnm_exec_w_addr, cnm_conf_o_w_addr))
         cnm_din.assign(Mux(is_configured, cnm_exec_din, cnm_conf_o_din))
 
         m.Always(Posedge(clk))(
             cnm_conf_o_wr(0),
             If(rst)(
                 cnm_conf_o_din(0),
-                cnm_conf_o_waddr(0),
+                cnm_conf_o_w_addr(0),
             ),
         )
 
@@ -421,12 +402,12 @@ class SAComponents:
             ("clk", clk),
             ("wr", cnm_wr),
             ("rd", cnm_rd),
-            ("waddr", cnm_waddr),
+            ("w_addr", cnm_w_addr),
             ("din", cnm_din),
-            ("raddr1", cnm_raddr1),
-            ("raddr2", cnm_raddr2),
-            ("dout1", cnm_dout1),
-            ("dout2", cnm_dout2),
+            ("r_addr1", cnm_r_addr1),
+            ("r_addr2", cnm_r_addr2),
+            ("d_out1", cnm_d_out1),
+            ("d_out2", cnm_d_out2),
         ]
         par = []
         im = self.create_cnc_memory()
@@ -439,7 +420,7 @@ class SAComponents:
 
 comp = SAComponents()
 
-comp.create_manhatan_dist_calc().to_verilog("manhatan.v")
+comp.create_manhattan_dist_calc().to_verilog("manhattan.v")
 comp.create_cnc_memory().to_verilog("cnc_memory.v")
 comp.create_graph_memory().to_verilog("graph_memory.v")
 comp.create_sa_pe().to_verilog("sa_pe.v")
