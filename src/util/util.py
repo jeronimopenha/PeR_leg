@@ -28,6 +28,11 @@ class Util:
         return text.split(" ")
 
     @staticmethod
+    def write_file(file_name: str, data_to_write: list):
+        with open(file_name, 'w') as f:
+            f.writelines(f'{line}\n' for line in data_to_write)
+
+    @staticmethod
     def func_key(val1: str, val2: str) -> str:
         """
         Concatenate two strings to form a key.
