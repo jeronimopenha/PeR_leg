@@ -1,0 +1,54 @@
+{
+    "graph_name": "BBT-h2.dot - MC = 1.dot",
+    "algorithm": "YOTO",
+    "arch_type": "MESH",
+    "total_edges": 7,
+    "visited_edges": 6,
+    "n_copies": 10,
+    "total_threads": 60,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "best_thread": "Exec_1_TH_3",
+    "best_dist": 0,
+    "exec_max_clk": 188,
+    "exec_min_clk": 118,
+    "exec_avg_clk": 141.1,
+    "th_max_clk": 31,
+    "th_min_clk": 8,
+    "th_avg_clk": 17.266666666666666,
+    "best_placement": [
+        [
+            5,
+            -1,
+            -1
+        ],
+        [
+            2,
+            6,
+            4
+        ],
+        [
+            0,
+            3,
+            1
+        ]
+    ],
+    "th_placement_distances": {
+        "4_1": 1,
+        "1_3": 1,
+        "3_0": 1,
+        "0_2": 1,
+        "2_6": 1,
+        "2_5": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "4": 3,
+        "3": 4,
+        "5": 5,
+        "6": 6
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "graph_name": "BBT-h2 - Inv.dot - MC = 1.dot",
+    "algorithm": "YOTT",
+    "arch_type": "ONE_HOP",
+    "total_edges": 7,
+    "visited_edges": 6,
+    "n_copies": 10,
+    "total_threads": 100,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 0,
+    "exec_max_clk": 309,
+    "exec_min_clk": 217,
+    "exec_avg_clk": 251.5,
+    "th_max_clk": 31,
+    "th_min_clk": 12,
+    "th_avg_clk": 19.71,
+    "best_placement": [
+        [
+            -1,
+            3,
+            6
+        ],
+        [
+            5,
+            1,
+            2
+        ],
+        [
+            -1,
+            0,
+            4
+        ]
+    ],
+    "th_placement_distances": {
+        "1_2": 1,
+        "2_6": 1,
+        "2_5": 1,
+        "1_0": 1,
+        "0_4": 1,
+        "0_3": 1
+    },
+    "nodes_dict": {
+        "1": 0,
+        "0": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+    }
+}

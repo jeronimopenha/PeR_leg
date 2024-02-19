@@ -28,7 +28,7 @@ class YOTTPipeline(PiplineBase):
         self.len_edges = len(self.edges_int[0])
 
     def run_parallel(self, n_copies: int = 1) -> dict:
-        max_jobs: int = mp.cpu_count()
+        max_jobs: int = mp.cpu_count() - 2
         manager = mp.Manager()
         dic_man = manager.dict()
         reports: dict = {}

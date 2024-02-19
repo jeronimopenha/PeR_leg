@@ -1,0 +1,69 @@
+{
+    "graph_name": "tree 10 - 4x4 - Inv.dot - MC = 1.dot",
+    "algorithm": "YOTT",
+    "arch_type": "ONE_HOP",
+    "total_edges": 10,
+    "visited_edges": 9,
+    "n_copies": 100,
+    "total_threads": 1000,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 0,
+    "exec_max_clk": 494,
+    "exec_min_clk": 271,
+    "exec_avg_clk": 346.22,
+    "th_max_clk": 50,
+    "th_min_clk": 12,
+    "th_avg_clk": 25.54,
+    "best_placement": [
+        [
+            -1,
+            -1,
+            7,
+            4
+        ],
+        [
+            -1,
+            3,
+            -1,
+            0
+        ],
+        [
+            8,
+            5,
+            6,
+            2
+        ],
+        [
+            -1,
+            -1,
+            9,
+            1
+        ]
+    ],
+    "th_placement_distances": {
+        "4_2": 1,
+        "2_5": 1,
+        "5_8": 1,
+        "8_6": 1,
+        "6_7": 1,
+        "2_1": 1,
+        "1_0": 1,
+        "0_3": 1,
+        "1_9": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "9": 1,
+        "2": 2,
+        "7": 3,
+        "8": 4,
+        "3": 5,
+        "5": 6,
+        "1": 7,
+        "4": 8,
+        "6": 9
+    }
+}
