@@ -17,7 +17,7 @@ dot_path_base = root_path + '/dot_db/'
 dot_connected_path = dot_path_base + 'graphs0_tree/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1,10,100]
+copies = [1, 10, 100]
 
 start = time.time()
 for i, method in enumerate(methods):
@@ -41,7 +41,8 @@ for i, method in enumerate(methods):
 
             # list connected benchmarks
             dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
-            # dots_list = [[Util.get_project_root() + "/dot_db/graphs0_dag/5x5 - 24.dot", "5x5 - 24.dot"]]
+            # dots_list = [
+            #    [dot_connected_path + "tree 10 - 4x4 - Inv.dot - MC = 1.dot", "tree 10 - 4x4 - Inv.dot - MC = 1.dot"]]
             reports: list[dict] = []
 
             # FIXME the line below is only for debugging
