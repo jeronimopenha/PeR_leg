@@ -1,0 +1,69 @@
+{
+    "graph_name": "dag 10 - 4x4.dot",
+    "algorithm": "YOTO",
+    "arch_type": "MESH",
+    "total_edges": 9,
+    "visited_edges": 9,
+    "n_copies": 1,
+    "total_threads": 6,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "best_thread": "Exec_0_TH_4",
+    "best_dist": 0,
+    "exec_max_clk": 218,
+    "exec_min_clk": 218,
+    "exec_avg_clk": 218.0,
+    "th_max_clk": 36,
+    "th_min_clk": 18,
+    "th_avg_clk": 27.833333333333332,
+    "best_placement": [
+        [
+            -1,
+            0,
+            -1,
+            -1
+        ],
+        [
+            8,
+            1,
+            9,
+            -1
+        ],
+        [
+            7,
+            6,
+            4,
+            5
+        ],
+        [
+            -1,
+            -1,
+            3,
+            2
+        ]
+    ],
+    "th_placement_distances": {
+        "8_1": 1,
+        "1_6": 1,
+        "6_7": 1,
+        "1_9": 1,
+        "9_4": 1,
+        "4_5": 1,
+        "5_2": 1,
+        "2_3": 1,
+        "1_0": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "6": 1,
+        "1": 2,
+        "3": 3,
+        "2": 4,
+        "4": 5,
+        "5": 6,
+        "8": 7,
+        "7": 8,
+        "9": 9
+    }
+}

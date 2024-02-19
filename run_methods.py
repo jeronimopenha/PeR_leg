@@ -14,10 +14,10 @@ run_parallel = True
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
 dot_path_base = root_path + '/dot_db/'
-dot_connected_path = dot_path_base + 'graphs0_dag/'
+dot_connected_path = dot_path_base + 'graphs0_tree/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [100]
+copies = [1,10,100]
 
 start = time.time()
 for i, method in enumerate(methods):

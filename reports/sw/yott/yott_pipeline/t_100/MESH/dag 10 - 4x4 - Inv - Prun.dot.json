@@ -1,0 +1,58 @@
+{
+    "graph_name": "dag 10 - 4x4 - Inv - Prun.dot",
+    "algorithm": "YOTT",
+    "arch_type": "MESH",
+    "total_edges": 8,
+    "visited_edges": 8,
+    "n_copies": 10,
+    "total_threads": 100,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "best_thread": "Exec_1_TH_9",
+    "best_dist": 0,
+    "exec_max_clk": 471,
+    "exec_min_clk": 332,
+    "exec_avg_clk": 409.2,
+    "th_max_clk": 47,
+    "th_min_clk": 13,
+    "th_avg_clk": 28.23,
+    "best_placement": [
+        [
+            8,
+            5,
+            4
+        ],
+        [
+            7,
+            6,
+            2
+        ],
+        [
+            3,
+            0,
+            1
+        ]
+    ],
+    "th_placement_distances": {
+        "5_8": 1,
+        "5_4": 1,
+        "4_2": 1,
+        "2_1": 1,
+        "1_0": 1,
+        "0_3": 1,
+        "5_6": 1,
+        "6_7": 1
+    },
+    "nodes_dict": {
+        "1": 0,
+        "4": 1,
+        "2": 2,
+        "3": 3,
+        "9": 4,
+        "6": 5,
+        "5": 6,
+        "8": 7,
+        "7": 8
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "graph_name": "dag 10 - 4x4 - Prun.dot",
+    "algorithm": "YOTO",
+    "arch_type": "ONE_HOP",
+    "total_edges": 8,
+    "visited_edges": 8,
+    "n_copies": 1,
+    "total_threads": 6,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 1,
+    "exec_max_clk": 259,
+    "exec_min_clk": 259,
+    "exec_avg_clk": 259.0,
+    "th_max_clk": 43,
+    "th_min_clk": 26,
+    "th_avg_clk": 37.0,
+    "best_placement": [
+        [
+            3,
+            8,
+            5
+        ],
+        [
+            6,
+            2,
+            7
+        ],
+        [
+            0,
+            1,
+            4
+        ]
+    ],
+    "th_placement_distances": {
+        "5_4": 1,
+        "4_7": 1,
+        "7_6": 1,
+        "6_3": 1,
+        "3_0": 1,
+        "0_1": 1,
+        "1_8": 1,
+        "0_2": 2
+    },
+    "nodes_dict": {
+        "6": 0,
+        "5": 1,
+        "7": 2,
+        "9": 3,
+        "1": 4,
+        "3": 5,
+        "2": 6,
+        "4": 7,
+        "8": 8
+    }
+}

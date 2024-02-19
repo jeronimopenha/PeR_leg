@@ -1,0 +1,69 @@
+{
+    "graph_name": "tree 10 - 4x4 - Inv.dot",
+    "algorithm": "YOTO",
+    "arch_type": "MESH",
+    "total_edges": 9,
+    "visited_edges": 9,
+    "n_copies": 10,
+    "total_threads": 60,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "best_thread": "Exec_0_TH_1",
+    "best_dist": 0,
+    "exec_max_clk": 232,
+    "exec_min_clk": 175,
+    "exec_avg_clk": 200.4,
+    "th_max_clk": 39,
+    "th_min_clk": 12,
+    "th_avg_clk": 24.916666666666668,
+    "best_placement": [
+        [
+            -1,
+            7,
+            6,
+            8
+        ],
+        [
+            -1,
+            -1,
+            5,
+            -1
+        ],
+        [
+            -1,
+            2,
+            3,
+            4
+        ],
+        [
+            -1,
+            0,
+            1,
+            9
+        ]
+    ],
+    "th_placement_distances": {
+        "4_3": 1,
+        "3_1": 1,
+        "1_9": 1,
+        "1_0": 1,
+        "0_2": 1,
+        "3_5": 1,
+        "5_6": 1,
+        "6_8": 1,
+        "6_7": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "9": 1,
+        "7": 2,
+        "2": 3,
+        "8": 4,
+        "3": 5,
+        "5": 6,
+        "1": 7,
+        "4": 8,
+        "6": 9
+    }
+}
