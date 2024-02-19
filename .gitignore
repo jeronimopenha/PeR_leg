@@ -237,3 +237,7 @@ MANIFEST
 
 # Visual Studio Code files
 .vscode
+
+*.rom
+*.v
+
