@@ -31,6 +31,7 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                                                                 dirs[-3],
                                                                 dirs[-4],
                                                                 dirs[-2],
+                                                                0
                                                                 )
             df = df.append(dict_data, ignore_index=True)
         return df

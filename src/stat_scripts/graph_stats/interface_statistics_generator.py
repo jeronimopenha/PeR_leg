@@ -4,7 +4,7 @@ import pandas
 
 class IStatisticsGenerator(ABC):
     columns = ['Bench', 'N Edges', 'Visited Edges', 'Dist Total', 'Edges > 0', 'Arch Type', 'Algorithm',
-               'Total Executions']
+               'Total Executions','Num Annotations']
 
     @staticmethod
     def generate_statistics_pandas(data_files: list[str]) -> pandas.DataFrame:
@@ -12,7 +12,7 @@ class IStatisticsGenerator(ABC):
 
     @staticmethod
     def generate_data_dict(bench: str, n_edges: int, visited_edges: int, dist_total: int, edges_greater_0: int,
-                           arch_type: str, algorithm: str, total_executions: int):
+                           arch_type: str, algorithm: str, total_executions: int, num_annotation: int):
         return {IStatisticsGenerator.columns[0]: bench,
                 IStatisticsGenerator.columns[1]: n_edges,
                 IStatisticsGenerator.columns[2]: visited_edges,
@@ -21,6 +21,7 @@ class IStatisticsGenerator(ABC):
                 IStatisticsGenerator.columns[5]: arch_type,
                 IStatisticsGenerator.columns[6]: algorithm,
                 IStatisticsGenerator.columns[7]: total_executions,
+                IStatisticsGenerator.columns[8]: num_annotation
                 }
 
     @staticmethod
