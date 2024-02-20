@@ -3,7 +3,6 @@ import pandas
 
 from src.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
 
-
 class StatisticsGeneratorDot(IStatisticsGenerator):
     # fixme melhorar algoritmo
     @staticmethod
@@ -11,11 +10,13 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
         df = pandas.DataFrame(columns=IStatisticsGenerator.columns)
         pattern = re.compile(".weight=(\d+)")
         for dot_file in data_files:
+            edges = 0
             distances = []
             with open(dot_file, 'r') as file:
                 for row in file:
                     result = re.findall(pattern, row)
                     if len(result) > 0:
+                        edges += 1
                         distances.append(int(result[0]))
             count_dists_greater_0 = 0
             dist_total = 0
@@ -24,7 +25,7 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                 count_dists_greater_0 += 0 if distance == 0 else 1
             dirs = dot_file.split("/")
             dict_data = IStatisticsGenerator.generate_data_dict(dirs[-1].replace('.dot', ''),
-                                                                -1,
+                                                                edges,
                                                                 -1,
                                                                 dist_total,
                                                                 count_dists_greater_0,

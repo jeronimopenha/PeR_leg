@@ -77,7 +77,6 @@ class IStatisticsGenerator(ABC):
 
                 new_df = new_df.merge(final_filter[cur_index + num_exec_per_algorithm], on=common_columns)
                 cur_index += num_exec_per_algorithm
-
         filename = output_file_path + output_file_name
         head += '\n'
         with open(filename, 'w') as file:
