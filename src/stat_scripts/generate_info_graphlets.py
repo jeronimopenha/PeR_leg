@@ -5,7 +5,6 @@ from src.util.per_enum import ArchType
 from src.util.util import Util
 
 def find_min_placement(vertexes,edges,adj_list = [(0,1),(0,-1),(1,0),(-1,0)]):
-    num_vertexes = len(vertexes)
     placement_n2c = {}
     placement_c2n = {}
     dim_arch = 10

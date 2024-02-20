@@ -1,0 +1,80 @@
+{
+    "graph_name": "dag14-4x4.dot",
+    "algorithm": "YOTO",
+    "arch_type": "MESH",
+    "total_edges": 15,
+    "visited_edges": 13,
+    "n_copies": 1,
+    "total_threads": 6,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "num_annotations": 0,
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 4,
+    "exec_max_clk": 373,
+    "exec_min_clk": 373,
+    "exec_avg_clk": 373.0,
+    "th_max_clk": 62,
+    "th_min_clk": 31,
+    "th_avg_clk": 46.166666666666664,
+    "best_placement": [
+        [
+            3,
+            6,
+            1,
+            0
+        ],
+        [
+            7,
+            8,
+            13,
+            12
+        ],
+        [
+            11,
+            9,
+            4,
+            2
+        ],
+        [
+            -1,
+            -1,
+            10,
+            5
+        ]
+    ],
+    "th_placement_distances": {
+        "11_9": 1,
+        "9_4": 1,
+        "4_10": 1,
+        "10_5": 1,
+        "5_2": 1,
+        "2_4": 1,
+        "2_12": 1,
+        "12_13": 1,
+        "0_1": 1,
+        "1_6": 1,
+        "3_7": 1,
+        "7_8": 1,
+        "2_0": 2,
+        "1_3": 2,
+        "10_11": 3
+    },
+    "nodes_dict": {
+        "0": 0,
+        "5": 1,
+        "12": 2,
+        "2": 3,
+        "3": 4,
+        "11": 5,
+        "1": 6,
+        "8": 7,
+        "7": 8,
+        "4": 9,
+        "9": 10,
+        "10": 11,
+        "13": 12,
+        "14": 13
+    }
+}

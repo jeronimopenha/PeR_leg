@@ -5,7 +5,7 @@ import traceback
 from math import ceil, log2, sqrt
 from pathlib import Path
 from typing import List, Dict, Tuple, Any
-
+import pygraphviz as pgv
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -752,3 +752,27 @@ class Util:
                     annotations[k].remove([c, _])
 
         return annotations
+
+    def generate_images_by_dot_files(path_dot_files:str):
+        dot_files = Util.get_files_list_by_extension(path_dot_files, ".dot")
+        for dot_file,filename in dot_files:
+            G = pgv.AGraph(dot_file)
+            G.draw(path_dot_files+filename.replace('.dot','.png'),format='png',prog='dot')
+    
+    def generate_in_vertexes(vertexes:list[int],edges:list[tuple[int,int]]) -> dict:
+        in_vertexes = {}
+
+        for vertex in vertexes:
+            in_vertexes[vertex] = []
+
+        for (src,dst) in edges:
+            in_vertexes[dst].append(src)
+        return in_vertexes
+    
+    def generate_out_vertexes(vertexes:list[int],edges:list[tuple[int,int]])-> dict:
+        out_vertexes = {}
+        for vertex in vertexes:
+            out_vertexes[vertex] = []
+        for (src,dst) in edges:
+            out_vertexes[src].append(dst)
+        return out_vertexes
