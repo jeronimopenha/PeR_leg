@@ -1,0 +1,80 @@
+{
+    "graph_name": "Opt8.dot",
+    "algorithm": "YOTO",
+    "arch_type": "MESH",
+    "total_edges": 14,
+    "visited_edges": 14,
+    "n_copies": 10,
+    "total_threads": 60,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "num_annotations": 0,
+    "best_thread": "Exec_6_TH_3",
+    "best_dist": 0,
+    "exec_max_clk": 557,
+    "exec_min_clk": 367,
+    "exec_avg_clk": 434.1,
+    "th_max_clk": 93,
+    "th_min_clk": 25,
+    "th_avg_clk": 52.7,
+    "best_placement": [
+        [
+            5,
+            13,
+            11,
+            12
+        ],
+        [
+            6,
+            10,
+            7,
+            9
+        ],
+        [
+            2,
+            3,
+            8,
+            14
+        ],
+        [
+            4,
+            0,
+            1,
+            -1
+        ]
+    ],
+    "th_placement_distances": {
+        "4_2": 1,
+        "2_3": 1,
+        "3_0": 1,
+        "0_1": 1,
+        "3_10": 1,
+        "2_6": 1,
+        "6_5": 1,
+        "5_13": 1,
+        "13_11": 1,
+        "11_7": 1,
+        "7_9": 1,
+        "9_14": 1,
+        "7_8": 1,
+        "11_12": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "2": 1,
+        "1": 2,
+        "5": 3,
+        "11": 4,
+        "3": 5,
+        "13": 6,
+        "4": 7,
+        "6": 8,
+        "12": 9,
+        "14": 10,
+        "7": 11,
+        "8": 12,
+        "10": 13,
+        "9": 14
+    }
+}

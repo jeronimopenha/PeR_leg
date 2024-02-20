@@ -19,4 +19,4 @@ def calc_in_out_vertexes_by_dot_files(path_dot_files):
         print(f'{filename} - In = {num_ins} - Out = {num_outs} - Num Vertexes = {len(vertexes)} - Num Edges = {len(edges)}')
         input()
 base = Util.get_project_root()
-calc_in_out_vertexes_by_dot_files(base + '/dot_db/connected/')
+calc_in_out_vertexes_by_dot_files(base + '/dot_db/tableII/')
