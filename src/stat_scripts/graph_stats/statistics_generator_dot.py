@@ -1,12 +1,13 @@
 import re
 import pandas
-
+import json
 from src.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
 
 class StatisticsGeneratorDot(IStatisticsGenerator):
     # fixme melhorar algoritmo
     @staticmethod
-    def generate_statistics_pandas(data_files: list[str]) -> pandas.DataFrame:
+    def generate_statistics_pandas(data_files: list[str], results_iter_json_file:str) -> pandas.DataFrame:
+
         df = pandas.DataFrame(columns=IStatisticsGenerator.columns)
         pattern = re.compile(".weight=(\d+)")
         for dot_file in data_files:
@@ -35,4 +36,25 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                                                                 0
                                                                 )
             df = df.append(dict_data, ignore_index=True)
+        print(df)
+        input()
+        with open(results_iter_json_file, 'r') as arquivo:
+            js = json.load(arquivo)
+        temp_df = pandas.DataFrame(columns=[IStatisticsGenerator.columns[0],'Iters'])
+        for data in js:
+            graph,iters = data.values()
+            graph_name = graph.replace('.dot','')
+            dict_data = {IStatisticsGenerator.columns[0]:graph_name,'Iters':iters}
+            temp_df = temp_df.append(dict_data,ignore_index = True)
+        print(temp_df)
+        benchs = df['Bench'].unique().tolist()
+
+        df = pandas.merge(df,temp_df,on=IStatisticsGenerator.columns[0])
+        new_benchs = df['Bench'].unique().tolist()
+        for bench in benchs:
+            if bench not in new_benchs:
+                print(bench)
+            
+        print(df)
+        input()
         return df
