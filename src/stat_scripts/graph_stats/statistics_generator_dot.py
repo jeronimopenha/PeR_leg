@@ -36,8 +36,6 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                                                                 0
                                                                 )
             df = df.append(dict_data, ignore_index=True)
-        print(df)
-        input()
         with open(results_iter_json_file, 'r') as arquivo:
             js = json.load(arquivo)
         temp_df = pandas.DataFrame(columns=[IStatisticsGenerator.columns[0],'Iters'])
@@ -46,7 +44,6 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             graph_name = graph.replace('.dot','')
             dict_data = {IStatisticsGenerator.columns[0]:graph_name,'Iters':iters}
             temp_df = temp_df.append(dict_data,ignore_index = True)
-        print(temp_df)
         benchs = df['Bench'].unique().tolist()
 
         df = pandas.merge(df,temp_df,on=IStatisticsGenerator.columns[0])
@@ -55,6 +52,4 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             if bench not in new_benchs:
                 print(bench)
             
-        print(df)
-        input()
         return df
