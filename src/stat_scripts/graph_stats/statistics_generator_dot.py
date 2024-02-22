@@ -4,7 +4,6 @@ import json
 from src.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
 
 class StatisticsGeneratorDot(IStatisticsGenerator):
-    # fixme melhorar algoritmo
     @staticmethod
     def generate_statistics_pandas(data_files: list[str], results_iter_json_file:str) -> pandas.DataFrame:
 
@@ -52,4 +51,39 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             if bench not in new_benchs:
                 print(bench)
             
+        return df
+
+    @staticmethod
+    def generate_statistics_iter(data_files: list[str]) -> pandas.DataFrame:
+        df = pandas.DataFrame(columns=['Bench','Dist Total','Edges > 0','Total Executions','Max Iter'])
+        pattern = re.compile(".weight=(\d+)")
+        for dot_file in data_files:
+            edges = 0
+            distances = []
+            with open(dot_file, 'r') as file:
+                for row in file:
+                    result = re.findall(pattern, row)
+                    if len(result) > 0:
+                        edges += 1
+                        distances.append(int(result[0]))
+            count_dists_greater_0 = 0
+            dist_total = 0
+            for distance in distances:
+                dist_total += distance
+                count_dists_greater_0 += 0 if distance == 0 else 1
+
+            max_iter = re.findall('MI<\d+>',dot_file)[0]
+            max_iter = max_iter.replace('MI<','').replace('>','')
+
+            print(max_iter)
+            dirs = dot_file.split("/")
+            bench = ''
+            for letter in dirs[-1]:
+                if letter == '.':
+                    break
+                bench += letter
+            dict_data ={'Bench': bench,'Dist Total': dist_total, 'Edges > 0':count_dists_greater_0, 'Total Executions':dirs[-2],'Max Iter':max_iter}   
+                              
+            df = df.append(dict_data, ignore_index=True)
+        print(df)
         return df
