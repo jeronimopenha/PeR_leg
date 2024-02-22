@@ -55,7 +55,7 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
 
     @staticmethod
     def generate_statistics_iter(data_files: list[str]) -> pandas.DataFrame:
-        df = pandas.DataFrame(columns=['Bench','Dist Total','Edges > 0','Total Executions','Max Iter'])
+        df = pandas.DataFrame(columns=['Bench','Dist Total','Edges > 0','Total Executions','Max Iter','Arch Type'])
         pattern = re.compile(".weight=(\d+)")
         for dot_file in data_files:
             edges = 0
@@ -80,7 +80,8 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                 if letter == '.':
                     break
                 bench += letter
-            dict_data ={'Bench': bench,'Dist Total': dist_total, 'Edges > 0':count_dists_greater_0, 'Total Executions':dirs[-2],'Max Iter':max_iter}   
+            dict_data ={'Bench': bench,'Dist Total': dist_total, 'Edges > 0':count_dists_greater_0,'Arch Type':dirs[-3], 'Total Executions':dirs[-2],'Max Iter':max_iter}   
                               
             df = df.append(dict_data, ignore_index=True)
+        
         return df
