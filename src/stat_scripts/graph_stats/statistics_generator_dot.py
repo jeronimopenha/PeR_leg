@@ -74,8 +74,6 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
 
             max_iter = re.findall('MI<\d+>',dot_file)[0]
             max_iter = max_iter.replace('MI<','').replace('>','')
-
-            print(max_iter)
             dirs = dot_file.split("/")
             bench = ''
             for letter in dirs[-1]:
@@ -85,5 +83,4 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             dict_data ={'Bench': bench,'Dist Total': dist_total, 'Edges > 0':count_dists_greater_0, 'Total Executions':dirs[-2],'Max Iter':max_iter}   
                               
             df = df.append(dict_data, ignore_index=True)
-        print(df)
         return df
