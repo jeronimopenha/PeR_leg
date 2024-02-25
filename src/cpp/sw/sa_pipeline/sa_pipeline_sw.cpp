@@ -1,28 +1,30 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include <unordered_map>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+#include "sa_defs.h"
 
-#include "stage0_sa.cpp"
-#include "src/sw/sa_pipeline/stage10_sa.hpp"
-#include "src/sw/sa_pipeline/stage1_sa.hpp"
-#include "src/sw/sa_pipeline/stage2_sa.hpp"
-#include "src/sw/sa_pipeline/stage3_sa.hpp"
-#include "src/sw/sa_pipeline/stage4_sa.hpp"
-#include "src/sw/sa_pipeline/stage5_sa.hpp"
-#include "src/sw/sa_pipeline/stage6_sa.hpp"
-#include "src/sw/sa_pipeline/stage7_sa.hpp"
-#include "src/sw/sa_pipeline/stage8_sa.hpp"
-#include "src/sw/sa_pipeline/stage9_sa.hpp"
-#include "src/util/per_enum.hpp"
-#include "src/python/util/per_graph.hpp"
-#include "src/python/util/piplinebase.hpp"
-#include "src/util/util.hpp"
+ST0_OUT st0_new_output, st0_old_output;
+ST1_OUT st1_new_output, st1_old_output;
+ST2_OUT st2_new_output, st2_old_output;
+ST3_OUT st3_new_output, st3_old_output;
+ST4_OUT st4_new_output, st4_old_output;
+ST5_OUT st5_new_output, st5_old_output;
+ST6_OUT st6_new_output, st6_old_output;
+ST7_OUT st7_new_output, st7_old_output;
+ST8_OUT st8_new_output, st8_old_output;
+ST9_OUT st9_new_output, st9_old_output;
 
+
+void init_outputs(){
+    st0_new_output.th_idx = 0;
+    st0_new_output.th_valid = 0;
+    st0_new_output.cell_a = 0;
+    st0_new_output.cell_b = 0;
+    
+}
+
+void update_outputs(){
+
+}
+
+/*
 class SAPipeline : public PiplineBase {
 private:
     int len_pipeline;
@@ -37,7 +39,7 @@ public:
         std::unordered_map<int, std::vector<int>> dic_man;
         std::unordered_map<std::string, std::vector<int>> reports;
         std::vector<pid_t> jobs_alive;
-        
+
         for (int exec_num = 0; exec_num < n_copies; ++exec_num) {
             pid_t pid = fork();
             if (pid == 0) {
@@ -109,7 +111,7 @@ private:
     void exec_pipeline(int exec_key, int max_counter, std::unordered_map<int, std::vector<int>> &dic_man) {
         std::unordered_map<int, std::vector<int>> n2c;
         std::unordered_map<int, std::vector<int>> c2n;
-        
+
         std::shared_ptr<Stage0SA> st0 = std::make_shared<Stage0SA>(per_graph.n_cells, n_threads);
         std::shared_ptr<Stage1SA> st1 = std::make_shared<Stage1SA>(c2n, n_threads);
         std::shared_ptr<Stage2SA> st2 = std::make_shared<Stage2SA>(per_graph.neighbors);
@@ -121,7 +123,7 @@ private:
         std::shared_ptr<Stage8SA> st8 = std::make_shared<Stage8SA>();
         std::shared_ptr<Stage9SA> st9 = std::make_shared<Stage9SA>();
         std::shared_ptr<Stage10SA> st10 = std::make_shared<Stage10SA>();
-        
+
         int counter = 0;
         while (counter < max_counter) {
             st0->compute();
@@ -151,4 +153,4 @@ private:
 
         dic_man[getpid()] = {exec_key, st0->get_exec_counter(), n2c};
     }
-};
+};*/
