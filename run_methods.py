@@ -1,10 +1,10 @@
 import os
-from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
+from src.python.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
+from src.python.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 
-from src.util.per_enum import ArchType
-from src.util.per_graph import PeRGraph
-from src.util.util import Util
+from src.python.util.per_enum import ArchType
+from src.python.util.per_graph import PeRGraph
+from src.python.util.util import Util
 import time
 
 methods = [YOTTPipeline, YotoPipelineSw]

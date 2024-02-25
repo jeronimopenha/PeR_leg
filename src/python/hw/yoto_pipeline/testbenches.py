@@ -2,7 +2,7 @@ from veriloggen import *
 from math import ceil, log2, sqrt
 import src.python.hw.sa_fsm.sa_components as _sa
 import old.sa_pipeline.util as _u
-import src.python.hw.sa_aws as _aws
+import src.python.python.hw.sa_aws as _aws
 import src.python.hw.sa_fsm.sa_components as _comp
 
 
@@ -145,7 +145,7 @@ def create_sa_verilog_test_bench(sa_comp: _sa.SAComponents) -> str:
 
     m.to_verilog(os.getcwd() + '/verilog/sa_verilog_test.v')
     sim = simulation.Simulator(m, sim="iverilog")
-    rslt = sim.run_parallel()
+    rslt = sim.run()
     print(rslt)
     _u.create_dot_from_rom_files(
         os.getcwd() + '/rom/c_n.rom', 'ini_th', os.getcwd() + '/rom/', n_threads, n_cells)

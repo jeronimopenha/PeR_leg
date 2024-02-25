@@ -1,6 +1,6 @@
 from veriloggen import *
 
-from src.hw import SAComponents
+from src.python.hw import SAComponents
 from old.sa_pipeline.util import create_rom_files, initialize_regs
 from math import ceil, log2, sqrt
 

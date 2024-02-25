@@ -1,9 +1,9 @@
 import os
 import time
-from src.sw.sa_pipeline.sa_pipeline_sw import SAPipeline
-from src.util.per_graph import PeRGraph
-from src.util.per_enum import ArchType
-from src.util.util import Util
+from src.python.sw.sa_pipeline.sa_pipeline_sw import SAPipeline
+from src.python.util.per_graph import PeRGraph
+from src.python.util.per_enum import ArchType
+from src.python.util.util import Util
 
 
 def run_connected_graphs():
