@@ -1,0 +1,1 @@
+docker run --network="host"  -v /home/jeronimocosta/:/home/jeronimocosta -v /tools/:/tools -it ubuntu:20.04 bash
