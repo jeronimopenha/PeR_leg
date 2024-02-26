@@ -19,7 +19,9 @@ class YotoPipelineHw(PiplineBase):
         self.node_bits = Util.get_n_bits(self.per_graph.n_cells)
         self.ij_bits = Util.get_n_bits(self.n_lines)
         self.total_dists = pow((self.n_lines * 2) - 1, 2)
-        self.dst_counter_bits = Util.get_n_bits(self.total_dists) + 1
+        self.dst_counter_bits = 6
+        # fixme uncomment the line below and comment the line above
+        # self.dst_counter_bits = Util.get_n_bits(self.total_dists) + 1
 
     # todo under construction
     def create_rom_files(self, edges_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
@@ -184,6 +186,9 @@ class YotoPipelineHw(PiplineBase):
         st1_dist_table_line = m.Wire('st1_dist_table_line', self.distance_table_bits)
         st1_a = m.Wire('st1_a', self.node_bits)
         st1_b = m.Wire('st1_b', self.node_bits)
+        st1_conf_wr = m.Input('st1_conf_wr')
+        st1_conf_addr = m.Input('st1_conf_addr', self.edge_bits + self.th_bits)
+        st1_conf_data = m.Input('st1_conf_data', self.node_bits * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -195,6 +200,11 @@ class YotoPipelineHw(PiplineBase):
         st2_dist_table_line = m.Wire('st2_dist_table_line', self.distance_table_bits)
         st2_dist_counter = m.Wire('st2_dist_counter', self.dst_counter_bits)
         st2_b = m.Wire('st2_b', self.node_bits)
+        st2_conf_addr = m.Input('st2_conf_addr', self.th_bits + self.node_bits)
+        st2_conf_wr = m.Input('st2_conf_wr')
+        st2_conf_wr_data = m.Input('st2_conf_wr_data', self.ij_bits * 2)
+        st2_conf_rd = m.Input('st2_conf_rd')
+        st2_conf_rd_data = m.Output('st2_conf_rd_data', self.ij_bits * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -205,6 +215,9 @@ class YotoPipelineHw(PiplineBase):
         st3_jb = m.Wire('st3_jb', self.ij_bits + 2)
         st3_dist_counter = m.Wire('st3_dist_counter', self.dst_counter_bits)
         st3_b = m.Wire('st3_b', self.node_bits)
+        st3_conf_wr = m.Input('st3_conf_wr')
+        st3_conf_addr = m.Input('st3_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        st3_conf_data = m.Input('st3_conf_data', (self.ij_bits + 1) * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -216,6 +229,9 @@ class YotoPipelineHw(PiplineBase):
         st4_ib = m.Wire('st4_ib', self.ij_bits)
         st4_jb = m.Wire('st4_jb', self.ij_bits)
         st4_b = m.Wire('st4_b', self.node_bits)
+        st4_conf_wr = m.Input('st4_conf_wr')
+        st4_conf_addr = m.Input('st4_conf_addr', self.th_bits + self.ij_bits * 2)
+        st4_conf_data = m.Input('st4_conf_data')
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -252,6 +268,9 @@ class YotoPipelineHw(PiplineBase):
             ('st0_th_idx', st0_th_idx),
             ('st0_th_valid', st0_th_valid),
             ('st0_edg_n', st0_edg_n),
+            ('conf_wr', st1_conf_wr),
+            ('conf_addr', st1_conf_addr),
+            ('conf_data', st1_conf_data),
         ]
         m.Instance(stage1_m, stage1_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -280,6 +299,11 @@ class YotoPipelineHw(PiplineBase):
             ('st4_ib', st4_ib),
             ('st4_jb', st4_jb),
             ('st4_b', st4_b),
+            ('conf_addr', st2_conf_addr),
+            ('conf_wr', st2_conf_wr),
+            ('conf_wr_data', st2_conf_wr_data),
+            ('conf_rd', st2_conf_rd),
+            ('conf_rd_data', st2_conf_rd_data),
         ]
         m.Instance(stage2_m, stage2_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -302,6 +326,9 @@ class YotoPipelineHw(PiplineBase):
             ('st2_dist_table_line', st2_dist_table_line),
             ('st2_dist_counter', st2_dist_counter),
             ('st2_b', st2_b),
+            ('conf_wr', st3_conf_wr),
+            ('conf_addr', st3_conf_addr),
+            ('conf_data', st3_conf_data),
         ]
         m.Instance(stage3_m, stage3_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -324,6 +351,9 @@ class YotoPipelineHw(PiplineBase):
             ('st3_jb', st3_jb),
             ('st3_dist_counter', st3_dist_counter),
             ('st3_b', st3_b),
+            ('conf_wr', st4_conf_wr),
+            ('conf_addr', st4_conf_addr),
+            ('conf_data', st4_conf_data),
         ]
         m.Instance(stage4_m, stage4_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -425,8 +455,8 @@ class YotoPipelineHw(PiplineBase):
             )
         )
 
-        # fixme
         HwUtil.initialize_regs(m, {'thread_valid': pow(2, self.n_threads) - 1})
+        # fixme comment the line below and uncoment the line above
         # HwUtil.initialize_regs(m, {'thread_valid': 1})
         return m
 
@@ -447,6 +477,11 @@ class YotoPipelineHw(PiplineBase):
         st0_th_idx = m.Input('st0_th_idx', self.th_bits)
         st0_th_valid = m.Input('st0_th_valid')
         st0_edg_n = m.Input('st0_edg_n', self.edge_bits)
+
+        # configuration inputs
+        conf_wr = m.Input('conf_wr')
+        conf_addr = m.Input('conf_addr', self.edge_bits + self.th_bits)
+        conf_data = m.Input('conf_data', self.node_bits * 2)
 
         a_t = m.Wire('a_t', self.node_bits)
         b_t = m.Wire('b_t', self.node_bits)
@@ -483,9 +518,9 @@ class YotoPipelineHw(PiplineBase):
             ('clk', clk),
             ('rd_addr', Cat(st0_th_idx, st0_edg_n)),
             ('out', Cat(a_t, b_t)),
-            ('wr', Int(0, 1, 10)),
-            ('wr_addr', Int(0, self.edge_bits + self.th_bits, 10)),
-            ('wr_data', Int(0, self.node_bits * 2, 10)),
+            ('wr', conf_wr),
+            ('wr_addr', conf_addr),
+            ('wr_data', conf_data),
         ]
 
         edges_m = self.hw_components.create_memory_1r_1w()
@@ -522,6 +557,15 @@ class YotoPipelineHw(PiplineBase):
         st4_ib = m.Input('st4_ib', self.ij_bits)
         st4_jb = m.Input('st4_jb', self.ij_bits)
         st4_b = m.Input('st4_b', self.node_bits)
+
+        # configuration inputs
+        conf_addr = m.Input('conf_addr', self.th_bits + self.node_bits)
+
+        conf_wr = m.Input('conf_wr')
+        conf_wr_data = m.Input('conf_wr_data', self.ij_bits * 2)
+
+        conf_rd = m.Input('conf_rd')
+        conf_rd_data = m.Output('conf_rd_data', self.ij_bits * 2)
 
         th_dist_table_counter = m.Reg('th_dist_table_counter', 6, self.n_threads)
         running = m.Reg('running')
@@ -561,6 +605,18 @@ class YotoPipelineHw(PiplineBase):
             )
         )
 
+        conf_rd_data.assign(Cat(ia_t, ja_t))
+
+        mem_rd_addr = m.Wire('mem_rd_addr', self.th_bits + self.node_bits)
+        mem_wr_addr = m.Wire('mem_wr_addr', self.th_bits + self.node_bits)
+        mem_wr = m.Wire('mem_wr')
+        mem_wr_data = m.Wire('mem_wr_data', self.ij_bits * 2)
+
+        mem_rd_addr.assign(Mux(conf_rd, conf_addr, Cat(st1_th_idx, st1_a)))
+        mem_wr_addr.assign(Mux(conf_wr, conf_addr, Cat(st4_th_idx, st4_b)))
+        mem_wr.assign(Mux(conf_wr, conf_wr, st4_place))
+        mem_wr_data.assign(Mux(conf_wr, conf_wr_data, Cat(st4_ib, st4_jb)))
+
         par = [
             ('width', self.ij_bits * 2),
             ('depth', self.th_bits + self.node_bits)
@@ -573,11 +629,11 @@ class YotoPipelineHw(PiplineBase):
 
         con = [
             ('clk', clk),
-            ('rd_addr', Cat(st1_th_idx, st1_a)),
+            ('rd_addr', mem_rd_addr),
             ('out', Cat(ia_t, ja_t)),
-            ('wr', st4_place),
-            ('wr_addr', Cat(st4_th_idx, st4_b)),
-            ('wr_data', Cat(st4_ib, st4_jb)),
+            ('wr', mem_wr),
+            ('wr_addr', mem_wr_addr),
+            ('wr_data', mem_wr_data),
         ]
 
         n2c_m = self.hw_components.create_memory_1r_1w()
@@ -607,6 +663,11 @@ class YotoPipelineHw(PiplineBase):
         st2_dist_table_line = m.Input('st2_dist_table_line', self.distance_table_bits)
         st2_dist_counter = m.Input('st2_dist_counter', self.dst_counter_bits)
         st2_b = m.Input('st2_b', self.node_bits)
+
+        # configuration inputs
+        conf_wr = m.Input('conf_wr')
+        conf_addr = m.Input('conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        conf_data = m.Input('conf_data', (self.ij_bits + 1) * 2)
 
         add_i_t = m.Wire('add_i_t', self.ij_bits + 1)
         add_j_t = m.Wire('add_j_t', self.ij_bits + 1)
@@ -640,9 +701,9 @@ class YotoPipelineHw(PiplineBase):
             ('clk', clk),
             ('rd_addr', Cat(st2_dist_table_line, st2_dist_counter[:-1])),
             ('out', Cat(add_i_t, add_j_t)),
-            ('wr', Int(0, 1, 10)),
-            ('wr_addr', Int(0, self.dst_counter_bits - 1 + self.distance_table_bits, 10)),
-            ('wr_data', Int(0, (self.ij_bits + 1) * 2, 10)),
+            ('wr', conf_wr),
+            ('wr_addr', conf_addr),
+            ('wr_data', conf_data),
         ]
 
         distance_table_m = self.hw_components.create_memory_1r_1w()
@@ -673,6 +734,11 @@ class YotoPipelineHw(PiplineBase):
         st3_jb = m.Input('st3_jb', self.ij_bits + 2)
         st3_dist_counter = m.Input('st3_dist_counter', self.dst_counter_bits)
         st3_b = m.Input('st3_b', self.node_bits)
+
+        # configuration inputs
+        conf_wr = m.Input('conf_wr')
+        conf_addr = m.Input('conf_addr', self.th_bits + self.ij_bits * 2)
+        conf_data = m.Input('conf_data')
 
         st4_th_idx = m.Wire('st4_th_idx', self.th_bits)
         st4_place = m.Wire('st4_place')
@@ -720,6 +786,14 @@ class YotoPipelineHw(PiplineBase):
             )
         )
 
+        mem_wr = m.Wire('mem_wr')
+        mem_addr = m.Wire('mem_addr', self.th_bits + self.ij_bits * 2)
+        mem_data = m.Wire('mem_data')
+
+        mem_wr.assign(Mux(conf_wr, conf_wr, st4_place))
+        mem_addr.assign(Mux(conf_wr, conf_addr, Cat(st4_th_idx, st4_ib, st4_jb)))
+        mem_data.assign(Mux(conf_wr, conf_data, Int(1, 1, 10)))
+
         par = [
             ('width', 1),
             ('depth', self.th_bits + self.ij_bits * 2),
@@ -731,9 +805,9 @@ class YotoPipelineHw(PiplineBase):
             ('clk', clk),
             ('rd_addr', Cat(st3_th_idx, st3_ib[0:self.ij_bits], st3_jb[0:self.ij_bits])),
             ('out', content),
-            ('wr', st4_place),
-            ('wr_addr', Cat(st4_th_idx, st4_ib, st4_jb)),
-            ('wr_data', Int(1, 1, 10)),
+            ('wr', mem_wr),
+            ('wr_addr', mem_addr),
+            ('wr_data', mem_data),
         ]
 
         cells_m = self.hw_components.create_memory_1r_1w()
