@@ -1,10 +1,10 @@
 import os
-from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
+from src.python.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
+from src.python.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 
-from src.util.per_enum import ArchType
-from src.util.per_graph import PeRGraph
-from src.util.util import Util
+from src.python.util.per_enum import ArchType
+from src.python.util.per_graph import PeRGraph
+from src.python.util.util import Util
 import time
 
 methods = [YOTTPipeline, YotoPipelineSw]
@@ -14,10 +14,10 @@ run_parallel = True
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
 dot_path_base = root_path + '/dot_db/'
-dot_connected_path = dot_path_base + 'graphs0_dag/'
+dot_connected_path = dot_path_base + 'graphs0_tree/'
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [100]
+copies = [1, 10, 100]
 
 start = time.time()
 for i, method in enumerate(methods):
@@ -41,7 +41,8 @@ for i, method in enumerate(methods):
 
             # list connected benchmarks
             dots_list = Util.get_files_list_by_extension(dot_connected_path, '.dot')
-            # dots_list = [[Util.get_project_root() + "/dot_db/graphs0_dag/5x5 - 24.dot", "5x5 - 24.dot"]]
+            # dots_list = [
+            #    [dot_connected_path + "tree 10 - 4x4 - Inv.dot - MC = 1.dot", "tree 10 - 4x4 - Inv.dot - MC = 1.dot"]]
             reports: list[dict] = []
 
             # FIXME the line below is only for debugging

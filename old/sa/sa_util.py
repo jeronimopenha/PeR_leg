@@ -1,5 +1,5 @@
 import random as rnd
-from src.util.per_graph import PeRGraph
+from src.python.util.per_graph import PeRGraph
 
 
 class SaUtil(object):

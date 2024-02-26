@@ -1,12 +1,15 @@
 import os
+import random
 
-from src.hw.yoto_pipeline.yoto_pipeline_hw import YotoPipelineHw
-from src.util.per_graph import PeRGraph
-from src.util.per_enum import ArchType
-from src.util.util import Util
+from src.python.hw.yoto_pipeline.yoto_pipeline_hw import YotoPipelineHw
+from src.python.util.per_graph import PeRGraph
+from src.python.util.per_enum import ArchType
+from src.python.util.util import Util
 
 
 def run_connected_graphs():
+    # fixme
+    random.seed(0)
     threads_per_copy: int = 6
     total_threads: int = 6
     arch_type: ArchType = ArchType.ONE_HOP
