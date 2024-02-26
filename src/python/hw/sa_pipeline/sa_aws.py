@@ -1,6 +1,6 @@
 from veriloggen import *
 import src.python.hw.sa_fsm.sa_components as _sa
-import old.sa_pipeline.util as _u
+import src.python.hw.sa_pipeline.util as _u
 from math import ceil, log2, sqrt
 
 

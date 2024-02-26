@@ -4,16 +4,16 @@ from veriloggen import *
 
 from src.python.hw.yoto_pipeline.yoto_pipeline_hw import YotoPipelineHw
 from src.python.util.hw_util import HwUtil
-from src.python.util.hw_components import HwComponents
 from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph
 from src.python.util.util import Util
 
 
-def create_testbench_synth(module: Module()):
+def create_testbench_synth(module: Module(), copies: int = 5):
     m = Module('testbench_synth')
     clk = m.Input('clk')
     rst = m.Input('rst')
+    start = m.Input('start')
     out = m.Output('out')
     regs_reset = []
     regs_inc = []
@@ -24,36 +24,37 @@ def create_testbench_synth(module: Module()):
         m.Localparam(params[p].name, params[p].value)
 
     ports = module.get_ports()
-    con = []
+    con = [[] for _ in range(copies)]
     max_width_out = 1
-    for port in ports:
-        if module.is_input(port) and port in ['clk', 'rst']:
-            con.append((port, m.get_ports()[port]))
-        elif module.is_input(port) and port not in ['clk', 'rst']:
-            p = ports[port]
-            if p.width:
-                reg = m.Reg(port, p.width)
-            else:
-                reg = m.Reg(port)
-            regs_reset.append(reg(0))
-            regs_inc.append(reg.inc())
-            con.append((port, reg))
-        elif module.is_output(port):
-            p = ports[port]
-            if p.width:
-                if str(p.width) in params:
-                    p.width = p.width.value
+    for copy in range(copies):
+        for port in ports:
+            if module.is_input(port) and port in ['clk', 'rst', 'start']:
+                con[copy].append((port, m.get_ports()[port]))
+            elif module.is_input(port) and port not in ['clk', 'rst', 'start']:
+                p = ports[port]
+                if p.width:
+                    reg = m.Reg(f'{port}_{copy}', p.width)
+                else:
+                    reg = m.Reg(f'{port}_{copy}')
+                regs_reset.append(reg(0))
+                regs_inc.append(reg.inc())
+                con[copy].append((port, reg))
+            elif module.is_output(port):
+                p = ports[port]
+                if p.width:
+                    if str(p.width) in params:
+                        p.width = p.width.value
 
-                wire = m.Wire(module.name + '_' + port, p.width)
-                max_width_out = max(max_width_out, p.width)
-            else:
-                wire = m.Wire(module.name + '_' + port)
-            or_list += wire.name + '|'
-            con.append((port, wire))
+                    wire = m.Wire(f'{module.name}_{port}_{copy}', p.width)
+                    max_width_out = max(max_width_out, p.width)
+                else:
+                    wire = m.Wire(f'{module.name}_{port}_{copy}')
+                or_list += wire.name + '|'
+                con[copy].append((port, wire))
 
     data = m.Wire('data', max_width_out)
-
-    m.Instance(module, module.name, params, con)
+    for copy in range(copies):
+        m.Instance(module, f'{module.name}_{copy}', params, con[copy])
 
     m.Always(Posedge(clk))(
         If(rst)(
@@ -97,7 +98,7 @@ for dot_path, dot_name in dots_list:
     print(per_graph.dot_name)
     yoto_pipeline_hw = YotoPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
 m = yoto_pipeline_hw.create_yoto_pipeline_hw('t.txt', 't.txt', 't.txt', 't.txt', 't.txt', False)
-m = create_testbench_synth(m)
+m = create_testbench_synth(m, 10)
 m.to_verilog('synth.v')
 
 '''def create_testbench_sim(cgraAcc, num_data: int, conf_lines, files):
