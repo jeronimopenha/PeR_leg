@@ -172,6 +172,22 @@ class YotoPipelineHw(PiplineBase):
         done = m.Output('done')
         total_pipeline_counter = m.Output('total_pipeline_counter', 32)
 
+        st1_conf_wr = m.Input('st1_conf_wr')
+        st1_conf_addr = m.Input('st1_conf_addr', self.edge_bits + self.th_bits)
+        st1_conf_data = m.Input('st1_conf_data', self.node_bits * 2)
+        st2_wr_conf_addr = m.Input('st2_wr_conf_addr', self.th_bits + self.node_bits)
+        st2_rd_conf_addr = m.Input('st2_rd_conf_addr', self.th_bits + self.node_bits)
+        st2_conf_wr = m.Input('st2_conf_wr')
+        st2_conf_wr_data = m.Input('st2_conf_wr_data', self.ij_bits * 2)
+        st2_conf_rd = m.Input('st2_conf_rd')
+        st2_conf_rd_data = m.Output('st2_conf_rd_data', self.ij_bits * 2)
+        st3_conf_wr = m.Input('st3_conf_wr')
+        st3_conf_addr = m.Input('st3_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        st3_conf_data = m.Input('st3_conf_data', (self.ij_bits + 1) * 2)
+        st4_conf_wr = m.Input('st4_conf_wr')
+        st4_conf_addr = m.Input('st4_conf_addr', self.th_bits + self.ij_bits * 2)
+        st4_conf_data = m.Input('st4_conf_data')
+
         m.EmbeddedCode('// St0 wires')
         st0_th_idx = m.Wire('st0_th_idx', self.th_bits)
         st0_th_valid = m.Wire('st0_th_valid')
@@ -186,9 +202,6 @@ class YotoPipelineHw(PiplineBase):
         st1_dist_table_line = m.Wire('st1_dist_table_line', self.distance_table_bits)
         st1_a = m.Wire('st1_a', self.node_bits)
         st1_b = m.Wire('st1_b', self.node_bits)
-        st1_conf_wr = m.Input('st1_conf_wr')
-        st1_conf_addr = m.Input('st1_conf_addr', self.edge_bits + self.th_bits)
-        st1_conf_data = m.Input('st1_conf_data', self.node_bits * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -200,11 +213,6 @@ class YotoPipelineHw(PiplineBase):
         st2_dist_table_line = m.Wire('st2_dist_table_line', self.distance_table_bits)
         st2_dist_counter = m.Wire('st2_dist_counter', self.dst_counter_bits)
         st2_b = m.Wire('st2_b', self.node_bits)
-        st2_conf_addr = m.Input('st2_conf_addr', self.th_bits + self.node_bits)
-        st2_conf_wr = m.Input('st2_conf_wr')
-        st2_conf_wr_data = m.Input('st2_conf_wr_data', self.ij_bits * 2)
-        st2_conf_rd = m.Input('st2_conf_rd')
-        st2_conf_rd_data = m.Output('st2_conf_rd_data', self.ij_bits * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -215,9 +223,6 @@ class YotoPipelineHw(PiplineBase):
         st3_jb = m.Wire('st3_jb', self.ij_bits + 2)
         st3_dist_counter = m.Wire('st3_dist_counter', self.dst_counter_bits)
         st3_b = m.Wire('st3_b', self.node_bits)
-        st3_conf_wr = m.Input('st3_conf_wr')
-        st3_conf_addr = m.Input('st3_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
-        st3_conf_data = m.Input('st3_conf_data', (self.ij_bits + 1) * 2)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -229,9 +234,6 @@ class YotoPipelineHw(PiplineBase):
         st4_ib = m.Wire('st4_ib', self.ij_bits)
         st4_jb = m.Wire('st4_jb', self.ij_bits)
         st4_b = m.Wire('st4_b', self.node_bits)
-        st4_conf_wr = m.Input('st4_conf_wr')
-        st4_conf_addr = m.Input('st4_conf_addr', self.th_bits + self.ij_bits * 2)
-        st4_conf_data = m.Input('st4_conf_data')
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -299,7 +301,8 @@ class YotoPipelineHw(PiplineBase):
             ('st4_ib', st4_ib),
             ('st4_jb', st4_jb),
             ('st4_b', st4_b),
-            ('conf_addr', st2_conf_addr),
+            ('conf_wr_addr', st2_wr_conf_addr),
+            ('conf_rd_addr', st2_rd_conf_addr),
             ('conf_wr', st2_conf_wr),
             ('conf_wr_data', st2_conf_wr_data),
             ('conf_rd', st2_conf_rd),
@@ -559,12 +562,12 @@ class YotoPipelineHw(PiplineBase):
         st4_b = m.Input('st4_b', self.node_bits)
 
         # configuration inputs
-        conf_addr = m.Input('conf_addr', self.th_bits + self.node_bits)
-
         conf_wr = m.Input('conf_wr')
+        conf_wr_addr = m.Input('conf_wr_addr', self.th_bits + self.node_bits)
         conf_wr_data = m.Input('conf_wr_data', self.ij_bits * 2)
 
         conf_rd = m.Input('conf_rd')
+        conf_rd_addr = m.Input('conf_rd_addr', self.th_bits + self.node_bits)
         conf_rd_data = m.Output('conf_rd_data', self.ij_bits * 2)
 
         th_dist_table_counter = m.Reg('th_dist_table_counter', 6, self.n_threads)
@@ -612,8 +615,8 @@ class YotoPipelineHw(PiplineBase):
         mem_wr = m.Wire('mem_wr')
         mem_wr_data = m.Wire('mem_wr_data', self.ij_bits * 2)
 
-        mem_rd_addr.assign(Mux(conf_rd, conf_addr, Cat(st1_th_idx, st1_a)))
-        mem_wr_addr.assign(Mux(conf_wr, conf_addr, Cat(st4_th_idx, st4_b)))
+        mem_rd_addr.assign(Mux(conf_rd, conf_rd_addr, Cat(st1_th_idx, st1_a)))
+        mem_wr_addr.assign(Mux(conf_wr, conf_wr_addr, Cat(st4_th_idx, st4_b)))
         mem_wr.assign(Mux(conf_wr, conf_wr, st4_place))
         mem_wr_data.assign(Mux(conf_wr, conf_wr_data, Cat(st4_ib, st4_jb)))
 
@@ -812,6 +815,362 @@ class YotoPipelineHw(PiplineBase):
 
         cells_m = self.hw_components.create_memory_1r_1w()
         m.Instance(cells_m, cells_m.name, par, con)
+
+        HwUtil.initialize_regs(m)
+
+        return m
+
+    def create_acc(self, copies: int = 1):
+        acc_num_in = copies
+        acc_num_out = copies
+
+        copies = copies
+        bus_width = 32
+        acc_data_in_width = bus_width
+        acc_data_out_width = bus_width
+        bus_data_width = acc_data_in_width
+
+        name = "yoto_acc"
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+        start = m.Input('start')
+
+        acc_user_done_rd_data = m.Input('acc_user_done_rd_data', acc_num_in)
+        acc_user_done_wr_data = m.Input('acc_user_done_wr_data', acc_num_out)
+
+        acc_user_request_read = m.Output('acc_user_request_read', acc_num_in)
+        acc_user_read_data_valid = m.Input('acc_user_read_data_valid', acc_num_in)
+        acc_user_read_data = m.Input('acc_user_read_data', bus_data_width * acc_num_in)
+
+        acc_user_available_write = m.Input('acc_user_available_write', acc_num_out)
+        acc_user_request_write = m.Output('acc_user_request_write', acc_num_out)
+        acc_user_write_data = m.Output('acc_user_write_data', bus_data_width * acc_num_out)
+
+        acc_user_done = m.Output('acc_user_done')
+
+        start_reg = m.Reg('start_reg')
+        yoto_interface_done = m.Wire('yoto_interface_done', acc_num_in)
+
+        acc_user_done.assign(Uand(yoto_interface_done))
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                start_reg(0)
+            ).Else(
+                start_reg(Or(start_reg, start))
+            )
+        )
+
+        yoto_interface = self.create_yoto_interface()
+        for i in range(copies):
+            par = []
+            con = [
+                ('clk', clk),
+                ('rst', rst),
+                ('start', start_reg),
+                ('yoto_done_rd_data', acc_user_done_rd_data[i]),
+                ('yoto_done_wr_data', acc_user_done_wr_data[i]),
+                ('yoto_request_read', acc_user_request_read[i]),
+                ('yoto_read_data_valid', acc_user_read_data_valid[i]),
+                ('yoto_read_data', acc_user_read_data[i * acc_data_in_width:(i + 1) * acc_data_in_width]),
+                ('yoto_available_write', acc_user_available_write[i]),
+                ('yoto_request_write', acc_user_request_write[i]),
+                ('yoto_write_data', acc_user_write_data[i * acc_data_out_width:(i + 1) * acc_data_out_width]),
+                ('yoto_interface_done', yoto_interface_done[i])]
+            m.EmbeddedCode("(* keep_hierarchy = \"yes\" *)")
+            m.Instance(yoto_interface, f'{yoto_interface.name}_{i}', par, con)
+
+            HwUtil.initialize_regs(m)
+
+        return m
+
+    def create_yoto_interface(self):
+        # self.copies = copies
+        bus_width = 32
+        pipe_width = 16
+
+        name = "yoto_interface"
+        m = Module(name)
+
+        # interface I/O interface - Begin ------------------------------------------------------------------------------
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+        start = m.Input('start')
+
+        yoto_done_rd_data = m.Input('yoto_done_rd_data')
+        yoto_done_wr_data = m.Input('yoto_done_wr_data')
+
+        yoto_request_read = m.Output('yoto_request_read')
+        yoto_read_data_valid = m.Input('yoto_read_data_valid')
+        yoto_read_data = m.Input('yoto_read_data', bus_width)
+
+        yoto_available_write = m.Input('yoto_available_write')
+        yoto_request_write = m.OutputReg('yoto_request_write')
+        yoto_write_data = m.OutputReg('yoto_write_data', bus_width)
+
+        yoto_interface_done = m.Output('yoto_interface_done')
+        # interface I/O interface - End --------------------------------------------------------------------------------
+
+        yoto_interface_done.assign(Uand(Cat(yoto_done_wr_data, yoto_done_rd_data)))
+
+        start_pipe = m.Reg('start_pipe')
+
+        pop_data = m.Reg('pop_data')
+        available_pop = m.Wire('available_pop')
+        data_out = m.Wire('data_out', pipe_width)
+        visited_edges = m.Reg('visited_edges', self.edge_bits)
+        total_pipeline_counter = m.Wire('total_pipeline_counter', 32)
+
+        fsm_sd = m.Reg('fms_sd', 5)
+        fsm_sd_edges_idle = m.Localparam('fsm_sd_edges_idle', 0, fsm_sd.width)
+        fsm_sd_edges_send_data = m.Localparam('fsm_sd_edges_send_data', 1, fsm_sd.width)
+        fsm_sd_edges_verify = m.Localparam('fsm_sd_edges_verify', 2, fsm_sd.width)
+        fsm_sd_n2c_idle = m.Localparam('fsm_sd_n2c_idle', 3, fsm_sd.width)
+        fsm_sd_n2c_send_data = m.Localparam('fsm_sd_n2c_send_data', 4, fsm_sd.width)
+        fsm_sd_n2c_verify = m.Localparam('fsm_sd_n2c_verify', 5, fsm_sd.width)
+        fsm_sd_dist_idle = m.Localparam('fsm_sd_dist_idle', 6, fsm_sd.width)
+        fsm_sd_dist_send_data = m.Localparam('fsm_sd_dist_send_data', 7, fsm_sd.width)
+        fsm_sd_dist_verify = m.Localparam('fsm_sd_dist_verify', 8, fsm_sd.width)
+        fsm_sd_c_idle = m.Localparam('fsm_sd_c_idle', 9, fsm_sd.width)
+        fsm_sd_c_send_data = m.Localparam('fsm_sd_c_send_data', 10, fsm_sd.width)
+        fsm_sd_c_verify = m.Localparam('fsm_sd_c_verify', 11, fsm_sd.width)
+        fsm_sd_vedges_idle = m.Localparam('fsm_sd_vedges_idle', 12, fsm_sd.width)
+        fsm_sd_vedges_send_data = m.Localparam('fsm_sd_vedges_send_data', 13, fsm_sd.width)
+        fsm_sd_done = m.Localparam('fsm_sd_done', 14, fsm_sd.width)
+
+        # read data back
+        yoto_done = m.Wire('yoto_done')
+        st2_conf_rd = m.Reg('st2_conf_rd')
+        st2_rd_conf_addr = m.Reg('st2_rd_conf_addr', self.th_bits + self.node_bits + 1)
+        st2_conf_rd_data = m.Wire('st2_conf_rd_data', self.ij_bits * 2)
+
+        # configurations
+        st1_conf_wr = m.Reg('st1_conf_wr')
+        st1_conf_addr = m.Reg('st1_conf_addr', self.edge_bits + self.th_bits)
+        st1_conf_data = m.Reg('st1_conf_data', self.node_bits * 2)
+
+        st2_conf_wr = m.Reg('st2_conf_wr')
+        st2_wr_conf_addr = m.Reg('st2_wr_conf_addr', self.th_bits + self.node_bits)
+        st2_conf_wr_data = m.Reg('st2_conf_wr_data', self.ij_bits * 2)
+
+        st3_conf_wr = m.Reg('st3_conf_wr')
+        st3_conf_addr = m.Reg('st3_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        st3_conf_data = m.Reg('st3_conf_data', (self.ij_bits + 1) * 2)
+
+        st4_conf_wr = m.Reg('st4_conf_wr')
+        st4_conf_addr = m.Reg('st4_conf_addr', self.th_bits + self.ij_bits * 2)
+        st4_conf_data = m.Reg('st4_conf_data')
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                st1_conf_wr(0),
+                st1_conf_addr(0),
+                st1_conf_data(0),
+                st2_conf_wr(0),
+                st2_wr_conf_addr(0),
+                st2_conf_wr_data(0),
+                st3_conf_wr(0),
+                st3_conf_addr(0),
+                st3_conf_data(0),
+                st4_conf_wr(0),
+                st4_conf_addr(0),
+                st4_conf_data(0),
+                pop_data(0),
+                fsm_sd(fsm_sd_edges_idle),
+            ).Elif(start)(
+                st1_conf_wr(0),
+                st2_conf_wr(0),
+                st3_conf_wr(0),
+                st4_conf_wr(0),
+                start_pipe(0),
+                pop_data(0),
+                Case(fsm_sd)(
+                    When(fsm_sd_edges_idle)(
+                        If(available_pop)(
+                            pop_data(1),
+                            fsm_sd(fsm_sd_edges_send_data)
+                        )
+                    ),
+                    When(fsm_sd_edges_send_data)(
+                        st1_conf_wr(1),
+                        st1_conf_data(data_out[:st1_conf_data.width]),
+                        fsm_sd(fsm_sd_edges_verify)
+                    ),
+                    When(fsm_sd_edges_verify)(
+                        If(Uand(st1_conf_addr))(
+                            fsm_sd(fsm_sd_n2c_idle)
+                        ).Else(
+                            st1_conf_addr.inc(),
+                            fsm_sd(fsm_sd_edges_idle)
+                        ),
+                    ),
+                    When(fsm_sd_n2c_idle)(
+                        If(available_pop)(
+                            pop_data(1),
+                            fsm_sd(fsm_sd_n2c_send_data)
+                        )
+                    ),
+                    When(fsm_sd_n2c_send_data)(
+                        st2_conf_wr(1),
+                        st2_conf_wr_data(data_out[:st2_conf_wr_data.width]),
+                        fsm_sd(fsm_sd_n2c_verify)
+                    ),
+                    When(fsm_sd_n2c_verify)(
+                        If(Uand(st2_wr_conf_addr))(
+                            fsm_sd(fsm_sd_dist_idle)
+                        ).Else(
+                            st2_wr_conf_addr.inc(),
+                            fsm_sd(fsm_sd_n2c_idle)
+                        ),
+                    ),
+                    When(fsm_sd_dist_idle)(
+                        If(available_pop)(
+                            pop_data(1),
+                            fsm_sd(fsm_sd_dist_send_data)
+                        )
+                    ),
+                    When(fsm_sd_dist_send_data)(
+                        st3_conf_wr(1),
+                        st3_conf_data(data_out[:st3_conf_data.width]),
+                        fsm_sd(fsm_sd_dist_verify)
+                    ),
+                    When(fsm_sd_dist_verify)(
+                        If(Uand(st3_conf_addr))(
+                            fsm_sd(fsm_sd_c_idle)
+                        ).Else(
+                            st3_conf_addr.inc(),
+                            fsm_sd(fsm_sd_dist_idle)
+                        ),
+                    ),
+                    When(fsm_sd_c_idle)(
+                        If(available_pop)(
+                            pop_data(1),
+                            fsm_sd(fsm_sd_c_send_data)
+                        )
+                    ),
+                    When(fsm_sd_c_send_data)(
+                        st4_conf_wr(1),
+                        st4_conf_data(data_out[:st4_conf_data.width]),
+                        fsm_sd(fsm_sd_c_verify)
+                    ),
+                    When(fsm_sd_c_verify)(
+                        If(Uand(st4_conf_addr))(
+                            fsm_sd(fsm_sd_vedges_idle)
+                        ).Else(
+                            st4_conf_addr.inc(),
+                            fsm_sd(fsm_sd_c_idle)
+                        ),
+                    ),
+                    When(fsm_sd_vedges_idle)(
+                        If(available_pop)(
+                            pop_data(1),
+                            fsm_sd(fsm_sd_vedges_send_data)
+                        )
+                    ),
+                    When(fsm_sd_vedges_send_data)(
+                        visited_edges(data_out[:visited_edges.width]),
+                        fsm_sd(fsm_sd_done)
+                    ),
+                    When(fsm_sd_done)(
+                        start_pipe(1)
+                    )
+                )
+            )
+        )
+
+        # Data Consumer - Begin ----------------------------------------------------------------------------------------
+        m.EmbeddedCode('\n//Data Consumer - Begin')
+        fsm_consume = m.Reg('fsm_consume', 2)
+        fsm_consume_wait = m.Localparam('fsm_consume_wait', 0)
+        fsm_consume_consume = m.Localparam('fsm_consume_consume', 1)
+        fsm_consume_verify = m.Localparam('fsm_consume_verify', 2)
+        fsm_consume_done = m.Localparam('fsm_consume_done', 3)
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                st2_conf_rd(0),
+                st2_rd_conf_addr(0),
+                yoto_request_write(0),
+                fsm_consume(fsm_consume_wait)
+            ).Else(
+                st2_conf_rd(0),
+                yoto_request_write(0),
+                Case(fsm_consume)(
+                    When(fsm_consume_wait)(
+                        If(yoto_available_write)(
+                            If(yoto_done)(
+                                st2_conf_rd(1),
+                                fsm_consume(fsm_consume_consume),
+                            ),
+                        ),
+
+                    ),
+                    When(fsm_consume_consume)(
+                        yoto_request_write(1),
+                        yoto_write_data(Cat(Int(0, bus_width - st2_conf_rd_data.width, 10), st2_conf_rd_data)),
+                        st2_rd_conf_addr.inc(),
+                        fsm_consume(fsm_consume_verify)
+                    ),
+                    When(fsm_consume_verify)(
+                        If(st2_rd_conf_addr == pow(2, self.th_bits + self.node_bits))(
+                            fsm_consume(fsm_consume_done)
+                        ).Else(
+                            fsm_consume(fsm_consume_wait)
+                        )
+                    ),
+                    When(fsm_consume_done)(
+
+                    ),
+                )
+            )
+        )
+        m.EmbeddedCode('//Data Consumer - Begin')
+        # Data Consumer - End ------------------------------------------------------------------------------------------
+
+        fetch_data = self.hw_components.create_fetch_data(bus_width, pipe_width)
+        par = []
+        con = [
+            ('clk', clk),
+            ('rst', rst),
+            ('start', start),
+            ('request_read', yoto_request_read),
+            ('data_valid', yoto_read_data_valid),
+            ('read_data', yoto_read_data),
+            ('pop_data', pop_data),
+            ('available_pop', available_pop),
+            ('data_out', data_out)
+        ]
+        m.EmbeddedCode("(* keep_hierarchy = \"yes\" *)")
+        m.Instance(fetch_data, fetch_data.name, par, con)
+
+        par = []
+        con = [
+            ('clk', clk),
+            ('rst', rst),
+            ('start', start_pipe),
+            ('visited_edges', visited_edges),
+            ('done', yoto_done),
+            ('total_pipeline_counter', total_pipeline_counter),
+            ('st1_conf_wr', st1_conf_wr),
+            ('st1_conf_addr', st1_conf_addr),
+            ('st1_conf_data', st1_conf_data),
+            ('st2_wr_conf_addr', st2_wr_conf_addr),
+            ('st2_rd_conf_addr', st2_rd_conf_addr),
+            ('st2_conf_wr', st2_conf_wr),
+            ('st2_conf_wr_data', st2_conf_wr_data),
+            ('st2_conf_rd', st2_conf_rd),
+            ('st2_conf_rd_data', st2_conf_rd_data),
+            ('st3_conf_wr', st3_conf_wr),
+            ('st3_conf_addr', st3_conf_addr),
+            ('st3_conf_data', st3_conf_data),
+            ('st4_conf_wr', st4_conf_wr),
+            ('st4_conf_addr', st4_conf_addr),
+            ('st4_conf_data', st4_conf_data),
+        ]
+        aux = self.create_yoto_pipeline_hw('t.rom', 't.rom', 't.rom', 't.rom', 't.rom', False)
+        m.Instance(aux, aux.name, par, con)
 
         HwUtil.initialize_regs(m)
 

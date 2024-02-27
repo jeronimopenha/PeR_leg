@@ -9,58 +9,67 @@ from src.python.util.per_graph import PeRGraph
 from src.python.util.util import Util
 
 
-def create_testbench_synth(module: Module(), copies: int = 5):
+def create_testbench_synth(module: Module()):
     m = Module('testbench_synth')
     clk = m.Input('clk')
     rst = m.Input('rst')
-    start = m.Input('start')
     out = m.Output('out')
     regs_reset = []
     regs_inc = []
     or_list = ''
+    start = m.Reg('start')
 
     params = module.get_params()
     for p in params:
         m.Localparam(params[p].name, params[p].value)
 
     ports = module.get_ports()
-    con = [[] for _ in range(copies)]
+    con = []
     max_width_out = 1
-    for copy in range(copies):
-        for port in ports:
-            if module.is_input(port) and port in ['clk', 'rst', 'start']:
-                con[copy].append((port, m.get_ports()[port]))
-            elif module.is_input(port) and port not in ['clk', 'rst', 'start']:
-                p = ports[port]
-                if p.width:
-                    reg = m.Reg(f'{port}_{copy}', p.width)
-                else:
-                    reg = m.Reg(f'{port}_{copy}')
-                regs_reset.append(reg(0))
-                regs_inc.append(reg.inc())
-                con[copy].append((port, reg))
-            elif module.is_output(port):
-                p = ports[port]
-                if p.width:
-                    if str(p.width) in params:
-                        p.width = p.width.value
 
-                    wire = m.Wire(f'{module.name}_{port}_{copy}', p.width)
-                    max_width_out = max(max_width_out, p.width)
-                else:
-                    wire = m.Wire(f'{module.name}_{port}_{copy}')
-                or_list += wire.name + '|'
-                con[copy].append((port, wire))
+    for port in ports:
+        if module.is_input(port) and port in ['clk', 'rst']:
+            con.append((port, m.get_ports()[port]))
+        elif module.is_input(port) and port in ['start']:
+            con.append((port, start))
+        elif module.is_input(port) and port not in ['clk', 'rst', 'start']:
+            p = ports[port]
+            if p.width:
+                reg = m.Reg(f'{port}', p.width)
+            else:
+                reg = m.Reg(f'{port}')
+            regs_reset.append(reg(0))
+            regs_inc.append(reg.inc())
+            con.append((port, reg))
+        elif module.is_output(port):
+            p = ports[port]
+            if p.width:
+                if str(p.width) in params:
+                    p.width = p.width.value
+
+                wire = m.Wire(f'{module.name}_{port}', p.width)
+                max_width_out = max(max_width_out, p.width)
+            else:
+                wire = m.Wire(f'{module.name}_{port}')
+            or_list += wire.name + '|'
+            con.append((port, wire))
 
     data = m.Wire('data', max_width_out)
-    for copy in range(copies):
-        m.Instance(module, f'{module.name}_{copy}', params, con[copy])
+    m.Instance(module, f'{module.name}', params, con)
 
     m.Always(Posedge(clk))(
         If(rst)(
             regs_reset
         ).Else(
             regs_inc
+        )
+    )
+
+    m.Always(Posedge(clk))(
+        If(rst)(
+            start(0)
+        ).Else(
+            start(1)
         )
     )
 
@@ -97,8 +106,8 @@ for dot_path, dot_name in dots_list:
     per_graph = PeRGraph(dot_path, dot_name)
     print(per_graph.dot_name)
     yoto_pipeline_hw = YotoPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
-m = yoto_pipeline_hw.create_yoto_pipeline_hw('t.txt', 't.txt', 't.txt', 't.txt', 't.txt', False)
-m = create_testbench_synth(m, 10)
+acc = yoto_pipeline_hw.create_acc(15)
+m = create_testbench_synth(acc)
 m.to_verilog('synth.v')
 
 '''def create_testbench_sim(cgraAcc, num_data: int, conf_lines, files):
