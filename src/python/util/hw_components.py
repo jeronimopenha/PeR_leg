@@ -132,7 +132,7 @@ class HwComponents:
         self.cache[name] = m
         return m
 
-    def create_memory_1r_1w(self) -> Module:
+    def create_memory_1r_1w(self, simulate: bool = False) -> Module:
         name = 'mem_1r_1w'
         if name in self.cache.keys():
             return self.cache[name]
@@ -168,19 +168,20 @@ class HwComponents:
             ),
         )
 
-        m.EmbeddedCode('//synthesis translate_off')
-        m.Always(Posedge(clk))(
-            If(AndList(wr, write_f))(
-                Systask('writememb', output_file, mem)
-            ),
-        )
-        m.EmbeddedCode('//synthesis translate_on')
-
-        m.Initial(
-            If(read_f)(
-                Systask('readmemb', init_file, mem),
+        if simulate:
+            m.EmbeddedCode('//synthesis translate_off')
+            m.Always(Posedge(clk))(
+                If(AndList(wr, write_f))(
+                    Systask('writememb', output_file, mem)
+                ),
             )
-        )
+            m.EmbeddedCode('//synthesis translate_on')
+
+            m.Initial(
+                If(read_f)(
+                    Systask('readmemb', init_file, mem),
+                )
+            )
 
         self.cache[name] = m
         return m

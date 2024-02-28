@@ -537,7 +537,7 @@ class Util:
         Returns:
             str: The root path of the project.
         """
-        path: Path = Path(__file__).parent.parent.parent
+        path: Path = Path(__file__).parent.parent.parent.parent
         return str(path)
 
     @staticmethod

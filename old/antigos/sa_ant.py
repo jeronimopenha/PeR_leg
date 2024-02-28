@@ -1,4 +1,4 @@
-from old.sa_pipeline.util import SaGraph
+from old.sa_pipeline import SaGraph
 import random
 
 
