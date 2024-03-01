@@ -1,32 +1,44 @@
-#define N_NEIGH 4
+#include <cmath>
 
-struct SW
-{
+#define N_NEIGH 4
+#define N_THREADS 6
+#define N_CELLS  100
+#define N_CELLS_SQRT 10
+#define TH_BITS ceil(log2(N_THREADS))
+#define CELL_BITS ceil(log2(N_CELLS))
+
+/*struct SW {
     int th_idx;
     char th_valid;
     char sw;
 } SW_DEFAULT = {
-    0, 0, 0};
+        0,
+        0,
+        0
+};
 
-struct W
-{
+struct W {
     int th_idx;
     int cell;
     int node;
 } W_DEFAULT = {
-    0, 0, 0};
+        0,
+        0,
+        0
+};
 
-struct ST0_OUT
-{
+struct ST0_OUT {
     int th_idx;
     char th_valid;
     int cell_a;
     int cell_b;
 } ST0_OUT_DEFAULT = {
-    0, 0, 0, 0};
+        0,
+        0,
+        0, 0
+};
 
-struct ST1_OUT
-{
+struct ST1_OUT {
     int th_idx;
     char th_valid;
     int cell_a;
@@ -36,10 +48,15 @@ struct ST1_OUT
     SW sw;
     W wa;
     W wb;
+} ST1_OUT_DEFAULT = {
+        0,
+        0,
+        0,
+        0,
+        0, 0, {0, 0, 0}
 };
 
-struct ST2_OUT
-{
+struct ST2_OUT {
     int th_idx;
     char th_valid;
     int cell_a;
@@ -51,10 +68,11 @@ struct ST2_OUT
     SW sw;
     W wa;
     W wb;
+} ST2_OUT_DEFAULT = {
+        0,
+        0, 0, 0, 0, 0, {-((int) 1), -((int) 1)}, {-((int) 1), -((int) 1)}
 };
-
-struct ST3_OUT
-{
+struct ST3_OUT {
     int th_idx;
     char th_valid;
     int cell_a;
@@ -66,8 +84,7 @@ struct ST3_OUT
     W wb;
 };
 
-struct ST4_OUT
-{
+struct ST4_OUT {
     int th_idx;
     char th_valid;
     int cell_a;
@@ -78,8 +95,7 @@ struct ST4_OUT
     int dvbc[N_NEIGH];
 };
 
-struct ST5_OUT
-{
+struct ST5_OUT {
     int th_idx;
     char th_valid;
     int dvac[N_NEIGH / 2];
@@ -87,16 +103,15 @@ struct ST5_OUT
     int dvas[N_NEIGH];
     int dvbs[N_NEIGH];
 } ST5_OUT_DEFAULT = {
-    0,
-    0,
-    {-((int)1), -((int)1)},
-    {-((int)1), -((int)1)},
-    {-((int)1), -((int)1), -((int)1), -((int)1)},
-    {-((int)1), -((int)1), -((int)1), -((int)1)},
+        0,
+        0,
+        {-((int) 1), -((int) 1)},
+        {-((int) 1), -((int) 1)},
+        {-((int) 1), -((int) 1), -((int) 1), -((int) 1)},
+        {-((int) 1), -((int) 1), -((int) 1), -((int) 1)},
 };
 
-struct ST6_OUT
-{
+struct ST6_OUT {
     int th_idx;
     char th_valid;
     int dvac;
@@ -104,37 +119,34 @@ struct ST6_OUT
     int dvas[N_NEIGH / 2];
     int dvbs[N_NEIGH / 2];
 } ST6_OUT_DEFAULT = {
-    0,
-    0,
-    0,
-    0,
-    {-((int)1), -((int)1)},
-    {-((int)1), -((int)1)},
+        0,
+        0,
+        0,
+        0,
+        {-((int) 1), -((int) 1)},
+        {-((int) 1), -((int) 1)},
 };
 
-struct ST7_OUT
-{
+struct ST7_OUT {
     int th_idx;
     char th_valid;
     int dc;
     int dvas;
     int dvbs;
 } ST7_OUT_DEFAULT = {
-    0, 0, 0, 0, 0};
+        0, 0, 0, 0, 0};
 
-struct ST8_OUT
-{
+struct ST8_OUT {
     int th_idx;
     char th_valid;
     int dc;
     int ds;
 } ST8_OUT_DEFAULT = {
-    0, 0, 0, 0};
+        0, 0, 0, 0};
 
-struct ST9_OUT
-{
+struct ST9_OUT {
     int th_idx;
     char th_valid;
     char sw;
 } ST9_OUT_DEFAULT = {
-    0, 0, 0};
+        0, 0, 0};*/

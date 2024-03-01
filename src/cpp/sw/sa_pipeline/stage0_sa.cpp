@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include "sa_defs.h"
 
 class Stage0SA
 {
