@@ -1,11 +1,12 @@
-#include <cmath>
+//
+// Created by jeronimo on 04/03/24.
+//
+
+#ifndef CPP_SA_DEFS_H
+#define CPP_SA_DEFS_H
 
 #define N_NEIGH 4
 #define N_THREADS 6
-#define N_CELLS  100
-#define N_CELLS_SQRT 10
-#define TH_BITS ceil(log2(N_THREADS))
-#define CELL_BITS ceil(log2(N_CELLS))
 
 /*struct SW {
     int th_idx;
@@ -150,3 +151,4 @@ struct ST9_OUT {
     char sw;
 } ST9_OUT_DEFAULT = {
         0, 0, 0};*/
+#endif //CPP_SA_DEFS_H
