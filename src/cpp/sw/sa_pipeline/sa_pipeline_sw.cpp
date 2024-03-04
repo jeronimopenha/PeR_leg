@@ -1,4 +1,4 @@
-#include "sa_defs.h"
+#include "defs_sa.h"
 
 ST0_OUT st0_new_output, st0_old_output;
 ST1_OUT st1_new_output, st1_old_output;

@@ -2,19 +2,19 @@
 // Created by jeronimo on 04/03/24.
 //
 
-#ifndef CPP_SA_DEFS_H
-#define CPP_SA_DEFS_H
+#ifndef CPP_DEFS_SA_H
+#define CPP_DEFS_SA_H
 
 #define N_NEIGH 4
 #define N_THREADS 6
 
-/*struct SW {
+struct SW {
     int th_idx;
-    char th_valid;
+    bool th_valid;
     char sw;
 } SW_DEFAULT = {
         0,
-        0,
+        false,
         0
 };
 
@@ -33,12 +33,9 @@ struct ST0_OUT {
     char th_valid;
     int cell_a;
     int cell_b;
-} ST0_OUT_DEFAULT = {
-        0,
-        0,
-        0, 0
 };
 
+/*
 struct ST1_OUT {
     int th_idx;
     char th_valid;
@@ -151,4 +148,4 @@ struct ST9_OUT {
     char sw;
 } ST9_OUT_DEFAULT = {
         0, 0, 0};*/
-#endif //CPP_SA_DEFS_H
+#endif //CPP_DEFS_SA_H
