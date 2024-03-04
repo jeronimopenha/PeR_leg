@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cmath>
-#include "defs_sa.h"
 #include "stage0_sa.h"
 
 class Stage0SA {
@@ -8,13 +5,13 @@ private:
     int counter[N_THREADS] = {0, 0, 0, 0, 0, 0};
     int cell_a[N_THREADS] = {0, 0, 0, 0, 0, 0};
     int cell_b[N_THREADS] = {0, 0, 0, 0, 0, 0};
-    bool th_valid[N_THREADS] = {false, false, false, false, false, false};
+    bool th_valid[N_THREADS] = {true, true, true, true, true, true};
     int th_idx = 0;
     int exec_counter = 0;
-    ST0_OUT new_output{0, 0, 0, 0};
-    ST0_OUT old_output{0, 0, 0, 0};
 
 public:
+    ST0_OUT new_output{0, false, 0, 0};
+    ST0_OUT old_output{0, false, 0, 0};
 
     void compute() {
         int th_idx_c = this->th_idx;

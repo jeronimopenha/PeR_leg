@@ -2,40 +2,38 @@
 // Created by jeronimo on 04/03/24.
 //
 
-#ifndef CPP_DEFS_SA_H
-#define CPP_DEFS_SA_H
+#ifndef CPP_SA_PIPELINE_SW_H
+#define CPP_SA_PIPELINE_SW_H
 
 #define N_NEIGH 4
 #define N_THREADS 6
+#define ARCH_TYPE "MESH"
+#define DISTANCE_TABLE_BITS 4
+#define N_CELLS  100
+#define N_CELLS_SQRT 10
+#define N_CELLS_POW 10000
 
 struct SW {
     int th_idx;
     bool th_valid;
     char sw;
-} SW_DEFAULT = {
-        0,
-        false,
-        0
 };
 
 struct W {
     int th_idx;
     int cell;
     int node;
-} W_DEFAULT = {
-        0,
-        0,
-        0
 };
+
 
 struct ST0_OUT {
     int th_idx;
-    char th_valid;
+    bool th_valid;
     int cell_a;
     int cell_b;
 };
 
-/*
+
 struct ST1_OUT {
     int th_idx;
     char th_valid;
@@ -46,14 +44,8 @@ struct ST1_OUT {
     SW sw;
     W wa;
     W wb;
-} ST1_OUT_DEFAULT = {
-        0,
-        0,
-        0,
-        0,
-        0, 0, {0, 0, 0}
 };
-
+/*
 struct ST2_OUT {
     int th_idx;
     char th_valid;
@@ -148,4 +140,4 @@ struct ST9_OUT {
     char sw;
 } ST9_OUT_DEFAULT = {
         0, 0, 0};*/
-#endif //CPP_DEFS_SA_H
+#endif //CPP_SA_PIPELINE_SW_H

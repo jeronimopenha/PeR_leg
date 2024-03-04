@@ -6,14 +6,10 @@
 #define CPP_STAGE0_SA_H
 
 #include <cmath>
+#include "sa_pipeline_sw.h"
 
-#include "defs_sa.h"
-
-#define N_CELLS  100
-#define N_CELLS_SQRT 10
-#define N_CELLS_POW 10000
 #define TH_BITS (int)ceil(log2(N_THREADS))
 #define CELL_BITS (int)ceil(log2(N_CELLS))
-#define MASK N_CELLS_POW-1
+#define MASK (N_CELLS_POW-1)
 
 #endif //CPP_STAGE0_SA_H
