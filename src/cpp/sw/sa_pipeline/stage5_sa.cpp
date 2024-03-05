@@ -14,7 +14,13 @@ public:
             {0, 0, 0, 0},
             {0, 0, 0, 0}
     };
-    ST5_OUT old_output = {};
+    ST5_OUT old_output = {
+            0, false,
+            {0, 0},
+            {0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
 
     Stage5SA(ArchType arch_type) {
         this->arch_type = arch_type;
