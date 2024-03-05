@@ -15,17 +15,17 @@ class SAPipelineSw {
 private:
     int len_pipeline;
 public:
-    static void run_single(int n_copies = 1) {
+    static void run_single(int n_copies = 1, ArchType arch_type = MESH) {
         int exec_times = 1000;
         int max_counter = N_CELLS_POW * exec_times;
 
         for (int exec_num = 0; exec_num < n_copies; ++exec_num) {
-            exec_pipeline(exec_num, max_counter);
+            exec_pipeline(exec_num, max_counter, arch_type);
         }
     }
 
 private:
-    static void exec_pipeline(int exec_key, int max_counter) {
+    static void exec_pipeline(int exec_key, int max_counter, ArchType arch_type) {
         int n2c[N_THREADS][N_CELLS];
         int c2n[N_THREADS][N_CELLS];
         int n[N_CELLS][N_NEIGH];
@@ -34,8 +34,8 @@ private:
         Stage1SA st1 = Stage1SA((int **) (c2n));
         Stage2SA st2 = Stage2SA((int **) (n));
         Stage3SA st3 = Stage3SA((int **) c2n);
-        Stage4SA st4 = Stage4SA();
-        Stage5SA st5 = Stage5SA();
+        Stage4SA st4 = Stage4SA(arch_type);
+        Stage5SA st5 = Stage5SA(arch_type);
         Stage6SA st6 = Stage6SA();
         Stage7SA st7 = Stage7SA();
         Stage8SA st8 = Stage8SA();
@@ -48,9 +48,9 @@ private:
             st1.compute(st0.old_output, st9.old_output, st1.old_output.wb);
             st2.compute(st1.old_output);
             st3.compute(st2.old_output, st3.old_output.wb);
-            st4.compute();
-            st5.compute();
-            st6.compute();
+            st4.compute(st3.old_output);
+            st5.compute(st4.old_output);
+            st6.compute(st5.old_output);
             st7.compute(st6.old_output);
             st8.compute(st7.old_output);
             st9.compute(st8.old_output);
