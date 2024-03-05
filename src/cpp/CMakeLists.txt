@@ -22,4 +22,5 @@ add_executable(cpp
         sw/sa_pipeline/stage7_sa.cpp
         sw/sa_pipeline/stage8_sa.cpp
         sw/sa_pipeline/stage9_sa.cpp
-        )
+        sw/sa_pipeline/util.cpp
+)

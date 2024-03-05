@@ -1,72 +1,89 @@
-#include <iostream>
+#include <cstring>
+#include "sa_pipeline_sw.h"
+#include "util.cpp"
 
-enum ArchType { ONE_HOP, MESH };
 
 class Stage4SA {
 private:
     ArchType arch_type;
-    int n_lines;
-    int n_columns;
-    int* new_output;
-    int* old_output;
 
 public:
-    Stage4SA(ArchType arch_type, int n_lines, int n_columns) :
-        arch_type(arch_type),
-        n_lines(n_lines),
-        n_columns(n_columns)
-    {
-        new_output = new int[12]();
-        old_output = new int[12]();
+    ST4_OUT new_output = {
+            0, false, 0, 0,
+            {-1, -1, -1, -1},
+            {-1, -1, -1, -1},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    ST4_OUT old_output = {
+            0, false, 0, 0,
+            {-1, -1, -1, -1},
+            {-1, -1, -1, -1},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+
+    explicit Stage4SA(ArchType arch_type) {
+        this->arch_type = arch_type;
     }
 
-    ~Stage4SA() {
-        delete[] new_output;
-        delete[] old_output;
-    }
+    void compute(ST3_OUT st3_input) {
+        this->old_output = this->new_output;
+        this->old_output = this->new_output;
+        this->old_output = this->new_output;
+        this->old_output = this->new_output;
+        memcpy(&this->old_output.cva, &this->new_output.cva, sizeof(this->new_output.cva));
+        memcpy(&this->old_output.cvb, &this->new_output.cvb, sizeof(this->new_output.cvb));
+        memcpy(&this->old_output.dvac, &this->new_output.dvac, sizeof(this->new_output.dvac));
+        memcpy(&this->old_output.dvbc, &this->new_output.dvbc, sizeof(this->new_output.dvbc));
 
-    void compute(int* st3_input) {
-        std::copy(new_output, new_output + 12, old_output);
-
-        int st3_th_idx = st3_input[0];
-        bool st3_th_valid = st3_input[1];
-        int st3_cell_a = st3_input[2];
-        int st3_cell_b = st3_input[3];
-        int* st3_cva = st3_input + 4;
-        int* st3_cvb = st3_input + 8;
+        int st3_th_idx = st3_input.th_idx;
+        bool st3_th_valid = st3_input.th_valid;
+        int st3_cell_a = st3_input.cell_a;
+        int st3_cell_b = st3_input.cell_b;
+        int *st3_cva = st3_input.cva;
+        int *st3_cvb = st3_input.cvb;
 
         int dvac[4] = {0, 0, 0, 0};
         int dvbc[4] = {0, 0, 0, 0};
 
-        for (int i = 0; i < 4; ++i) {
-            int ca = st3_input[2];
-            int cb = st3_input[3];
-            int cva = st3_cva[i];
-            int cvb = st3_cvb[i];
+        int ca = st3_cell_a;
+        int cb = st3_cell_b;
 
-            if (cva != -1) {
-                if (arch_type == ONE_HOP) {
-                    // Compute distance using one-hop algorithm
-                    // dvac[i] = ...
+        for (int n = 0; n < N_NEIGH; ++n) {
+
+            int i1, i2, j1, j2, distance;
+
+            if (st3_cva[n] != -1) {
+                get_line_column_from_cell(ca, N_LINES, N_COLUMNS, i1, j1);
+                get_line_column_from_cell(st3_cva[n], N_LINES, N_COLUMNS, i2, j2);
+
+                if (this->arch_type == ONE_HOP) {
+                    dvac[n] = dist_one_hop(i1, j1, i2, j2);
                 } else if (arch_type == MESH) {
-                    // Compute Manhattan distance
-                    // dvac[i] = ...
+                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
                 }
             }
 
-            if (cvb != -1) {
+            if (st3_cvb[n] != -1) {
+                get_line_column_from_cell(cb, N_LINES, N_COLUMNS, i1, j1);
+                get_line_column_from_cell(st3_cvb[n], N_LINES, N_COLUMNS, i2, j2);
+
                 if (arch_type == ONE_HOP) {
-                    // Compute distance using one-hop algorithm
-                    // dvbc[i] = ...
+                    dvbc[n] = dist_one_hop(i1, j1, i2, j2);
                 } else if (arch_type == MESH) {
-                    // Compute Manhattan distance
-                    // dvbc[i] = ...
+                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
                 }
             }
         }
 
-        std::copy(st3_input, st3_input + 12, new_output);
-        std::copy(dvac, dvac + 4, new_output + 4);
-        std::copy(dvbc, dvbc + 4, new_output + 8);
+        this->new_output.th_idx = st3_th_idx;
+        this->new_output.th_valid = st3_th_valid;
+        this->new_output.cell_a = st3_cell_a;
+        this->new_output.cell_b = st3_cell_b;
+        memcpy(&this->new_output.cva, &st3_cva, sizeof(st3_cva));
+        memcpy(&this->new_output.cvb, &st3_cvb, sizeof(st3_cvb));
+        memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
+        memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
     }
 };

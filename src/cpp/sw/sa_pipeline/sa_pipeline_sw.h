@@ -7,12 +7,15 @@
 
 #define N_NEIGH 4
 #define N_THREADS 6
-#define ARCH_TYPE "MESH"
-#define DISTANCE_TABLE_BITS 4
 #define N_CELLS  100
 #define N_CELLS_SQRT 10
 #define N_CELLS_POW 10000
+#define N_LINES N_CELLS_SQRT
+#define N_COLUMNS N_CELLS_SQRT
 
+enum ArchType {
+    ONE_HOP, MESH
+};
 
 struct W {
     int th_idx;
