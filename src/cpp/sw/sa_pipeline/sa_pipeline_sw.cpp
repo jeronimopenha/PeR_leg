@@ -28,6 +28,7 @@ private:
     static void exec_pipeline(int exec_key, int max_counter) {
         int n2c[N_THREADS][N_CELLS];
         int c2n[N_THREADS][N_CELLS];
+        int n[N_CELLS][N_NEIGH];
 
         Stage0SA st0 = Stage0SA();
         Stage1SA st1 = Stage1SA((int **) (c2n));

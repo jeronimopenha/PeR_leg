@@ -1,3 +1,4 @@
+#include <cstring>
 #include "stage1_sa.h"
 #include "fifo_sa.cpp"
 
@@ -50,9 +51,9 @@ public:
         this->old_output.cell_b = this->new_output.cell_b;
         this->old_output.node_a = this->new_output.node_a;
         this->old_output.node_b = this->new_output.node_b;
-        this->old_output.sw = this->new_output.sw;
-        this->old_output.wa = this->new_output.wa;
-        this->old_output.wb = this->new_output.wb;
+        memcpy(&this->old_output.sw, &this->new_output.sw, sizeof(ST9_OUT));
+        memcpy(&this->old_output.wa, &this->new_output.wa, sizeof(W));
+        memcpy(&this->old_output.wb, &this->new_output.wb, sizeof(W));
 
         int st0_th_idx = st0_input.th_idx;
         bool st0_th_valid = st0_input.th_valid;
@@ -70,13 +71,15 @@ public:
             wa = this->fifo_a->dequeue();
             wb = this->fifo_b->dequeue();
         } else {
-            wa = this->new_output.wa;
-            wb = this->new_output.wb;
+            memcpy(&wa, &this->new_output.wa, sizeof(W));
+            memcpy(&wb, &this->new_output.wb, sizeof(W));
         }
 
         bool usw = st9_sw.sw;
-        W uwa = this->new_output.wa;
-        W uwb = st1_wb;
+        W uwa{};
+        W uwb{};
+        memcpy(&uwa, &this->new_output.wa, sizeof(W));
+        memcpy(&uwb, &st1_wb, sizeof(W));
         if (usw) {
             if (flag) {
                 this->c2n[uwa.th_idx][uwa.cell] = wa.node;
@@ -93,8 +96,8 @@ public:
         this->new_output.cell_b = st0_cell_b;
         this->new_output.node_a = this->c2n[st0_th_idx][st0_cell_a];
         this->new_output.node_b = this->c2n[st0_th_idx][st0_cell_b];
-        this->new_output.sw = st9_sw;
-        this->new_output.wa = wa;
-        this->new_output.wb = wb;
+        memcpy(&this->new_output.sw, &st9_sw, sizeof(ST9_OUT));
+        memcpy(&this->new_output.wa, &wa, sizeof(W));
+        memcpy(&this->new_output.wb, &wb, sizeof(W));
     }
 };
