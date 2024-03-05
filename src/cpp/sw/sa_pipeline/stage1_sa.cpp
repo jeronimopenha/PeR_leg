@@ -7,32 +7,31 @@ private:
     int **c2n;
     bool flag;
 
-
     FifoSa<W> *fifo_a;
     FifoSa<W> *fifo_b;
 
 public:
     ST1_OUT new_output = {
             0, false, 0, 0, 0, 0,
-            {int(0), bool(false), bool(false)},
-            {int(0), int(0), int(0)},
-            {int(0), int(0), int(0)}
+            {0, false, false},
+            {0, 0, 0},
+            {0, 0, 0}
     };
     ST1_OUT old_output = {
             0, false, 0, 0, 0, 0,
-            {int(0), bool(false), bool(false)},
-            {int(0), int(0), int(0)},
-            {int(0), int(0), int(0)}
+            {0, false, false},
+            {0, 0, 0},
+            {0, 0, 0}
     };
 
     explicit Stage1SA(int **c2n) {
         this->c2n = c2n;
-        this->flag = false;
+        this->flag = true;
         this->fifo_a = new FifoSa<W>(N_THREADS);
         this->fifo_b = new FifoSa<W>(N_THREADS);
         for (int i = 0; i < N_THREADS - 2; i++) {
-            W fifo_cell_a = {0, 0, 0};
-            W fifo_cell_b = {0, 0, 0};
+            W fifo_cell_a = {0, 0, -1};
+            W fifo_cell_b = {0, 0, -1};
             this->fifo_a->enqueue(fifo_cell_a);
             this->fifo_b->enqueue(fifo_cell_b);
         }

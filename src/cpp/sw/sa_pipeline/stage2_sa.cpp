@@ -12,16 +12,16 @@ public:
             {-1, -1, -1, -1},
             {-1, -1, -1, -1},
             {0, false, false},
-            {0, 0, 0},
-            {0, 0, 0}
+            {0, 0, -1},
+            {0, 0, -1}
     };
     ST2_OUT old_output = {
             0, false, 0, 0, 0, 0,
             {-1, -1, -1, -1},
             {-1, -1, -1, -1},
             {0, false, false},
-            {0, 0, 0},
-            {0, 0, 0}
+            {0, 0, -1},
+            {0, 0, -1}
     };
 
     explicit Stage2SA(int **neighbors) {
@@ -56,8 +56,8 @@ public:
         memcpy(&st1_wa, &st1_input.wa, sizeof(W));
         memcpy(&st1_wb, &st1_input.wa, sizeof(W));
 
-        int va[N_NEIGH];
-        int vb[N_NEIGH];
+        int va[N_NEIGH] = {-1, -1, -1, -1};
+        int vb[N_NEIGH] = {-1, -1, -1, -1};
 
 
         if (st1_node_a != -1) {

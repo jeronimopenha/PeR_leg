@@ -32,8 +32,8 @@ private:
 
         Stage0SA st0 = Stage0SA();
         Stage1SA st1 = Stage1SA((int **) (c2n));
-        Stage2SA st2 = Stage2SA();
-        Stage3SA st3 = Stage3SA();
+        Stage2SA st2 = Stage2SA((int **) (n));
+        Stage3SA st3 = Stage3SA((int **) c2n);
         Stage4SA st4 = Stage4SA();
         Stage5SA st5 = Stage5SA();
         Stage6SA st6 = Stage6SA();
@@ -46,8 +46,8 @@ private:
         while (counter < max_counter) {
             st0.compute();
             st1.compute(st0.old_output, st9.old_output, st1.old_output.wb);
-            st2.compute();
-            st3.compute();
+            st2.compute(st1.old_output);
+            st3.compute(st2.old_output, st3.old_output.wb);
             st4.compute();
             st5.compute();
             st6.compute();
