@@ -1,83 +1,102 @@
-#include <iostream>
+#include <cstring>
+#include "stage1_sa.h"
+#include "fifo_sa.cpp"
 
 class Stage1SA {
 private:
-    int** c2n;
-    int n_threads;
+    int **c2n;
     bool flag;
-    int* new_output;
-    int* old_output;
-    struct FIFO {
-        int th_idx;
-        int cell;
-        int node;
-    };
-    FIFO* fifo_a;
-    FIFO* fifo_b;
+
+    FifoSa<W> *fifo_a;
+    FifoSa<W> *fifo_b;
 
 public:
-    Stage1SA(int** c2n, int n_threads) :
-        n_threads(n_threads),
-        flag(true)
-    {
+    ST1_OUT new_output = {
+            0, false, 0, 0, 0, 0,
+            {0, false, false},
+            {0, 0, 0},
+            {0, 0, 0}
+    };
+    ST1_OUT old_output = {
+            0, false, 0, 0, 0, 0,
+            {0, false, false},
+            {0, 0, 0},
+            {0, 0, 0}
+    };
+
+    explicit Stage1SA(int **c2n) {
         this->c2n = c2n;
-        new_output = new int[9]();
-        old_output = new int[9]();
-        fifo_a = new FIFO[n_threads - 2]();
-        fifo_b = new FIFO[n_threads - 2]();
+        this->flag = true;
+        this->fifo_a = new FifoSa<W>(N_THREADS);
+        this->fifo_b = new FifoSa<W>(N_THREADS);
+        for (int i = 0; i < N_THREADS - 2; i++) {
+            W fifo_cell_a = {0, 0, -1};
+            W fifo_cell_b = {0, 0, -1};
+            this->fifo_a->enqueue(fifo_cell_a);
+            this->fifo_b->enqueue(fifo_cell_b);
+        }
     }
 
     ~Stage1SA() {
-        delete[] new_output;
-        delete[] old_output;
         delete[] fifo_a;
         delete[] fifo_b;
     }
 
-    void compute(int* st0_input, int* st9_sw, int* st1_wb) {
-        std::copy(new_output, new_output + 9, old_output);
 
-        int st0_th_idx = st0_input[0];
-        bool st0_th_valid = st0_input[1];
-        int st0_cell_a = st0_input[2];
-        int st0_cell_b = st0_input[3];
+    void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb) {
+        this->old_output.th_idx = this->new_output.th_idx;
+        this->old_output.th_valid = this->new_output.th_valid;
+        this->old_output.cell_a = this->new_output.cell_a;
+        this->old_output.cell_b = this->new_output.cell_b;
+        this->old_output.node_a = this->new_output.node_a;
+        this->old_output.node_b = this->new_output.node_b;
+        memcpy(&this->old_output.sw, &this->new_output.sw, sizeof(ST9_OUT));
+        memcpy(&this->old_output.wa, &this->new_output.wa, sizeof(W));
+        memcpy(&this->old_output.wb, &this->new_output.wb, sizeof(W));
+
+        int st0_th_idx = st0_input.th_idx;
+        bool st0_th_valid = st0_input.th_valid;
+        int st0_cell_a = st0_input.cell_a;
+        int st0_cell_b = st0_input.cell_b;
 
         if (st0_th_valid) {
-            fifo_a[n_threads - 2] = {new_output[0], new_output[2], old_output[7]};
-            fifo_b[n_threads - 2] = {new_output[0], new_output[3], new_output[6]};
+            this->fifo_a->enqueue(W{this->new_output.th_idx, this->new_output.cell_a, this->new_output.node_b});
+            this->fifo_b->enqueue(W{this->new_output.th_idx, this->new_output.cell_b, this->new_output.node_a});
         }
 
-        FIFO wa = {new_output[7], new_output[4], new_output[5]};
-        FIFO wb = {new_output[6], new_output[8], st1_wb[2]};
+        W wa{};
+        W wb{};
         if (st0_th_valid) {
-            wa = fifo_a[0];
-            wb = fifo_b[0];
+            wa = this->fifo_a->dequeue();
+            wb = this->fifo_b->dequeue();
+        } else {
+            memcpy(&wa, &this->new_output.wa, sizeof(W));
+            memcpy(&wb, &this->new_output.wb, sizeof(W));
         }
 
-        bool usw = st9_sw[2];
-        FIFO uwa = {new_output[4], new_output[5], new_output[6]};
-        FIFO uwb = {st1_wb[0], st1_wb[1], st1_wb[2]};
+        bool usw = st9_sw.sw;
+        W uwa{};
+        W uwb{};
+        memcpy(&uwa, &this->new_output.wa, sizeof(W));
+        memcpy(&uwb, &st1_wb, sizeof(W));
         if (usw) {
             if (flag) {
-                c2n[uwa.th_idx][uwa.cell] = wa.node;
-                flag = !flag;
+                this->c2n[uwa.th_idx][uwa.cell] = wa.node;
+                this->flag = !this->flag;
             } else {
                 c2n[uwb.th_idx][uwb.cell] = uwb.node;
                 flag = !flag;
-                if (uwb.th_idx == 0) {
-                    // Pass, or you can print matrix here if needed
-                }
             }
         }
 
-        new_output[0] = st0_th_idx;
-        new_output[1] = st0_th_valid;
-        new_output[2] = st0_cell_a;
-        new_output[3] = st0_cell_b;
-        new_output[4] = c2n[st0_th_idx][st0_cell_a];
-        new_output[5] = c2n[st0_th_idx][st0_cell_b];
-        new_output[6] = wb.th_idx;
-        new_output[7] = wa.th_idx;
-        new_output[8] = wb.cell;
+        this->new_output.th_idx = st0_th_idx;
+        this->new_output.th_valid = st0_th_valid;
+        this->new_output.cell_a = st0_cell_a;
+        this->new_output.cell_b = st0_cell_b;
+        this->new_output.node_a = this->c2n[st0_th_idx][st0_cell_a];
+        this->new_output.node_b = this->c2n[st0_th_idx][st0_cell_b];
+        memcpy(&this->new_output.sw, &st9_sw, sizeof(ST9_OUT));
+        memcpy(&this->new_output.wa, &wa, sizeof(W));
+        memcpy(&this->new_output.wb, &wb, sizeof(W));
     }
 };

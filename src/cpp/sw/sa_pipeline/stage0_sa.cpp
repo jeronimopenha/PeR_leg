@@ -1,87 +1,49 @@
-#include <iostream>
-#include <cmath>
+#include "stage0_sa.h"
 
-class Stage0SA
-{
+class Stage0SA {
 private:
-    int *counter;
-    int *cell_a;
-    int *cell_b;
-    bool *th_valid;
-    int n_threads;
-    int n_cells;
-    int th_idx;
-    int exec_counter;
-    int th_bits;
-    int cell_bits;
-    int counter_mask;
-    int *new_output;
-    int *old_output;
+    int counter[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    int cell_a[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    int cell_b[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    bool th_valid[N_THREADS] = {true, true, true, true, true, true};
+    int th_idx = 0;
+    int exec_counter = 0;
 
 public:
-    Stage0SA(int n_cells, int n_threads) : n_threads(n_threads),
-                                           n_cells(n_cells),
-                                           th_idx(0),
-                                           exec_counter(0)
-    {
-        th_bits = ceil(log2(n_threads));
-        cell_bits = ceil(log2(n_cells));
-        counter_mask = pow(ceil(sqrt(n_cells)), 2) - 1;
+    ST0_OUT new_output{0, false, 0, 0};
+    ST0_OUT old_output{0, false, 0, 0};
 
-        counter = new int[n_threads]();
-        cell_a = new int[n_threads]();
-        cell_b = new int[n_threads]();
-        th_valid = new bool[n_threads]();
-        new_output = new int[4]();
-        old_output = new int[4]();
-    }
+    void compute() {
+        int th_idx_c = this->th_idx;
 
-    ~Stage0SA()
-    {
-        delete[] counter;
-        delete[] cell_a;
-        delete[] cell_b;
-        delete[] th_valid;
-        delete[] new_output;
-        delete[] old_output;
-    }
+        this->old_output.th_idx = this->new_output.th_idx;
+        this->old_output.th_valid = this->new_output.th_valid;
+        this->old_output.cell_a = this->new_output.cell_a;
+        this->old_output.cell_b = this->new_output.cell_b;
 
-    void compute()
-    {
-        int th_idx = this->th_idx;
-        int cell_bits = this->cell_bits;
-        int mask = this->counter_mask;
 
-        this->old_output[0] = this->new_output[0];
-        this->old_output[1] = this->new_output[1];
-        this->old_output[2] = this->new_output[2];
-        this->old_output[3] = this->new_output[3];
-
-        if (!this->th_valid[th_idx])
-        {
-            this->counter[th_idx] += 1;
-            if (this->counter[th_idx] >= pow(this->n_cells, 2))
-            {
-                this->counter[th_idx] = 0;
+        if (!this->th_valid[th_idx_c]) {
+            this->counter[th_idx_c] += 1;
+            if (this->counter[th_idx_c] >= N_CELLS_POW) {
+                this->counter[th_idx_c] = 0;
             }
-            this->cell_a[th_idx] = this->counter[th_idx] & mask;
-            this->cell_b[th_idx] = (this->counter[th_idx] >> cell_bits) & mask;
+            this->cell_a[th_idx_c] = this->counter[th_idx_c] & MASK;
+            this->cell_b[th_idx_c] = (this->counter[th_idx_c] >> CELL_BITS) & MASK;
 
             this->th_idx += 1;
-            if (this->th_idx == this->n_threads)
-            {
+            if (this->th_idx == N_THREADS) {
                 this->th_idx = 0;
             }
         }
-        this->th_valid[th_idx] = !this->th_valid[th_idx];
+        this->th_valid[th_idx_c] = !this->th_valid[th_idx_c];
 
-        th_idx = this->th_idx;
-        this->new_output[0] = this->th_idx;
-        this->new_output[1] = this->th_valid[th_idx];
-        this->new_output[2] = this->cell_a[th_idx];
-        this->new_output[3] = this->cell_b[th_idx];
-        if (this->th_valid[th_idx] && this->th_idx == 0)
-        {
+        th_idx_c = this->th_idx;
+        this->new_output.th_idx = this->th_idx;
+        this->new_output.th_valid = this->th_valid[th_idx_c];
+        this->new_output.cell_a = this->cell_a[th_idx_c];
+        this->new_output.cell_b = this->cell_b[th_idx_c];
+
+        if (this->th_valid[th_idx_c] && this->th_idx == 0) {
             this->exec_counter += 1;
         }
     }
