@@ -1,11 +1,9 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
-#include "util.cpp"
+
 
 
 class Stage4SA {
 private:
-    ArchType arch_type;
 
 public:
     ST4_OUT new_output = {
@@ -22,10 +20,6 @@ public:
             {0, 0, 0, 0},
             {0, 0, 0, 0}
     };
-
-    explicit Stage4SA(ArchType arch_type) {
-        this->arch_type = arch_type;
-    }
 
     void compute(ST3_OUT st3_input) {
         this->old_output = this->new_output;
@@ -58,10 +52,10 @@ public:
                 get_line_column_from_cell(ca, N_LINES, N_COLUMNS, i1, j1);
                 get_line_column_from_cell(st3_cva[n], N_LINES, N_COLUMNS, i2, j2);
 
-                if (this->arch_type == ONE_HOP) {
+                if (ARCH_TYPE == ONE_HOP) {
                     dvac[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (arch_type == MESH) {
-                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
+                } else if (ARCH_TYPE == MESH) {
+                    dvac[n] = dist_manhattan(i1, j1, i2, j2);
                 }
             }
 
@@ -69,10 +63,10 @@ public:
                 get_line_column_from_cell(cb, N_LINES, N_COLUMNS, i1, j1);
                 get_line_column_from_cell(st3_cvb[n], N_LINES, N_COLUMNS, i2, j2);
 
-                if (arch_type == ONE_HOP) {
+                if (ARCH_TYPE == ONE_HOP) {
                     dvbc[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (arch_type == MESH) {
-                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
+                } else if (ARCH_TYPE == MESH) {
+                    dvac[n] = dist_manhattan(i1, j1, i2, j2);
                 }
             }
         }

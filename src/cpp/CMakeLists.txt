@@ -11,9 +11,7 @@ add_executable(cpp
         sw/sa_pipeline/fifo_sa.cpp
         sw/sa_pipeline/sa_pipeline_sw.h
         sw/sa_pipeline/sa_pipeline_sw.cpp
-        sw/sa_pipeline/stage0_sa.h
         sw/sa_pipeline/stage0_sa.cpp
-        sw/sa_pipeline/stage1_sa.h
         sw/sa_pipeline/stage2_sa.cpp
         sw/sa_pipeline/stage3_sa.cpp
         sw/sa_pipeline/stage4_sa.cpp
@@ -23,4 +21,5 @@ add_executable(cpp
         sw/sa_pipeline/stage8_sa.cpp
         sw/sa_pipeline/stage9_sa.cpp
         sw/sa_pipeline/util.cpp
+        sw/sa_pipeline/util.h
 )

@@ -1,10 +1,8 @@
-#include <cstring>
-#include "stage1_sa.h"
+#include "sa_pipeline_sw.h"
 #include "fifo_sa.cpp"
 
 class Stage1SA {
 private:
-    int **c2n;
     bool flag;
 
     FifoSa<W> *fifo_a;
@@ -24,8 +22,7 @@ public:
             {0, 0, 0}
     };
 
-    explicit Stage1SA(int **c2n) {
-        this->c2n = c2n;
+    explicit Stage1SA() {
         this->flag = true;
         this->fifo_a = new FifoSa<W>(N_THREADS);
         this->fifo_b = new FifoSa<W>(N_THREADS);
@@ -43,7 +40,7 @@ public:
     }
 
 
-    void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb) {
+    void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int (&c2n)[N_THREADS][N_CELLS]) {
         this->old_output.th_idx = this->new_output.th_idx;
         this->old_output.th_valid = this->new_output.th_valid;
         this->old_output.cell_a = this->new_output.cell_a;
@@ -58,6 +55,10 @@ public:
         bool st0_th_valid = st0_input.th_valid;
         int st0_cell_a = st0_input.cell_a;
         int st0_cell_b = st0_input.cell_b;
+
+        if(st0_th_idx ==0 && st0_th_valid){
+            int a=1;
+        }
 
         if (st0_th_valid) {
             this->fifo_a->enqueue(W{this->new_output.th_idx, this->new_output.cell_a, this->new_output.node_b});
@@ -80,12 +81,12 @@ public:
         memcpy(&uwa, &this->new_output.wa, sizeof(W));
         memcpy(&uwb, &st1_wb, sizeof(W));
         if (usw) {
-            if (flag) {
-                this->c2n[uwa.th_idx][uwa.cell] = wa.node;
+            if (this->flag) {
+                c2n[uwa.th_idx][uwa.cell] = wa.node;
                 this->flag = !this->flag;
             } else {
                 c2n[uwb.th_idx][uwb.cell] = uwb.node;
-                flag = !flag;
+                this->flag = !this->flag;
             }
         }
 
@@ -93,8 +94,8 @@ public:
         this->new_output.th_valid = st0_th_valid;
         this->new_output.cell_a = st0_cell_a;
         this->new_output.cell_b = st0_cell_b;
-        this->new_output.node_a = this->c2n[st0_th_idx][st0_cell_a];
-        this->new_output.node_b = this->c2n[st0_th_idx][st0_cell_b];
+        this->new_output.node_a = c2n[st0_th_idx][st0_cell_a];
+        this->new_output.node_b = c2n[st0_th_idx][st0_cell_b];
         memcpy(&this->new_output.sw, &st9_sw, sizeof(ST9_OUT));
         memcpy(&this->new_output.wa, &wa, sizeof(W));
         memcpy(&this->new_output.wb, &wb, sizeof(W));

@@ -2,16 +2,11 @@
 
 class Stage9SA {
 private:
-    bool sw;
 
 
 public:
     ST9_OUT new_output = {0, false, false};
     ST9_OUT old_output = {0, false, false};
-
-    Stage9SA() {
-        this->sw = false;
-    }
 
     void compute(ST8_OUT st8_input) {
         this->old_output.th_idx = this->new_output.th_idx;

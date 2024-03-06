@@ -1,4 +1,3 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
 
 class Stage6SA {

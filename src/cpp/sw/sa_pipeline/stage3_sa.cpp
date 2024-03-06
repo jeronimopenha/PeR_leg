@@ -1,9 +1,7 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
 
 class Stage3SA {
 private:
-    int **n2c;
     bool flag;
 
 public:
@@ -25,13 +23,12 @@ public:
             {0, 0, -1}
     };
 
-    explicit Stage3SA(int **n2c) {
-        this->n2c = n2c;
+    explicit Stage3SA() {
         this->flag = true;
     }
 
 
-    void compute(ST2_OUT st2_input, W st3_wb) {
+    void compute(ST2_OUT st2_input, W st3_wb, int (&n2c)[N_THREADS][N_CELLS]) {
         this->old_output.th_idx = this->new_output.th_idx;
         this->old_output.th_valid = this->new_output.th_valid;
         this->old_output.cell_a = this->new_output.cell_a;
