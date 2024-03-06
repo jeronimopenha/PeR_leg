@@ -52,7 +52,7 @@ public:
 
         for (int n = 0; n < N_NEIGH; ++n) {
 
-            int i1, i2, j1, j2, distance;
+            int i1, i2, j1, j2;
 
             if (st3_cva[n] != -1) {
                 get_line_column_from_cell(ca, N_LINES, N_COLUMNS, i1, j1);

@@ -1,5 +1,7 @@
 #include <cstring>
 #include "sa_pipeline_sw.h"
+#include "util.cpp"
+
 
 class Stage5SA {
 private:
@@ -51,39 +53,42 @@ public:
         int dvbs[N_NEIGH] = {0, 0, 0, 0};
 
         for (int n = 0; n < N_NEIGH; ++n) {
+            int i1, i2, j1, j2;
+
             if (st4_cva[n] != -1) {
+                get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i1, j1);
+                if (st4_cas == st4_cva[n]) {
+                    get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i2, j2);
+                } else {
+                    get_line_column_from_cell(st4_cva[n], N_LINES, N_COLUMNS, i2, j2);
+                }
                 if (arch_type == ONE_HOP) {
-                    dvas[n] = (st4_cas == st4_cva[n]) ?
-                              // Compute distance using one-hop algorithm
-                              // Util::dist_one_hop(...) :
-                              0;
+                    dvas[n] = dist_one_hop(i1, j1, i2, j2);
                 } else if (arch_type == MESH) {
-                    dvas[n] = (st4_cas == st4_cva[n]) ?
-                              // Compute Manhattan distance
-                              // Util::dist_manhattan(...) :
-                              0;
+                    dvas[n] = dist_manhatan(i1, j1, i2, j2);
                 }
             }
 
             if (st4_cvb[n] != -1) {
+                get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i1, j1);
+                if (st4_cbs == st4_cvb[n]) {
+                    get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i2, j2);
+                } else {
+                    get_line_column_from_cell(st4_cvb[n], N_LINES, N_COLUMNS, i2, j2);
+                }
                 if (arch_type == ONE_HOP) {
-                    dvbs[n] = (st4_cbs == st4_cvb[n]) ?
-                              // Compute distance using one-hop algorithm
-                              // Util::dist_one_hop(...) :
-                              0;
+                    dvbs[n] = dist_one_hop(i1, j1, i2, j2);
                 } else if (arch_type == MESH) {
-                    dvbs[n] = (st4_cbs == st4_cvb[n]) ?
-                              // Compute Manhattan distance
-                              // Util::dist_manhattan(...) :
-                              0;
+                    dvbs[n] = dist_manhatan(i1, j1, i2, j2);
                 }
             }
         }
 
-        std::copy(st4_input, st4_input + 14, new_output);
-        std::copy(dvac, dvac + 2, new_output + 2);
-        std::copy(dvbc, dvbc + 2, new_output + 4);
-        std::copy(dvas, dvas + 4, new_output + 6);
-        std::copy(dvbs, dvbs + 4, new_output + 10);
+        this->new_output.th_idx = st4_th_idx;
+        this->new_output.th_valid = st4_th_valid;
+        memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
+        memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
+        memcpy(&this->new_output.dvas, &dvas, sizeof(dvas));
+        memcpy(&this->new_output.dvbs, &dvbs, sizeof(dvbs));
     }
 };
