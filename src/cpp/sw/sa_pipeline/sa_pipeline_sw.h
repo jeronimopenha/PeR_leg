@@ -5,6 +5,11 @@
 #ifndef CPP_SA_PIPELINE_SW_H
 #define CPP_SA_PIPELINE_SW_H
 
+#include <cmath>
+#include <cstring>
+#include "util.h"
+
+
 #define N_NEIGH 4
 #define N_THREADS 6
 #define N_CELLS  100
@@ -12,10 +17,12 @@
 #define N_CELLS_POW 10000
 #define N_LINES N_CELLS_SQRT
 #define N_COLUMNS N_CELLS_SQRT
-
-enum ArchType {
-    ONE_HOP, MESH
-};
+#define N_COPIES 1
+#define MESH
+//#define ONE_HOP
+#define TH_BITS (int)ceil(log2(N_THREADS))
+#define CELL_BITS (int)ceil(log2(N_CELLS))
+#define MASK (N_CELLS_POW-1)
 
 struct W {
     int th_idx;

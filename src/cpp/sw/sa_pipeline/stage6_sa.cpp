@@ -1,4 +1,3 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
 
 class Stage6SA {
@@ -27,15 +26,15 @@ public:
 
         int st5_th_idx = st5_input.th_idx;
         bool st5_th_valid = st5_input.th_valid;
-        int *st5_dvac = st5_input.dvac;
-        int *st5_dvbc = st5_input.dvbc;
-        int *st5_dvas = st5_input.dvas;
-        int *st5_dvbs = st5_input.dvbs;
 
-        int dvac = st5_dvac[0] + st5_dvac[1];
-        int dvbc = st5_dvbc[0] + st5_dvbc[1];
-        int dvas[2] = {st5_dvas[0] + st5_dvas[1], st5_dvas[2] + st5_dvas[3]};
-        int dvbs[2] = {st5_dvbs[0] + st5_dvbs[1], st5_dvbs[2] + st5_dvbs[3]};
+        if (st5_th_idx == 0 && st5_th_valid) {
+            int a = 1;
+        }
+
+        int dvac = st5_input.dvac[0] + st5_input.dvac[1];
+        int dvbc = st5_input.dvbc[0] + st5_input.dvbc[1];
+        int dvas[2] = {st5_input.dvas[0] + st5_input.dvas[1], st5_input.dvas[2] + st5_input.dvas[3]};
+        int dvbs[2] = {st5_input.dvbs[0] + st5_input.dvbs[1], st5_input.dvbs[2] + st5_input.dvbs[3]};
 
         this->new_output.th_idx = st5_th_idx;
         this->new_output.th_valid = st5_th_valid;
@@ -43,6 +42,5 @@ public:
         this->new_output.dvbc = dvbc;
         memcpy(&this->new_output.dvas, &dvas, sizeof(dvas));
         memcpy(&this->new_output.dvbs, &dvbs, sizeof(dvbs));
-
     }
 };

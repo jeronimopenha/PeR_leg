@@ -88,8 +88,8 @@ class Stage5SA:
                 if self.arch_type == ArchType.ONE_HOP:
                     if st4_cbs == st4_cvb[i]:
                         dvbs[i] = Util.dist_one_hop(
-                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
-                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns)
                         )
                     else:
                         dvbs[i] = Util.dist_one_hop(
@@ -99,8 +99,8 @@ class Stage5SA:
                 elif self.arch_type == ArchType.MESH:
                     if st4_cbs == st4_cvb[i]:
                         dvbs[i] = Util.dist_manhattan(
-                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns),
-                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns)
+                            Util.get_line_column_from_cell(st4_cbs, self.n_lines, self.n_columns),
+                            Util.get_line_column_from_cell(st4_cas, self.n_lines, self.n_columns)
                         )
                     else:
                         dvbs[i] = Util.dist_manhattan(

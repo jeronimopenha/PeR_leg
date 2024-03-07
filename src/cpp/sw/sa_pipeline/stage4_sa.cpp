@@ -1,11 +1,8 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
-#include "util.cpp"
 
 
 class Stage4SA {
 private:
-    ArchType arch_type;
 
 public:
     ST4_OUT new_output = {
@@ -23,10 +20,6 @@ public:
             {0, 0, 0, 0}
     };
 
-    explicit Stage4SA(ArchType arch_type) {
-        this->arch_type = arch_type;
-    }
-
     void compute(ST3_OUT st3_input) {
         this->old_output = this->new_output;
         this->old_output = this->new_output;
@@ -41,8 +34,11 @@ public:
         bool st3_th_valid = st3_input.th_valid;
         int st3_cell_a = st3_input.cell_a;
         int st3_cell_b = st3_input.cell_b;
-        int *st3_cva = st3_input.cva;
-        int *st3_cvb = st3_input.cvb;
+
+
+        if (st3_th_idx == 0 && st3_th_valid) {
+            int a = 1;
+        }
 
         int dvac[4] = {0, 0, 0, 0};
         int dvbc[4] = {0, 0, 0, 0};
@@ -52,28 +48,26 @@ public:
 
         for (int n = 0; n < N_NEIGH; ++n) {
 
-            int i1, i2, j1, j2, distance;
+            int i1, i2, j1, j2;
 
-            if (st3_cva[n] != -1) {
+            if (st3_input.cva[n] != -1) {
                 get_line_column_from_cell(ca, N_LINES, N_COLUMNS, i1, j1);
-                get_line_column_from_cell(st3_cva[n], N_LINES, N_COLUMNS, i2, j2);
-
-                if (this->arch_type == ONE_HOP) {
-                    dvac[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (arch_type == MESH) {
-                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
-                }
+                get_line_column_from_cell(st3_input.cva[n], N_LINES, N_COLUMNS, i2, j2);
+#if defined(ONE_HOP)
+                dvac[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvac[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
 
-            if (st3_cvb[n] != -1) {
+            if (st3_input.cvb[n] != -1) {
                 get_line_column_from_cell(cb, N_LINES, N_COLUMNS, i1, j1);
-                get_line_column_from_cell(st3_cvb[n], N_LINES, N_COLUMNS, i2, j2);
-
-                if (arch_type == ONE_HOP) {
-                    dvbc[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (arch_type == MESH) {
-                    dvac[n] = dist_manhatan(i1, j1, i2, j2);
-                }
+                get_line_column_from_cell(st3_input.cvb[n], N_LINES, N_COLUMNS, i2, j2);
+#if defined(ONE_HOP)
+                dvbc[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvbc[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
         }
 
@@ -81,8 +75,8 @@ public:
         this->new_output.th_valid = st3_th_valid;
         this->new_output.cell_a = st3_cell_a;
         this->new_output.cell_b = st3_cell_b;
-        memcpy(&this->new_output.cva, &st3_cva, sizeof(st3_cva));
-        memcpy(&this->new_output.cvb, &st3_cvb, sizeof(st3_cvb));
+        memcpy(&this->new_output.cva, &st3_input.cva, sizeof(st3_input.cva));
+        memcpy(&this->new_output.cvb, &st3_input.cvb, sizeof(st3_input.cvb));
         memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
         memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
     }

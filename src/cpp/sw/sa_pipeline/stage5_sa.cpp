@@ -1,10 +1,8 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
+
 
 class Stage5SA {
 private:
-    ArchType arch_type;
-
 
 public:
     ST5_OUT new_output = {
@@ -22,11 +20,6 @@ public:
             {0, 0, 0, 0}
     };
 
-    Stage5SA(ArchType arch_type) {
-        this->arch_type = arch_type;
-    }
-
-
     void compute(ST4_OUT st4_input) {
         this->old_output = this->new_output;
         this->old_output = this->new_output;
@@ -39,51 +32,55 @@ public:
         bool st4_th_valid = st4_input.th_valid;
         int st4_cbs = st4_input.cell_a;
         int st4_cas = st4_input.cell_b;
-        int *st4_cva = st4_input.cva;
-        int *st4_cvb = st4_input.cvb;
-        int *st4_dvac = st4_input.dvac;
-        int *st4_dvbc = st4_input.dvbc;
 
-        int dvac[2] = {st4_dvac[0] + st4_dvac[1], st4_dvac[2] + st4_dvac[3]};
-        int dvbc[2] = {st4_dvbc[0] + st4_dvbc[1], st4_dvbc[2] + st4_dvbc[3]};
+
+        if (st4_th_idx == 0 && st4_th_valid) {
+            int a = 1;
+        }
+
+        int dvac[2] = {st4_input.dvac[0] + st4_input.dvac[1], st4_input.dvac[2] + st4_input.dvac[3]};
+        int dvbc[2] = {st4_input.dvbc[0] + st4_input.dvbc[1], st4_input.dvbc[2] + st4_input.dvbc[3]};
 
         int dvas[N_NEIGH] = {0, 0, 0, 0};
         int dvbs[N_NEIGH] = {0, 0, 0, 0};
 
         for (int n = 0; n < N_NEIGH; ++n) {
-            if (st4_cva[n] != -1) {
-                if (arch_type == ONE_HOP) {
-                    dvas[n] = (st4_cas == st4_cva[n]) ?
-                              // Compute distance using one-hop algorithm
-                              // Util::dist_one_hop(...) :
-                              0;
-                } else if (arch_type == MESH) {
-                    dvas[n] = (st4_cas == st4_cva[n]) ?
-                              // Compute Manhattan distance
-                              // Util::dist_manhattan(...) :
-                              0;
+            int i1, i2, j1, j2;
+
+            if (st4_input.cva[n] != -1) {
+                get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i1, j1);
+                if (st4_cas == st4_input.cva[n]) {
+                    get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i2, j2);
+                } else {
+                    get_line_column_from_cell(st4_input.cva[n], N_LINES, N_COLUMNS, i2, j2);
                 }
+#if defined(ONE_HOP)
+                dvas[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvas[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
 
-            if (st4_cvb[n] != -1) {
-                if (arch_type == ONE_HOP) {
-                    dvbs[n] = (st4_cbs == st4_cvb[n]) ?
-                              // Compute distance using one-hop algorithm
-                              // Util::dist_one_hop(...) :
-                              0;
-                } else if (arch_type == MESH) {
-                    dvbs[n] = (st4_cbs == st4_cvb[n]) ?
-                              // Compute Manhattan distance
-                              // Util::dist_manhattan(...) :
-                              0;
+            if (st4_input.cvb[n] != -1) {
+                get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i1, j1);
+                if (st4_cbs == st4_input.cvb[n]) {
+                    get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i2, j2);
+                } else {
+                    get_line_column_from_cell(st4_input.cvb[n], N_LINES, N_COLUMNS, i2, j2);
                 }
+#if defined(ONE_HOP)
+                dvbs[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvbs[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
         }
 
-        std::copy(st4_input, st4_input + 14, new_output);
-        std::copy(dvac, dvac + 2, new_output + 2);
-        std::copy(dvbc, dvbc + 2, new_output + 4);
-        std::copy(dvas, dvas + 4, new_output + 6);
-        std::copy(dvbs, dvbs + 4, new_output + 10);
+        this->new_output.th_idx = st4_th_idx;
+        this->new_output.th_valid = st4_th_valid;
+        memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
+        memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
+        memcpy(&this->new_output.dvas, &dvas, sizeof(dvas));
+        memcpy(&this->new_output.dvbs, &dvbs, sizeof(dvbs));
     }
 };

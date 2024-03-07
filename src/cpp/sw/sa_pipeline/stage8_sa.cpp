@@ -18,6 +18,10 @@ public:
         bool st7_th_valid = st7_input.th_valid;
         int st7_dc = st7_input.dc;
 
+        if (st7_th_idx == 0 && st7_th_valid) {
+            int a = 1;
+        }
+
         int st7_dvas = st7_input.dvas;
         int st7_dvbs = st7_input.dvbs;
 

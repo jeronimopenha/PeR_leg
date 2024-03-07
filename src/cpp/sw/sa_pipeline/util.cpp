@@ -1,14 +1,14 @@
 //
 // Created by jeronimo on 05/03/24.
 //
-#include <cmath>
+#include "util.h"
 
 void get_line_column_from_cell(int cell, int n_lines, int n_columns, int &line, int &column) {
     line = cell / n_lines;
     column = cell % n_columns;
 }
 
-int dist_manhatan(int ia, int ja, int ib, int jb) {
+int dist_manhattan(int ia, int ja, int ib, int jb) {
     return abs(ia - ib) + abs(ja - jb);
 }
 

@@ -1,9 +1,7 @@
-#include <cstring>
 #include "sa_pipeline_sw.h"
 
 class Stage2SA {
 private:
-    int **neighbors;
 
 
 public:
@@ -24,12 +22,8 @@ public:
             {0, 0, -1}
     };
 
-    explicit Stage2SA(int **neighbors) {
-        this->neighbors = neighbors;
-    }
 
-
-    void compute(ST1_OUT st1_input) {
+    void compute(ST1_OUT st1_input, int(&neighbors)[N_CELLS][N_NEIGH]) {
 
         this->old_output.th_idx = this->new_output.th_idx;
         this->old_output.th_valid = this->new_output.th_valid;
@@ -59,6 +53,9 @@ public:
         int va[N_NEIGH] = {-1, -1, -1, -1};
         int vb[N_NEIGH] = {-1, -1, -1, -1};
 
+        if(st1_th_idx ==0 && st1_th_valid){
+            int a=1;
+        }
 
         if (st1_node_a != -1) {
             for (int n = 0; n < N_NEIGH; ++n) {

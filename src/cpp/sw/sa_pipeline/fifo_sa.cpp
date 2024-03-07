@@ -8,16 +8,16 @@ template<typename T>
 
 class FifoSa {
 private:
-    T *arr;
+    T arr[CAPACITY];
     int capacity;
     int size;
     int front;
     int rear;
 
 public:
-    explicit FifoSa(int cap) {
-        capacity = cap;
-        arr = new T[capacity];
+    explicit FifoSa() {
+        capacity = CAPACITY;
+        //arr = new T[capacity];
         size = 0;
         front = 0;
         rear = -1;

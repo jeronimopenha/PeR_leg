@@ -19,12 +19,14 @@ public:
         bool st6_th_valid = st6_input.th_valid;
         int st6_dvac = st6_input.dvac;
         int st6_dvbc = st6_input.dvbc;
-        int *st6_dvas = st6_input.dvas;
-        int *st6_dvbs = st6_input.dvbs;
+
+        if (st6_th_idx == 0 && st6_th_valid) {
+            int a = 1;
+        }
 
         int dc = st6_dvac + st6_dvbc;
-        int dvas = st6_dvas[0] + st6_dvas[1];
-        int dvbs = st6_dvbs[0] + st6_dvbs[1];
+        int dvas = st6_input.dvas[0] + st6_input.dvas[1];
+        int dvbs = st6_input.dvbs[0] + st6_input.dvbs[1];
 
         this->new_output.th_idx = st6_th_idx;
         this->new_output.th_valid = st6_th_valid;

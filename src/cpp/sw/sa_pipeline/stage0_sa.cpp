@@ -1,8 +1,8 @@
-#include "stage0_sa.h"
+#include "sa_pipeline_sw.h"
 
 class Stage0SA {
 private:
-    int counter[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    //int counter[N_THREADS] = {0, 0, 0, 0, 0, 0};
     int cell_a[N_THREADS] = {0, 0, 0, 0, 0, 0};
     int cell_b[N_THREADS] = {0, 0, 0, 0, 0, 0};
     bool th_valid[N_THREADS] = {true, true, true, true, true, true};
@@ -10,8 +10,8 @@ private:
     int exec_counter = 0;
 
 public:
-    ST0_OUT new_output{0, false, 0, 0};
-    ST0_OUT old_output{0, false, 0, 0};
+    ST0_OUT new_output{0, true, 0, 0};
+    ST0_OUT old_output{0, true, 0, 0};
 
     void compute() {
         int th_idx_c = this->th_idx;
@@ -23,12 +23,16 @@ public:
 
 
         if (!this->th_valid[th_idx_c]) {
-            this->counter[th_idx_c] += 1;
-            if (this->counter[th_idx_c] >= N_CELLS_POW) {
-                this->counter[th_idx_c] = 0;
+            if (this->cell_a[th_idx_c] == N_CELLS - 1) {
+                this->cell_a[th_idx_c] = 0;
+                if (this->cell_b[th_idx_c] == N_CELLS - 1) {
+                    this->cell_b[th_idx_c] = 0;
+                } else {
+                    this->cell_b[th_idx_c] += 1;
+                }
+            } else {
+                this->cell_a[th_idx_c] += 1;
             }
-            this->cell_a[th_idx_c] = this->counter[th_idx_c] & MASK;
-            this->cell_b[th_idx_c] = (this->counter[th_idx_c] >> CELL_BITS) & MASK;
 
             this->th_idx += 1;
             if (this->th_idx == N_THREADS) {
