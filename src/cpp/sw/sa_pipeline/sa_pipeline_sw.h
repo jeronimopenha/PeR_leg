@@ -9,9 +9,6 @@
 #include <cstring>
 #include "util.h"
 
-#define TH_BITS (int)ceil(log2(N_THREADS))
-#define CELL_BITS (int)ceil(log2(N_CELLS))
-#define MASK (N_CELLS_POW-1)
 
 #define N_NEIGH 4
 #define N_THREADS 6
@@ -21,9 +18,11 @@
 #define N_LINES N_CELLS_SQRT
 #define N_COLUMNS N_CELLS_SQRT
 #define N_COPIES 1
-#define MESH 0
-#define ONE_HOP 1
-#define ARCH_TYPE MESH
+#define MESH
+//#define ONE_HOP
+#define TH_BITS (int)ceil(log2(N_THREADS))
+#define CELL_BITS (int)ceil(log2(N_CELLS))
+#define MASK (N_CELLS_POW-1)
 
 struct W {
     int th_idx;

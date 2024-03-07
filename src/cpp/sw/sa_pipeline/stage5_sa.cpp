@@ -32,13 +32,14 @@ public:
         bool st4_th_valid = st4_input.th_valid;
         int st4_cbs = st4_input.cell_a;
         int st4_cas = st4_input.cell_b;
-        int *st4_cva = st4_input.cva;
-        int *st4_cvb = st4_input.cvb;
-        int *st4_dvac = st4_input.dvac;
-        int *st4_dvbc = st4_input.dvbc;
 
-        int dvac[2] = {st4_dvac[0] + st4_dvac[1], st4_dvac[2] + st4_dvac[3]};
-        int dvbc[2] = {st4_dvbc[0] + st4_dvbc[1], st4_dvbc[2] + st4_dvbc[3]};
+
+        if (st4_th_idx == 0 && st4_th_valid) {
+            int a = 1;
+        }
+
+        int dvac[2] = {st4_input.dvac[0] + st4_input.dvac[1], st4_input.dvac[2] + st4_input.dvac[3]};
+        int dvbc[2] = {st4_input.dvbc[0] + st4_input.dvbc[1], st4_input.dvbc[2] + st4_input.dvbc[3]};
 
         int dvas[N_NEIGH] = {0, 0, 0, 0};
         int dvbs[N_NEIGH] = {0, 0, 0, 0};
@@ -46,32 +47,32 @@ public:
         for (int n = 0; n < N_NEIGH; ++n) {
             int i1, i2, j1, j2;
 
-            if (st4_cva[n] != -1) {
+            if (st4_input.cva[n] != -1) {
                 get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i1, j1);
-                if (st4_cas == st4_cva[n]) {
+                if (st4_cas == st4_input.cva[n]) {
                     get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i2, j2);
                 } else {
-                    get_line_column_from_cell(st4_cva[n], N_LINES, N_COLUMNS, i2, j2);
+                    get_line_column_from_cell(st4_input.cva[n], N_LINES, N_COLUMNS, i2, j2);
                 }
-                if (ARCH_TYPE == ONE_HOP) {
-                    dvas[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (ARCH_TYPE == MESH) {
-                    dvas[n] = dist_manhattan(i1, j1, i2, j2);
-                }
+#if defined(ONE_HOP)
+                dvas[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvas[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
 
-            if (st4_cvb[n] != -1) {
+            if (st4_input.cvb[n] != -1) {
                 get_line_column_from_cell(st4_cbs, N_LINES, N_COLUMNS, i1, j1);
-                if (st4_cbs == st4_cvb[n]) {
+                if (st4_cbs == st4_input.cvb[n]) {
                     get_line_column_from_cell(st4_cas, N_LINES, N_COLUMNS, i2, j2);
                 } else {
-                    get_line_column_from_cell(st4_cvb[n], N_LINES, N_COLUMNS, i2, j2);
+                    get_line_column_from_cell(st4_input.cvb[n], N_LINES, N_COLUMNS, i2, j2);
                 }
-                if (ARCH_TYPE == ONE_HOP) {
-                    dvbs[n] = dist_one_hop(i1, j1, i2, j2);
-                } else if (ARCH_TYPE == MESH) {
-                    dvbs[n] = dist_manhattan(i1, j1, i2, j2);
-                }
+#if defined(ONE_HOP)
+                dvbs[n] = dist_one_hop(i1, j1, i2, j2);
+#elif defined(MESH)
+                dvbs[n] = dist_manhattan(i1, j1, i2, j2);
+#endif
             }
         }
 

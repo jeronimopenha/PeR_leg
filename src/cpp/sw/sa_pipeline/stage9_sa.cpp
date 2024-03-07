@@ -18,6 +18,10 @@ public:
         int st8_dc = st8_input.dc;
         int st8_ds = st8_input.ds;
 
+        if (st8_th_idx == 0 && st8_th_valid) {
+            int a = 1;
+        }
+
         bool sw_c = st8_ds < st8_dc;
 
         this->new_output.th_idx = st8_th_idx;

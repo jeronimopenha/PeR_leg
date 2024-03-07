@@ -24,19 +24,14 @@ public:
 
     explicit Stage1SA() {
         this->flag = true;
-        this->fifo_a = new FifoSa<W>(N_THREADS);
-        this->fifo_b = new FifoSa<W>(N_THREADS);
+        this->fifo_a = new FifoSa<W>();
+        this->fifo_b = new FifoSa<W>();
         for (int i = 0; i < N_THREADS - 2; i++) {
             W fifo_cell_a = {0, 0, -1};
             W fifo_cell_b = {0, 0, -1};
             this->fifo_a->enqueue(fifo_cell_a);
             this->fifo_b->enqueue(fifo_cell_b);
         }
-    }
-
-    ~Stage1SA() {
-        delete[] fifo_a;
-        delete[] fifo_b;
     }
 
 
@@ -56,8 +51,8 @@ public:
         int st0_cell_a = st0_input.cell_a;
         int st0_cell_b = st0_input.cell_b;
 
-        if(st0_th_idx ==0 && st0_th_valid){
-            int a=1;
+        if (st0_th_idx == 0 && st0_th_valid) {
+            int a = 1;
         }
 
         if (st0_th_valid) {
@@ -75,7 +70,7 @@ public:
             memcpy(&wb, &this->new_output.wb, sizeof(W));
         }
 
-        bool usw = st9_sw.sw;
+        bool usw = this->new_output.sw.sw;
         W uwa{};
         W uwb{};
         memcpy(&uwa, &this->new_output.wa, sizeof(W));

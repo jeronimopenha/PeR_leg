@@ -52,6 +52,10 @@ public:
         memcpy(&st2_wa, &st2_input.wa, sizeof(W));
         memcpy(&st2_wb, &st2_input.wb, sizeof(W));
 
+        if (st2_th_idx == 0 && st2_th_valid) {
+            int a = 1;
+        }
+
         bool usw = old_output.sw.sw;
         W uwa{};
         W uwb{};
@@ -88,10 +92,10 @@ public:
         this->new_output.th_valid = st2_th_valid;
         this->new_output.cell_a = st2_cell_a;
         this->new_output.cell_b = st2_cell_b;
-        memcpy(&this->new_output, &cva, sizeof(cva));
-        memcpy(&this->new_output, &cvb, sizeof(cvb));
-        memcpy(&this->new_output, &st2_sw, sizeof(ST9_OUT));
-        memcpy(&this->new_output, &st2_wa, sizeof(W));
-        memcpy(&this->new_output, &st2_wb, sizeof(W));
+        memcpy(&this->new_output.cva, &cva, sizeof(cva));
+        memcpy(&this->new_output.cvb, &cvb, sizeof(cvb));
+        memcpy(&this->new_output.sw, &st2_sw, sizeof(ST9_OUT));
+        memcpy(&this->new_output.wa, &st2_wa, sizeof(W));
+        memcpy(&this->new_output.wb, &st2_wb, sizeof(W));
     }
 };
