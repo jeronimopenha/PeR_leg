@@ -16,18 +16,15 @@ private:
 public:
     void run_single(int (&n2c)[N_COPIES][N_THREADS][N_CELLS], int (&c2n)[N_COPIES][N_THREADS][N_CELLS],
                     int (&n)[N_CELLS][N_NEIGH]) {
-        int exec_times = 1000;
-        long max_counter = N_CELLS_POW * exec_times;
 
         for (int i = 0; i < N_COPIES; ++i) {
-            exec_pipeline(n2c[i], c2n[i], n, max_counter);
+            exec_pipeline(n2c[i], c2n[i], n);
         }
     }
 
 private:
     static void
-    exec_pipeline(int (&n2c)[N_THREADS][N_CELLS], int (&c2n)[N_THREADS][N_CELLS], int (&n)[N_CELLS][N_NEIGH],
-                  long max_counter) {
+    exec_pipeline(int (&n2c)[N_THREADS][N_CELLS], int (&c2n)[N_THREADS][N_CELLS], int (&n)[N_CELLS][N_NEIGH]) {
 
         Stage0SA st0 = Stage0SA();
         Stage1SA st1 = Stage1SA();
@@ -40,8 +37,8 @@ private:
         Stage8SA st8 = Stage8SA();
         Stage9SA st9 = Stage9SA();
 
-        long counter = 0;
-        while (counter < max_counter) {
+
+        for (long counter = 0; counter < MAX_COUNTER; counter++) {
             st0.compute();
             st1.compute(st0.old_output, st9.old_output, st1.old_output.wb, c2n);
             st2.compute(st1.old_output, n);
@@ -52,8 +49,6 @@ private:
             st7.compute(st6.old_output);
             st8.compute(st7.old_output);
             st9.compute(st8.old_output);
-
-            counter++;
         }
     }
 };

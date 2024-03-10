@@ -21,12 +21,21 @@ public:
     };
 
     void compute(ST4_OUT st4_input) {
-        this->old_output = this->new_output;
-        this->old_output = this->new_output;
-        memcpy(&this->old_output.dvac, &this->new_output.dvac, sizeof(this->new_output.dvac));
-        memcpy(&this->old_output.dvbc, &this->new_output.dvbc, sizeof(this->new_output.dvbc));
-        memcpy(&this->old_output.dvas, &this->new_output.dvas, sizeof(this->new_output.dvas));
-        memcpy(&this->old_output.dvbs, &this->new_output.dvbs, sizeof(this->new_output.dvbs));
+        this->old_output.th_idx = this->new_output.th_idx;
+        this->old_output.th_valid = this->new_output.th_valid;
+        this->old_output.dvac[0] = this->new_output.dvac[0];
+        this->old_output.dvac[1] = this->new_output.dvac[1];
+        this->old_output.dvbc[0] = this->new_output.dvbc[0];
+        this->old_output.dvbc[1] = this->new_output.dvbc[1];
+        this->old_output.dvas[0] = this->new_output.dvas[0];
+        this->old_output.dvas[1] = this->new_output.dvas[1];
+        this->old_output.dvas[2] = this->new_output.dvas[2];
+        this->old_output.dvas[3] = this->new_output.dvas[3];
+        this->old_output.dvbs[0] = this->new_output.dvbs[0];
+        this->old_output.dvbs[1] = this->new_output.dvbs[1];
+        this->old_output.dvbs[2] = this->new_output.dvbs[2];
+        this->old_output.dvbs[3] = this->new_output.dvbs[3];
+
 
         int st4_th_idx = st4_input.th_idx;
         bool st4_th_valid = st4_input.th_valid;
@@ -78,9 +87,18 @@ public:
 
         this->new_output.th_idx = st4_th_idx;
         this->new_output.th_valid = st4_th_valid;
-        memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
-        memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
-        memcpy(&this->new_output.dvas, &dvas, sizeof(dvas));
-        memcpy(&this->new_output.dvbs, &dvbs, sizeof(dvbs));
+        this->new_output.dvac[0] = dvac[0];
+        this->new_output.dvac[1] = dvac[1];
+        this->new_output.dvbc[0] = dvbc[0];
+        this->new_output.dvbc[1] = dvbc[1];
+        this->new_output.dvas[0] = dvas[0];
+        this->new_output.dvas[1] = dvas[1];
+        this->new_output.dvas[2] = dvas[2];
+        this->new_output.dvas[3] = dvas[3];
+        this->new_output.dvbs[0] = dvbs[0];
+        this->new_output.dvbs[1] = dvbs[1];
+        this->new_output.dvbs[2] = dvbs[2];
+        this->new_output.dvbs[3] = dvbs[3];
+
     }
 };

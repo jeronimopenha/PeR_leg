@@ -6,7 +6,6 @@
 #define CPP_SA_PIPELINE_SW_H
 
 #include <cmath>
-#include <cstring>
 #include "util.h"
 
 
@@ -20,9 +19,8 @@
 #define N_COPIES 1
 #define MESH
 //#define ONE_HOP
-#define TH_BITS (int)ceil(log2(N_THREADS))
-#define CELL_BITS (int)ceil(log2(N_CELLS))
-#define MASK (N_CELLS_POW-1)
+#define EXEC_TIMES 1000
+#define MAX_COUNTER (N_CELLS_POW * EXEC_TIMES)
 
 struct W {
     int th_idx;

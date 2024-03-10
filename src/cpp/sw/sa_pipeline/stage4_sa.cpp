@@ -25,10 +25,23 @@ public:
         this->old_output = this->new_output;
         this->old_output = this->new_output;
         this->old_output = this->new_output;
-        memcpy(&this->old_output.cva, &this->new_output.cva, sizeof(this->new_output.cva));
-        memcpy(&this->old_output.cvb, &this->new_output.cvb, sizeof(this->new_output.cvb));
-        memcpy(&this->old_output.dvac, &this->new_output.dvac, sizeof(this->new_output.dvac));
-        memcpy(&this->old_output.dvbc, &this->new_output.dvbc, sizeof(this->new_output.dvbc));
+        this->old_output.cva[0] = this->new_output.cva[0];
+        this->old_output.cva[1] = this->new_output.cva[1];
+        this->old_output.cva[2] = this->new_output.cva[2];
+        this->old_output.cva[3] = this->new_output.cva[3];
+        this->old_output.cvb[0] = this->new_output.cvb[0];
+        this->old_output.cvb[1] = this->new_output.cvb[1];
+        this->old_output.cvb[2] = this->new_output.cvb[2];
+        this->old_output.cvb[3] = this->new_output.cvb[3];
+        this->old_output.dvac[0] = this->new_output.dvac[0];
+        this->old_output.dvac[1] = this->new_output.dvac[1];
+        this->old_output.dvac[2] = this->new_output.dvac[2];
+        this->old_output.dvac[3] = this->new_output.dvac[3];
+        this->old_output.dvbc[0] = this->new_output.dvbc[0];
+        this->old_output.dvbc[1] = this->new_output.dvbc[1];
+        this->old_output.dvbc[2] = this->new_output.dvbc[2];
+        this->old_output.dvbc[3] = this->new_output.dvbc[3];
+
 
         int st3_th_idx = st3_input.th_idx;
         bool st3_th_valid = st3_input.th_valid;
@@ -75,9 +88,22 @@ public:
         this->new_output.th_valid = st3_th_valid;
         this->new_output.cell_a = st3_cell_a;
         this->new_output.cell_b = st3_cell_b;
-        memcpy(&this->new_output.cva, &st3_input.cva, sizeof(st3_input.cva));
-        memcpy(&this->new_output.cvb, &st3_input.cvb, sizeof(st3_input.cvb));
-        memcpy(&this->new_output.dvac, &dvac, sizeof(dvac));
-        memcpy(&this->new_output.dvbc, &dvbc, sizeof(dvbc));
+        this->new_output.cva[0] = st3_input.cva[0];
+        this->new_output.cva[1] = st3_input.cva[1];
+        this->new_output.cva[2] = st3_input.cva[2];
+        this->new_output.cva[3] = st3_input.cva[3];
+        this->new_output.cvb[0] = st3_input.cvb[0];
+        this->new_output.cvb[1] = st3_input.cvb[1];
+        this->new_output.cvb[2] = st3_input.cvb[2];
+        this->new_output.cvb[3] = st3_input.cvb[3];
+        this->new_output.dvac[0] = dvac[0];
+        this->new_output.dvac[1] = dvac[1];
+        this->new_output.dvac[2] = dvac[2];
+        this->new_output.dvac[3] = dvac[3];
+        this->new_output.dvbc[0] = dvbc[0];
+        this->new_output.dvbc[1] = dvbc[1];
+        this->new_output.dvbc[2] = dvbc[2];
+        this->new_output.dvbc[3] = dvbc[3];
+
     }
 };

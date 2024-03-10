@@ -42,9 +42,16 @@ public:
         this->old_output.cell_b = this->new_output.cell_b;
         this->old_output.node_a = this->new_output.node_a;
         this->old_output.node_b = this->new_output.node_b;
-        memcpy(&this->old_output.sw, &this->new_output.sw, sizeof(ST9_OUT));
-        memcpy(&this->old_output.wa, &this->new_output.wa, sizeof(W));
-        memcpy(&this->old_output.wb, &this->new_output.wb, sizeof(W));
+        this->old_output.sw.th_idx = this->new_output.sw.th_idx;
+        this->old_output.sw.th_valid = this->new_output.sw.th_valid;
+        this->old_output.sw.sw = this->new_output.sw.sw;
+        this->old_output.wa.th_idx = this->new_output.wa.th_idx;
+        this->old_output.wa.cell = this->new_output.wa.cell;
+        this->old_output.wa.node = this->new_output.wa.node;
+        this->old_output.wb.th_idx = this->new_output.wb.th_idx;
+        this->old_output.wb.cell = this->new_output.wb.cell;
+        this->old_output.wb.node = this->new_output.wb.node;
+
 
         int st0_th_idx = st0_input.th_idx;
         bool st0_th_valid = st0_input.th_valid;
@@ -66,15 +73,24 @@ public:
             wa = this->fifo_a->dequeue();
             wb = this->fifo_b->dequeue();
         } else {
-            memcpy(&wa, &this->new_output.wa, sizeof(W));
-            memcpy(&wb, &this->new_output.wb, sizeof(W));
+            wa.th_idx = this->new_output.wa.th_idx;
+            wa.cell = this->new_output.wa.cell;
+            wa.node = this->new_output.wa.node;
+            wb.th_idx = this->new_output.wb.th_idx;
+            wb.cell = this->new_output.wb.cell;
+            wb.node = this->new_output.wb.node;
         }
 
         bool usw = this->new_output.sw.sw;
         W uwa{};
         W uwb{};
-        memcpy(&uwa, &this->new_output.wa, sizeof(W));
-        memcpy(&uwb, &st1_wb, sizeof(W));
+        uwa.th_idx = this->new_output.wa.th_idx;
+        uwa.cell = this->new_output.wa.cell;
+        uwa.node = this->new_output.wa.node;
+        uwb.th_idx = st1_wb.th_idx;
+        uwb.cell = st1_wb.cell;
+        uwb.node = st1_wb.node;
+
         if (usw) {
             if (this->flag) {
                 c2n[uwa.th_idx][uwa.cell] = wa.node;
@@ -91,8 +107,14 @@ public:
         this->new_output.cell_b = st0_cell_b;
         this->new_output.node_a = c2n[st0_th_idx][st0_cell_a];
         this->new_output.node_b = c2n[st0_th_idx][st0_cell_b];
-        memcpy(&this->new_output.sw, &st9_sw, sizeof(ST9_OUT));
-        memcpy(&this->new_output.wa, &wa, sizeof(W));
-        memcpy(&this->new_output.wb, &wb, sizeof(W));
+        this->new_output.sw.th_idx = st9_sw.th_idx;
+        this->new_output.sw.th_valid = st9_sw.th_valid;
+        this->new_output.sw.sw = st9_sw.sw;
+        this->new_output.wa.th_idx = wa.th_idx;
+        this->new_output.wa.cell = wa.cell;
+        this->new_output.wa.node = wa.node;
+        this->new_output.wb.th_idx = wb.th_idx;
+        this->new_output.wb.cell = wb.cell;
+        this->new_output.wb.node = wb.node;
     }
 };
