@@ -17,7 +17,7 @@ def run_connected_graphs():
 
         root_path: str = Util.get_project_root()
         dot_path_base = root_path + '/dot_db/'
-        dot_connected_path = dot_path_base + 'graphs0'
+        dot_connected_path = dot_path_base + 'connected/'
 
         output_path_base = os.getcwd() + '/reports/sw/yott/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)
 
@@ -37,13 +37,13 @@ def run_connected_graphs():
             per_graph = PeRGraph(dot_path, dot_name)
             print(per_graph.dot_name)
             yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 3)
-            raw_report: dict = yott_pipeline_sw.run(total_threads // threads_per_copy)
+            raw_report: dict = yott_pipeline_sw.run_single(total_threads // threads_per_copy)
             formatted_report = Util.get_formatted_report(raw_report)
             Util.save_json(output_path, dot_name, formatted_report)
             reports.append(formatted_report)
 
 
 if __name__ == '__main__':
-    per = PeRGraph(Util.get_project_root() + "/dot_db/connected/simple.dot", "simple.dot")
-    yott = YOTTPipeline(per, ArchType.MESH, 4, True, 3, 1).run_single(1)
-    # run_connected_graphs()
+    # per = PeRGraph(Util.get_project_root() + "/dot_db/connected/simple.dot", "simple.dot")
+    # yott = YOTTPipeline(per, ArchType.MESH, 4, True, 3, 1).run_single(1)
+    run_connected_graphs()

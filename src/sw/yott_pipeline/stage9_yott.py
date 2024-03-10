@@ -64,7 +64,7 @@ class Stage9YOTT:
 
         if thread_valid:
             stage0.fifo.put(thread_index, should_write)
-
+       
         self.new_output = {
             'should_write': should_write,
             'thread_index': thread_index,

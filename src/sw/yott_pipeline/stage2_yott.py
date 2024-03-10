@@ -46,8 +46,8 @@ class Stage2YOTT:
         out_previous_stage = stage1.old_output
         thread_index = out_previous_stage['thread_index']
         edge_index = out_previous_stage['edge_index']
-
         a, b = self.threads_edges[thread_index][edge_index]
+
         # fixme Método de anotações acrescentar 1 nas distâncias anotadas pra manter o padrão e ccorriir stage2_yott
         annotations = list(self.annotations[thread_index].values())[edge_index]
         while len(annotations) < num_annotations:

@@ -16,8 +16,6 @@ class Stage7YOTT:
         """
         self.tam_grid: int = tam_grid
         self.c2n: list[list[list]] = c2n
-        self.threads_current_adj_dists: list = [1 for _ in range(len_pipe)]
-        self.threads_free_cel: list[list] = [[None, math.inf] for _ in range(len_pipe)]
         self.new_output: dict = {
             'thread_index': 0,
             'thread_valid': 0,
@@ -43,7 +41,6 @@ class Stage7YOTT:
         if out_stage9['should_write']:
             old_c_s = out_stage9['C_S']
             self.c2n[old_thread_index][old_c_s[0]][old_c_s[1]] = out_stage9['B']
-            self.threads_current_adj_dists[old_thread_index] = 1
 
         self.old_output: dict = self.new_output.copy()
 

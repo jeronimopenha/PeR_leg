@@ -58,10 +58,10 @@ class YOTTPipeline(PiplineBase):
         reports: dict = {}
         for exec_num in range(n_copies):
             self.exec_pipeline(exec_num, dic_man)
-        for k in dic_man.keys():
-            exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
-            exec_key: str = 'exec_%d' % exec_num
-            reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
+            for k in dic_man.keys():
+                exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
+                exec_key: str = 'exec_%d' % exec_num
+                reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
         report: dict = Util.create_report(self, "YOTT", n_copies, reports)
         # print()
         return report
