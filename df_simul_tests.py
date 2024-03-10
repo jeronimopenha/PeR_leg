@@ -13,7 +13,7 @@ def run_simul_graphs():
 
     output_base = root_path + '/verilog/df_simul'
 
-    output_folders = [output_base + '/verilog', output_base + '/output', output_base + '/dot', output_base + '/results']
+    output_folders = [output_base + '/verilog', output_base + '/results']
     for out_f in output_folders:
         if not os.path.exists(out_f):
             os.makedirs(out_f)
@@ -24,6 +24,8 @@ def run_simul_graphs():
     for dot_path, dot_name in dots_list:
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
+        df_simul = DfSimul(per_graph, output_base)
+        df_simul.start_simulation()
 
 
 if __name__ == '__main__':

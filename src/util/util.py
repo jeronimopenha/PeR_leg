@@ -314,6 +314,8 @@ class Util:
         :param data: The data to save.
         :type data: dict
         """
+        if path[-1] !='/':
+            path = path + '/'
         with open(path + file_name + '.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
