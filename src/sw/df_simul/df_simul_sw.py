@@ -112,11 +112,10 @@ class DfSimulSw:
 
         while not df_break and not input_nodes_done and counter_done < 5:
             df_break = True
-            for pipe in self.dataflow:
-                for node in pipe:
+            for stage in self.dataflow:
+                for node in stage:
                     node_name = node.name
-                    ret = node.compute()
-                    if ret:
+                    if node.compute():
                         df_break = False
             input_nodes_done = True
             for input_node in self.input_nodes:
@@ -128,7 +127,7 @@ class DfSimulSw:
             exec_counter += 1
         th: list = []
         for output_node in self.output_nodes:
-            th.append(len(output_node.data) / exec_counter * 2 * 100)
+            th.append([output_node.name, len(output_node.data) / exec_counter * 2 * 100])
         return th
 
     def add_regs(self) -> nx.DiGraph:
@@ -221,6 +220,7 @@ class DfSimulSw:
         else:
             return Node(name)
 
+    # TODO implementar
     def write_output_result(self, rslt: str):
         lines = rslt.split('\n')
 

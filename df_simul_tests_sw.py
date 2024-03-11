@@ -6,8 +6,6 @@ from src.util.util import Util
 
 
 def run_simul_graphs():
-    run_parallel = False
-
     root_path: str = Util.get_project_root()
     dot_input = root_path + '/dot_db/dot_simul/'
 
@@ -23,7 +21,7 @@ def run_simul_graphs():
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
         df_simul = DfSimulSw(per_graph, output_base)
-        df_simul.run_simulation()
+        th: list = df_simul.run_simulation()
 
 
 if __name__ == '__main__':
