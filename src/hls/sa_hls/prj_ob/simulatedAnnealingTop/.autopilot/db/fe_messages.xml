@@ -1,0 +1,60 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:6:16" msg_body="use of undeclared identifier 'N_THREADS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:7:16" msg_body="use of undeclared identifier 'N_THREADS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:8:19" msg_body="use of undeclared identifier 'N_THREADS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:13:5" msg_body="unknown type name 'ST0_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:14:5" msg_body="unknown type name 'ST0_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:26:43" msg_body="use of undeclared identifier 'N_CELLS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:28:47" msg_body="use of undeclared identifier 'N_CELLS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:38:33" msg_body="use of undeclared identifier 'N_THREADS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:8:12" msg_body="use of undeclared identifier 'W'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:9:12" msg_body="use of undeclared identifier 'W'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:12:5" msg_body="unknown type name 'ST1_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:18:5" msg_body="unknown type name 'ST1_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:18" msg_body="unknown type name 'ST0_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:37" msg_body="unknown type name 'ST9_OUT'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3801" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:53" msg_body="unknown type name 'W'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:74" msg_body="use of undeclared identifier 'N_THREADS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:85" msg_body="use of undeclared identifier 'N_CELLS'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:27:35" msg_body="use of undeclared identifier 'W'">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-3776" msg_severity="ERROR" msg_loc="/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:28:35" msg_body="use of undeclared identifier 'W'">
+        <args/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Messages>
+	<Message severity="INFO" prefix="[HLS 200-111]" key="HLS_111_966" tag="RUNTIME" content="Finished File checks and directory preparation: CPU user time: 0.01 seconds. CPU system time: 0.01 seconds. Elapsed time: 10.1 seconds; current allocated memory: 308.109 MB." resolution=""/>
+	<Message severity="INFO" prefix="[HLS 200-10]" key="HLS_10_1312" tag="" content="Analyzing design file &apos;/home/jeronimocosta/Documentos/sa_hls/src/util.cpp&apos; ..." resolution=""/>
+	<Message severity="INFO" prefix="[HLS 200-10]" key="HLS_10_1312" tag="" content="Analyzing design file &apos;/home/jeronimocosta/Documentos/sa_hls/src/stage9_sa.cpp&apos; ..." resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_THREADS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:6:16)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_THREADS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:7:16)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_THREADS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:8:19)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST0_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:13:5)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST0_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:14:5)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_CELLS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:26:43)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_CELLS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:28:47)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_THREADS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage0_sa.cpp:38:33)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;W&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:8:12)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;W&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:9:12)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST1_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:12:5)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST1_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:18:5)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST0_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:18)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;ST9_OUT&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:37)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3801]" key="HLS 207-3801" tag="" content="unknown type name &apos;W&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:53)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_THREADS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:74)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;N_CELLS&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:38:85)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;W&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:27:35)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-3776]" key="HLS 207-3776" tag="" content="use of undeclared identifier &apos;W&apos; (/home/jeronimocosta/Documentos/sa_hls/src/stage1_sa.cpp:28:35)" resolution=""/>
+	<Message severity="ERROR" prefix="[HLS 207-59]" key="HLS 207-59" tag="" content="too many errors emitted, stopping now" resolution=""/>
+	<Message severity="INFO" prefix="[HLS 200-111]" key="HLS_111_966" tag="RUNTIME" content="Finished Command csynth_design CPU user time: 0.92 seconds. CPU system time: 0.46 seconds. Elapsed time: 5.14 seconds; current allocated memory: 1.062 MB." resolution=""/>
+</Messages>
