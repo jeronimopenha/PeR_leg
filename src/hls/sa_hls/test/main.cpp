@@ -1,7 +1,8 @@
 //
 // Created by jeronimo on 04/03/24.
 //
-#include "pipeline_sa_sw.hpp"
+#include <stdio.h>
+#include "sa_pipeline_sw.cpp"
 
 int main(int argc, char *argv[]) {
     int c2n[N_COPIES][N_THREADS][N_CELLS];
@@ -75,8 +76,8 @@ int main(int argc, char *argv[]) {
 
     //printf("%d ", c2n[0][0][0]);
 
-    PipelineSaSw pipeline_sa_sw = *new PipelineSaSw();
-    pipeline_sa_sw.run_single(n2c, c2n, n);
+    SAPipelineSw sa_pipeline_sw = *new SAPipelineSw();
+    sa_pipeline_sw.run_single(n2c, c2n, n);
 
     return 0;
 }
