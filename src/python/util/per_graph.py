@@ -190,6 +190,7 @@ class PeRGraph:
             List[List[str]]: List of unique edges.
         """
         dic = set()
+        dic.add(edges[0][0])
         new_edges = []
         for edge in edges:
             n1, n2 = edge[:2]

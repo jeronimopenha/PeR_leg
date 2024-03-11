@@ -8,7 +8,7 @@ class Stage3YOTT:
         @type n2c:
         """
         self.n2c = n2c
-        self.thread_adj_indexes: list[int] = [0 if i == 0 else 0 for i in range(len_pipe)]
+        self.thread_adj_indexes: list[int] = [0 for _ in range(len_pipe)]
         self.new_output: dict = {
             'thread_index': 0,
             'thread_valid': 0,
@@ -51,10 +51,6 @@ class Stage3YOTT:
         # Caso utilize mais anotacoes, em hardware sera necessario uma mmoria para cada 2 leituras
         c_a = self.n2c[thread_index][a] if thread_valid == 1 else [0, 0]  # type:ignore
         cs_c = [self.n2c[thread_index][c] if c > -1 else [-1, -1] for c in cs]  # type:ignore
-
-        for c in cs_c:
-            if c == [None, None]:
-                z = 1
 
         adj_index = self.thread_adj_indexes[thread_index] if thread_valid else 0
 

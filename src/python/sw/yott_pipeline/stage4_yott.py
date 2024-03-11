@@ -43,15 +43,8 @@ class Stage4YOTT:
 
         adj_index = out_previous_stage['adj_index']
         c_a = out_previous_stage['C_A']
-
         i, j = self.distance_table[index_list_edge][adj_index]
-
         c_s = [c_a[0] + i, c_a[1] + j]
-
-        for c in out_previous_stage['Cs_C']:
-            if c == [None, None]:
-                a = 1
-
         self.new_output = {
             'thread_index': thread_index,
             'thread_valid': out_previous_stage['thread_valid'],

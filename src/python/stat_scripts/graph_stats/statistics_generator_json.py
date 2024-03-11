@@ -1,7 +1,7 @@
 from src.python.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
 import pandas
 import json
-
+import re
 
 class StatisticsGeneratorJSON(IStatisticsGenerator):
     @staticmethod
@@ -14,6 +14,8 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
                 count_dists_greater_0 = 0
                 for distance in json_data['th_placement_distances'].values():
                     count_dists_greater_0 += 0 if distance == 1 else 1
+                num_annotation = re.findall('NA<\d>',json_file)[0]
+                num_annotation = num_annotation.replace('NA<','').replace('>','')
 
                 dict_data = IStatisticsGenerator.generate_data_dict(json_data['graph_name'].replace('.dot', ''),
                                                                     json_data['total_edges'],
@@ -23,6 +25,7 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
                                                                     json_data['arch_type'],
                                                                     json_data['algorithm'],
                                                                     json_data['total_threads'],
+                                                                    int(num_annotation)
                                                                     )
                 df = df.append(dict_data, ignore_index=True)
         return df

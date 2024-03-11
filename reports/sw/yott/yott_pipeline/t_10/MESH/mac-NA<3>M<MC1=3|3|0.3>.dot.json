@@ -1,0 +1,75 @@
+{
+    "graph_name": "mac.dot",
+    "algorithm": "YOTT-MC",
+    "arch_type": "MESH",
+    "total_edges": 11,
+    "visited_edges": 10,
+    "n_copies": 1,
+    "total_threads": 10,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "num_annotations": 3,
+    "method": "MC1",
+    "limiar": "3|3|0.3",
+    "best_thread": "Exec_0_TH_6",
+    "best_dist": 2,
+    "exec_max_clk": 636,
+    "exec_min_clk": 636,
+    "exec_avg_clk": 636.0,
+    "th_max_clk": 64,
+    "th_min_clk": 22,
+    "th_avg_clk": 40.1,
+    "best_placement": [
+        [
+            4,
+            3,
+            5,
+            6
+        ],
+        [
+            10,
+            9,
+            8,
+            7
+        ],
+        [
+            -1,
+            -1,
+            0,
+            2
+        ],
+        [
+            -1,
+            -1,
+            1,
+            -1
+        ]
+    ],
+    "th_placement_distances": {
+        "8_7": 1,
+        "7_6": 1,
+        "6_5": 1,
+        "5_3": 1,
+        "3_4": 1,
+        "3_9": 1,
+        "0_1": 1,
+        "0_2": 1,
+        "9_10": 1,
+        "9_0": 2,
+        "2_6": 2
+    },
+    "nodes_dict": {
+        "mul0": 0,
+        "const1": 1,
+        "load2": 2,
+        "mul3": 3,
+        "const4": 4,
+        "load5": 5,
+        "mul6": 6,
+        "add7": 7,
+        "output8": 8,
+        "add9": 9,
+        "const10": 10
+    }
+}
