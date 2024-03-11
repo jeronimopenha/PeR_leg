@@ -1,6 +1,6 @@
 import os
 import time
-from src.hw.df_simul.df_simul import DfSimul
+from src.hw.df_simul.df_simul_hw import DfSimulHw
 from src.util.per_graph import PeRGraph
 from src.util.util import Util
 
@@ -24,7 +24,7 @@ def run_simul_graphs():
     for dot_path, dot_name in dots_list:
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
-        df_simul = DfSimul(per_graph, output_base)
+        df_simul = DfSimulHw(per_graph, output_base)
         df_simul.start_simulation()
 
 

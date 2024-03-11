@@ -1,17 +1,11 @@
-from veriloggen import *
 import networkx as nx
-from src.util.util import Util
-
+from queue import Queue
 from src.util.per_graph import PeRGraph
 
 
-class DfSimul:
+class DfSimulHw:
     def __init__(self, per_graph: PeRGraph, output_base: str):
         self.per_graph = per_graph
-        self.verilog_file = f'{output_base}/verilog/{self.per_graph.dot_name.replace(".", "_")}.v'
-        self.output_file = f'{output_base}/{self.per_graph.dot_name.replace(".", "_")}.out'
-        self.result_path = f'{output_base}/results'
-        self.result_file = f'{self.per_graph.dot_name.replace(".", "_")}.json'
         self.df: nx.DiGraph = self.add_regs()
         self.test_bench: Module = self.make_test_bench()
 
@@ -497,3 +491,78 @@ class DfSimul:
             )
         )
         return m
+
+
+class Node:
+    def __init__(self):
+        self.in_queues: list[Queue] = []
+        self.out_queues: list[Queue] = []
+
+    def get_n_in_queues(self) -> int:
+        if self.in_queues:
+            return len(self.in_queues)
+        return 0
+
+    def create_in_queue(self):
+        self.in_queues.append(Queue(1))
+
+    def set_out_queue(self, queue: Queue):
+        self.out_queues.append(queue)
+
+    def compute(self) -> bool:
+        # verify if outputs are ready to receive data:
+        for out_queue in self.out_queues:
+            if not out_queue.empty():
+                return False
+        # verify if inputs are ready to give data:
+        for in_queue in self.in_queues:
+            if in_queue.empty():
+                return False
+        # sum all inputs
+        exec_data = 0
+        for in_queue in self.in_queues:
+            exec_data += in_queue.get()
+        # enqueue all outputs
+        for out_queue in self.out_queues:
+            out_queue.put(exec_data)
+        return True
+
+
+class InputNode(Node):
+    def __init__(self, n_data: int):
+        super().__init__()
+        self.n_data: int = n_data
+        self.data: int = 0
+        self.done: bool = False
+
+    def compute(self) -> bool:
+        if self.done:
+            return False
+        # verify if outputs are ready to receive data:
+        for out_queue in self.out_queues:
+            if not out_queue.empty():
+                return False
+        for out_queue in self.out_queues:
+            out_queue.put(self.data)
+        self.data += 1
+        if self.data >= self.n_data:
+            self.done = True
+        return True
+
+
+class OutputNode(Node):
+    def __init__(self):
+        super().__init__()
+        self.data: list = []
+
+    def compute(self) -> bool:
+        # verify if inputs are ready to give data:
+        for in_queue in self.in_queues:
+            if in_queue.empty():
+                return False
+        # sum all inputs
+        exec_data = 0
+        for in_queue in self.in_queues:
+            exec_data += in_queue.get()
+        self.data.append(exec_data)
+        return True
