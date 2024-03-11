@@ -1,9 +1,9 @@
 import os
-from src.sw.yott_pipeline.monte_carlo.yott_pipeline_mc0_sw import YOTTMC0Pipeline
-from src.sw.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
-from src.sw.yott_pipeline.X.yott_pipenline_x_sw import YOTTXPipeline
-from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
+from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc0_sw import YOTTMC0Pipeline
+from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
+from src.python.sw.yott_pipeline.X.yott_pipenline_x_sw import YOTTXPipeline
+from src.python.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
+from src.python.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 
 from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph

@@ -1,5 +1,5 @@
-from src.stat_scripts.graph_stats.statistics_generator_dot import StatisticsGeneratorDot
-from src.util.util import Util
+from src.python.stat_scripts.graph_stats.statistics_generator_dot import StatisticsGeneratorDot
+from src.python.util.util import Util
 base = Util.get_project_root()
 data_files = Util.get_files_list_by_extension(base + "/results_sa_iter/", ".dot")
 

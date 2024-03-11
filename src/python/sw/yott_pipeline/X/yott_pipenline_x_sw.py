@@ -1,24 +1,22 @@
 from copy import deepcopy
 from math import ceil
-import math
 import os
 import time
 import multiprocessing as mp
-from src.sw.yott_pipeline.X.stage0_yott_x import Stage0YOTTX
-from src.util.per_graph import PeRGraph
-from src.sw.yott_pipeline.FIFOQueue import FIFOQueue
-from src.sw.yott_pipeline.stage0_yott import Stage0YOTT
-from src.sw.yott_pipeline.stage1_yott import Stage1YOTT
-from src.sw.yott_pipeline.stage2_yott import Stage2YOTT
-from src.sw.yott_pipeline.stage3_yott import Stage3YOTT
-from src.sw.yott_pipeline.stage4_yott import Stage4YOTT
-from src.sw.yott_pipeline.stage5_yott import Stage5YOTT
-from src.sw.yott_pipeline.stage6_yott import Stage6YOTT
-from src.sw.yott_pipeline.stage7_yott import Stage7YOTT
-from src.sw.yott_pipeline.stage8_yott import Stage8YOTT
-from src.sw.yott_pipeline.stage9_yott import Stage9YOTT
-from src.util.piplinebase import PiplineBase
-from src.util.util import Util
+from src.python.sw.yott_pipeline.X.stage0_yott_x import Stage0YOTTX
+from src.python.util.per_graph import PeRGraph
+from src.python.sw.yott_pipeline.FIFOQueue import FIFOQueue
+from src.python.sw.yott_pipeline.stage1_yott import Stage1YOTT
+from src.python.sw.yott_pipeline.stage2_yott import Stage2YOTT
+from src.python.sw.yott_pipeline.stage3_yott import Stage3YOTT
+from src.python.sw.yott_pipeline.stage4_yott import Stage4YOTT
+from src.python.sw.yott_pipeline.stage5_yott import Stage5YOTT
+from src.python.sw.yott_pipeline.stage6_yott import Stage6YOTT
+from src.python.sw.yott_pipeline.stage7_yott import Stage7YOTT
+from src.python.sw.yott_pipeline.stage8_yott import Stage8YOTT
+from src.python.sw.yott_pipeline.stage9_yott import Stage9YOTT
+from src.python.util.piplinebase import PiplineBase
+from src.python.util.util import Util
 
 
 class YOTTXPipeline(PiplineBase):

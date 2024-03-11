@@ -1,4 +1,4 @@
-from src.util.util import Util
+from src.python.util.util import Util
 import pygraphviz as pgv
 
 def calc_in_out_vertexes_by_dot_files(path_dot_files):

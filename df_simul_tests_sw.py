@@ -1,8 +1,8 @@
 import os
 import time
-from src.sw.df_simul.df_simul_sw import DfSimulSw
-from src.util.per_graph import PeRGraph
-from src.util.util import Util
+from src.python.sw.df_simul.df_simul_sw import DfSimulSw
+from src.python.util.per_graph import PeRGraph
+from src.python.util.util import Util
 
 
 def run_simul_graphs():

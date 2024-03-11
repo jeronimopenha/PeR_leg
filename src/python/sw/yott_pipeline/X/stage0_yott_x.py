@@ -1,4 +1,4 @@
-from src.sw.yott_pipeline.IFIFO import IFIFO
+from src.python.sw.yott_pipeline.IFIFO import IFIFO
 
 
 class Stage0YOTTX:

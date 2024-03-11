@@ -1,6 +1,6 @@
-from src.stat_scripts.graph_exporter.graph_exporter import GraphExporter
-from src.stat_scripts.graph_generator.graph_inverter import GraphInverter
-from src.util.util import Util
+from src.python.stat_scripts.graph_exporter.graph_exporter import GraphExporter
+from src.python.stat_scripts.graph_generator.graph_inverter import GraphInverter
+from src.python.util.util import Util
 import pygraphviz as pgv
 
 def generate_inverted_graphs_from_dot_files(path_dot_files:str):

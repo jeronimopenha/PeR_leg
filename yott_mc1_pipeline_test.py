@@ -1,10 +1,8 @@
 import os
-from src.sw.yott_pipeline.monte_carlo.yott_pipeline_mc0_sw import YOTTMC0Pipeline
-from src.sw.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
-from src.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.util.per_enum import ArchType
-from src.util.per_graph import PeRGraph
-from src.util.util import Util
+from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
+from src.python.util.per_enum import ArchType
+from src.python.util.per_graph import PeRGraph
+from src.python.util.util import Util
 run_parallel = False
 def run_connected_graphs():
     archs_types = [ArchType.MESH, ArchType.ONE_HOP]

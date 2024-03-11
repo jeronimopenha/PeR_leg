@@ -1,8 +1,8 @@
 from veriloggen import *
 import networkx as nx
-from src.util.util import Util
+from src.python.util.util import Util
 
-from src.util.per_graph import PeRGraph
+from src.python.util.per_graph import PeRGraph
 
 
 class DfSimulHw:

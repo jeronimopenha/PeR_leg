@@ -1,8 +1,8 @@
 import math
-from src.stat_scripts.graph_exporter.graph_exporter import GraphExporter
-from src.stat_scripts.graphlets.graphlets_generator import GraphletsGenerator
-from src.util.per_enum import ArchType
-from src.util.util import Util
+from src.python.stat_scripts.graph_exporter.graph_exporter import GraphExporter
+from src.python.stat_scripts.graphlets.graphlets_generator import GraphletsGenerator
+from src.python.util.per_enum import ArchType
+from src.python.util.util import Util
 
 def find_min_placement(vertexes,edges,adj_list = [(0,1),(0,-1),(1,0),(-1,0)]):
     placement_n2c = {}
