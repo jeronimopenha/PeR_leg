@@ -1,6 +1,7 @@
 #ifndef TYPES_SA_HLS_H
 #define TYPES_SA_HLS_H
 
+#include "ap_int.h"
 #include "defines_sa_hls.hpp"
 
 struct W

@@ -3,13 +3,13 @@
 Stage3SaHls::Stage3SaHls()
 {
     m_flag = true;
-    for (int i = 0; i < N_THREADS; i++)
+    for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
         m_th_idx_offset[i] = i * N_CELLS;
     }
 }
 
-void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset)
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8> exec_offset)
 {
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
@@ -33,12 +33,12 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
     m_old_output.wb.cell = m_new_output.wb.cell;
     m_old_output.wb.node = m_new_output.wb.node;
 
-    int st2_th_idx = st2_input.th_idx;
+    ap_int<8> st2_th_idx = st2_input.th_idx;
     bool st2_th_valid = st2_input.th_valid;
-    int st2_cell_a = st2_input.cell_a;
-    int st2_cell_b = st2_input.cell_b;
-    int *st2_va = st2_input.va;
-    int *st2_vb = st2_input.vb;
+    ap_int<8> st2_cell_a = st2_input.cell_a;
+    ap_int<8> st2_cell_b = st2_input.cell_b;
+    ap_int<8> *st2_va = st2_input.va;
+    ap_int<8> *st2_vb = st2_input.vb;
     ST9_OUT st2_sw{};
     W st2_wa{};
     W st2_wb{};
@@ -54,7 +54,7 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
 
     if (st2_th_idx == 0 && st2_th_valid)
     {
-        int a = 1;
+        ap_int<8> a = 1;
     }
 
     bool usw = m_new_output.sw.sw;
@@ -73,7 +73,7 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
         {
             if (uwa.node != -1)
             {
-                int idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
+                ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
                 n2c[idx] = uwa.cell;
             }
             m_flag = !m_flag;
@@ -82,26 +82,26 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
         {
             if (uwb.node != -1)
             {
-                int idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
+                ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
                 n2c[idx] = uwb.cell;
             }
             m_flag = !m_flag;
         }
     }
 
-    int cva[N_NEIGH] = {-1, -1, -1, -1};
-    int cvb[N_NEIGH] = {-1, -1, -1, -1};
+    ap_int<8> cva[N_NEIGH] = {-1, -1, -1, -1};
+    ap_int<8> cvb[N_NEIGH] = {-1, -1, -1, -1};
 
-    for (int n = 0; n < N_NEIGH; ++n)
+    for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
         if (st2_va[n] != -1)
         {
-            int idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
+            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
             cva[n] = n2c[idx];
         }
         if (st2_vb[n] != -1)
         {
-            int idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
+            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
         }
     }
