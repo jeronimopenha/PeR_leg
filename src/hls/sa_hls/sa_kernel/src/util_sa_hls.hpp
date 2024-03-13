@@ -3,10 +3,10 @@
 
 #include <cmath>
 
-void get_line_column_from_cell(int cell, int n_lines, int n_columns, int &line, int &column);
+void get_line_column_from_cell(ap_int<8> cell, ap_int<8> n_lines, ap_int<8> n_columns, ap_int<8> &line, ap_int<8> &column);
 
-int dist_manhattan(int ia, int ja, int ib, int jb);
+ap_int<8> dist_manhattan(ap_int<8> ia, ap_int<8> ja, ap_int<8> ib, ap_int<8> jb);
 
-int dist_one_hop(int ia, int ja, int ib, int jb);
+ap_int<8> dist_one_hop(ap_int<8> ia, ap_int<8> ja, ap_int<8> ib, ap_int<8> jb);
 
 #endif

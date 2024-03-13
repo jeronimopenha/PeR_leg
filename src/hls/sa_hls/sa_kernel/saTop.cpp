@@ -1,16 +1,17 @@
 
 #include "saTop.hpp"
 
-extern "C" void simulatedAnnealingTop(int *n2c,int *c2n,int *n){
+extern "C" void simulatedAnnealingTop(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n)
+{
 #pragma HLS INTERFACE m_axi port = n2c offset = slave
 #pragma HLS INTERFACE m_axi port = c2n offset = slave
-#pragma HLS INTERFACE m_axi port = n   offset = slave
+#pragma HLS INTERFACE m_axi port = n offset = slave
 #pragma HLS INTERFACE s_axilite port = return
 
-    int n2c_l[N_C_N_DATA];
-    int c2n_l[N_C_N_DATA];
-    int n_l[N_N_DATA];
-    
+    ap_int<8> n2c_l[N_C_N_DATA];
+    ap_int<8> c2n_l[N_C_N_DATA];
+    ap_int<8> n_l[N_N_DATA];
+
     // for (int i  = 0; i<N_C_N_DATA; i++){
     //     n2c_l[i] = n2c[i];
     //     c2n_l[i] = c2n[i];
@@ -18,18 +19,18 @@ extern "C" void simulatedAnnealingTop(int *n2c,int *c2n,int *n){
     // for (int i  = 0; i<N_C_N_DATA; i++){
     //     n_l[i] = n[i];
     // }
-    
-    memcpy((int *) n2c_l, n2c , N_C_N_DATA * sizeof(int));
-    memcpy((int *) c2n_l, c2n , N_C_N_DATA * sizeof(int));
-    memcpy((int *) n_l, n , N_N_DATA * sizeof(int));
-    
+
+    memcpy((ap_int<8> *)n2c_l, n2c, N_C_N_DATA * sizeof(ap_int<8>));
+    memcpy((ap_int<8> *)c2n_l, c2n, N_C_N_DATA * sizeof(ap_int<8>));
+    memcpy((ap_int<8> *)n_l, n, N_N_DATA * sizeof(ap_int<8>));
+
     static PipelineSaHls sa_pipeline_hw;
-    sa_pipeline_hw.run_single((int *) n2c_l,(int *) c2n_l,(int *) n_l);
-    
-    memcpy(n2c, (int *) n2c_l, N_C_N_DATA * sizeof(int));
-    memcpy(c2n, (int *) c2n_l, N_C_N_DATA * sizeof(int));
-    memcpy(n, (int *) n_l, N_N_DATA * sizeof(int));
-    
+    sa_pipeline_hw.run_single((ap_int<8> *)n2c_l, (ap_int<8> *)c2n_l, (ap_int<8> *)n_l);
+
+    memcpy(n2c, (ap_int<8> *)n2c_l, N_C_N_DATA * sizeof(ap_int<8>));
+    memcpy(c2n, (ap_int<8> *)c2n_l, N_C_N_DATA * sizeof(ap_int<8>));
+    memcpy(n, (ap_int<8> *)n_l, N_N_DATA * sizeof(ap_int<8>));
+
     // for (int i  = 0; i<N_C_N_DATA; i++){
     //     n2c[i] = n2c_l[i];
     //     c2n[i] = c2n_l[i];
@@ -37,5 +38,4 @@ extern "C" void simulatedAnnealingTop(int *n2c,int *c2n,int *n){
     // for (int i  = 0; i<N_C_N_DATA; i++){
     //     n[i] = n_l[i];
     // }
-
 }

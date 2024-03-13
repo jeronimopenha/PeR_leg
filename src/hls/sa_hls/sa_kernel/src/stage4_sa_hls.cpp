@@ -23,26 +23,26 @@ void Stage4SaHls::compute(ST3_OUT st3_input)
     m_old_output.dvbc[2] = m_new_output.dvbc[2];
     m_old_output.dvbc[3] = m_new_output.dvbc[3];
 
-    int st3_th_idx = st3_input.th_idx;
+    ap_int<8> st3_th_idx = st3_input.th_idx;
     bool st3_th_valid = st3_input.th_valid;
-    int st3_cell_a = st3_input.cell_a;
-    int st3_cell_b = st3_input.cell_b;
+    ap_int<8> st3_cell_a = st3_input.cell_a;
+    ap_int<8> st3_cell_b = st3_input.cell_b;
 
     if (st3_th_idx == 0 && st3_th_valid)
     {
         int a = 1;
     }
 
-    int dvac[4] = {0, 0, 0, 0};
-    int dvbc[4] = {0, 0, 0, 0};
+    ap_int<8> dvac[4] = {0, 0, 0, 0};
+    ap_int<8> dvbc[4] = {0, 0, 0, 0};
 
-    int ca = st3_cell_a;
-    int cb = st3_cell_b;
+    ap_int<8> ca = st3_cell_a;
+    ap_int<8> cb = st3_cell_b;
 
-    for (int n = 0; n < N_NEIGH; ++n)
+    for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
 
-        int i1, i2, j1, j2;
+        ap_int<8> i1, i2, j1, j2;
 
         if (st3_input.cva[n] != -1)
         {

@@ -1,19 +1,19 @@
 #include "util_sa_hls.hpp"
 
-void get_line_column_from_cell(int cell, int n_lines, int n_columns, int &line, int &column)
+void get_line_column_from_cell(ap_int<8> cell, ap_int<8> n_lines, ap_int<8> n_columns, ap_int<8> &line, ap_int<8> &column)
 {
     line = cell / n_lines;
     column = cell % n_columns;
 }
 
-int dist_manhattan(int ia, int ja, int ib, int jb)
+ap_int<8> dist_manhattan(ap_int<8> ia, ap_int<8> ja, ap_int<8> ib, ap_int<8> jb)
 {
     return abs(ia - ib) + abs(ja - jb);
 }
 
-int dist_one_hop(int ia, int ja, int ib, int jb)
+ap_int<8> dist_one_hop(ap_int<8> ia, ap_int<8> ja, ap_int<8> ib, ap_int<8> jb)
 {
-    int i = abs(ia - ib);
-    int j = abs(ja - jb);
-    return (int)ceil(i / 2.0) + (int)ceil(j / 2.0);
+    ap_int<8> i = abs(ia - ib);
+    ap_int<8> j = abs(ja - jb);
+    return (ap_int<8>)ceil(i / 2.0) + (ap_int<8>)ceil(j / 2.0);
 }

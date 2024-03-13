@@ -1,6 +1,6 @@
 #include "stage2_sa_hls.hpp"
 
-void Stage2SaHls::compute(ST1_OUT st1_input, int *neighbors)
+void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
 {
 
     m_old_output.th_idx = m_new_output.th_idx;
@@ -27,12 +27,12 @@ void Stage2SaHls::compute(ST1_OUT st1_input, int *neighbors)
     m_old_output.wb.cell = m_new_output.wb.cell;
     m_old_output.wb.node = m_new_output.wb.node;
 
-    int st1_th_idx = st1_input.th_idx;
+    ap_int<8> st1_th_idx = st1_input.th_idx;
     bool st1_th_valid = st1_input.th_valid;
-    int st1_cell_a = st1_input.cell_a;
-    int st1_cell_b = st1_input.cell_b;
-    int st1_node_a = st1_input.node_a;
-    int st1_node_b = st1_input.node_b;
+    ap_int<8> st1_cell_a = st1_input.cell_a;
+    ap_int<8> st1_cell_b = st1_input.cell_b;
+    ap_int<8> st1_node_a = st1_input.node_a;
+    ap_int<8> st1_node_b = st1_input.node_b;
     ST9_OUT st1_sw{};
     W st1_wa{};
     W st1_wb{};
@@ -46,27 +46,27 @@ void Stage2SaHls::compute(ST1_OUT st1_input, int *neighbors)
     st1_wb.cell = st1_input.wb.cell;
     st1_wb.node = st1_input.wb.node;
 
-    int va[N_NEIGH] = {-1, -1, -1, -1};
-    int vb[N_NEIGH] = {-1, -1, -1, -1};
+    ap_int<8> va[N_NEIGH] = {-1, -1, -1, -1};
+    ap_int<8> vb[N_NEIGH] = {-1, -1, -1, -1};
 
     if (st1_th_idx == 0 && st1_th_valid)
     {
-        int a = 1;
+        ap_int<8> a = 1;
     }
 
     if (st1_node_a != -1)
     {
-        for (int n = 0; n < N_NEIGH; ++n)
+        for (ap_int<8> n = 0; n < N_NEIGH; ++n)
         {
-            int idx = (st1_node_a * N_NEIGH) + n;
+            ap_int<8> idx = (st1_node_a * N_NEIGH) + n;
             va[n] = neighbors[idx];
         }
     }
     if (st1_node_b != -1)
     {
-        for (int n = 0; n < 4; ++n)
+        for (ap_int<8> n = 0; n < 4; ++n)
         {
-            int idx = (st1_node_b * N_NEIGH) + n;
+            ap_int<8> idx = (st1_node_b * N_NEIGH) + n;
             vb[n] = neighbors[idx];
         }
     }

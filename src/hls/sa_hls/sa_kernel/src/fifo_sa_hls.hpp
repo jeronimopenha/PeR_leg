@@ -9,10 +9,9 @@ class FifoSaHls
 {
 private:
     W m_arr[CAPACITY];
-    int m_capacity;
-    int m_size;
-    int m_front;
-    int m_rear;
+    ap_int<8> m_size;
+    ap_int<8> m_front;
+    ap_int<8> m_rear;
 
 public:
     FifoSaHls();
@@ -21,7 +20,7 @@ public:
     W peek();
     bool isEmpty() const;
     bool isFull() const;
-    int getSize() const;
+    ap_int<8> getSize() const;
 };
 
 #endif

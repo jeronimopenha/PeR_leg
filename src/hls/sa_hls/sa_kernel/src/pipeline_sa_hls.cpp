@@ -1,15 +1,15 @@
 #include "pipeline_sa_hls.hpp"
 
-void PipelineSaHls::run_single(int *n2c, int *c2n, int *n)
+void PipelineSaHls::run_single(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n)
 {
 
-    for (int i = 0; i < N_COPIES; ++i)
+    for (ap_int<8> i = 0; i < N_COPIES; ++i)
     {
         exec_pipeline(n2c, c2n, n, i);
     }
 }
 
-void PipelineSaHls::exec_pipeline(int *n2c, int *c2n, int *n, int exec_n)
+void PipelineSaHls::exec_pipeline(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n, ap_int<8> exec_n)
 {
 
     Stage0SaHls st0;
@@ -23,7 +23,7 @@ void PipelineSaHls::exec_pipeline(int *n2c, int *c2n, int *n, int exec_n)
     Stage8SaHls st8;
     Stage9SaHls st9;
 
-    int exec_offset = exec_n * N_THREADS * N_CELLS;
+    ap_int<8> exec_offset = exec_n * N_THREADS * N_CELLS;
 
     for (long counter = 0; counter < MAX_COUNTER; counter++)
     {

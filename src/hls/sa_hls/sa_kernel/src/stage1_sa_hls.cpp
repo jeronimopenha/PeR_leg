@@ -3,20 +3,20 @@
 Stage1SaHls::Stage1SaHls()
 {
     m_flag = true;
-    for (int i = 0; i < N_THREADS - 2; i++)
+    for (ap_int<8> i = 0; i < N_THREADS - 2; i++)
     {
         W fifo_cell_a = {0, 0, -1};
         W fifo_cell_b = {0, 0, -1};
         m_fifo_a.enqueue(fifo_cell_a);
         m_fifo_b.enqueue(fifo_cell_b);
     }
-    for (int i = 0; i < N_THREADS; i++)
+    for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
         m_th_idx_offset[i] = i * N_CELLS;
     }
 }
 
-void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int *c2n, int exec_offset)
+void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n, ap_int<8> exec_offset)
 {
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
@@ -34,14 +34,14 @@ void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int *c2n,
     m_old_output.wb.cell = m_new_output.wb.cell;
     m_old_output.wb.node = m_new_output.wb.node;
 
-    int st0_th_idx = st0_input.th_idx;
+    ap_int<8> st0_th_idx = st0_input.th_idx;
     bool st0_th_valid = st0_input.th_valid;
-    int st0_cell_a = st0_input.cell_a;
-    int st0_cell_b = st0_input.cell_b;
+    ap_int<8> st0_cell_a = st0_input.cell_a;
+    ap_int<8> st0_cell_b = st0_input.cell_b;
 
     if (st0_th_idx == 0 && st0_th_valid)
     {
-        int a = 1;
+        ap_int<8> a = 1;
     }
 
     if (st0_th_valid)
@@ -81,19 +81,19 @@ void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int *c2n,
     {
         if (m_flag)
         {
-            int idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.cell;
+            ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.cell;
             c2n[idx] = wa.node;
             m_flag = !m_flag;
         }
         else
         {
-            int idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.cell;
+            ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.cell;
             c2n[idx] = uwb.node;
             m_flag = !m_flag;
         }
     }
-    int idxa = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_a;
-    int idxb = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_b;
+    ap_int<8> idxa = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_a;
+    ap_int<8> idxb = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_b;
 
     m_new_output.th_idx = st0_th_idx;
     m_new_output.th_valid = st0_th_valid;

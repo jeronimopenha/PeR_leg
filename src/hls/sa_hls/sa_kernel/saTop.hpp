@@ -6,6 +6,6 @@
 #include "hls_stream.h"
 #include "src/pipeline_sa_hls.hpp"
 
-extern "C" void simulatedAnnealingTop(int *n2c,int *c2n,int *n);
+extern "C" void simulatedAnnealingTop(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n);
 
 #endif

@@ -17,25 +17,25 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
     m_old_output.dvbs[2] = m_new_output.dvbs[2];
     m_old_output.dvbs[3] = m_new_output.dvbs[3];
 
-    int st4_th_idx = st4_input.th_idx;
+    ap_int<8> st4_th_idx = st4_input.th_idx;
     bool st4_th_valid = st4_input.th_valid;
-    int st4_cbs = st4_input.cell_a;
-    int st4_cas = st4_input.cell_b;
+    ap_int<8> st4_cbs = st4_input.cell_a;
+    ap_int<8> st4_cas = st4_input.cell_b;
 
     if (st4_th_idx == 0 && st4_th_valid)
     {
-        int a = 1;
+        ap_int<8> a = 1;
     }
 
-    int dvac[2] = {st4_input.dvac[0] + st4_input.dvac[1], st4_input.dvac[2] + st4_input.dvac[3]};
-    int dvbc[2] = {st4_input.dvbc[0] + st4_input.dvbc[1], st4_input.dvbc[2] + st4_input.dvbc[3]};
+    ap_int<8> dvac[2] = {st4_input.dvac[0] + st4_input.dvac[1], st4_input.dvac[2] + st4_input.dvac[3]};
+    ap_int<8> dvbc[2] = {st4_input.dvbc[0] + st4_input.dvbc[1], st4_input.dvbc[2] + st4_input.dvbc[3]};
 
-    int dvas[N_NEIGH] = {0, 0, 0, 0};
-    int dvbs[N_NEIGH] = {0, 0, 0, 0};
+    ap_int<8> dvas[N_NEIGH] = {0, 0, 0, 0};
+    ap_int<8> dvbs[N_NEIGH] = {0, 0, 0, 0};
 
-    for (int n = 0; n < N_NEIGH; ++n)
+    for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
-        int i1, i2, j1, j2;
+        ap_int<8> i1, i2, j1, j2;
 
         if (st4_input.cva[n] != -1)
         {

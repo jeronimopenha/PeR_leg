@@ -2,7 +2,7 @@
 
 void Stage0SaHls::compute()
 {
-    int th_idx_c = m_th_idx;
+    ap_int<8> th_idx_c = m_th_idx;
 
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
