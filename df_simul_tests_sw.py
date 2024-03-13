@@ -7,7 +7,7 @@ from src.python.util.util import Util
 
 def run_simul_graphs():
     root_path: str = Util.get_project_root()
-    dot_input = root_path + '/dot_db/dot_simul/'
+    dot_input = root_path + '/reports/sw/yoto_dot/yoto_pipeline/t_6/MESH/'
 
     output_base = root_path + '/reports/sw/df_simul'
 
@@ -22,6 +22,7 @@ def run_simul_graphs():
         per_graph = PeRGraph(dot_path, dot_name)
         df_simul = DfSimulSw(per_graph, output_base)
         th: list = df_simul.run_simulation()
+        print(th)
 
 
 if __name__ == '__main__':
