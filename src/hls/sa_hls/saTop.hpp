@@ -1,6 +1,6 @@
 
 #include "ap_int.h"
 #include "hls_stream.h"
-#include "sa_pipeline_sw.h"
+#include "src/pipeline_sa_hls.hpp"
 
 extern "C" void simulatedAnnealingTop(int ***n2c,int ***c2n,int **n){

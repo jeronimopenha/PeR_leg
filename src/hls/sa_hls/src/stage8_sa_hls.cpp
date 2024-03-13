@@ -1,6 +1,6 @@
 #include "stage8_sa_hls.hpp"
 
-void Stage8SsHls::compute(ST7_OUT st7_input)
+void Stage8SaHls::compute(ST7_OUT st7_input)
 {
     this->old_output.th_idx = this->new_output.th_idx;
     this->old_output.th_valid = this->new_output.th_valid;

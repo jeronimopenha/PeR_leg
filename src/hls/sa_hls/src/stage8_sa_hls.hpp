@@ -3,7 +3,7 @@
 
 #include "types_sa_hls.hpp"
 
-class Stage8SsHls
+class Stage8SaHls
 {
 private:
 public:
