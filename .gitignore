@@ -3,7 +3,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.xo
+*.xclbin
+*.xclbin.info
+*.xclbin.link_summary
+*.jou
 # C extensions
 *.so
 

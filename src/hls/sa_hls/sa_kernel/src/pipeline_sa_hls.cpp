@@ -27,6 +27,7 @@ void PipelineSaHls::exec_pipeline(int *n2c, int *c2n, int *n, int exec_n)
 
     for (long counter = 0; counter < MAX_COUNTER; counter++)
     {
+#pragma HLS pipeline
         st0.compute();
         st1.compute(st0.m_old_output, st9.m_old_output, st1.m_old_output.wb, c2n, exec_offset);
         st2.compute(st1.m_old_output, n);

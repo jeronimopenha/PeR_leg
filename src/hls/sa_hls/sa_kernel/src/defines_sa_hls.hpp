@@ -13,6 +13,8 @@
 // #define ONE_HOP
 #define EXEC_TIMES 1000
 #define MAX_COUNTER (N_CELLS_POW * EXEC_TIMES)
+#define N_C_N_DATA N_THREADS*N_CELLS*N_COPIES
+#define N_N_DATA N_CELLS*N_NEIGH
 
 
 
