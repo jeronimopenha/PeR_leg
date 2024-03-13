@@ -2,20 +2,20 @@
 
 void Stage5SaHls::compute(ST4_OUT st4_input)
 {
-    this->old_output.th_idx = this->new_output.th_idx;
-    this->old_output.th_valid = this->new_output.th_valid;
-    this->old_output.dvac[0] = this->new_output.dvac[0];
-    this->old_output.dvac[1] = this->new_output.dvac[1];
-    this->old_output.dvbc[0] = this->new_output.dvbc[0];
-    this->old_output.dvbc[1] = this->new_output.dvbc[1];
-    this->old_output.dvas[0] = this->new_output.dvas[0];
-    this->old_output.dvas[1] = this->new_output.dvas[1];
-    this->old_output.dvas[2] = this->new_output.dvas[2];
-    this->old_output.dvas[3] = this->new_output.dvas[3];
-    this->old_output.dvbs[0] = this->new_output.dvbs[0];
-    this->old_output.dvbs[1] = this->new_output.dvbs[1];
-    this->old_output.dvbs[2] = this->new_output.dvbs[2];
-    this->old_output.dvbs[3] = this->new_output.dvbs[3];
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.dvac[0] = m_new_output.dvac[0];
+    m_old_output.dvac[1] = m_new_output.dvac[1];
+    m_old_output.dvbc[0] = m_new_output.dvbc[0];
+    m_old_output.dvbc[1] = m_new_output.dvbc[1];
+    m_old_output.dvas[0] = m_new_output.dvas[0];
+    m_old_output.dvas[1] = m_new_output.dvas[1];
+    m_old_output.dvas[2] = m_new_output.dvas[2];
+    m_old_output.dvas[3] = m_new_output.dvas[3];
+    m_old_output.dvbs[0] = m_new_output.dvbs[0];
+    m_old_output.dvbs[1] = m_new_output.dvbs[1];
+    m_old_output.dvbs[2] = m_new_output.dvbs[2];
+    m_old_output.dvbs[3] = m_new_output.dvbs[3];
 
     int st4_th_idx = st4_input.th_idx;
     bool st4_th_valid = st4_input.th_valid;
@@ -74,18 +74,18 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
         }
     }
 
-    this->new_output.th_idx = st4_th_idx;
-    this->new_output.th_valid = st4_th_valid;
-    this->new_output.dvac[0] = dvac[0];
-    this->new_output.dvac[1] = dvac[1];
-    this->new_output.dvbc[0] = dvbc[0];
-    this->new_output.dvbc[1] = dvbc[1];
-    this->new_output.dvas[0] = dvas[0];
-    this->new_output.dvas[1] = dvas[1];
-    this->new_output.dvas[2] = dvas[2];
-    this->new_output.dvas[3] = dvas[3];
-    this->new_output.dvbs[0] = dvbs[0];
-    this->new_output.dvbs[1] = dvbs[1];
-    this->new_output.dvbs[2] = dvbs[2];
-    this->new_output.dvbs[3] = dvbs[3];
+    m_new_output.th_idx = st4_th_idx;
+    m_new_output.th_valid = st4_th_valid;
+    m_new_output.dvac[0] = dvac[0];
+    m_new_output.dvac[1] = dvac[1];
+    m_new_output.dvbc[0] = dvbc[0];
+    m_new_output.dvbc[1] = dvbc[1];
+    m_new_output.dvas[0] = dvas[0];
+    m_new_output.dvas[1] = dvas[1];
+    m_new_output.dvas[2] = dvas[2];
+    m_new_output.dvas[3] = dvas[3];
+    m_new_output.dvbs[0] = dvbs[0];
+    m_new_output.dvbs[1] = dvbs[1];
+    m_new_output.dvbs[2] = dvbs[2];
+    m_new_output.dvbs[3] = dvbs[3];
 }

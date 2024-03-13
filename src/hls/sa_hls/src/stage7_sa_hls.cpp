@@ -2,11 +2,11 @@
 
 void Stage7SaHls::compute(ST6_OUT st6_input)
 {
-    this->old_output.th_idx = this->new_output.th_idx;
-    this->old_output.th_valid = this->new_output.th_valid;
-    this->old_output.dc = this->new_output.dc;
-    this->old_output.dvas = this->new_output.dvas;
-    this->old_output.dvbs = this->new_output.dvbs;
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.dc = m_new_output.dc;
+    m_old_output.dvas = m_new_output.dvas;
+    m_old_output.dvbs = m_new_output.dvbs;
 
     int st6_th_idx = st6_input.th_idx;
     bool st6_th_valid = st6_input.th_valid;
@@ -22,9 +22,9 @@ void Stage7SaHls::compute(ST6_OUT st6_input)
     int dvas = st6_input.dvas[0] + st6_input.dvas[1];
     int dvbs = st6_input.dvbs[0] + st6_input.dvbs[1];
 
-    this->new_output.th_idx = st6_th_idx;
-    this->new_output.th_valid = st6_th_valid;
-    this->new_output.dc = dc;
-    this->new_output.dvas = dvas;
-    this->new_output.dvbs = dvbs;
+    m_new_output.th_idx = st6_th_idx;
+    m_new_output.th_valid = st6_th_valid;
+    m_new_output.dc = dc;
+    m_new_output.dvas = dvas;
+    m_new_output.dvbs = dvbs;
 }

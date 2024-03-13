@@ -2,10 +2,10 @@
 
 void Stage8SaHls::compute(ST7_OUT st7_input)
 {
-    this->old_output.th_idx = this->new_output.th_idx;
-    this->old_output.th_valid = this->new_output.th_valid;
-    this->old_output.dc = this->new_output.dc;
-    this->old_output.ds = this->new_output.ds;
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.dc = m_new_output.dc;
+    m_old_output.ds = m_new_output.ds;
 
     int st7_th_idx = st7_input.th_idx;
     bool st7_th_valid = st7_input.th_valid;
@@ -21,8 +21,8 @@ void Stage8SaHls::compute(ST7_OUT st7_input)
 
     int ds = st7_dvas + st7_dvbs;
 
-    this->new_output.th_idx = st7_th_idx;
-    this->new_output.th_valid = st7_th_valid;
-    this->new_output.dc = st7_dc;
-    this->new_output.ds = ds;
+    m_new_output.th_idx = st7_th_idx;
+    m_new_output.th_valid = st7_th_valid;
+    m_new_output.dc = st7_dc;
+    m_new_output.ds = ds;
 }

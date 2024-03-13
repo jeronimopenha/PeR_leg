@@ -6,15 +6,15 @@
 class Stage1SaHls
 {
 private:
-    bool flag;
-    int th_idx_offset[N_THREADS];
+    bool m_flag;
+    int m_th_idx_offset[N_THREADS];
 
-    FifoSaHls *fifo_a;
-    FifoSaHls *fifo_b;
+    FifoSaHls m_fifo_a;
+    FifoSaHls m_fifo_b;
 
 public:
-    ST1_OUT new_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
-    ST1_OUT old_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
+    ST1_OUT m_new_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
+    ST1_OUT m_old_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
 
     Stage1SaHls();
     void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int *c2n, int exec_offset);

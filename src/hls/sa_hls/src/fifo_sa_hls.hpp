@@ -3,18 +3,16 @@
 
 #include "types_sa_hls.hpp"
 
-//#define CAPACITY 10
-
-const int CAPACITY = 10;
+#define CAPACITY 10
 
 class FifoSaHls
 {
 private:
-    W arr[CAPACITY];
-    int capacity;
-    int size;
-    int front;
-    int rear;
+    W m_arr[CAPACITY];
+    int m_capacity;
+    int m_size;
+    int m_front;
+    int m_rear;
 
 public:
     FifoSaHls();

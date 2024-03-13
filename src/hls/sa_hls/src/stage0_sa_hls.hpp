@@ -7,15 +7,15 @@
 class Stage0SaHls
 {
 private:
-    int cell_a[N_THREADS] = {0, 0, 0, 0, 0, 0};
-    int cell_b[N_THREADS] = {0, 0, 0, 0, 0, 0};
-    bool th_valid[N_THREADS] = {true, true, true, true, true, true};
-    int th_idx = 0;
-    int exec_counter = 0;
+    int m_cell_a[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    int m_cell_b[N_THREADS] = {0, 0, 0, 0, 0, 0};
+    bool m_th_valid[N_THREADS] = {true, true, true, true, true, true};
+    int m_th_idx = 0;
+    int m_exec_counter = 0;
 
 public:
-    ST0_OUT new_output{0, true, 0, 0};
-    ST0_OUT old_output{0, true, 0, 0};
+    ST0_OUT m_new_output{0, true, 0, 0};
+    ST0_OUT m_old_output{0, true, 0, 0};
 
     void compute();
 };

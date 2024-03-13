@@ -2,11 +2,11 @@
 
 FifoSaHls::FifoSaHls()
 {
-    capacity = CAPACITY;
+    m_capacity = CAPACITY;
     // arr = new T[capacity];
-    size = 0;
-    front = 0;
-    rear = -1;
+    m_size = 0;
+    m_front = 0;
+    m_rear = -1;
 }
 
 void FifoSaHls::enqueue(W data)
@@ -15,9 +15,9 @@ void FifoSaHls::enqueue(W data)
     {
         return;
     }
-    rear = (rear + 1) % capacity;
-    arr[rear] = data;
-    size++;
+    m_rear = (m_rear + 1) % m_capacity;
+    m_arr[m_rear] = data;
+    m_size++;
 }
 
 
@@ -27,9 +27,9 @@ W FifoSaHls::dequeue()
     {
         return {}; // Return default value for type T
     }
-    W data = arr[front];
-    front = (front + 1) % capacity;
-    size--;
+    W data = m_arr[m_front];
+    m_front = (m_front + 1) % m_capacity;
+    m_size--;
     return data;
 }
 
@@ -39,20 +39,20 @@ W FifoSaHls::peek()
     {
         return {}; // Return default value for type T
     }
-    return arr[front];
+    return m_arr[m_front];
 }
 
 bool FifoSaHls::isEmpty() const
 {
-    return size == 0;
+    return m_size == 0;
 }
 
 bool FifoSaHls::isFull() const
 {
-    return size == capacity;
+    return m_size == m_capacity;
 }
 
 int FifoSaHls::getSize() const
 {
-    return size;
+    return m_size;
 }

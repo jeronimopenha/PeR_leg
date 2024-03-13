@@ -2,36 +2,36 @@
 
 Stage3SaHls::Stage3SaHls()
 {
-    this->flag = true;
+    m_flag = true;
     for (int i = 0; i < N_THREADS; i++)
     {
-        this->th_idx_offset[i] = i * N_CELLS;
+        m_th_idx_offset[i] = i * N_CELLS;
     }
 }
 
 void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset)
 {
-    this->old_output.th_idx = this->new_output.th_idx;
-    this->old_output.th_valid = this->new_output.th_valid;
-    this->old_output.cell_a = this->new_output.cell_a;
-    this->old_output.cell_b = this->new_output.cell_b;
-    this->old_output.cva[0] = this->new_output.cva[0];
-    this->old_output.cva[1] = this->new_output.cva[1];
-    this->old_output.cva[2] = this->new_output.cva[2];
-    this->old_output.cva[3] = this->new_output.cva[3];
-    this->old_output.cvb[0] = this->new_output.cvb[0];
-    this->old_output.cvb[1] = this->new_output.cvb[1];
-    this->old_output.cvb[2] = this->new_output.cvb[2];
-    this->old_output.cvb[3] = this->new_output.cvb[3];
-    this->old_output.sw.th_idx = this->new_output.sw.th_idx;
-    this->old_output.sw.th_valid = this->new_output.sw.th_valid;
-    this->old_output.sw.sw = this->new_output.sw.sw;
-    this->old_output.wa.th_idx = this->new_output.wa.th_idx;
-    this->old_output.wa.cell = this->new_output.wa.cell;
-    this->old_output.wa.node = this->new_output.wa.node;
-    this->old_output.wb.th_idx = this->new_output.wb.th_idx;
-    this->old_output.wb.cell = this->new_output.wb.cell;
-    this->old_output.wb.node = this->new_output.wb.node;
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.cell_a = m_new_output.cell_a;
+    m_old_output.cell_b = m_new_output.cell_b;
+    m_old_output.cva[0] = m_new_output.cva[0];
+    m_old_output.cva[1] = m_new_output.cva[1];
+    m_old_output.cva[2] = m_new_output.cva[2];
+    m_old_output.cva[3] = m_new_output.cva[3];
+    m_old_output.cvb[0] = m_new_output.cvb[0];
+    m_old_output.cvb[1] = m_new_output.cvb[1];
+    m_old_output.cvb[2] = m_new_output.cvb[2];
+    m_old_output.cvb[3] = m_new_output.cvb[3];
+    m_old_output.sw.th_idx = m_new_output.sw.th_idx;
+    m_old_output.sw.th_valid = m_new_output.sw.th_valid;
+    m_old_output.sw.sw = m_new_output.sw.sw;
+    m_old_output.wa.th_idx = m_new_output.wa.th_idx;
+    m_old_output.wa.cell = m_new_output.wa.cell;
+    m_old_output.wa.node = m_new_output.wa.node;
+    m_old_output.wb.th_idx = m_new_output.wb.th_idx;
+    m_old_output.wb.cell = m_new_output.wb.cell;
+    m_old_output.wb.node = m_new_output.wb.node;
 
     int st2_th_idx = st2_input.th_idx;
     bool st2_th_valid = st2_input.th_valid;
@@ -57,35 +57,35 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
         int a = 1;
     }
 
-    bool usw = new_output.sw.sw;
+    bool usw = m_new_output.sw.sw;
     W uwa{};
     W uwb{};
-    uwa.th_idx = this->new_output.wa.th_idx;
-    uwa.cell = this->new_output.wa.cell;
-    uwa.node = this->new_output.wa.node;
+    uwa.th_idx = m_new_output.wa.th_idx;
+    uwa.cell = m_new_output.wa.cell;
+    uwa.node = m_new_output.wa.node;
     uwb.th_idx = st3_wb.th_idx;
     uwb.cell = st3_wb.cell;
     uwb.node = st3_wb.node;
 
     if (usw)
     {
-        if (flag)
+        if (m_flag)
         {
             if (uwa.node != -1)
             {
-                int idx = exec_offset + this->th_idx_offset[uwa.th_idx] + uwa.node;
+                int idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
                 n2c[idx] = uwa.cell;
             }
-            flag = !flag;
+            m_flag = !m_flag;
         }
         else
         {
             if (uwb.node != -1)
             {
-                int idx = exec_offset + this->th_idx_offset[uwb.th_idx] + uwb.node;
+                int idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
                 n2c[idx] = uwb.cell;
             }
-            flag = !flag;
+            m_flag = !m_flag;
         }
     }
 
@@ -96,35 +96,35 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset
     {
         if (st2_va[n] != -1)
         {
-            int idx = exec_offset + this->th_idx_offset[st2_th_idx] + st2_va[n];
+            int idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
             cva[n] = n2c[idx];
         }
         if (st2_vb[n] != -1)
         {
-            int idx = exec_offset + this->th_idx_offset[st2_th_idx] + st2_vb[n];
+            int idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
         }
     }
 
-    this->new_output.th_idx = st2_th_idx;
-    this->new_output.th_valid = st2_th_valid;
-    this->new_output.cell_a = st2_cell_a;
-    this->new_output.cell_b = st2_cell_b;
-    this->new_output.cva[0] = cva[0];
-    this->new_output.cva[1] = cva[1];
-    this->new_output.cva[2] = cva[2];
-    this->new_output.cva[3] = cva[3];
-    this->new_output.cvb[0] = cvb[0];
-    this->new_output.cvb[1] = cvb[1];
-    this->new_output.cvb[2] = cvb[2];
-    this->new_output.cvb[3] = cvb[3];
-    this->new_output.sw.th_idx = st2_sw.th_idx;
-    this->new_output.sw.th_valid = st2_sw.th_valid;
-    this->new_output.sw.sw = st2_sw.sw;
-    this->new_output.wa.th_idx = st2_wa.th_idx;
-    this->new_output.wa.cell = st2_wa.cell;
-    this->new_output.wa.node = st2_wa.node;
-    this->new_output.wb.th_idx = st2_wb.th_idx;
-    this->new_output.wb.cell = st2_wb.cell;
-    this->new_output.wb.node = st2_wb.node;
+    m_new_output.th_idx = st2_th_idx;
+    m_new_output.th_valid = st2_th_valid;
+    m_new_output.cell_a = st2_cell_a;
+    m_new_output.cell_b = st2_cell_b;
+    m_new_output.cva[0] = cva[0];
+    m_new_output.cva[1] = cva[1];
+    m_new_output.cva[2] = cva[2];
+    m_new_output.cva[3] = cva[3];
+    m_new_output.cvb[0] = cvb[0];
+    m_new_output.cvb[1] = cvb[1];
+    m_new_output.cvb[2] = cvb[2];
+    m_new_output.cvb[3] = cvb[3];
+    m_new_output.sw.th_idx = st2_sw.th_idx;
+    m_new_output.sw.th_valid = st2_sw.th_valid;
+    m_new_output.sw.sw = st2_sw.sw;
+    m_new_output.wa.th_idx = st2_wa.th_idx;
+    m_new_output.wa.cell = st2_wa.cell;
+    m_new_output.wa.node = st2_wa.node;
+    m_new_output.wb.th_idx = st2_wb.th_idx;
+    m_new_output.wb.cell = st2_wb.cell;
+    m_new_output.wb.node = st2_wb.node;
 }

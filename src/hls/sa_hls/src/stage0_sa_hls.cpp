@@ -2,48 +2,48 @@
 
 void Stage0SaHls::compute()
 {
-    int th_idx_c = this->th_idx;
+    int th_idx_c = m_th_idx;
 
-    this->old_output.th_idx = this->new_output.th_idx;
-    this->old_output.th_valid = this->new_output.th_valid;
-    this->old_output.cell_a = this->new_output.cell_a;
-    this->old_output.cell_b = this->new_output.cell_b;
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.cell_a = m_new_output.cell_a;
+    m_old_output.cell_b = m_new_output.cell_b;
 
-    if (!this->th_valid[th_idx_c])
+    if (!m_th_valid[th_idx_c])
     {
-        if (this->cell_a[th_idx_c] == N_CELLS - 1)
+        if (m_cell_a[th_idx_c] == N_CELLS - 1)
         {
-            this->cell_a[th_idx_c] = 0;
-            if (this->cell_b[th_idx_c] == N_CELLS - 1)
+            m_cell_a[th_idx_c] = 0;
+            if (m_cell_b[th_idx_c] == N_CELLS - 1)
             {
-                this->cell_b[th_idx_c] = 0;
+                m_cell_b[th_idx_c] = 0;
             }
             else
             {
-                this->cell_b[th_idx_c] += 1;
+                m_cell_b[th_idx_c] += 1;
             }
         }
         else
         {
-            this->cell_a[th_idx_c] += 1;
+            m_cell_a[th_idx_c] += 1;
         }
 
-        this->th_idx += 1;
-        if (this->th_idx == N_THREADS)
+        m_th_idx += 1;
+        if (m_th_idx == N_THREADS)
         {
-            this->th_idx = 0;
+            m_th_idx = 0;
         }
     }
-    this->th_valid[th_idx_c] = !this->th_valid[th_idx_c];
+    m_th_valid[th_idx_c] = !m_th_valid[th_idx_c];
 
-    th_idx_c = this->th_idx;
-    this->new_output.th_idx = this->th_idx;
-    this->new_output.th_valid = this->th_valid[th_idx_c];
-    this->new_output.cell_a = this->cell_a[th_idx_c];
-    this->new_output.cell_b = this->cell_b[th_idx_c];
+    th_idx_c = m_th_idx;
+    m_new_output.th_idx = m_th_idx;
+    m_new_output.th_valid = m_th_valid[th_idx_c];
+    m_new_output.cell_a = m_cell_a[th_idx_c];
+    m_new_output.cell_b = m_cell_b[th_idx_c];
 
-    if (this->th_valid[th_idx_c] && this->th_idx == 0)
+    if (m_th_valid[th_idx_c] && m_th_idx == 0)
     {
-        this->exec_counter += 1;
+        m_exec_counter += 1;
     }
 }
