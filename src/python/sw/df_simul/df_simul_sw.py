@@ -174,38 +174,45 @@ class DfSimulSw:
                         # succ_name: str = str.lower(succ)
                         queue.put([succ, l + 1])
                 except Exception as e:
-                    a=1
+                    a = 1
         return nodes_level, level + 1
 
     def create_dataflow(self) -> list[list[Node]]:
         nodes_levels, levels = self.find_nodes_level()
         g = self.g_with_regs
         dataflow: list[list[Node]] = [[] for _ in range(levels)]
+        dfg_dic = {}
         visited: set = set()
         queue: Queue = Queue()
         for ini_node in g.nodes:
             # ini_node_name: str = str.lower(ini_node)
             if ini_node not in visited:
-                queue.put([ini_node, ini_node])
+                queue.put(ini_node)
             while queue.qsize() > 0:
-                no, name = queue.get()
-                level = nodes_levels[name]
+                no = queue.get()
+                level = nodes_levels[no]
                 node_in_size: int = g.in_degree(no)
                 node_out_size: int = g.out_degree(no)
-                if name not in visited:
-                    dataflow[level].append(self.node_factory(name, node_in_size, node_out_size))
-                    visited.add(name)
-                node = dataflow[level][-1]
+                if no not in visited:
+                    node: Node = self.node_factory(no, node_in_size, node_out_size)
+                    dfg_dic[no] = node
+                    dataflow[level].append(node)
+                    visited.add(no)
+                node: Node = dfg_dic[no]
                 for succ in g._succ[no].keys():
+                    if succ == '24':
+                        a = 1
                     # succ_name: str = str.lower(succ)
                     succ_in_size: int = g.in_degree(succ)
                     succ_out_size: int = g.out_degree(succ)
                     level = nodes_levels[succ]
                     if succ not in visited:
-                        queue.put([succ, succ])
+                        queue.put(succ)
+                        succ_node: Node = self.node_factory(succ, succ_in_size, succ_out_size)
+                        dfg_dic[succ] = succ_node
+                        dataflow[level].append(succ_node)
                         visited.add(succ)
-                        dataflow[level].append(self.node_factory(succ, succ_in_size, succ_out_size))
-                    succ_node: Node = dataflow[level][-1]
+                    succ_node: Node = dfg_dic[succ]
                     succ_node.create_in_queue()
                     node.set_out_queue(succ_node.in_queues[-1])
 

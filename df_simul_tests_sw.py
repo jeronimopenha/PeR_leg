@@ -15,7 +15,9 @@ def run_simul_graphs():
         os.makedirs(output_base)
 
     # list connected benchmarks
-    dots_list = Util.get_files_list_by_extension(dot_input, '.dot')
+    # dots_list = Util.get_files_list_by_extension(dot_input, '.dot')
+    dots_list = [[root_path + '/reports/sw/yoto_dot/yoto_pipeline/t_6/MESH/dag32-6x6-MC=1-NA_0_.dot.json.dot',
+                  'dag32-6x6-MC=1-NA_0_.dot.json.dot']]
 
     for dot_path, dot_name in dots_list:
         print(f'DOT: {dot_name}')
