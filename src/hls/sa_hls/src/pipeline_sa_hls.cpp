@@ -1,16 +1,15 @@
 #include "pipeline_sa_hls.hpp"
 
-void PipelineSaHls::run_single(int (&n2c)[N_COPIES][N_THREADS][N_CELLS], int (&c2n)[N_COPIES][N_THREADS][N_CELLS],
-                               int (&n)[N_CELLS][N_NEIGH])
+void PipelineSaHls::run_single(int *n2c, int *c2n, int *n)
 {
 
     for (int i = 0; i < N_COPIES; ++i)
     {
-        exec_pipeline(n2c[i], c2n[i], n);
+        exec_pipeline(n2c, c2n, n, i);
     }
 }
 
-void PipelineSaHls::exec_pipeline(int (&n2c)[N_THREADS][N_CELLS], int (&c2n)[N_THREADS][N_CELLS], int (&n)[N_CELLS][N_NEIGH])
+void PipelineSaHls::exec_pipeline(int *n2c, int *c2n, int *n, int exec_n)
 {
 
     Stage0SaHls st0 = Stage0SaHls();
@@ -24,12 +23,14 @@ void PipelineSaHls::exec_pipeline(int (&n2c)[N_THREADS][N_CELLS], int (&c2n)[N_T
     Stage8SaHls st8 = Stage8SaHls();
     Stage9SaHls st9 = Stage9SaHls();
 
+    int exec_offset = exec_n * N_THREADS;
+
     for (long counter = 0; counter < MAX_COUNTER; counter++)
     {
         st0.compute();
-        st1.compute(st0.old_output, st9.old_output, st1.old_output.wb, c2n);
+        st1.compute(st0.old_output, st9.old_output, st1.old_output.wb, c2n, exec_offset);
         st2.compute(st1.old_output, n);
-        st3.compute(st2.old_output, st3.old_output.wb, n2c);
+        st3.compute(st2.old_output, st3.old_output.wb, n2c, exec_offset);
         st4.compute(st3.old_output);
         st5.compute(st4.old_output);
         st6.compute(st5.old_output);

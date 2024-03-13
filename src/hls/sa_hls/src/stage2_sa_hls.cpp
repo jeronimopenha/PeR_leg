@@ -1,6 +1,6 @@
 #include "stage2_sa_hls.hpp"
 
-void Stage2SaHls::compute(ST1_OUT st1_input, int (&neighbors)[N_CELLS][N_NEIGH])
+void Stage2SaHls::compute(ST1_OUT st1_input, int *neighbors)
 {
 
     this->old_output.th_idx = this->new_output.th_idx;
@@ -58,14 +58,16 @@ void Stage2SaHls::compute(ST1_OUT st1_input, int (&neighbors)[N_CELLS][N_NEIGH])
     {
         for (int n = 0; n < N_NEIGH; ++n)
         {
-            va[n] = neighbors[st1_node_a][n];
+            int idx = (st1_node_a * N_NEIGH) + n;
+            va[n] = neighbors[idx];
         }
     }
     if (st1_node_b != -1)
     {
         for (int n = 0; n < 4; ++n)
         {
-            vb[n] = neighbors[st1_node_b][n];
+            int idx = (st1_node_b * N_NEIGH) + n;
+            vb[n] = neighbors[idx];
         }
     }
     this->new_output.th_idx = st1_th_idx;

@@ -19,11 +19,10 @@ class PipelineSaHls
 {
 private:
 public:
-    void run_single(int (&n2c)[N_COPIES][N_THREADS][N_CELLS], int (&c2n)[N_COPIES][N_THREADS][N_CELLS],
-                    int (&n)[N_CELLS][N_NEIGH]);
+    void run_single(int *n2c, int *c2n, int *n);
 
 private:
-    static void exec_pipeline(int (&n2c)[N_THREADS][N_CELLS], int (&c2n)[N_THREADS][N_CELLS], int (&n)[N_CELLS][N_NEIGH]);
+    static void exec_pipeline(int *n2c, int *c2n, int *n, int exec_n);
 };
 
 #endif

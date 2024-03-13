@@ -12,9 +12,13 @@ Stage1SaHls::Stage1SaHls()
         this->fifo_a->enqueue(fifo_cell_a);
         this->fifo_b->enqueue(fifo_cell_b);
     }
+    for (int i = 0; i < N_THREADS; i++)
+    {
+        this->th_idx_offset[i] = i * N_CELLS_SQRT;
+    }
 }
 
-void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int (&c2n)[N_THREADS][N_CELLS])
+void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int *c2n, int exec_offset)
 {
     this->old_output.th_idx = this->new_output.th_idx;
     this->old_output.th_valid = this->new_output.th_valid;
@@ -79,22 +83,26 @@ void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, int (&c2n
     {
         if (this->flag)
         {
-            c2n[uwa.th_idx][uwa.cell] = wa.node;
+            int idx = exec_offset + this->th_idx_offset[uwa.th_idx] + uwa.cell;
+            c2n[idx] = wa.node;
             this->flag = !this->flag;
         }
         else
         {
-            c2n[uwb.th_idx][uwb.cell] = uwb.node;
+            int idx = exec_offset + this->th_idx_offset[uwb.th_idx] + uwb.cell;
+            c2n[idx] = uwb.node;
             this->flag = !this->flag;
         }
     }
+    int idxa = exec_offset + this->th_idx_offset[st0_th_idx] + st0_cell_a;
+    int idxb = exec_offset + this->th_idx_offset[st0_th_idx] + st0_cell_b;
 
     this->new_output.th_idx = st0_th_idx;
     this->new_output.th_valid = st0_th_valid;
     this->new_output.cell_a = st0_cell_a;
     this->new_output.cell_b = st0_cell_b;
-    this->new_output.node_a = c2n[st0_th_idx][st0_cell_a];
-    this->new_output.node_b = c2n[st0_th_idx][st0_cell_b];
+    this->new_output.node_a = c2n[idxa];
+    this->new_output.node_b = c2n[idxb];
     this->new_output.sw.th_idx = st9_sw.th_idx;
     this->new_output.sw.th_valid = st9_sw.th_valid;
     this->new_output.sw.sw = st9_sw.sw;

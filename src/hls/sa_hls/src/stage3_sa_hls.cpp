@@ -3,9 +3,13 @@
 Stage3SaHls::Stage3SaHls()
 {
     this->flag = true;
+    for (int i = 0; i < N_THREADS; i++)
+    {
+        this->th_idx_offset[i] = i * N_CELLS_SQRT;
+    }
 }
 
-void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int (&n2c)[N_THREADS][N_CELLS])
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int *n2c, int exec_offset)
 {
     this->old_output.th_idx = this->new_output.th_idx;
     this->old_output.th_valid = this->new_output.th_valid;
@@ -69,7 +73,8 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int (&n2c)[N_THREADS][N_C
         {
             if (uwa.node != -1)
             {
-                n2c[uwa.th_idx][uwa.node] = uwa.cell;
+                int idx = exec_offset + this->th_idx_offset[uwa.th_idx] + uwa.node;
+                n2c[idx] = uwa.cell;
             }
             flag = !flag;
         }
@@ -77,7 +82,8 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int (&n2c)[N_THREADS][N_C
         {
             if (uwb.node != -1)
             {
-                n2c[uwb.th_idx][uwb.node] = uwb.cell;
+                int idx = exec_offset + this->th_idx_offset[uwb.th_idx] + uwb.node;
+                n2c[idx] = uwb.cell;
             }
             flag = !flag;
         }
@@ -90,11 +96,13 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, int (&n2c)[N_THREADS][N_C
     {
         if (st2_va[n] != -1)
         {
-            cva[n] = n2c[st2_th_idx][st2_va[n]];
+            int idx = exec_offset + this->th_idx_offset[st2_th_idx] + st2_va[n];
+            cva[n] = n2c[idx];
         }
         if (st2_vb[n] != -1)
         {
-            cvb[n] = n2c[st2_th_idx][st2_vb[n]];
+            int idx = exec_offset + this->th_idx_offset[st2_th_idx] + st2_vb[n];
+            cvb[n] = n2c[idx];
         }
     }
 
