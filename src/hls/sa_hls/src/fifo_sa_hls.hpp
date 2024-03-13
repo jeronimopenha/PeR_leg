@@ -3,7 +3,9 @@
 
 #include "types_sa_hls.hpp"
 
-#define CAPACITY 10
+//#define CAPACITY 10
+
+const int CAPACITY = 10;
 
 class FifoSaHls
 {

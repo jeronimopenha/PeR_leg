@@ -1,7 +1,7 @@
-set COMMON_DIR [pwd]/common/include
+
 set KERNEL_DIR [pwd]
 
-set CFLAGS "-I${COMMON_DIR} -I${KERNEL_DIR}/src -std=c++14"
+set CFLAGS "-I${KERNEL_DIR}/src -std=c++14"
 
 open_project -reset prj_ob
 add_files ${KERNEL_DIR}/saTop.cpp -cflags ${CFLAGS}

@@ -1,10 +1,10 @@
 
 #include "saTop.hpp"
 
-extern "C" void simulatedAnnealingTop(int ***n2c,int ***c2n,int **n){
-#pragma HLS INTERFACE m_axi port = mem1 offset = slave
-#pragma HLS INTERFACE m_axi port = mem2 offset = slave
-#pragma HLS INTERFACE m_axi port = mem3 offset = slave
+extern "C" void simulatedAnnealingTop(int *n2c,int *c2n,int *n){
+#pragma HLS INTERFACE m_axi port = n2c offset = slave
+#pragma HLS INTERFACE m_axi port = c2n offset = slave
+#pragma HLS INTERFACE m_axi port = n   offset = slave
 #pragma HLS INTERFACE s_axilite port = return
 
     static PipelineSaHls sa_pipeline_hw;
