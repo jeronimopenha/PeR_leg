@@ -5,7 +5,7 @@ Stage3SaHls::Stage3SaHls()
     this->flag = true;
     for (int i = 0; i < N_THREADS; i++)
     {
-        this->th_idx_offset[i] = i * N_CELLS_SQRT;
+        this->th_idx_offset[i] = i * N_CELLS;
     }
 }
 

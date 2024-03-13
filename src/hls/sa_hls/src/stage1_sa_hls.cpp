@@ -14,7 +14,7 @@ Stage1SaHls::Stage1SaHls()
     }
     for (int i = 0; i < N_THREADS; i++)
     {
-        this->th_idx_offset[i] = i * N_CELLS_SQRT;
+        this->th_idx_offset[i] = i * N_CELLS;
     }
 }
 

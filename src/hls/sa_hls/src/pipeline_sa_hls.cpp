@@ -23,7 +23,7 @@ void PipelineSaHls::exec_pipeline(int *n2c, int *c2n, int *n, int exec_n)
     Stage8SaHls st8 = Stage8SaHls();
     Stage9SaHls st9 = Stage9SaHls();
 
-    int exec_offset = exec_n * N_THREADS;
+    int exec_offset = exec_n * N_THREADS * N_CELLS;
 
     for (long counter = 0; counter < MAX_COUNTER; counter++)
     {
