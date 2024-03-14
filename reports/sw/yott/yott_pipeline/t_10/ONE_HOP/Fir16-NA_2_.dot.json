@@ -290,5 +290,31 @@
         "reg26": 74,
         "reg27": 75,
         "reg1": 76
-    }
+    },
+    "th": 66.51103848462616,
+    "path_th": [
+        "G0",
+        "copy_0",
+        "copy_1",
+        "copy_2",
+        "copy_3",
+        "copy_4",
+        "imult_4",
+        "reg5",
+        "iadd_2",
+        "reg15",
+        "reg16",
+        "iadd_9",
+        "iadd_12",
+        "reg21",
+        "reg22",
+        "reg23",
+        "reg24",
+        "reg25",
+        "reg26",
+        "reg27",
+        "iadd_14",
+        "S0",
+        "A0"
+    ]
 }

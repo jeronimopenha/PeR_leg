@@ -69,5 +69,15 @@
         "output8": 8,
         "add9": 9,
         "const10": 10
-    }
+    },
+    "th": 74.96811942089866,
+    "path_th": [
+        "const10",
+        "add9",
+        "mul0",
+        "load2",
+        "mul6",
+        "add7",
+        "output8"
+    ]
 }

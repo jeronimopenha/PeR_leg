@@ -68,7 +68,7 @@ for algorithm_name,path_alg in algorithms:
                     # Escrever as arestas com pesos
                     for (u,v,w) in new_digraph.edges.data():
                         w = w['weight']
-                        f.write(f'    {u} -> {v} [w={w}];\n')
+                        f.write(f'    {u} -> {v} [weight={w}];\n')
                     
                     f.write('}\n')
 

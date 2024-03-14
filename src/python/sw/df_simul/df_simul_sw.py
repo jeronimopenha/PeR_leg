@@ -3,8 +3,7 @@ from typing import Tuple
 import networkx as nx
 from queue import Queue
 from src.python.util.per_graph import PeRGraph
-from src.python.util.util import Util
-
+# from src.python.util.util import Util
 
 class Node:
     def __init__(self, name: str):
@@ -127,6 +126,7 @@ class DfSimulSw:
             exec_counter += 1
         th: list = []
         for output_node in self.output_nodes:
+            print(output_node.name,output_node.data,exec_counter)
             th.append([output_node.name, len(output_node.data) / exec_counter * 2 * 100])
         return th
 
@@ -134,20 +134,20 @@ class DfSimulSw:
         df: nx.DiGraph = self.per_graph.g.copy()
         n_df: nx.DiGraph = df.copy()
         for edge in df.edges():
-            if int(df.edges[edge]['w']) > 0:
-                # df.edges[edge]['label'] = df.edges[edge]['w']
+            if int(df.edges[edge]['weight']) > 0:
+                # df.edges[edge]['label'] = df.edges[edge]['weight']
                 src = edge[0]
                 dst = edge[1]
                 # port = int(df.edges[edge]['port'])
-                for r in range(int(df.edges[edge]['w'])):
+                for r in range(int(df.edges[edge]['weight'])):
                     idx = '%s_%s' % edge + '_%d' % r
                     n_df.add_node(idx)
                     nx.set_node_attributes(n_df, {idx: {'label': 'reg'}})
                     n_df.add_edge(src, idx)
-                    nx.set_edge_attributes(n_df, {(src, idx): {'w': 0}})
+                    nx.set_edge_attributes(n_df, {(src, idx): {'weight': 0}})
                     src = idx
                 n_df.add_edge(src, dst)
-                nx.set_edge_attributes(n_df, {(src, dst): {'w': 0}})
+                nx.set_edge_attributes(n_df, {(src, dst): {'weight': 0}})
                 n_df.remove_edge(edge[0], edge[1])
         return n_df
 
@@ -231,18 +231,19 @@ class DfSimulSw:
             return Node(name)
 
     # TODO implementar
-    def write_output_result(self, rslt: str):
-        lines = rslt.split('\n')
+    # Comentei pra resolver mais rápido o erro de import circular
+    # def write_output_result(self, rslt: str):
+    #     lines = rslt.split('\n')
 
-        th = 0.0
+    #     th = 0.0
 
-        for line in lines:
-            if 'throughput' in line:
-                th = float(line.split(':')[2].replace(' ', '').replace('%', ''))
-                break
+    #     for line in lines:
+    #         if 'throughput' in line:
+    #             th = float(line.split(':')[2].replace(' ', '').replace('%', ''))
+    #             break
 
-        simul_result = {
-            'benchmark': self.per_graph.dot_name,
-            'throughput': th
-        }
-        Util.save_json(self.result_path, self.result_file, simul_result)
+    #     simul_result = {
+    #         'benchmark': self.per_graph.dot_name,
+    #         'throughput': th
+    #     }
+        # Util.save_json(self.result_path, self.result_file, simul_result)

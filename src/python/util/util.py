@@ -8,12 +8,14 @@ from typing import List, Dict, Tuple, Any
 import pygraphviz as pgv
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import networkx as nx
+from src.python.sw.df_simul.df_simul_sw import DfSimulSw
 from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph
 
 
 class Util:
+    
 
     @staticmethod
     def func_unkey(text: str) -> List[str]:
@@ -807,3 +809,46 @@ class Util:
                 best_dist = dist_total
                 best_thread = th
         return best_thread,best_dist
+    
+    @staticmethod
+    def calc_worse_th_by_dot_file(dot_path,dot_name,output_base = None):
+        print(f'DOT: {dot_name}')
+        per_graph = PeRGraph(dot_path, dot_name)
+        df_simul = DfSimulSw(per_graph, output_base)
+        ths: list = df_simul.run_simulation()
+        print(ths)
+        dict_ths = dict(ths)
+
+        G = nx.DiGraph()
+
+        G = nx.drawing.nx_pydot.read_dot(dot_path)
+        in_vs = out_vs = []
+
+        for vertex in G.nodes():
+            if len(list(G.predecessors(vertex))) == 0:
+                in_vs.append(vertex)
+            if len(list(G.successors(vertex))) == 0:
+                out_vs.append(vertex)
+        worse_path = None
+        len_worse_path = -1
+        v_out_worse = None
+
+        for v_in in in_vs:
+            for v_out in out_vs:
+                for path in nx.all_simple_paths(G, source=v_in, target=v_out):
+                    len_path = len(path)
+                    if len_path > len_worse_path:
+                        len_worse_path = len_path
+                        worse_path = path
+                        v_out_worse = v_out
+                    elif len_path == len_worse_path:
+                        th_out_path = dict_ths[v_out]
+                        th_out_worse_path = dict_ths[v_out_worse]
+                    
+                        if th_out_path < th_out_worse_path:
+                            len_worse_path = len_path
+                            worse_path = path
+                            v_out_worse = v_out
+
+        th_worse = dict_ths[v_out_worse]
+        return th_worse, worse_path
