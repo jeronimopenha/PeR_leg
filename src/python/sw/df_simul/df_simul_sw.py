@@ -3,6 +3,8 @@ from typing import Tuple
 import networkx as nx
 from queue import Queue
 from src.python.util.per_graph import PeRGraph
+
+
 # from src.python.util.util import Util
 
 class Node:
@@ -44,7 +46,8 @@ class Node:
                 return ret_value
 
         # sum all inputs
-        self.exec_data = self.has_data = True
+        self.exec_data = 0
+        self.has_data = True
         for in_queue in self.in_queues:
             self.exec_data += in_queue.get()
         return ret_value
@@ -109,7 +112,7 @@ class DfSimulSw:
         counter_done = 0
         exec_counter = 0
 
-        while not df_break and not input_nodes_done and counter_done < 5:
+        while not df_break or not input_nodes_done or counter_done < 5:
             df_break = True
             for stage in self.dataflow:
                 for node in stage:
@@ -123,10 +126,13 @@ class DfSimulSw:
                     break
             if df_break and input_nodes_done:
                 counter_done += 1
+            else:
+                counter_done = 0
             exec_counter += 1
+        assert (exec_counter >= self.n_data * 2)
         th: list = []
         for output_node in self.output_nodes:
-            print(output_node.name,output_node.data,exec_counter)
+            print(output_node.name, output_node.data, exec_counter)
             th.append([output_node.name, len(output_node.data) / exec_counter * 2 * 100])
         return th
 
@@ -246,4 +252,4 @@ class DfSimulSw:
     #         'benchmark': self.per_graph.dot_name,
     #         'throughput': th
     #     }
-        # Util.save_json(self.result_path, self.result_file, simul_result)
+    # Util.save_json(self.result_path, self.result_file, simul_result)

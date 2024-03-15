@@ -5,10 +5,10 @@ from src.python.sw.df_simul.df_simul_sw import DfSimulSw
 from src.python.util.per_graph import PeRGraph
 from src.python.util.util import Util
 import networkx as nx
+
 root_path: str = Util.get_project_root()
 # dir_json = ["yoto/yoto_pipeline/","yott/yott_pipeline/"]
 # dir_dots = ["yoto_dot/yoto_pipeline/","yott_dot/yott_pipeline/"]
-
 
 
 # def run_simul_graphs():
@@ -35,15 +35,14 @@ root_path: str = Util.get_project_root()
 #                         json.dump(json_data,f,indent=4)
 
 
-
 # if __name__ == '__main__':
 #     start_time = time.time()
 #     run_simul_graphs()
 #     end_time = time.time()
 #     print("Total time: " + str(end_time - start_time))
 
-th_worse, worse_path = Util.calc_worse_th_by_dot_file(root_path+"/reports/sw/yoto_dot/yoto_pipeline/t_6/MESH/t-NA_0_.dot.json.dot"
-                                                      ,"t-NA_0_.dot.json.dot")
+th_worse, worse_path = Util.calc_worse_th_by_dot_file(
+    root_path + "/benchmarks/dot_simul/test_simul_40.dot"
+    , "test_simul_40.dot")
 print(th_worse)
 print(worse_path)
-

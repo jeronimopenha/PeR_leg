@@ -15,7 +15,6 @@ from src.python.util.per_graph import PeRGraph
 
 
 class Util:
-    
 
     @staticmethod
     def func_unkey(text: str) -> List[str]:
@@ -316,7 +315,7 @@ class Util:
         :param data: The data to save.
         :type data: dict
         """
-        if path[-1] !='/':
+        if path[-1] != '/':
             path = path + '/'
         with open(path + file_name + '.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
@@ -757,48 +756,48 @@ class Util:
 
         return annotations
 
-    def generate_images_by_dot_files(path_dot_files:str):
+    def generate_images_by_dot_files(path_dot_files: str):
         dot_files = Util.get_files_list_by_extension(path_dot_files, ".dot")
-        for dot_file,filename in dot_files:
+        for dot_file, filename in dot_files:
             G = pgv.AGraph(dot_file)
-            G.draw(path_dot_files+filename.replace('.dot','.png'),format='png',prog='dot')
-    
-    def generate_in_vertexes(vertexes:list[int],edges:list[tuple[int,int]]) -> dict:
+            G.draw(path_dot_files + filename.replace('.dot', '.png'), format='png', prog='dot')
+
+    def generate_in_vertexes(vertexes: list[int], edges: list[tuple[int, int]]) -> dict:
         in_vertexes = {}
         for vertex in vertexes:
             in_vertexes[vertex] = []
 
-        for (src,dst) in edges:
+        for (src, dst) in edges:
             in_vertexes[dst].append(src)
         return in_vertexes
-    
-    def generate_out_vertexes(vertexes:list[int],edges:list[tuple[int,int]])-> dict:
+
+    def generate_out_vertexes(vertexes: list[int], edges: list[tuple[int, int]]) -> dict:
         out_vertexes = {}
         for vertex in vertexes:
             out_vertexes[vertex] = []
-        for (src,dst) in edges:
+        for (src, dst) in edges:
             out_vertexes[src].append(dst)
         return out_vertexes
-    
-    def find_thread_with_best_placement(pipeline_base,n2c):
+
+    def find_thread_with_best_placement(pipeline_base, n2c):
         best_thread = None
         best_dist = 999999
+
         def get_edges_distances(arch_type: ArchType, edges: list[list[int]], n2c: list[list[int]]) \
-        -> tuple[dict, list]:
+                -> tuple[dict, list]:
             dic_edges_dist: Dict[str, int] = {}
             list_edges_dist: List[int] = []
             for edge in edges:
                 n1, n2 = edge
                 a = n2c[n1]
                 b = n2c[n2]
-                assert a != [None,None], 'retirar se utilizar método X'
-                if a!=[None,None] and b!= [None,None]:
+                assert a != [None, None], 'retirar se utilizar método X'
+                if a != [None, None] and b != [None, None]:
                     edge_distance = Util.calc_dist(a, b, arch_type)
                     dic_edges_dist[f"{n1}_{n2}"] = edge_distance
                     list_edges_dist.append(edge_distance)
             return dic_edges_dist, list_edges_dist
 
-        
         for th in range(pipeline_base.n_threads):
             edges_str: List[str] = pipeline_base.edges_raw
             edges_int: List = pipeline_base.get_edges_int(edges_str[th])
@@ -808,10 +807,10 @@ class Util:
             if dist_total < best_dist:
                 best_dist = dist_total
                 best_thread = th
-        return best_thread,best_dist
-    
+        return best_thread, best_dist
+
     @staticmethod
-    def calc_worse_th_by_dot_file(dot_path,dot_name,output_base = None):
+    def calc_worse_th_by_dot_file(dot_path, dot_name, output_base=None):
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
         df_simul = DfSimulSw(per_graph, output_base)
@@ -819,9 +818,7 @@ class Util:
         print(ths)
         dict_ths = dict(ths)
 
-        G = nx.DiGraph()
-
-        G = nx.drawing.nx_pydot.read_dot(dot_path)
+        G = df_simul.g_with_regs  # per_graph.g  # nx.drawing.nx_pydot.read_dot(dot_path)
         in_vs = out_vs = []
 
         for vertex in G.nodes():
@@ -844,11 +841,11 @@ class Util:
                     elif len_path == len_worse_path:
                         th_out_path = dict_ths[v_out]
                         th_out_worse_path = dict_ths[v_out_worse]
-                    
+
                         if th_out_path < th_out_worse_path:
                             len_worse_path = len_path
                             worse_path = path
                             v_out_worse = v_out
 
         th_worse = dict_ths[v_out_worse]
-        return th_worse, worse_path
+        return th_worse, [n for n in worse_path if n in list(per_graph.g.nodes)]
