@@ -1,4 +1,5 @@
 from veriloggen import *
+from math import ceil, log2
 from src.python.util.hw_util import HwUtil
 
 
@@ -148,7 +149,8 @@ class HwComponents:
         clk = m.Input('clk')
         rd = m.Input('rd')
         rd_addr = m.Input('rd_addr', depth)
-        out = m.OutputReg('out', width)
+        # out = m.OutputReg('out', width)
+        out = m.Output('out', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
@@ -159,15 +161,17 @@ class HwComponents:
         mem = m.Reg('mem', width, Power(2, depth))
         m.EmbeddedCode('*/')
 
+        out.assign(mem[rd_addr])
+
         m.Always(Posedge(clk))(
             If(wr)(
                 mem[wr_addr](wr_data)
             ),
-            If(rd)(
-                out(mem[rd_addr])
-            ),
-        )
 
+        )
+        '''If(rd)(
+                        out(mem[rd_addr])
+                    ),'''
         if simulate:
             m.EmbeddedCode('//synthesis translate_off')
         m.Always(Posedge(clk))(
