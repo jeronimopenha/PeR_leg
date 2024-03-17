@@ -10,7 +10,7 @@ from src.python.util.hw_components import HwComponents
 
 class YotoPipelineHw(PiplineBase):
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
-                 n_threads: int = 1):
+                 n_threads: int = 6):
         self.len_pipeline: int = 6
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
         self.hw_components = HwComponents()
