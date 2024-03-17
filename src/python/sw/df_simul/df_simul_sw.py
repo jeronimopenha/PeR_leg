@@ -132,7 +132,6 @@ class DfSimulSw:
         assert (exec_counter >= self.n_data * 2)
         th: list = []
         for output_node in self.output_nodes:
-            print(output_node.name, output_node.data, exec_counter)
             th.append([output_node.name, len(output_node.data) / exec_counter * 2 * 100])
         return th
 
