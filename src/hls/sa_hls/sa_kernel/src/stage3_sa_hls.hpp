@@ -14,6 +14,6 @@ public:
     ST3_OUT m_old_output = {0, false, 0, 0, {-1, -1, -1, -1}, {-1, -1, -1, -1}, {0, false, false}, {0, 0, -1}, {0, 0, -1}};
 
     Stage3SaHls();
-    void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8> exec_offset);
+    void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c0, ap_int<8> *n2c1, ap_int<8> *n2c2, ap_int<8> *n2c3, ap_int<8> exec_offset);
 };
 #endif

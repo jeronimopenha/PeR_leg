@@ -9,7 +9,7 @@ Stage3SaHls::Stage3SaHls()
     }
 }
 
-void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8> exec_offset)
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c0, ap_int<8> *n2c1, ap_int<8> *n2c2, ap_int<8> *n2c3, ap_int<8> exec_offset)
 {
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
@@ -74,7 +74,10 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
             if (uwa.node != -1)
             {
                 ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
-                n2c[idx] = uwa.cell;
+                n2c0[idx] = uwa.cell;
+                n2c1[idx] = uwa.cell;
+                n2c2[idx] = uwa.cell;
+                n2c3[idx] = uwa.cell;
             }
             m_flag = !m_flag;
         }
@@ -83,7 +86,10 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
             if (uwb.node != -1)
             {
                 ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
-                n2c[idx] = uwb.cell;
+                n2c0[idx] = uwb.cell;
+                n2c1[idx] = uwb.cell;
+                n2c2[idx] = uwb.cell;
+                n2c3[idx] = uwb.cell;
             }
             m_flag = !m_flag;
         }
@@ -92,7 +98,48 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
     ap_int<8> cva[N_NEIGH] = {-1, -1, -1, -1};
     ap_int<8> cvb[N_NEIGH] = {-1, -1, -1, -1};
 
-    for (ap_int<8> n = 0; n < N_NEIGH; ++n)
+    if (st2_va[0] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[0];
+        cva[0] = n2c0[idx];
+    }
+    if (st2_va[1] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[1];
+        cva[1] = n2c0[idx];
+    }
+    if (st2_va[2] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[2];
+        cva[2] = n2c1[idx];
+    }
+    if (st2_va[3] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[3];
+        cva[3] = n2c1[idx];
+    }
+    if (st2_vb[0] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[0];
+        cvb[0] = n2c2[idx];
+    }
+    if (st2_vb[1] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[1];
+        cvb[1] = n2c2[idx];
+    }
+    if (st2_vb[2] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[2];
+        cvb[2] = n2c3[idx];
+    }
+    if (st2_vb[3] != -1)
+    {
+        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[3];
+        cvb[3] = n2c3[idx];
+    }
+
+    /*for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
         if (st2_va[n] != -1)
         {
@@ -104,7 +151,7 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
             ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
         }
-    }
+    }*/
 
     m_new_output.th_idx = st2_th_idx;
     m_new_output.th_valid = st2_th_valid;

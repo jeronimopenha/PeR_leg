@@ -19,10 +19,10 @@ class PipelineSaHls
 {
 private:
 public:
-    void run_single(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n);
+    void run_single(ap_int<8> *n2c0, ap_int<8> *n2c1, ap_int<8> *n2c2, ap_int<8> *n2c3, ap_int<8> *c2n, ap_int<8> *n0, ap_int<8> *n1, ap_int<8> *n2, ap_int<8> *n3);
 
 private:
-    static void exec_pipeline(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> *n, ap_int<8> exec_n);
+    static void exec_pipeline(ap_int<8> *n2c0, ap_int<8> *n2c1, ap_int<8> *n2c2, ap_int<8> *n2c3, ap_int<8> *c2n, ap_int<8> *n0, ap_int<8> *n1, ap_int<8> *n2, ap_int<8> *n3, ap_int<8> exec_n);
 };
 
 #endif
