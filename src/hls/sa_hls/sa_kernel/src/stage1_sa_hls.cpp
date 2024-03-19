@@ -10,14 +10,26 @@ Stage1SaHls::Stage1SaHls()
         m_fifo_a.enqueue(fifo_cell_a);
         m_fifo_b.enqueue(fifo_cell_b);
     }
+#ifdef ARRAY_INLINE
     for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
         m_th_idx_offset[i] = i * N_CELLS;
     }
+#endif
 }
 
-void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n, ap_int<8> exec_offset)
+#ifdef ARRAY_INLINE
+Stage1SaHls();
+void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n);
+#else
+Stage1SaHls();
+void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> **c2n);
+#endif
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
+
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
     m_old_output.cell_a = m_new_output.cell_a;
@@ -38,11 +50,6 @@ void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8>
     bool st0_th_valid = st0_input.th_valid;
     ap_int<8> st0_cell_a = st0_input.cell_a;
     ap_int<8> st0_cell_b = st0_input.cell_b;
-
-    if (st0_th_idx == 0 && st0_th_valid)
-    {
-        ap_int<8> a = 1;
-    }
 
     if (st0_th_valid)
     {
@@ -81,26 +88,38 @@ void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8>
     {
         if (m_flag)
         {
-            ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.cell;
+#ifdef ARRAY_INLINE
+            ap_int<8> idx = m_th_idx_offset[uwa.th_idx] + uwa.cell;
             c2n[idx] = wa.node;
-            m_flag = !m_flag;
+#else
+            c2n[uwa.th_idx][uwa.cell] = wa.node;
+#endif
         }
         else
         {
-            ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.cell;
+#ifdef ARRAY_INLINE
+            ap_int<8> idx = m_th_idx_offset[uwb.th_idx] + uwb.cell;
             c2n[idx] = uwb.node;
-            m_flag = !m_flag;
+#else
+            c2n[uwb.th_idx][uwa.cell] = uwb.node;
+#endif
         }
+        m_flag = !m_flag;
     }
-    ap_int<8> idxa = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_a;
-    ap_int<8> idxb = exec_offset + m_th_idx_offset[st0_th_idx] + st0_cell_b;
 
     m_new_output.th_idx = st0_th_idx;
     m_new_output.th_valid = st0_th_valid;
     m_new_output.cell_a = st0_cell_a;
     m_new_output.cell_b = st0_cell_b;
+#ifdef ARRAY_INLINE
+    ap_int<8> idxa = m_th_idx_offset[st0_th_idx] + st0_cell_a;
+    ap_int<8> idxb = m_th_idx_offset[st0_th_idx] + st0_cell_b;
     m_new_output.node_a = c2n[idxa];
     m_new_output.node_b = c2n[idxb];
+#else
+    m_new_output.node_a = c2n[st0_th_idx][st0_cell_a];
+    m_new_output.node_b = c2n[st0_th_idx][st0_cell_b];
+#endif
     m_new_output.sw.th_idx = st9_sw.th_idx;
     m_new_output.sw.th_valid = st9_sw.th_valid;
     m_new_output.sw.sw = st9_sw.sw;

@@ -3,26 +3,37 @@
 Stage3SaHls::Stage3SaHls()
 {
     m_flag = true;
+#ifdef ARRAY_INLINE
     for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
         m_th_idx_offset[i] = i * N_CELLS;
     }
+#endif
 }
-
-void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c0, ap_int<8> *n2c1, ap_int<8> *n2c2, ap_int<8> *n2c3, ap_int<8> exec_offset)
+#ifdef ARRAY_INLINE
+Stage3SaHls();
+void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> n2c)
+#else
+Stage3SaHls();
+void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
+#endif
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
+
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
     m_old_output.cell_a = m_new_output.cell_a;
     m_old_output.cell_b = m_new_output.cell_b;
-    m_old_output.cva[0] = m_new_output.cva[0];
-    m_old_output.cva[1] = m_new_output.cva[1];
-    m_old_output.cva[2] = m_new_output.cva[2];
-    m_old_output.cva[3] = m_new_output.cva[3];
-    m_old_output.cvb[0] = m_new_output.cvb[0];
-    m_old_output.cvb[1] = m_new_output.cvb[1];
-    m_old_output.cvb[2] = m_new_output.cvb[2];
-    m_old_output.cvb[3] = m_new_output.cvb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragrma HLS unroll
+#endif
+        m_old_output.cva[i] = m_new_output.cva[i];
+        m_old_output.cvb[i] = m_new_output.cvb[i];
+    }
     m_old_output.sw.th_idx = m_new_output.sw.th_idx;
     m_old_output.sw.th_valid = m_new_output.sw.th_valid;
     m_old_output.sw.sw = m_new_output.sw.sw;
@@ -73,98 +84,71 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c0, ap_int<8
         {
             if (uwa.node != -1)
             {
-                ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
-                n2c0[idx] = uwa.cell;
-                n2c1[idx] = uwa.cell;
-                n2c2[idx] = uwa.cell;
-                n2c3[idx] = uwa.cell;
+#ifdef ARRAY_INLINE
+                ap_int<8> idx = m_th_idx_offset[uwa.th_idx] + uwa.node;
+                n2c[idx] = uwa.cell;
+#else
+                n2c0[uwa.th_idx][uwa.node] = uwa.cell;
+#endif
             }
-            m_flag = !m_flag;
         }
         else
         {
             if (uwb.node != -1)
             {
-                ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
+#ifdef ARRAY_INLINE
+                ap_int<8> idx = m_th_idx_offset[uwb.th_idx] + uwb.node;
                 n2c0[idx] = uwb.cell;
-                n2c1[idx] = uwb.cell;
-                n2c2[idx] = uwb.cell;
-                n2c3[idx] = uwb.cell;
+#else
+                n2c0[uwb.th_idx][uwb.node] = uwb.cell;
+#endif
             }
-            m_flag = !m_flag;
         }
+        m_flag = !m_flag;
     }
 
     ap_int<8> cva[N_NEIGH] = {-1, -1, -1, -1};
     ap_int<8> cvb[N_NEIGH] = {-1, -1, -1, -1};
 
-    if (st2_va[0] != -1)
+    for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[0];
-        cva[0] = n2c0[idx];
-    }
-    if (st2_va[1] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[1];
-        cva[1] = n2c0[idx];
-    }
-    if (st2_va[2] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[2];
-        cva[2] = n2c1[idx];
-    }
-    if (st2_va[3] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[3];
-        cva[3] = n2c1[idx];
-    }
-    if (st2_vb[0] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[0];
-        cvb[0] = n2c2[idx];
-    }
-    if (st2_vb[1] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[1];
-        cvb[1] = n2c2[idx];
-    }
-    if (st2_vb[2] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[2];
-        cvb[2] = n2c3[idx];
-    }
-    if (st2_vb[3] != -1)
-    {
-        ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[3];
-        cvb[3] = n2c3[idx];
-    }
-
-    /*for (ap_int<8> n = 0; n < N_NEIGH; ++n)
-    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
         if (st2_va[n] != -1)
         {
+#ifdef ARRAY_INLINE
             ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
-            cva[n] = n2c[idx];
+            if (n == 0)
+                cva[n] = n2c[idx];
+#else
+            cva[n] = n2c[st2_th_idx][st2_va[n]];
+#endif
         }
         if (st2_vb[n] != -1)
         {
+#ifdef ARRAY_INLINE
             ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
+#else
+            cvb[n] = n2c[st2_th_idx][st2_vb[n]];
+#endif
         }
-    }*/
+    }
 
     m_new_output.th_idx = st2_th_idx;
     m_new_output.th_valid = st2_th_valid;
     m_new_output.cell_a = st2_cell_a;
     m_new_output.cell_b = st2_cell_b;
-    m_new_output.cva[0] = cva[0];
-    m_new_output.cva[1] = cva[1];
-    m_new_output.cva[2] = cva[2];
-    m_new_output.cva[3] = cva[3];
-    m_new_output.cvb[0] = cvb[0];
-    m_new_output.cvb[1] = cvb[1];
-    m_new_output.cvb[2] = cvb[2];
-    m_new_output.cvb[3] = cvb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragrma HLS unroll
+#endif
+        m_new_output.cva[i] = cva[i];
+        m_new_output.cvb[i] = cvb[i];
+    }
+
     m_new_output.sw.th_idx = st2_sw.th_idx;
     m_new_output.sw.th_valid = st2_sw.th_valid;
     m_new_output.sw.sw = st2_sw.sw;

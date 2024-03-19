@@ -2,6 +2,10 @@
 
 void Stage0SaHls::compute()
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
+
     ap_int<8> th_idx_c = m_th_idx;
 
     m_old_output.th_idx = m_new_output.th_idx;
