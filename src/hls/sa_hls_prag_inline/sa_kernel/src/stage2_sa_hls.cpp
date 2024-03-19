@@ -1,0 +1,112 @@
+#include "stage2_sa_hls.hpp"
+
+void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors0, ap_int<8> *neighbors1, ap_int<8> *neighbors2, ap_int<8> *neighbors3)
+{
+
+    m_old_output.th_idx = m_new_output.th_idx;
+    m_old_output.th_valid = m_new_output.th_valid;
+    m_old_output.cell_a = m_new_output.cell_a;
+    m_old_output.cell_b = m_new_output.cell_b;
+    m_old_output.node_a = m_new_output.node_a;
+    m_old_output.node_b = m_new_output.node_b;
+    m_old_output.va[0] = m_new_output.va[0];
+    m_old_output.va[1] = m_new_output.va[1];
+    m_old_output.va[2] = m_new_output.va[2];
+    m_old_output.va[3] = m_new_output.va[3];
+    m_old_output.vb[0] = m_new_output.vb[0];
+    m_old_output.vb[1] = m_new_output.vb[1];
+    m_old_output.vb[2] = m_new_output.vb[2];
+    m_old_output.vb[3] = m_new_output.vb[3];
+    m_old_output.sw.th_idx = m_new_output.sw.th_idx;
+    m_old_output.sw.th_valid = m_new_output.sw.th_valid;
+    m_old_output.sw.sw = m_new_output.sw.sw;
+    m_old_output.wa.th_idx = m_new_output.wa.th_idx;
+    m_old_output.wa.cell = m_new_output.wa.cell;
+    m_old_output.wa.node = m_new_output.wa.node;
+    m_old_output.wb.th_idx = m_new_output.wb.th_idx;
+    m_old_output.wb.cell = m_new_output.wb.cell;
+    m_old_output.wb.node = m_new_output.wb.node;
+
+    ap_int<8> st1_th_idx = st1_input.th_idx;
+    bool st1_th_valid = st1_input.th_valid;
+    ap_int<8> st1_cell_a = st1_input.cell_a;
+    ap_int<8> st1_cell_b = st1_input.cell_b;
+    ap_int<8> st1_node_a = st1_input.node_a;
+    ap_int<8> st1_node_b = st1_input.node_b;
+    ST9_OUT st1_sw{};
+    W st1_wa{};
+    W st1_wb{};
+    st1_sw.th_idx = st1_input.sw.th_idx;
+    st1_sw.th_valid = st1_input.sw.th_valid;
+    st1_sw.sw = st1_input.sw.sw;
+    st1_wa.th_idx = st1_input.wa.th_idx;
+    st1_wa.cell = st1_input.wa.cell;
+    st1_wa.node = st1_input.wa.node;
+    st1_wb.th_idx = st1_input.wb.th_idx;
+    st1_wb.cell = st1_input.wb.cell;
+    st1_wb.node = st1_input.wb.node;
+
+    ap_int<8> va[N_NEIGH] = {-1, -1, -1, -1};
+    ap_int<8> vb[N_NEIGH] = {-1, -1, -1, -1};
+
+    if (st1_th_idx == 0 && st1_th_valid)
+    {
+        ap_int<8> a = 1;
+    }
+
+    if (st1_node_a != -1)
+    {
+        ap_int<8> idx = (st1_node_a * N_NEIGH) + 0;
+        va[0] = neighbors0[idx];
+        idx = (st1_node_a * N_NEIGH) + 1;
+        va[1] = neighbors0[idx];
+        idx = (st1_node_a * N_NEIGH) + 2;
+        va[2] = neighbors1[idx];
+        idx = (st1_node_a * N_NEIGH) + 3;
+        va[3] = neighbors1[idx];
+        /*for (ap_int<8> n = 0; n < N_NEIGH; ++n)
+        {
+            ap_int<8> idx = (st1_node_a * N_NEIGH) + n;
+            va[n] = neighbors[idx];
+        }*/
+    }
+    if (st1_node_b != -1)
+    {
+        ap_int<8> idx = (st1_node_b * N_NEIGH) + 0;
+        vb[0] = neighbors2[idx];
+        idx = (st1_node_b * N_NEIGH) + 1;
+        vb[1] = neighbors2[idx];
+        idx = (st1_node_b * N_NEIGH) + 2;
+        vb[2] = neighbors3[idx];
+        idx = (st1_node_b * N_NEIGH) + 3;
+        vb[3] = neighbors3[idx];
+        /*for (ap_int<8> n = 0; n < 4; ++n)
+        {
+            ap_int<8> idx = (st1_node_b * N_NEIGH) + n;
+            vb[n] = neighbors[idx];
+        }*/
+    }
+    m_new_output.th_idx = st1_th_idx;
+    m_new_output.th_valid = st1_th_valid;
+    m_new_output.cell_a = st1_cell_a;
+    m_new_output.cell_b = st1_cell_b;
+    m_new_output.node_a = st1_node_a;
+    m_new_output.node_b = st1_node_b;
+    m_new_output.va[0] = va[0];
+    m_new_output.va[1] = va[1];
+    m_new_output.va[2] = va[2];
+    m_new_output.va[3] = va[3];
+    m_new_output.vb[0] = vb[0];
+    m_new_output.vb[1] = vb[1];
+    m_new_output.vb[2] = vb[2];
+    m_new_output.vb[3] = vb[3];
+    m_new_output.sw.th_idx = st1_sw.th_idx;
+    m_new_output.sw.th_valid = st1_sw.th_valid;
+    m_new_output.sw.sw = st1_sw.sw;
+    m_new_output.wa.th_idx = st1_wa.th_idx;
+    m_new_output.wa.cell = st1_wa.cell;
+    m_new_output.wa.node = st1_wa.node;
+    m_new_output.wb.th_idx = st1_wb.th_idx;
+    m_new_output.wb.cell = st1_wb.cell;
+    m_new_output.wb.node = st1_wb.node;
+}
