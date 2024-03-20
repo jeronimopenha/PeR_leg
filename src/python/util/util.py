@@ -9,7 +9,7 @@ import pygraphviz as pgv
 import matplotlib.pyplot as plt
 import pandas as pd
 import networkx as nx
-from src.python.sw.df_simul.df_simul_sw import DfSimulSw
+
 from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph
 
@@ -811,14 +811,15 @@ class Util:
 
     @staticmethod
     def calc_worse_th_by_dot_file(dot_path, dot_name, output_base=None):
+        from src.python.hw.df_simul.df_simul_hw import DfSimulHw
+
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
-        df_simul = DfSimulSw(per_graph, output_base)
+        df_simul = DfSimulHw(per_graph)
         ths: list = df_simul.run_simulation()
-        print(ths)
-        dict_ths = dict(ths)
 
-        G = df_simul.g_with_regs  # per_graph.g  # nx.drawing.nx_pydot.read_dot(dot_path)
+
+        G = df_simul.df_compat  # per_graph.g  # nx.drawing.nx_pydot.read_dot(dot_path)
         in_vs = out_vs = []
 
         for vertex in G.nodes():
@@ -826,6 +827,14 @@ class Util:
                 in_vs.append(vertex)
             if len(list(G.successors(vertex))) == 0:
                 out_vs.append(vertex)
+                for th in ths:
+                    if th[0] == G.nodes[vertex]['idx']:
+                        th[0] = vertex
+                        break
+
+        print(ths)
+        dict_ths = dict(ths)
+
         worse_path = None
         len_worse_path = -1
         v_out_worse = None

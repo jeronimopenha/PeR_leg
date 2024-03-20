@@ -6,63 +6,92 @@ from src.python.util.per_graph import PeRGraph
 
 
 class DfSimulHw:
-    def __init__(self, per_graph: PeRGraph, output_base: str):
+    def __init__(self, per_graph: PeRGraph, n_data: int = 5000):
         self.per_graph = per_graph
-        self.verilog_file = f'{output_base}/verilog/{self.per_graph.dot_name.replace(".", "_")}.v'
-        self.output_file = f'{output_base}/{self.per_graph.dot_name.replace(".", "_")}.out'
-        self.result_path = f'{output_base}/results'
-        self.result_file = f'{self.per_graph.dot_name.replace(".", "_")}.json'
-        self.df: nx.DiGraph = self.add_regs()
+        self.n_data = n_data
+        self.verilog_file = f'dfg.v'
+        self.output_file = f'dfg.out'
+        self.df_compat: nx.DiGraph = self.make_dfg_compatible()
         self.test_bench: Module = self.make_test_bench()
 
-    def start_simulation(self):
+    def run_simulation(self):
         self.test_bench.to_verilog(self.verilog_file)
         sim = simulation.Simulator(self.test_bench, sim='iverilog')
         print('Starting simulation')
         rslt = sim.run(outputfile=self.output_file)
         print('Simulation done')
-        self.write_output_result(rslt)
-        os.remove(self.output_file)
 
-    def write_output_result(self, rslt: str):
+        th = self.get_thoughputs(rslt)
+        return th
+
+    def get_thoughputs(self, rslt: str):
         lines = rslt.split('\n')
 
-        th = 0.0
+        th: list = []
 
         for line in lines:
             if 'throughput' in line:
-                th = float(line.split(':')[2].replace(' ', '').replace('%', ''))
-                break
+                line_spl = line.replace(' ', '').replace('%', '').split(':')
+                th.append([line_spl[1], float(line_spl[2])])
+        return th
 
-        simul_result = {
-            'benchmark': self.per_graph.dot_name,
-            'throughput': th
-        }
-        Util.save_json(self.result_path, self.result_file, simul_result)
-
-    def add_regs(self) -> nx.DiGraph:
+    def make_dfg_compatible(self) -> nx.DiGraph:
         df: nx.DiGraph = self.per_graph.g.copy()
-        n_df: nx.DiGraph = df.copy()
+        new_df: nx.DiGraph = df.copy()
+        nodes_ports: dict = {}
+        insert_output_nodes: set = set()
         for edge in df.edges():
-            if int(df.edges[edge]['w']) > 0:
-                df.edges[edge]['label'] = df.edges[edge]['w']
-                src = edge[0]
-                dst = edge[1]
-                port = int(df.edges[edge]['port'])
-                for r in range(int(df.edges[edge]['w'])):
-                    idx = '%s_%s' % edge + '_%d' % r
-                    n_df.add_node(idx)
-                    nx.set_node_attributes(n_df, {idx: {'label': 'reg', 'op': 'reg'}})
-                    n_df.add_edge(src, idx)
-                    nx.set_edge_attributes(n_df, {(src, idx): {'port': 0, 'w': 0}})
-                    src = idx
-                n_df.add_edge(src, dst)
-                nx.set_edge_attributes(n_df, {(src, dst): {'port': port, 'w': 0}})
-                n_df.remove_edge(edge[0], edge[1])
-        return n_df
+            src = edge[0]
+            dst = edge[1]
+
+            node_in_size: int = new_df.in_degree(src)
+            node_out_size: int = new_df.out_degree(dst)
+            if new_df.in_degree(src) == 0:
+                new_df.nodes[src]['op'] = 'in'
+            elif new_df.out_degree(dst) == 0:
+                if new_df.in_degree(dst) > 1:
+                    insert_output_nodes.add(dst)
+                else:
+                    new_df.nodes[src]['op'] = 'in'
+
+            # verify if the weight parameter is in each edge
+            if 'weight' not in new_df.edges[edge].keys():
+                new_df.edges[edge]['weight'] = 0
+            # specify wich port to connect to each node
+            if dst not in nodes_ports.keys():
+                nodes_ports[dst] = 0
+            dst_port = nodes_ports[dst]
+            nodes_ports[dst] += 1
+            if int(new_df.edges[edge]['weight']) > 0:
+                for r in range(int(new_df.edges[edge]['weight'])):
+                    reg_idx = f'{src}_{dst}_{r}'
+                    new_df.add_node(reg_idx)
+                    nx.set_node_attributes(new_df, {reg_idx: {'label': f'reg_{reg_idx}'}})
+                    new_df.add_edge(src, reg_idx)
+                    if reg_idx not in nodes_ports.keys():
+                        nodes_ports[reg_idx] = 0
+                    reg_port = nodes_ports[reg_idx]
+                    nodes_ports[reg_idx] += 1
+                    nx.set_edge_attributes(new_df, {(src, reg_idx): {'port': reg_port, 'weight': 0}})
+                    src = reg_idx
+                new_df.add_edge(src, dst)
+                nx.set_edge_attributes(new_df, {(src, dst): {'port': dst_port, 'weight': 0}})
+                new_df.remove_edge(edge[0], edge[1])
+            else:
+                if 'port' not in new_df.edges[edge].keys():
+                    new_df.edges[edge]['port'] = dst_port
+                else:
+                    new_df.edges[edge]['port'] = dst_port
+        for node in insert_output_nodes:
+            out_idx = f'{node}_out'
+            new_df.add_node(out_idx)
+            nx.set_node_attributes(new_df, {out_idx: {'label': out_idx, 'op': 'out'}})
+            new_df.add_edge(node, out_idx)
+            nx.set_edge_attributes(new_df, {(node, out_idx): {'port': 0, 'weight': 0}})
+        return new_df
 
     def make_test_bench(self) -> Module:
-        df = self.df
+        df = self.df_compat
         dataflow = self.make_dataflow()
         m = Module(self.per_graph.dot_name.replace(".", "_"))
         data_width = m.Localparam('data_width', 32)
@@ -71,7 +100,7 @@ class DfSimulHw:
         is_const = m.Localparam('is_const', 'false')
         initial_value = m.Localparam('initial_value', 0)
 
-        max_data_size = m.Localparam('max_data_size', 5000)
+        max_data_size = m.Localparam('max_data_size', self.n_data)
 
         clk = m.Reg('clk')
         rst = m.Reg('rst')
@@ -87,11 +116,12 @@ class DfSimulHw:
         n_in = 0
         n_out = 0
         for no in df.nodes:
-            op = str.lower(df.nodes[no]['op'])
-            if op == 'in':
-                n_in += 1
-            elif op == 'out':
-                n_out += 1
+            if 'op' in df.nodes[no]:
+                op = str.lower(df.nodes[no]['op'])
+                if op == 'in':
+                    n_in += 1
+                elif op == 'out':
+                    n_out += 1
 
         count_producer = m.Wire('count_producer', 32, n_in)
         count_consumer = m.Wire('count_consumer', 32, n_out)
@@ -130,41 +160,43 @@ class DfSimulHw:
         c_in = 0
         c_out = 0
         for no in df.nodes:
-            op = str.lower(df.nodes[no]['op'])
-            if op == 'in':
-                param = [
-                    ('producer_id', int(no)),
-                    ('data_width', data_width),
-                    ('fail_rate', fail_rate_producer),
-                    ('initial_value', initial_value),
-                    ('is_const', is_const)
-                ]
-                con = [
-                    ('clk', clk),
-                    ('rst', rst),
-                    ('req', ports['din_req_%s' % no]),
-                    ('ack', ports['din_ack_%s' % no]),
-                    ('dout', ports['din_%s' % no]),
-                    ('count', count_producer[c_in])
-                ]
-                m.Instance(p, p.name + '_%s' % no, param, con)
-                c_in += 1
-            elif op == 'out':
-                param = [
-                    ('consumer_id', int(no)),
-                    ('data_width', data_width),
-                    ('fail_rate', fail_rate_consumer)
-                ]
-                con = [
-                    ('clk', clk),
-                    ('rst', rst),
-                    ('req', ports['dout_req_%s' % no]),
-                    ('ack', ports['dout_ack_%s' % no]),
-                    ('din', ports['dout_%s' % no]),
-                    ('count', count_consumer[c_out])
-                ]
-                m.Instance(c, c.name + '_%s' % no, param, con)
-                c_out += 1
+            if 'op' in df.nodes[no]:
+                op = str.lower(df.nodes[no]['op'])
+                if op == 'in':
+                    param = [
+                        ('producer_id', int(c_in)),
+                        ('data_width', data_width),
+                        ('fail_rate', fail_rate_producer),
+                        ('initial_value', initial_value),
+                        ('is_const', is_const)
+                    ]
+                    con = [
+                        ('clk', clk),
+                        ('rst', rst),
+                        ('req', ports['din_req_%s' % no]),
+                        ('ack', ports['din_ack_%s' % no]),
+                        ('dout', ports['din_%s' % no]),
+                        ('count', count_producer[c_in])
+                    ]
+                    m.Instance(p, p.name + '_%s' % no, param, con)
+                    c_in += 1
+                elif op == 'out':
+                    df.nodes[no]['idx'] = str(c_out)
+                    param = [
+                        ('consumer_id', int(c_out)),
+                        ('data_width', data_width),
+                        ('fail_rate', fail_rate_consumer)
+                    ]
+                    con = [
+                        ('clk', clk),
+                        ('rst', rst),
+                        ('req', ports['dout_req_%s' % no]),
+                        ('ack', ports['dout_ack_%s' % no]),
+                        ('din', ports['dout_%s' % no]),
+                        ('count', count_consumer[c_out])
+                    ]
+                    m.Instance(c, c.name + '_%s' % no, param, con)
+                    c_out += 1
 
         m.Instance(dataflow, dataflow.name,
                    dataflow.get_params(), dataflow.get_ports())
@@ -172,7 +204,7 @@ class DfSimulHw:
         return m
 
     def make_dataflow(self):
-        df = self.df
+        df = self.df_compat
         m = Module(df.name)
         data_width = m.Parameter('data_width', 32)
         clk = m.Input('clk')
@@ -180,16 +212,19 @@ class DfSimulHw:
         wires = self.create_wires(m)
         operator = self.make_async_operator()
         for no in df.nodes:
-            op = str.lower(df.nodes[no]['op'])
-            immediate = self.get_immediate(df.nodes[no])
+            immediate = 0  # self.get_immediate(df.nodes[no])
             input_size = df.in_degree(no)
             output_size = df.out_degree(no)
+            if 'op' in df.nodes[no]:
+                op = str.lower(df.nodes[no]['op'])
+            else:
+                op = 'add'
             if op == 'in':
                 input_size += 1
             if op == 'out':
                 output_size += 1
 
-            req_l, ack_l, din, req_r, ack_r, dout = self.create_con_node(no)
+            req_l, ack_l, din, req_r, ack_r, dout = self.create_con_node(no, op)
             param = [('data_width', data_width),
                      ('op', op),
                      ('immediate', immediate),
@@ -209,33 +244,34 @@ class DfSimulHw:
         return m
 
     def create_wires(self, m: Module()) -> dict:
-        df = self.df
+        df = self.df_compat
         data_width = m.get_params()['data_width']
         wires = {}
         for no in df.nodes:
-            op = str.lower(df.nodes[no]['op'])
             for n in df.successors(no):
                 req_r = m.Wire('req_%s_%s' % (no, n))
                 wires[req_r.name] = req_r
-            if op == 'in':
-                req_r = m.Output('din_req_%s' % no)
-                ack_r = m.Input('din_ack_%s' % no)
-                d = m.Input('din_%s' % no, data_width)
-                wires[req_r.name] = req_r
-                wires[ack_r.name] = ack_r
-                wires[d.name] = d
-                ack_r = m.Wire('ack_%s' % no)
-                d = m.Wire('d%s' % no, data_width)
-                wires[ack_r.name] = ack_r
-                wires[d.name] = d
-            elif op == 'out':
-                parent = [n for n in df.predecessors(no)][0]
-                req_r = m.Input('dout_req_%s' % no)
-                ack_r = m.Output('dout_ack_%s' % no)
-                d = m.Output('dout_%s' % no, data_width)
-                wires['req_%s' % parent] = req_r
-                wires['ack_%s' % parent] = ack_r
-                wires['d%s' % parent] = d
+            if 'op' in df.nodes[no]:
+                op = str.lower(df.nodes[no]['op'])
+                if op == 'in':
+                    req_r = m.Output('din_req_%s' % no)
+                    ack_r = m.Input('din_ack_%s' % no)
+                    d = m.Input('din_%s' % no, data_width)
+                    wires[req_r.name] = req_r
+                    wires[ack_r.name] = ack_r
+                    wires[d.name] = d
+                    ack_r = m.Wire('ack_%s' % no)
+                    d = m.Wire('d%s' % no, data_width)
+                    wires[ack_r.name] = ack_r
+                    wires[d.name] = d
+                elif op == 'out':
+                    parent = [n for n in df.predecessors(no)][0]
+                    req_r = m.Input('dout_req_%s' % no)
+                    ack_r = m.Output('dout_ack_%s' % no)
+                    d = m.Output('dout_%s' % no, data_width)
+                    wires['req_%s' % parent] = req_r
+                    wires['ack_%s' % parent] = ack_r
+                    wires['d%s' % parent] = d
             else:
                 ack_r = m.Wire('ack_%s' % no)
                 d = m.Wire('d%s' % no, data_width)
@@ -299,8 +335,7 @@ class DfSimulHw:
         )
         genfor = m.GenerateFor(g(0), g < input_size, g.inc(), 'rcv')
         genfor.Always(Posedge(ack_l[g]))(
-            din_r[Mul(data_width, g):Mul(data_width, g + 1)
-            ](din[Mul(data_width, g):Mul(data_width, g + 1)])
+            din_r[Mul(data_width, g):Mul(data_width, g + 1)](din[Mul(data_width, g):Mul(data_width, g + 1)])
         )
 
         operator = self.make_operator()
@@ -350,8 +385,8 @@ class DfSimulHw:
             immediate = int(no['value'])
         return immediate
 
-    def create_con_node(self, no: str) -> list:
-        df = self.df
+    def create_con_node(self, no: str, op: str) -> list:
+        df = self.df_compat
         din = ''
         req_l = ''
         ack_l = ''
@@ -359,7 +394,7 @@ class DfSimulHw:
         dout = ''
         ack_r = ''
 
-        if df.nodes[no]['op'] == 'in':
+        if op == 'in':
             req_l = 'din_req_%s' % no
             ack_l = 'din_ack_%s' % no
             ack_r = 'ack_%s' % no
@@ -370,7 +405,7 @@ class DfSimulHw:
                 req_r += 'req_%s_%s, ' % (no, d)
             req_r = req_r[:-2]
             req_r += '}'
-        elif df.nodes[no]['op'] == 'out':
+        elif op == 'out':
             req_r = 'dout_req_%s' % no
             ack_r = 'dout_ack_%s' % no
             dout = 'dout_%s' % no
