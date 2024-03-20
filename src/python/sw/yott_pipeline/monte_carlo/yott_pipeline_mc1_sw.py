@@ -54,7 +54,7 @@ class YOTTMC1Pipeline(PiplineBase):
             exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC1", n_copies, reports)
         # print()
         return report
 
@@ -156,7 +156,7 @@ class YOTTMC1Pipeline(PiplineBase):
                 exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
                 exec_key: str = 'exec_%d' % exec_num
                 reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC1", n_copies, reports)
         print('best_dist:',best_dist,'best_exec',best_exec,'best_th',best_th,)
         for row in best_c2n:
             print(row)

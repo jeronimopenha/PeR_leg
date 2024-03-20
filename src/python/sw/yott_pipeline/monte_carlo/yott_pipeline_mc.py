@@ -19,16 +19,16 @@ from src.python.util.piplinebase import PiplineBase
 from src.python.util.util import Util
 
 
-class YOTTMC0Pipeline(PiplineBase):
+class YOTTMCPipeline(PiplineBase):
     len_pipeline = 10
 
-    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, limiars, num_annotations: int = 3,
+    def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, limiar, num_annotations: int = 3,
                  num_threads: int = None):
         num_threads = self.len_pipeline if num_threads is None else num_threads
         self.num_annotations = num_annotations
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, num_threads)
         self.len_edges = len(self.edges_int[0])
-        self.limiars = limiars
+        self.limiar = limiar
 
     def run_parallel(self, n_copies: int = 1) -> dict:
         max_jobs: int = mp.cpu_count() - 2
@@ -53,7 +53,7 @@ class YOTTMC0Pipeline(PiplineBase):
             exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-MC0", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
         # print()
         return report
 
@@ -66,16 +66,16 @@ class YOTTMC0Pipeline(PiplineBase):
         best_exec = 0
         dic_man = {}
         reports: dict = {}
-        # limiar[0]: x% primeiras cópias executando YOTT padrão
-        # limiar[1]: y% primeiras cópias (a partir de x%) executando yott considerando nós já mapeados
-         # limiar[2]: porcentagem dos nós mapeados
-        last_idx_edges = math.floor(self.limiars[2]*self.per_graph.n_nodes ) - 1
+    
+        last_idx_edges = math.floor(self.limiar*self.per_graph.n_nodes ) - 1
         for exec_num in range(n_copies):
             calc = (exec_num+1)/n_copies
-            if calc <= self.limiars[0] or n_copies == 1:
+            if exec_num == 0:
                 n2c_temp,c2n_temp,threads_edges,annotations,dist = self.exec_pipeline(exec_num, dic_man)
 
-            elif calc <= self.limiars[1]:
+            else:
+                print(best_c2n)
+                input()
                 copy_best_n2c = deepcopy(best_n2c)
                 copy_best_c2n = deepcopy(best_c2n)
                 for (a,b) in edges_best_th[last_idx_edges:]:
@@ -88,6 +88,10 @@ class YOTTMC0Pipeline(PiplineBase):
                 for th in range(self.len_pipeline):
                     new_c2n[th] = deepcopy(copy_best_c2n)
                     new_n2c[th] = deepcopy(copy_best_n2c)
+                print(new_c2n[0])
+                input()
+
+
 
                 n2c_temp,c2n_temp,threads_edges,annotations,dist = self.exec_pipeline(exec_num, dic_man,new_c2n,
                                                                                       new_n2c,
@@ -95,38 +99,6 @@ class YOTTMC0Pipeline(PiplineBase):
                                                                                       [annots_best_th for _ in range(self.len_pipeline)],
                                                                                       [edges_best_th for _ in range(self.len_pipeline)]
                                                                                       )
-            else:
-                in_vertexes = Util.generate_in_vertexes([self.per_graph.nodes_to_idx[node] for node in self.per_graph.nodes],edges_best_th)
-                for edge_index,(a,b) in enumerate(edges_best_th):
-                    summ = 0
-                    for father in in_vertexes[b]:
-                        summ+= Util.calc_dist(best_n2c[father],best_n2c[b],self.arch_type) - 1
-                    if summ > 0:
-                        break
-                if summ == 0:
-                    edge_index = self.len_edges
-                    # continue
-                copy_best_n2c = deepcopy(best_n2c)
-                copy_best_c2n = deepcopy(best_c2n)
-                for (a,b) in edges_best_th[edge_index:]:
-                    cell = best_n2c[b]
-                    copy_best_n2c[b] = [None,None]
-                    copy_best_c2n[cell[0]][cell[1]] = None
-
-                new_c2n = [None for _ in range(self.len_pipeline)]
-                new_n2c = [None for _ in range(self.len_pipeline)]
-
-                for th in range(self.len_pipeline):
-                    new_c2n[th] = deepcopy(copy_best_c2n)
-                    new_n2c[th] = deepcopy(copy_best_n2c)
-
-                n2c_temp,c2n_temp,threads_edges,annotations,dist = self.exec_pipeline(exec_num, dic_man,new_c2n,
-                                                                                      new_n2c,
-                                                                                      [edge_index for _ in range(self.len_pipeline)],
-                                                                                      [annots_best_th for _ in range(self.len_pipeline)],
-                                                                                      [edges_best_th for _ in range(self.len_pipeline)]
-                                                                                      )
-
             if dist < best_dist:
                 best_dist = dist
                 best_n2c = n2c_temp
@@ -139,7 +111,7 @@ class YOTTMC0Pipeline(PiplineBase):
                 exec_key: str = 'exec_%d' % exec_num
                 reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
                 
-        report: dict = Util.create_report(self, "YOTT-MC0", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
         return report
 
     def exec_pipeline(self, exec_key: int, dic_man,c2n = None,

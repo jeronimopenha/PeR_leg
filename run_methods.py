@@ -1,7 +1,7 @@
 import os
 from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc0_sw import YOTTMC0Pipeline
 from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
-from src.python.sw.yott_pipeline.X.yott_pipenline_x_sw import YOTTXPipeline
+from src.python.sw.yott_pipeline.monte_carlo.yott_pipeline_mc import YOTTMCPipeline
 from src.python.sw.yott_pipeline.yott_pipeline_sw import YOTTPipeline
 from src.python.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 
@@ -10,15 +10,15 @@ from src.python.util.per_graph import PeRGraph
 from src.python.util.util import Util
 import time
 
-traversal = [YOTTPipeline, YOTTXPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline, YotoPipelineSw]
+traversal = [YOTTPipeline, YOTTMCPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline, YotoPipelineSw]
 path_results = ["yott/yott_pipeline","yott/yott_pipeline","yott/yott_pipeline","yott/yott_pipeline","yoto/yoto_pipeline"]
-methods = ["default","X","MC0","MC1","default"]
-limiars_str = ["-1","0.8","0.5|0.8|0.3","3|3|0.3","-1"]
+methods = ["default","MC","MC0","MC1","default"]
+limiars_str = ["-1","0.3","0.5|0.8|0.3","3|3|0.3","-1"]
 run_parallel = False 
 arch_types = [ArchType.MESH, ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
-dot_path_base = root_path + '/dot_db/'
-dot_connected_paths = [dot_path_base + path_graph for path_graph in ['connected/','graphs0_dag/']]
+dot_path_base = root_path + '/benchmarks/'
+dot_connected_paths = [dot_path_base + path_graph for path_graph in ['connected/']]
 make_shuffle: bool = True
 distance_table_bits: int = 4
 copies = [1,10,100]
@@ -27,7 +27,7 @@ start = time.time()
 for dot_connected_path in dot_connected_paths:
     for i, method in enumerate(traversal):
         for arch_type in arch_types:
-            if method == YOTTXPipeline:
+            if method != YOTTMCPipeline:
                 continue
             len_pipe = method.len_pipeline
             total_executions = [len_pipe * copy for copy in copies]
@@ -53,7 +53,7 @@ for dot_connected_path in dot_connected_paths:
 
                 # FIXME the line below is only for debugging
                 # dots_list = [[dot_connected_path + 'arf.dot', 'arf.dot']]
-                num_annotations = [3] if method in [YOTTPipeline, YOTTXPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline] else [0]
+                num_annotations = [3] if method in [YOTTPipeline, YOTTMCPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline] else [0]
                 for num_annotation in num_annotations:
                     for dot_path, dot_name in dots_list:
                         per_graph = PeRGraph(dot_path, dot_name)
@@ -62,8 +62,8 @@ for dot_connected_path in dot_connected_paths:
                             pipeline_method = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
                         elif method == YOTTPipeline:
                             pipeline_method = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, num_annotation, len_pipe)
-                        elif method == YOTTXPipeline:
-                            pipeline_method = YOTTXPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 0.8, num_annotation, len_pipe)
+                        elif method == YOTTMCPipeline:
+                            pipeline_method = YOTTMCPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 0.3, num_annotation, len_pipe)
                         elif method == YOTTMC0Pipeline:
                             pipeline_method = YOTTMC0Pipeline(per_graph, arch_type, distance_table_bits, make_shuffle, [0.5,0.8,0.3], num_annotation, len_pipe)
                         elif method == YOTTMC1Pipeline:
