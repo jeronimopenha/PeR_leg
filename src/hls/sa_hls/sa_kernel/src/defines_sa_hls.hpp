@@ -1,7 +1,7 @@
 #ifndef DEFINES_SA_HLS_H
 #define DEFINES_SA_HLS_H
 
-//#define ARRAY_INLINE
+#define ARRAY_INLINE
 #define PRAGMAS
 
 #define N_NEIGH 4

@@ -13,7 +13,7 @@ void Stage4SaHls::compute(ST3_OUT st3_input)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_old_output.cva[i] = m_new_output.cva[i];
         m_old_output.cvb[i] = m_new_output.cvb[i];
@@ -35,7 +35,7 @@ void Stage4SaHls::compute(ST3_OUT st3_input)
     for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         ap_int<8> i1, i2, j1, j2;
 
@@ -69,7 +69,7 @@ void Stage4SaHls::compute(ST3_OUT st3_input)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_new_output.cva[i] = st3_input.cva[i];
         m_new_output.cvb[i] = st3_input.cvb[i];

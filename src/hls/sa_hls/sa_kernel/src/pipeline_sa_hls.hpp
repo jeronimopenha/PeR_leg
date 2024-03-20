@@ -23,12 +23,12 @@ public:
     static void exec_pipeline(
         ap_int<8> *n2c,
         ap_int<8> *c2n,
-        ap_int<8> *n)
+        ap_int<8> *n);
 #else
     static void exec_pipeline(
         ap_int<8> **n2c,
         ap_int<8> **c2n,
-        ap_int<8> **n)
+        ap_int<8> **n);
 #endif
         private:
 };

@@ -14,11 +14,12 @@ private:
 public:
     ST3_OUT m_new_output = {0, false, 0, 0, {-1, -1, -1, -1}, {-1, -1, -1, -1}, {0, false, false}, {0, 0, -1}, {0, 0, -1}};
     ST3_OUT m_old_output = {0, false, 0, 0, {-1, -1, -1, -1}, {-1, -1, -1, -1}, {0, false, false}, {0, 0, -1}, {0, 0, -1}};
-#ifdef ARRAY_INLINE
+
     Stage3SaHls();
+
+#ifdef ARRAY_INLINE
     void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c);
 #else
-    Stage3SaHls();
     void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c);
 #endif
 };

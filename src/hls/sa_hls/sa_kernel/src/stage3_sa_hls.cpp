@@ -10,12 +10,11 @@ Stage3SaHls::Stage3SaHls()
     }
 #endif
 }
+
 #ifdef ARRAY_INLINE
-Stage3SaHls();
-void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> n2c)
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c)
 #else
-Stage3SaHls();
-void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
 #endif
 {
 #ifdef PRAGMAS
@@ -29,7 +28,7 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_old_output.cva[i] = m_new_output.cva[i];
         m_old_output.cvb[i] = m_new_output.cvb[i];
@@ -63,11 +62,6 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
     st2_wb.cell = st2_input.wb.cell;
     st2_wb.node = st2_input.wb.node;
 
-    if (st2_th_idx == 0 && st2_th_valid)
-    {
-        ap_int<8> a = 1;
-    }
-
     bool usw = m_new_output.sw.sw;
     W uwa{};
     W uwb{};
@@ -88,7 +82,7 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
                 ap_int<8> idx = m_th_idx_offset[uwa.th_idx] + uwa.node;
                 n2c[idx] = uwa.cell;
 #else
-                n2c0[uwa.th_idx][uwa.node] = uwa.cell;
+                n2c[uwa.th_idx][uwa.node] = uwa.cell;
 #endif
             }
         }
@@ -98,9 +92,9 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
             {
 #ifdef ARRAY_INLINE
                 ap_int<8> idx = m_th_idx_offset[uwb.th_idx] + uwb.node;
-                n2c0[idx] = uwb.cell;
+                n2c[idx] = uwb.cell;
 #else
-                n2c0[uwb.th_idx][uwb.node] = uwb.cell;
+                n2c[uwb.th_idx][uwb.node] = uwb.cell;
 #endif
             }
         }
@@ -118,7 +112,7 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
         if (st2_va[n] != -1)
         {
 #ifdef ARRAY_INLINE
-            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
+            ap_int<8> idx = m_th_idx_offset[st2_th_idx] + st2_va[n];
             if (n == 0)
                 cva[n] = n2c[idx];
 #else
@@ -128,7 +122,7 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
         if (st2_vb[n] != -1)
         {
 #ifdef ARRAY_INLINE
-            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
+            ap_int<8> idx = m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
 #else
             cvb[n] = n2c[st2_th_idx][st2_vb[n]];
@@ -143,7 +137,7 @@ void compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_new_output.cva[i] = cva[i];
         m_new_output.cvb[i] = cvb[i];

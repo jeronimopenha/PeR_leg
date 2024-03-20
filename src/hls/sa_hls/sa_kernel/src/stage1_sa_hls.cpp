@@ -19,11 +19,9 @@ Stage1SaHls::Stage1SaHls()
 }
 
 #ifdef ARRAY_INLINE
-Stage1SaHls();
-void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n);
+void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n)
 #else
-Stage1SaHls();
-void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> **c2n);
+void Stage1SaHls::compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> **c2n)
 #endif
 {
 #ifdef PRAGMAS

@@ -11,7 +11,7 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
     for (ap_int<8> i = 0; i < N_NEIGH / 2; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_old_output.dvac[i] = m_new_output.dvac[i];
         m_old_output.dvbc[i] = m_new_output.dvbc[i];
@@ -19,7 +19,7 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_old_output.dvas[i] = m_new_output.dvas[i];
         m_old_output.dvbs[i] = m_new_output.dvbs[i];
@@ -85,7 +85,7 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
     for (ap_int<8> i = 0; i < N_NEIGH / 2; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_new_output.dvac[i] = dvac[i];
         m_new_output.dvbc[i] = dvbc[i];
@@ -93,7 +93,7 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_new_output.dvas[i] = dvas[i];
         m_new_output.dvbs[i] = dvbs[i];

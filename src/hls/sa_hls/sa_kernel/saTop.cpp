@@ -26,7 +26,7 @@ extern "C" void simulatedAnnealingTop(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> 
     memcpy((ap_int<8> *)n_l, n, N_N_DATA * sizeof(ap_int<8>));
 
     static PipelineSaHls sa_pipeline_hw;
-    sa_pipeline_hw.run_single((ap_int<8> *)n2c_l, (ap_int<8> *)c2n_l, (ap_int<8> *)n_l);
+    sa_pipeline_hw.exec_pipeline((ap_int<8> *)n2c_l, (ap_int<8> *)c2n_l, (ap_int<8> *)n_l);
 
     memcpy(c2n, (ap_int<8> *)c2n_l, N_C_N_DATA * sizeof(ap_int<8>));
 #else
@@ -36,7 +36,7 @@ extern "C" void simulatedAnnealingTop(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> 
 
     for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
-        for (ap_int<8> j = 0; j < N_CELLS)
+        for (ap_int<8> j = 0; j < N_CELLS; j++)
         {
             ap_int<8> idx = i * N_THREADS + j;
             n2c_l[i][j] = n2c[idx];
@@ -45,19 +45,19 @@ extern "C" void simulatedAnnealingTop(ap_int<8> *n2c, ap_int<8> *c2n, ap_int<8> 
     }
     for (ap_int<8> i = 0; i < N_CELLS; i++)
     {
-        for (ap_int<8> j = 0; j < N_NEIGH)
+        for (ap_int<8> j = 0; j < N_NEIGH; j++)
         {
             ap_int<8> idx = i * N_CELLS + j;
-            n_l[i[j]] = n[idx];
+            n_l[i][j] = n[idx];
         }
     }
 
     static PipelineSaHls sa_pipeline_hw;
-    sa_pipeline_hw.run_single((ap_int<8> **)n2c_l, (ap_int<8> **)c2n_l, (ap_int<8> *)n_l);
+    sa_pipeline_hw.exec_pipeline((ap_int<8> **)n2c_l, c2n_l, (ap_int<8> **)n_l);
 
     for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
-        for (ap_int<8> j = 0; j < N_CELLS)
+        for (ap_int<8> j = 0; j < N_CELLS; j++)
         {
             ap_int<8> idx = i * N_THREADS + j;
             c2n[idx] = c2n_l[i][j];

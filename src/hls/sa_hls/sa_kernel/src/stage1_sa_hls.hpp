@@ -18,11 +18,11 @@ public:
     ST1_OUT m_new_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
     ST1_OUT m_old_output = {0, false, 0, 0, 0, 0, {0, false, false}, {0, 0, 0}, {0, 0, 0}};
 
-#ifdef ARRAY_INLINE
     Stage1SaHls();
+
+#ifdef ARRAY_INLINE
     void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> *c2n);
 #else
-    Stage1SaHls();
     void compute(ST0_OUT st0_input, ST9_OUT st9_sw, W st1_wb, ap_int<8> **c2n);
 #endif
 };

@@ -1,9 +1,9 @@
 #include "stage2_sa_hls.hpp"
 
 #ifdef ARRAY_INLINE
-void compute(ST1_OUT st1_input, ap_int<8> *neighbors)
+void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
 #else
-void compute(ST1_OUT st1_input, ap_int<8> **neighbors)
+void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> **neighbors)
 #endif
 {
 #ifdef PRAGMAS
@@ -19,7 +19,7 @@ void compute(ST1_OUT st1_input, ap_int<8> **neighbors)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_old_output.va[i] = m_new_output.va[i];
         m_old_output.vb[i] = m_new_output.vb[i];
@@ -73,8 +73,10 @@ void compute(ST1_OUT st1_input, ap_int<8> **neighbors)
 #endif
         }
     }
+    
     if (st1_node_b != -1)
     {
+        for (ap_int<8> n = 0; n < N_NEIGH; ++n)
         {
 #ifdef PRAGMAS
 #pragma HLS unroll
@@ -97,7 +99,7 @@ void compute(ST1_OUT st1_input, ap_int<8> **neighbors)
     for (ap_int<8> i = 0; i < N_NEIGH; i++)
     {
 #ifdef PRAGMAS
-#pragrma HLS unroll
+#pragma HLS unroll
 #endif
         m_new_output.va[i] = va[i];
         m_new_output.vb[i] = vb[i];
