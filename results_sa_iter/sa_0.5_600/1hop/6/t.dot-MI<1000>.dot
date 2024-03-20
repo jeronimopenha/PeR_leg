@@ -1,0 +1,9 @@
+digraph g {
+0 [label = a;op = ;]
+1 [label = b;op = ;]
+2 [label = c;op = ;]
+3 [label = d;op = ;]
+0 -> 1 [port=0; weight=1;]
+0 -> 2 [port=0; weight=0;]
+2 -> 3 [port=0; weight=1;]
+}
