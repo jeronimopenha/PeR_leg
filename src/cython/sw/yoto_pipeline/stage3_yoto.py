@@ -1,5 +1,5 @@
-from src.python.util.per_enum import ArchType
-from src.python.util.util import Util
+from src.cython.util.per_enum import ArchType
+from src.cython.util.util import Util
 
 
 class Stage3YOTO(object):

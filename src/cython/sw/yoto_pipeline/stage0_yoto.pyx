@@ -1,9 +1,13 @@
+#cython: language_level=3, boundscheck=False, wraparound=False
+import cython
+
+
 class Stage0YOTO(object):
     """
     This class is responsible to generate the edges sections for each thread.
     """
 
-    def __init__(self, n_threads: int, n_edges: int, len_pipeline: int):
+    def __init__(self, n_threads: cython.int, n_edges: cython.int, len_pipeline: cython.int):
         """
 
         @param n_threads:
@@ -13,17 +17,17 @@ class Stage0YOTO(object):
         @param len_pipeline:
         @type len_pipeline:
         """
-        self.len_pipeline: int = len_pipeline
-        self.n_threads: int = n_threads
-        self.n_edges: int = n_edges
-        self.edge_counter: list[int] = [0 for _ in range(self.len_pipeline)]
-        self.exec_counter: list[int] = [0 for _ in range(self.len_pipeline)]
+        self.len_pipeline: cython.int = len_pipeline
+        self.n_threads: cython.int = n_threads
+        self.n_edges: cython.int = n_edges
+        self.edge_counter: list[cython.int] = [0 for _ in range(self.len_pipeline)]
+        self.exec_counter: list[cython.int] = [0 for _ in range(self.len_pipeline)]
         self.total_pipeline_counter: int = 0
 
-        self.thread_valid: list[bool] = [True if i < self.n_threads else False for i in range(self.len_pipeline)]
-        self.thread_done: list[bool] = [False if i < self.n_threads else True for i in range(self.len_pipeline)]
-        self.th_idx: int = 0
-        self.done: bool = False
+        self.thread_valid: list[cython.bint] = [True if i < self.n_threads else False for i in range(self.len_pipeline)]
+        self.thread_done: list[cython.bint] = [False if i < self.n_threads else True for i in range(self.len_pipeline)]
+        self.th_idx: cython.int = 0
+        self.done: cython.bint = False
 
         self.new_output: dict = {
             'th_idx': 0,
@@ -46,12 +50,12 @@ class Stage0YOTO(object):
         self.old_output = self.new_output.copy()
 
         # return update
-        st4_place: bool = st4_input['place']
+        st4_place: cython.bint = st4_input['place']
 
-        st0_edg_n: int = st0_input['edg_n']
-        st0_th_idx: int = st0_input['th_idx']
-        st0_th_valid: int = st0_input['th_valid']
-        st0_incr_edge: int = st0_input['incr_edge']
+        st0_edg_n: cython.int = st0_input['edg_n']
+        st0_th_idx: cython.int = st0_input['th_idx']
+        st0_th_valid: cython.bint = st0_input['th_valid']
+        st0_incr_edge: cython.bint = st0_input['incr_edge']
 
         if st0_incr_edge:
             self.edge_counter[st0_th_idx] = st0_edg_n
@@ -61,7 +65,7 @@ class Stage0YOTO(object):
         self.total_pipeline_counter += 1
 
         # process the new output
-        th_idx: int = self.th_idx
+        th_idx: cython.int = self.th_idx
 
         # increment the thread index
         self.th_idx = th_idx + 1 if th_idx + 1 < self.len_pipeline else 0
@@ -78,9 +82,9 @@ class Stage0YOTO(object):
                 self.done = False
                 break
 
-        incr_edge = st4_place
-        edge_n: int = self.edge_counter[th_idx] if not st4_place else self.edge_counter[th_idx] + 1
-        th_valid: int = self.thread_valid[th_idx]
+        incr_edge: cython.bint = st4_place
+        edge_n: cython.int = self.edge_counter[th_idx] if not st4_place else self.edge_counter[th_idx] + 1
+        th_valid: cython.bint = self.thread_valid[th_idx]
 
         self.new_output = {
             'th_idx': th_idx,

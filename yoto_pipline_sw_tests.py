@@ -1,6 +1,7 @@
 import os
 import time
 
+import src.cython.util.per_enum
 from src.python.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSw
 from src.cython.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSwOpt
 from src.python.util.per_graph import PeRGraph
@@ -10,9 +11,10 @@ from src.python.util.util import Util
 
 def run_connected_graphs():
     threads_per_copy: int = 6
-    total_threads: int = 600
+    total_threads: int = 60
     random_seed: int = 0
     arch_type: ArchType = ArchType.ONE_HOP
+    arch_type_opt = src.cython.util.per_enum.ArchType.ONE_HOP
     make_shuffle: bool = True
     distance_table_bits: int = 4
 
@@ -38,19 +40,20 @@ def run_connected_graphs():
 
         yoto_pipeline_sw = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
         start_p = time.time()
-        raw_report: dict = yoto_pipeline_sw.run_single(total_threads // threads_per_copy)
+        #raw_report: dict = yoto_pipeline_sw.run_single(total_threads // threads_per_copy)
         end_p = time.time()
         print(f'Pure Python execution: {end_p-start_p}sw')
 
-        yoto_pipeline_sw_opt = YotoPipelineSwOpt(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
+        per_graph_opt = src.cython.util.per_graph.PeRGraph(dot_path, dot_name)
+        yoto_pipeline_sw_opt = YotoPipelineSwOpt(per_graph_opt, arch_type_opt, distance_table_bits, make_shuffle, threads_per_copy, )
         start_o = time.time()
         raw_report: dict = yoto_pipeline_sw_opt.run_single(total_threads // threads_per_copy)
         end_o = time.time()
         print(f'Pure Python execution: {end_o - start_o}sw')
 
-        formatted_report = Util.get_formatted_report(raw_report)
+        #formatted_report = Util.get_formatted_report(raw_report)
         #Util.save_json(output_path, dot_name, formatted_report)
-        random_seed += 1
+        #random_seed += 1
 
 
 if __name__ == '__main__':
