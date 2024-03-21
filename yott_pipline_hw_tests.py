@@ -18,7 +18,7 @@ def run_connected_graphs():
     simul = True
 
     root_path: str = Util.get_project_root()
-    dot_path_base = root_path + '/dot_db/'
+    dot_path_base = root_path + '/benchmarks/'
     dot_connected_path = dot_path_base + 'connected/'
 
     report_path_base = os.getcwd() + '/reports/sw/yott/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)
@@ -36,8 +36,9 @@ def run_connected_graphs():
         per_graph = PeRGraph(dot_path, dot_name)
         print(per_graph.dot_name)
         yott_pipeline_hw = YottPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
-        yott_pipeline_hw.create_yott_pipeline_hw().to_verilog('synth.v')
-        #yott_pipeline_hw.create_yott_pipeline_hw_test_bench(verilog_path_base, True)
+        #yott_pipeline_hw.create_manhattan_dist_table().to_verilog('synth.v')
+        yott_pipeline_hw.create_yott_pipeline_hw('','', '', '', '', '', True).to_verilog('synth.v')
+        # yott_pipeline_hw.create_yott_pipeline_hw_test_bench(verilog_path_base, True)
         '''raw_report: dict = yott_pipeline_hw.run(total_threads // threads_per_copy)
         formatted_report = Util.get_formatted_report(raw_report)
         Util.save_json(output_path, dot_name, formatted_report)'''
