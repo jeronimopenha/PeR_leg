@@ -35,7 +35,7 @@ digraph g {
 6 -> 0 [port=0; weight=0;]
 6 -> 1 [port=0; weight=0;]
 7 -> 21 [port=0; weight=0;]
-8 -> 17 [port=0; weight=1;]
+8 -> 17 [port=0; weight=0;]
 9 -> 22 [port=0; weight=0;]
 10 -> 20 [port=0; weight=0;]
 11 -> 8 [port=0; weight=0;]

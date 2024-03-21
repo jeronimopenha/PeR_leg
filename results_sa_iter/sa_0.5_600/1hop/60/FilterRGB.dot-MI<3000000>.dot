@@ -160,7 +160,7 @@ digraph g {
 64 -> 22 [port=0; weight=0;]
 65 -> 35 [port=1; weight=0;]
 66 -> 36 [port=1; weight=0;]
-67 -> 70 [port=0; weight=1;]
+67 -> 70 [port=0; weight=0;]
 68 -> 13 [port=0; weight=0;]
 69 -> 38 [port=0; weight=0;]
 70 -> 38 [port=1; weight=0;]

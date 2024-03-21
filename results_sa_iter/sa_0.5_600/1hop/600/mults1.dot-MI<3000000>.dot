@@ -49,5 +49,5 @@ digraph g {
 20 -> 12 [port=0; weight=0;]
 21 -> 14 [port=0; weight=0;]
 22 -> 23 [port=0; weight=0;]
-23 -> 16 [port=0; weight=0;]
+23 -> 16 [port=0; weight=1;]
 }

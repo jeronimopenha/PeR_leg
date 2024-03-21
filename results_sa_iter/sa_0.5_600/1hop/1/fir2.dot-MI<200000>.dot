@@ -66,7 +66,7 @@ digraph g {
 24 -> 31 [port=1; weight=0;]
 25 -> 32 [port=0; weight=0;]
 26 -> 33 [port=0; weight=0;]
-27 -> 34 [port=0; weight=1;]
+27 -> 34 [port=0; weight=0;]
 28 -> 35 [port=0; weight=0;]
 29 -> 36 [port=0; weight=0;]
 30 -> 37 [port=0; weight=0;]
