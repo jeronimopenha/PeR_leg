@@ -2,6 +2,7 @@
 #define CPP_UTIL_SA_HLS_H
 
 #include <cmath>
+#include "defines_sa_hls.hpp"
 #include "ap_int.h"
 
 void get_line_column_from_cell(ap_int<8> cell, ap_int<8> n_lines, ap_int<8> n_columns, ap_int<8> &line, ap_int<8> &column);

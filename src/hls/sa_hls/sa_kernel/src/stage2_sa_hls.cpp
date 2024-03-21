@@ -1,7 +1,14 @@
 #include "stage2_sa_hls.hpp"
 
+#ifdef ARRAY_INLINE
 void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
+#else
+void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> **neighbors)
+#endif
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
 
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
@@ -9,14 +16,15 @@ void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
     m_old_output.cell_b = m_new_output.cell_b;
     m_old_output.node_a = m_new_output.node_a;
     m_old_output.node_b = m_new_output.node_b;
-    m_old_output.va[0] = m_new_output.va[0];
-    m_old_output.va[1] = m_new_output.va[1];
-    m_old_output.va[2] = m_new_output.va[2];
-    m_old_output.va[3] = m_new_output.va[3];
-    m_old_output.vb[0] = m_new_output.vb[0];
-    m_old_output.vb[1] = m_new_output.vb[1];
-    m_old_output.vb[2] = m_new_output.vb[2];
-    m_old_output.vb[3] = m_new_output.vb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_old_output.va[i] = m_new_output.va[i];
+        m_old_output.vb[i] = m_new_output.vb[i];
+    }
+
     m_old_output.sw.th_idx = m_new_output.sw.th_idx;
     m_old_output.sw.th_valid = m_new_output.sw.th_valid;
     m_old_output.sw.sw = m_new_output.sw.sw;
@@ -49,25 +57,37 @@ void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
     ap_int<8> va[N_NEIGH] = {-1, -1, -1, -1};
     ap_int<8> vb[N_NEIGH] = {-1, -1, -1, -1};
 
-    if (st1_th_idx == 0 && st1_th_valid)
-    {
-        ap_int<8> a = 1;
-    }
-
     if (st1_node_a != -1)
     {
         for (ap_int<8> n = 0; n < N_NEIGH; ++n)
         {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+
+#ifdef ARRAY_INLINE
             ap_int<8> idx = (st1_node_a * N_NEIGH) + n;
             va[n] = neighbors[idx];
+#else
+            va[n] = neighbors[st1_node_a][n];
+#endif
         }
     }
+    
     if (st1_node_b != -1)
     {
-        for (ap_int<8> n = 0; n < 4; ++n)
+        for (ap_int<8> n = 0; n < N_NEIGH; ++n)
         {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+
+#ifdef ARRAY_INLINE
             ap_int<8> idx = (st1_node_b * N_NEIGH) + n;
             vb[n] = neighbors[idx];
+#else
+            vb[n] = neighbors[st1_node_b][n];
+#endif
         }
     }
     m_new_output.th_idx = st1_th_idx;
@@ -76,14 +96,14 @@ void Stage2SaHls::compute(ST1_OUT st1_input, ap_int<8> *neighbors)
     m_new_output.cell_b = st1_cell_b;
     m_new_output.node_a = st1_node_a;
     m_new_output.node_b = st1_node_b;
-    m_new_output.va[0] = va[0];
-    m_new_output.va[1] = va[1];
-    m_new_output.va[2] = va[2];
-    m_new_output.va[3] = va[3];
-    m_new_output.vb[0] = vb[0];
-    m_new_output.vb[1] = vb[1];
-    m_new_output.vb[2] = vb[2];
-    m_new_output.vb[3] = vb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_new_output.va[i] = va[i];
+        m_new_output.vb[i] = vb[i];
+    }
     m_new_output.sw.th_idx = st1_sw.th_idx;
     m_new_output.sw.th_valid = st1_sw.th_valid;
     m_new_output.sw.sw = st1_sw.sw;

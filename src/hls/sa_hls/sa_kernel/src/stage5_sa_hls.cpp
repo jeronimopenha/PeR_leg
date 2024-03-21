@@ -2,30 +2,33 @@
 
 void Stage5SaHls::compute(ST4_OUT st4_input)
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
+
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
-    m_old_output.dvac[0] = m_new_output.dvac[0];
-    m_old_output.dvac[1] = m_new_output.dvac[1];
-    m_old_output.dvbc[0] = m_new_output.dvbc[0];
-    m_old_output.dvbc[1] = m_new_output.dvbc[1];
-    m_old_output.dvas[0] = m_new_output.dvas[0];
-    m_old_output.dvas[1] = m_new_output.dvas[1];
-    m_old_output.dvas[2] = m_new_output.dvas[2];
-    m_old_output.dvas[3] = m_new_output.dvas[3];
-    m_old_output.dvbs[0] = m_new_output.dvbs[0];
-    m_old_output.dvbs[1] = m_new_output.dvbs[1];
-    m_old_output.dvbs[2] = m_new_output.dvbs[2];
-    m_old_output.dvbs[3] = m_new_output.dvbs[3];
+    for (ap_int<8> i = 0; i < N_NEIGH / 2; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_old_output.dvac[i] = m_new_output.dvac[i];
+        m_old_output.dvbc[i] = m_new_output.dvbc[i];
+    }
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_old_output.dvas[i] = m_new_output.dvas[i];
+        m_old_output.dvbs[i] = m_new_output.dvbs[i];
+    }
 
     ap_int<8> st4_th_idx = st4_input.th_idx;
     bool st4_th_valid = st4_input.th_valid;
     ap_int<8> st4_cbs = st4_input.cell_a;
     ap_int<8> st4_cas = st4_input.cell_b;
-
-    if (st4_th_idx == 0 && st4_th_valid)
-    {
-        ap_int<8> a = 1;
-    }
 
     ap_int<8> dvac[2] = {st4_input.dvac[0] + st4_input.dvac[1], st4_input.dvac[2] + st4_input.dvac[3]};
     ap_int<8> dvbc[2] = {st4_input.dvbc[0] + st4_input.dvbc[1], st4_input.dvbc[2] + st4_input.dvbc[3]};
@@ -35,6 +38,9 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
 
     for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
         ap_int<8> i1, i2, j1, j2;
 
         if (st4_input.cva[n] != -1)
@@ -76,16 +82,20 @@ void Stage5SaHls::compute(ST4_OUT st4_input)
 
     m_new_output.th_idx = st4_th_idx;
     m_new_output.th_valid = st4_th_valid;
-    m_new_output.dvac[0] = dvac[0];
-    m_new_output.dvac[1] = dvac[1];
-    m_new_output.dvbc[0] = dvbc[0];
-    m_new_output.dvbc[1] = dvbc[1];
-    m_new_output.dvas[0] = dvas[0];
-    m_new_output.dvas[1] = dvas[1];
-    m_new_output.dvas[2] = dvas[2];
-    m_new_output.dvas[3] = dvas[3];
-    m_new_output.dvbs[0] = dvbs[0];
-    m_new_output.dvbs[1] = dvbs[1];
-    m_new_output.dvbs[2] = dvbs[2];
-    m_new_output.dvbs[3] = dvbs[3];
+    for (ap_int<8> i = 0; i < N_NEIGH / 2; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_new_output.dvac[i] = dvac[i];
+        m_new_output.dvbc[i] = dvbc[i];
+    }
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_new_output.dvas[i] = dvas[i];
+        m_new_output.dvbs[i] = dvbs[i];
+    }
 }

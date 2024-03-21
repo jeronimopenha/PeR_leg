@@ -3,26 +3,36 @@
 Stage3SaHls::Stage3SaHls()
 {
     m_flag = true;
+#ifdef ARRAY_INLINE
     for (ap_int<8> i = 0; i < N_THREADS; i++)
     {
         m_th_idx_offset[i] = i * N_CELLS;
     }
+#endif
 }
 
-void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8> exec_offset)
+#ifdef ARRAY_INLINE
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c)
+#else
+void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> **n2c)
+#endif
 {
+#ifdef PRAGMAS
+#pragma HLS inline
+#endif
+
     m_old_output.th_idx = m_new_output.th_idx;
     m_old_output.th_valid = m_new_output.th_valid;
     m_old_output.cell_a = m_new_output.cell_a;
     m_old_output.cell_b = m_new_output.cell_b;
-    m_old_output.cva[0] = m_new_output.cva[0];
-    m_old_output.cva[1] = m_new_output.cva[1];
-    m_old_output.cva[2] = m_new_output.cva[2];
-    m_old_output.cva[3] = m_new_output.cva[3];
-    m_old_output.cvb[0] = m_new_output.cvb[0];
-    m_old_output.cvb[1] = m_new_output.cvb[1];
-    m_old_output.cvb[2] = m_new_output.cvb[2];
-    m_old_output.cvb[3] = m_new_output.cvb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_old_output.cva[i] = m_new_output.cva[i];
+        m_old_output.cvb[i] = m_new_output.cvb[i];
+    }
     m_old_output.sw.th_idx = m_new_output.sw.th_idx;
     m_old_output.sw.th_valid = m_new_output.sw.th_valid;
     m_old_output.sw.sw = m_new_output.sw.sw;
@@ -52,11 +62,6 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
     st2_wb.cell = st2_input.wb.cell;
     st2_wb.node = st2_input.wb.node;
 
-    if (st2_th_idx == 0 && st2_th_valid)
-    {
-        ap_int<8> a = 1;
-    }
-
     bool usw = m_new_output.sw.sw;
     W uwa{};
     W uwb{};
@@ -73,20 +78,27 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
         {
             if (uwa.node != -1)
             {
-                ap_int<8> idx = exec_offset + m_th_idx_offset[uwa.th_idx] + uwa.node;
+#ifdef ARRAY_INLINE
+                ap_int<8> idx = m_th_idx_offset[uwa.th_idx] + uwa.node;
                 n2c[idx] = uwa.cell;
+#else
+                n2c[uwa.th_idx][uwa.node] = uwa.cell;
+#endif
             }
-            m_flag = !m_flag;
         }
         else
         {
             if (uwb.node != -1)
             {
-                ap_int<8> idx = exec_offset + m_th_idx_offset[uwb.th_idx] + uwb.node;
+#ifdef ARRAY_INLINE
+                ap_int<8> idx = m_th_idx_offset[uwb.th_idx] + uwb.node;
                 n2c[idx] = uwb.cell;
+#else
+                n2c[uwb.th_idx][uwb.node] = uwb.cell;
+#endif
             }
-            m_flag = !m_flag;
         }
+        m_flag = !m_flag;
     }
 
     ap_int<8> cva[N_NEIGH] = {-1, -1, -1, -1};
@@ -94,15 +106,27 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
 
     for (ap_int<8> n = 0; n < N_NEIGH; ++n)
     {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
         if (st2_va[n] != -1)
         {
-            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_va[n];
-            cva[n] = n2c[idx];
+#ifdef ARRAY_INLINE
+            ap_int<8> idx = m_th_idx_offset[st2_th_idx] + st2_va[n];
+            if (n == 0)
+                cva[n] = n2c[idx];
+#else
+            cva[n] = n2c[st2_th_idx][st2_va[n]];
+#endif
         }
         if (st2_vb[n] != -1)
         {
-            ap_int<8> idx = exec_offset + m_th_idx_offset[st2_th_idx] + st2_vb[n];
+#ifdef ARRAY_INLINE
+            ap_int<8> idx = m_th_idx_offset[st2_th_idx] + st2_vb[n];
             cvb[n] = n2c[idx];
+#else
+            cvb[n] = n2c[st2_th_idx][st2_vb[n]];
+#endif
         }
     }
 
@@ -110,14 +134,15 @@ void Stage3SaHls::compute(ST2_OUT st2_input, W st3_wb, ap_int<8> *n2c, ap_int<8>
     m_new_output.th_valid = st2_th_valid;
     m_new_output.cell_a = st2_cell_a;
     m_new_output.cell_b = st2_cell_b;
-    m_new_output.cva[0] = cva[0];
-    m_new_output.cva[1] = cva[1];
-    m_new_output.cva[2] = cva[2];
-    m_new_output.cva[3] = cva[3];
-    m_new_output.cvb[0] = cvb[0];
-    m_new_output.cvb[1] = cvb[1];
-    m_new_output.cvb[2] = cvb[2];
-    m_new_output.cvb[3] = cvb[3];
+    for (ap_int<8> i = 0; i < N_NEIGH; i++)
+    {
+#ifdef PRAGMAS
+#pragma HLS unroll
+#endif
+        m_new_output.cva[i] = cva[i];
+        m_new_output.cvb[i] = cvb[i];
+    }
+
     m_new_output.sw.th_idx = st2_sw.th_idx;
     m_new_output.sw.th_valid = st2_sw.th_valid;
     m_new_output.sw.sw = st2_sw.sw;
