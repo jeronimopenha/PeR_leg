@@ -12,8 +12,6 @@ class Node:
         self.name: str = name
         self.in_queues: list[Queue] = []
         self.out_queues: list[Queue] = []
-        self.has_data: bool = False
-        self.exec_data: int = 0
 
     def get_n_in_queues(self) -> int:
         if self.in_queues:
@@ -26,56 +24,38 @@ class Node:
     def set_out_queue(self, queue: Queue):
         self.out_queues.append(queue)
 
-    def compute(self) -> bool:
-        ret_value: bool = False
-
-        if self.has_data:
-            # enqueue all outputs
-            for out_queue in self.out_queues:
-                out_queue.put(self.exec_data)
-            ret_value = True
-            self.has_data = False
-
+    def compute(self):
         # verify if inputs are ready to give data:
         for in_queue in self.in_queues:
             if in_queue.empty():
-                return ret_value
+                return
         # verify if outputs are ready to receive data:
         for out_queue in self.out_queues:
             if not out_queue.empty():
-                return ret_value
-
+                return
         # sum all inputs
-        self.exec_data = 0
-        self.has_data = True
+        exec_data = 0
         for in_queue in self.in_queues:
-            self.exec_data += in_queue.get()
-        return ret_value
+            exec_data += in_queue.get()
+            # enqueue all outputs
+        for out_queue in self.out_queues:
+            out_queue.put(exec_data)
 
 
 class InputNode(Node):
     def __init__(self, name: str, n_data: int):
         super().__init__(name)
         self.exec_data: int = 0
-        self.n_data: int = n_data
-        self.done: bool = False
 
-    def compute(self) -> bool:
-        ret_value: bool = False
-        if not self.done:
-            # verify if outputs are ready to receive data:
-            for out_queue in self.out_queues:
-                if not out_queue.empty():
-                    return ret_value
+    def compute(self):
+        # verify if outputs are ready to receive data:
+        for out_queue in self.out_queues:
+            if not out_queue.empty():
+                return
 
-            ret_value = True
-            for out_queue in self.out_queues:
-                out_queue.put(self.exec_data)
-
-            self.exec_data += 1
-            if self.exec_data >= self.n_data:
-                self.done = True
-        return ret_value
+        for out_queue in self.out_queues:
+            out_queue.put(self.exec_data)
+        self.exec_data += 1
 
 
 class OutputNode(Node):
@@ -83,62 +63,55 @@ class OutputNode(Node):
         super().__init__(name)
         self.data: list = []
 
-    def compute(self) -> bool:
+    def compute(self):
         # verify if inputs are ready to give data:
         for in_queue in self.in_queues:
             if in_queue.empty():
-                return False
-        # sum all inputs
+                return
+                # sum all inputs
         exec_data = 0
         for in_queue in self.in_queues:
             exec_data += in_queue.get()
         self.data.append(exec_data)
-        return True
 
 
 class DfSimulSw:
-    def __init__(self, per_graph: PeRGraph, output_base: str, n_data: int = 5000):
+    def __init__(self, per_graph: PeRGraph, n_data: int = 5000):
         self.per_graph: PeRGraph = per_graph
-        self.output_base: str = output_base
         self.n_data: int = n_data
         self.g_with_regs: nx.DiGraph = self.add_regs()
         self.input_nodes: list[InputNode] = []
         self.output_nodes: list[OutputNode] = []
         self.dataflow: list[list[Node]] = self.create_dataflow()
+        self.dataflow.reverse()
 
     def run_simulation(self) -> list:
-        input_nodes_done = False
-        df_break = False
-        counter_done = 0
+        df_done = False
         exec_counter = 0
 
-        while not df_break or not input_nodes_done or counter_done < 5:
-            df_break = True
+        while not df_done:
+            df_done = True
             for stage in self.dataflow:
                 for node in stage:
                     node_name = node.name
-                    if node.compute():
-                        df_break = False
-            input_nodes_done = True
-            for input_node in self.input_nodes:
-                if not input_node.done:
-                    input_nodes_done = False
+                    node.compute()
+            for output_node in self.output_nodes:
+                len_output: int = len(output_node.data)
+                if len_output < self.n_data:
+                    df_done = False
                     break
-            if df_break and input_nodes_done:
-                counter_done += 1
-            else:
-                counter_done = 0
             exec_counter += 1
-        assert (exec_counter >= self.n_data * 2)
         th: list = []
         for output_node in self.output_nodes:
-            th.append([output_node.name, len(output_node.data) / exec_counter * 2 * 100])
+            th.append([output_node.name, len(output_node.data) / exec_counter * 100])
         return th
 
     def add_regs(self) -> nx.DiGraph:
         df: nx.DiGraph = self.per_graph.g.copy()
         n_df: nx.DiGraph = df.copy()
         for edge in df.edges():
+            if 'weight' not in df.edges[edge].keys():
+                df.edges[edge]['weight'] = 0
             if int(df.edges[edge]['weight']) > 0:
                 # df.edges[edge]['label'] = df.edges[edge]['weight']
                 src = edge[0]
@@ -147,7 +120,6 @@ class DfSimulSw:
                 for r in range(int(df.edges[edge]['weight'])):
                     idx = '%s_%s' % edge + '_%d' % r
                     n_df.add_node(idx)
-                    nx.set_node_attributes(n_df, {idx: {'label': 'reg'}})
                     n_df.add_edge(src, idx)
                     nx.set_edge_attributes(n_df, {(src, idx): {'weight': 0}})
                     src = idx

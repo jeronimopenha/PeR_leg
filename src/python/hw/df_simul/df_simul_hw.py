@@ -4,7 +4,7 @@ from src.python.util.util import Util
 
 from src.python.util.per_graph import PeRGraph
 
-
+#FIXME - Troughput % error
 class DfSimulHw:
     def __init__(self, per_graph: PeRGraph, n_data: int = 5000):
         self.per_graph = per_graph
@@ -49,6 +49,9 @@ class DfSimulHw:
                     insert_output_nodes.add(node)
                 else:
                     df.nodes[node]['op'] = 'out'
+            elif df.in_degree(node) == 1:
+                df.nodes[node]['op'] = 'reg'
+
         new_df: nx.DiGraph = df.copy()
 
         for edge in df.edges():
@@ -137,7 +140,7 @@ class DfSimulHw:
 
         simulation.setup_clock(m, clk, hperiod=1)
         simulation.setup_reset(m, rst, period=1)
-        simulation.setup_waveform(m,dumpfile='uut.vcd')
+        simulation.setup_waveform(m, dumpfile='uut.vcd')
 
         i = m.Integer('i')
 
