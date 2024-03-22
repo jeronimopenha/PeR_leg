@@ -42,6 +42,7 @@ root_path: str = Util.get_project_root()
 #     print("Total time: " + str(end_time - start_time))
 
 th_worse, worse_path = Util.calc_worse_th_by_dot_file(
-    root_path + "/benchmarks/dot_simul/test_th_x.dot","test_th_x.dot")
+    # root_path + "/benchmarks/dot_simul/test_th_x.dot","test_th_x.dot")
+    root_path + '/benchmarks/dot_simul/test_th_y.dot', 'test_th_y.dot')
 print(th_worse)
 print(worse_path)

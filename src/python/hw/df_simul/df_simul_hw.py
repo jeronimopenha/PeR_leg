@@ -19,6 +19,7 @@ class DfSimulHw:
         sim = simulation.Simulator(self.test_bench, sim='iverilog')
         print('Starting simulation')
         rslt = sim.run(outputfile=self.output_file)
+        print(rslt)
         print('Simulation done')
 
         th = self.get_thoughputs(rslt)
@@ -136,7 +137,7 @@ class DfSimulHw:
 
         simulation.setup_clock(m, clk, hperiod=1)
         simulation.setup_reset(m, rst, period=1)
-        # simulation.setup_waveform(m)
+        simulation.setup_waveform(m,dumpfile='uut.vcd')
 
         i = m.Integer('i')
 
@@ -149,8 +150,8 @@ class DfSimulHw:
                 For(i(0), i < n_out, i.inc())(
                     Display(self.per_graph.dot_name.replace(".", "_") + " throughput: %d : %5.2f%%", i,
                             Mul(100.0, (count_consumer[i] / (count_clock / 4.0)))),
-
                 ),
+                Display("%d d_in, %d d_out, %d clk", count_producer[0], count_consumer[0], count_clock),
                 Finish()
             )
         )

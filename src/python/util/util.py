@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import networkx as nx
 
+from src.python.sw.df_simul.df_simul_sw import DfSimulSw
 from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph
 
@@ -815,7 +816,7 @@ class Util:
 
         print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
-        df_simul = DfSimulHw(per_graph)
+        df_simul = DfSimulSw(per_graph,'')
         ths: list = df_simul.run_simulation()
 
 

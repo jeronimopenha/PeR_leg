@@ -7,11 +7,10 @@ from src.python.util.util import Util
 import networkx as nx
 
 root_path: str = Util.get_project_root()
-dir_json = ["yoto/yoto_pipeline/","yott/yott_pipeline/"]
-dir_dots = ["yoto_dot/yoto_pipeline/","yott_dot/yott_pipeline/"]
+dir_json = ["yoto/yoto_pipeline/", "yott/yott_pipeline/"]
+dir_dots = ["yoto_dot/yoto_pipeline/", "yott_dot/yott_pipeline/"]
 
-
-def run_simul_graphs():
+'''def run_simul_graphs():
     for i,algorithm_dir in enumerate(dir_dots):
         partial_path = root_path+'/reports/sw/'+algorithm_dir
         for t in os.listdir(partial_path):
@@ -37,13 +36,14 @@ if __name__ == '__main__':
     start_time = time.time()
     run_simul_graphs()
     end_time = time.time()
-    print("Total time: " + str(end_time - start_time))
+    print("Total time: " + str(end_time - start_time))'''
 
-# th_worse, worse_path = Util.calc_worse_th_by_dot_file(
-#     # root_path + "/benchmarks/dot_simul/test_th_x.dot", "test_th_x.dot")
-#     # root_path + '/benchmarks/dot_simul/test_simul_40.dot', "test_simul_40.dot")
-#     # root_path + '/benchmarks/dot_simul/test_simul_optimal.dot', 'test_simul_optimal.dot')
-#     # root_path + '/benchmarks/dot_simul/arf_w1.dot', 'arf_w1.dot')
-#     root_path + '/benchmarks/dot_simul/test_th_x.dot', 'test_th_x.dot')
+th_worse, worse_path = Util.calc_worse_th_by_dot_file(
+    #     # root_path + "/benchmarks/dot_simul/test_th_x.dot", "test_th_x.dot")
+    #     # root_path + '/benchmarks/dot_simul/test_simul_40.dot', "test_simul_40.dot")
+    #     # root_path + '/benchmarks/dot_simul/test_simul_optimal.dot', 'test_simul_optimal.dot')
+    #     # root_path + '/benchmarks/dot_simul/arf_w1.dot', 'arf_w1.dot')
+    # root_path + '/benchmarks/dot_simul/test_th_0_jer.dot', 'test_th_0_jer.dot')
+    root_path + '/benchmarks/dot_simul/test_th_y.dot', 'test_th_y.dot')
 # print(th_worse)
 # print(worse_path)
