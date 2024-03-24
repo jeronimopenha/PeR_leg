@@ -70,12 +70,12 @@
         "add9": 9,
         "const10": 10
     },
-    "th": 85.6750964423489,
+    "th": 74.9288176232579,
     "path_th": [
         "const10",
         "add9",
-        "mul0",
-        "load2",
+        "mul3",
+        "load5",
         "mul6",
         "add7",
         "output8"

@@ -325,7 +325,7 @@
         "reg12": 82,
         "reg8": 83
     },
-    "th": 62.39529941242655,
+    "th": 45.343248390314685,
     "path_th": [
         "rgb",
         "copyshr_r",
@@ -337,7 +337,7 @@
         "sub_r1",
         "merge_r",
         "copymux_r0",
-        "lt_r",
+        "reg7",
         "mux_r0",
         "copymux_r1",
         "gt_r",

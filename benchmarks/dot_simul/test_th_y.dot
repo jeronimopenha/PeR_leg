@@ -6,5 +6,5 @@ strict digraph "test_th_y" {
 0 -> 1 ;
 1 -> 2;
 2 -> 3 ;
-0 -> 3 ;
+0 -> 3 [weight=1] ;
 }
