@@ -53,7 +53,7 @@ class YOTTMC0Pipeline(PiplineBase):
             exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC0", n_copies, reports)
         # print()
         return report
 
@@ -139,7 +139,7 @@ class YOTTMC0Pipeline(PiplineBase):
                 exec_key: str = 'exec_%d' % exec_num
                 reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
                 
-        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC0", n_copies, reports)
         return report
 
     def exec_pipeline(self, exec_key: int, dic_man,c2n = None,

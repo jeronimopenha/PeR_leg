@@ -1,11 +1,11 @@
 from copy import deepcopy
-from math import ceil
+import math
 import os
 import time
 import multiprocessing as mp
-from src.python.sw.yott_pipeline.X.stage0_yott_x import Stage0YOTTX
 from src.python.util.per_graph import PeRGraph
 from src.python.sw.yott_pipeline.FIFOQueue import FIFOQueue
+from src.python.sw.yott_pipeline.stage0_yott import Stage0YOTT
 from src.python.sw.yott_pipeline.stage1_yott import Stage1YOTT
 from src.python.sw.yott_pipeline.stage2_yott import Stage2YOTT
 from src.python.sw.yott_pipeline.stage3_yott import Stage3YOTT
@@ -19,7 +19,7 @@ from src.python.util.piplinebase import PiplineBase
 from src.python.util.util import Util
 
 
-class YOTTXPipeline(PiplineBase):
+class YOTTMCPipeline(PiplineBase):
     len_pipeline = 10
 
     def __init__(self, per_graph: PeRGraph, arch_type, distance_table_bits, make_shuffle, limiar, num_annotations: int = 3,
@@ -53,37 +53,91 @@ class YOTTXPipeline(PiplineBase):
             exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
             exec_key: str = 'exec_%d' % exec_num
             reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-X", n_copies, reports)
+        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
         # print()
         return report
 
     def run_single(self, n_copies: int = 1) -> dict:
+        best_n2c = None
+        best_c2n= None
+        best_dist = 999999
+        edges_best_th = None
+        annots_best_th = None
+        best_exec = 0
         dic_man = {}
         reports: dict = {}
+    
+        last_idx_edges = math.floor(self.limiar*self.per_graph.n_nodes ) - 1
         for exec_num in range(n_copies):
-            self.exec_pipeline(exec_num, dic_man)
-        
+            calc = (exec_num+1)/n_copies
+            if exec_num == 0:
+                n2c_temp,c2n_temp,threads_edges,annotations,dist = self.exec_pipeline(exec_num, dic_man)
+
+            else:
+                print(best_c2n)
+                input()
+                copy_best_n2c = deepcopy(best_n2c)
+                copy_best_c2n = deepcopy(best_c2n)
+                for (a,b) in edges_best_th[last_idx_edges:]:
+                    cell = best_n2c[b]
+                    copy_best_n2c[b] = [None,None]
+                    copy_best_c2n[cell[0]][cell[1]] = None
+                new_c2n = [None for _ in range(self.len_pipeline)]
+                new_n2c = [None for _ in range(self.len_pipeline)]
+
+                for th in range(self.len_pipeline):
+                    new_c2n[th] = deepcopy(copy_best_c2n)
+                    new_n2c[th] = deepcopy(copy_best_n2c)
+                print(new_c2n[0])
+                input()
+
+
+
+                n2c_temp,c2n_temp,threads_edges,annotations,dist = self.exec_pipeline(exec_num, dic_man,new_c2n,
+                                                                                      new_n2c,
+                                                                                      [last_idx_edges for _ in range(self.len_pipeline)],
+                                                                                      [annots_best_th for _ in range(self.len_pipeline)],
+                                                                                      [edges_best_th for _ in range(self.len_pipeline)]
+                                                                                      )
+            if dist < best_dist:
+                best_dist = dist
+                best_n2c = n2c_temp
+                best_c2n = c2n_temp
+                edges_best_th = threads_edges
+                annots_best_th = annotations
+
             for k in dic_man.keys():
                 exec_num, total_pipeline_counter, exec_counter, n2c = dic_man[k]
                 exec_key: str = 'exec_%d' % exec_num
                 reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
-        report: dict = Util.create_report(self, "YOTT-X", n_copies, reports)
-        # print()
+                
+        report: dict = Util.create_report(self, "YOTT-MC", n_copies, reports)
         return report
 
-    def exec_pipeline(self, exec_key: int, dic_man):
+    def exec_pipeline(self, exec_key: int, dic_man,c2n = None,
+                      n2c =  None, edge_index = None, annotations = None,itl = None):
         pid = os.getpid()
         # print(f'thread: {pid} starting')
+        if c2n == None:
+            first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
+            n2c, c2n = self.init_traversal_placement_tables(first_nodes)
 
-        first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
-        n2c, c2n = self.init_traversal_placement_tables(first_nodes)
+            for i, th_annot in enumerate(self.annotations.copy()):
+                self.annotations[i] = Util.clear_invalid_annotations(th_annot)
 
-        for i, th_annot in enumerate(self.annotations.copy()):
-            self.annotations[i] = Util.clear_invalid_annotations(th_annot)
+            edges = self.edges_int
+            annots = self.annotations
+        else:
+            edges = itl
+            annots = annotations
+            n2c = n2c
+            c2n = c2n
 
-        stage0 = Stage0YOTTX(FIFOQueue(self.n_threads), self.len_pipeline, self.n_threads, self.per_graph.n_nodes)
+        stage0 = Stage0YOTT(FIFOQueue(self.n_threads), self.len_pipeline)
         stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
-        stage2 = Stage2YOTT(self.edges_int, self.per_graph, self.annotations, self.n_threads,
+        if edge_index != None:
+            stage1.edges_indexes = edge_index
+        stage2 = Stage2YOTT(edges, self.per_graph, annots, self.n_threads,
                             self.distance_table_bits)
         stage3 = Stage3YOTT(self.len_pipeline, n2c)
         stage4 = Stage4YOTT(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
@@ -95,47 +149,9 @@ class YOTTXPipeline(PiplineBase):
 
         counter = 0
         while not stage1.done:
-            print(stage1.done)
-            should_get_photo = all(int(ceil(self.limiar*self.per_graph.n_nodes)) == n_placed_nodes_th if i < self.n_threads 
-                                   else True for i,n_placed_nodes_th in enumerate(stage0.th_count_placed_vertexes))
-            if should_get_photo:
-                best_th,_ = Util.find_thread_with_best_placement(self,stage3.n2c)
-                best_c2n = stage7.c2n[best_th]
-                best_n2c = stage3.n2c[best_th]
-                new_c2n = deepcopy(stage7.c2n)
-                new_n2c = deepcopy(stage3.n2c)
-
-                for th in range(self.len_pipeline):
-                    new_c2n[th] = deepcopy(best_c2n)
-                    new_n2c[th] = deepcopy(best_n2c)
-
-                edge_index = stage1.edges_indexes[best_th]
-                n_placed_vertexes = stage0.th_count_placed_vertexes[0]
-                
-                self.limiar = 1.01
-
-                stage0.fifo = FIFOQueue(self.n_threads)
-
-                stage0 = Stage0YOTTX(FIFOQueue(self.n_threads), self.len_pipeline, self.n_threads, self.per_graph.n_nodes)
-                stage0.th_count_placed_vertexes = [n_placed_vertexes if i < self.n_threads else self.per_graph.n_nodes for i in range(self.len_pipeline)]
-                stage1 = Stage1YOTT(self.len_pipeline, self.n_threads, self.len_edges)
-                stage1.edges_indexes = [edge_index if i < self.n_threads else 0 for i in range(self.len_pipeline)]
-                stage2 = Stage2YOTT([stage2.threads_edges[best_th] for _ in range(self.len_pipeline)], 
-                                    self.per_graph, [stage2.annotations[best_th] for _ in range(self.len_pipeline)], 
-                                    self.n_threads,
-                                    self.distance_table_bits)
-                stage3 = Stage3YOTT(self.len_pipeline, new_n2c)
-                stage4 = Stage4YOTT(self.arch_type, self.n_lines, self.distance_table_bits, self.make_shuffle)
-                stage5 = Stage5YOTT(self.arch_type)
-                stage6 = Stage6YOTT(self.arch_type)
-                stage7 = Stage7YOTT(self.n_lines, self.len_pipeline, new_c2n)
-                stage8 = Stage8YOTT()
-                stage9 = Stage9YOTT(self.len_pipeline)
-            # if s:
-            #     print('a')
-        
+    
             # print(stage6.old_output_stage3)
-            stage0.compute(self.limiar)
+            stage0.compute()
             # print(stage0.new_output)
             # print()
             # print(stage0.old_output)
@@ -178,6 +194,8 @@ class YOTTXPipeline(PiplineBase):
         
         dic_man[pid] = [exec_key, stage0.total_pipeline_counter, stage0.exec_counter, stage3.n2c]
         # print(f'thread: {pid} ending')
+        best_th,dist = Util.find_thread_with_best_placement(self,stage3.n2c)
+        return stage3.n2c[best_th],stage7.c2n[best_th],stage2.threads_edges[best_th],stage2.annotations[best_th],dist
 
     @staticmethod
     def print_grid(c2n):

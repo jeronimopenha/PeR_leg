@@ -1,0 +1,56 @@
+{
+    "graph_name": "my_graph.dot",
+    "algorithm": "YOTT-MC",
+    "arch_type": "MESH",
+    "total_edges": 6,
+    "visited_edges": 5,
+    "n_copies": 10,
+    "total_threads": 100,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "num_annotations": 3,
+    "method": "MC",
+    "limiar": "0.3",
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 0,
+    "exec_max_clk": 241,
+    "exec_min_clk": 161,
+    "exec_avg_clk": 215.2,
+    "th_max_clk": 24,
+    "th_min_clk": 6,
+    "th_avg_clk": 14.01,
+    "best_placement": [
+        [
+            -1,
+            -1,
+            -1
+        ],
+        [
+            3,
+            4,
+            5
+        ],
+        [
+            2,
+            1,
+            0
+        ]
+    ],
+    "th_placement_distances": {
+        "0_5": 1,
+        "5_4": 1,
+        "4_3": 1,
+        "3_2": 1,
+        "2_1": 1,
+        "1_0": 1
+    },
+    "nodes_dict": {
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5
+    }
+}
