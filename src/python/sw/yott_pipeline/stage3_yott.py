@@ -48,7 +48,7 @@ class Stage3YOTT:
         thread_index = out_previous_stage['thread_index']
         a = out_previous_stage['A']
         cs = out_previous_stage['Cs']
-        # Caso utilize mais anotacoes, em hardware sera necessario uma mmoria para cada 2 leituras
+        # Caso utilize mais anotacoes, em hardware sera necessario uma memoria para cada 2 leituras
         c_a = self.n2c[thread_index][a] if thread_valid == 1 else [0, 0]  # type:ignore
         cs_c = [self.n2c[thread_index][c] if c > -1 else [-1, -1] for c in cs]  # type:ignore
 

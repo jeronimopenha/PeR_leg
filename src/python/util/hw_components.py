@@ -149,8 +149,8 @@ class HwComponents:
         clk = m.Input('clk')
         rd = m.Input('rd')
         rd_addr = m.Input('rd_addr', depth)
-        # out = m.OutputReg('out', width)
-        out = m.Output('out', width)
+        out = m.OutputReg('out', width)
+        # out = m.Output('out', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
@@ -161,36 +161,36 @@ class HwComponents:
         mem = m.Reg('mem', width, Power(2, depth))
         m.EmbeddedCode('*/')
 
-        out.assign(mem[rd_addr])
+        # out.assign(mem[rd_addr])
 
         m.Always(Posedge(clk))(
             If(wr)(
                 mem[wr_addr](wr_data)
             ),
-
-        )
-        '''If(rd)(
-                        out(mem[rd_addr])
-                    ),'''
-        if simulate:
-            m.EmbeddedCode('//synthesis translate_off')
-        m.Always(Posedge(clk))(
-            If(AndList(wr, write_f))(
-                Systask('writememb', output_file, mem)
+            If(rd)(
+                out(mem[rd_addr])
             ),
         )
-        m.EmbeddedCode('//synthesis translate_on')
 
-        m.Initial(
-            If(read_f)(
-                Systask('readmemb', init_file, mem),
+        if simulate:
+            m.EmbeddedCode('//synthesis translate_off')
+            m.Always(Posedge(clk))(
+                If(AndList(wr, write_f))(
+                    Systask('writememb', output_file, mem)
+                ),
             )
-        )
+            m.EmbeddedCode('//synthesis translate_on')
+
+            m.Initial(
+                If(read_f)(
+                    Systask('readmemb', init_file, mem),
+                )
+            )
 
         self.cache[name] = m
         return m
 
-    def create_memory_2r_1w(self) -> Module:
+    def create_memory_2r_1w(self, simulate: bool = False) -> Module:
         name = 'mem_2r_1w'
         if name in self.cache.keys():
             return self.cache[name]
@@ -204,44 +204,48 @@ class HwComponents:
         output_file = m.Parameter('output_file', 'mem_out_file.txt')
 
         clk = m.Input('clk')
-        # rd = m.Input('rd')
+        rd = m.Input('rd')
         rd_addr0 = m.Input('rd_addr0', depth)
         rd_addr1 = m.Input('rd_addr1', depth)
-        out0 = m.Output('out0', width)
-        out1 = m.Output('out1', width)
+        out0 = m.OutputReg('out0', width)
+        out1 = m.OutputReg('out1', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
         wr_data = m.Input('wr_data', width)
 
-        # m.EmbeddedCode(
-        #    '(*rom_style = "block" *) reg [%d-1:0] mem[0:2**%d-1];' % (width, depth))
-        # m.EmbeddedCode('/*')
+        m.EmbeddedCode(f'(* ram_style = "M20K" *) reg [{width}-1:0] mem[0:2**{depth}-1];')
+        m.EmbeddedCode('/*')
         mem = m.Reg('mem', width, Power(2, depth))
-        # m.EmbeddedCode('*/')
+        m.EmbeddedCode('*/')
 
-        out0.assign(mem[rd_addr0])
-        out1.assign(mem[rd_addr1])
+        # out0.assign(mem[rd_addr0])
+        # out1.assign(mem[rd_addr1])
 
         m.Always(Posedge(clk))(
             If(wr)(
                 mem[wr_addr](wr_data)
             ),
-        )
-
-        m.EmbeddedCode('//synthesis translate_off')
-        m.Always(Posedge(clk))(
-            If(AndList(wr, write_f))(
-                Systask('writememb', output_file, mem)
+            If(rd)(
+                out0(mem[rd_addr0]),
+                out1(mem[rd_addr1]),
             ),
         )
-        m.EmbeddedCode('//synthesis translate_on')
 
-        m.Initial(
-            If(read_f)(
-                Systask('readmemb', init_file, mem),
+        if simulate:
+            m.EmbeddedCode('//synthesis translate_off')
+            m.Always(Posedge(clk))(
+                If(AndList(wr, write_f))(
+                    Systask('writememb', output_file, mem)
+                ),
             )
-        )
+            m.EmbeddedCode('//synthesis translate_on')
+
+            m.Initial(
+                If(read_f)(
+                    Systask('readmemb', init_file, mem),
+                )
+            )
 
         self.cache[name] = m
         return m
