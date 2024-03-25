@@ -6,7 +6,10 @@ module yoto_pipeline_hw
   input rst,
   input start,
   input [4-1:0] visited_edges,
-  output done
+  output done,
+  input st4_conf_wr,
+  input [9-1:0] st4_conf_addr,
+  input [6-1:0] st4_conf_data
 );
 
   // St0 wires
@@ -40,11 +43,18 @@ module yoto_pipeline_hw
   wire [4-1:0] st3_b;
   wire [12-1:0] st3_cs_c;
   wire [9-1:0] st3_dist_csb;
-  wire [4-1:0] st3_adj_index;
+  wire [6-1:0] st3_adj_index;
   wire [4-1:0] st3_index_list_edge;
   // -----
 
   // St4 wires
+  wire [4-1:0] st4_thread_index;
+  wire st4_thread_valid;
+  wire [4-1:0] st4_c_a;
+  wire [4-1:0] st4_b;
+  wire [8-1:0] st4_c_s;
+  wire [12-1:0] st4_cs_c;
+  wire [9-1:0] st4_dist_csb;
   // -----
 
   // St5 wires
@@ -157,6 +167,32 @@ module yoto_pipeline_hw
 
   // -----
   // St4 instantiation
+
+  stage4_yott
+  stage4_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st4_thread_index),
+    .thread_valid(st4_thread_valid),
+    .c_a(st4_c_a),
+    .b(st4_b),
+    .c_s(st4_c_s),
+    .cs_c(st4_cs_c),
+    .dist_csb(st4_dist_csb),
+    .st3_thread_index(st3_thread_index),
+    .st3_thread_valid(st3_thread_valid),
+    .st3_c_a(st3_c_a),
+    .st3_b(st3_b),
+    .st3_cs_c(st3_cs_c),
+    .st3_dist_csb(st3_dist_csb),
+    .st3_adj_index(st3_adj_index),
+    .st3_index_list_edge(st3_index_list_edge),
+    .conf_wr(st4_conf_wr),
+    .conf_addr(st4_conf_addr),
+    .conf_data(st4_conf_data)
+  );
+
   // -----
   // St5 instantiation
   // -----
@@ -398,6 +434,7 @@ module stage1_yott
         end
         if(done_flag) begin
           thread_done[st0_thread_index] <= 1'd1;
+          thread_valid <= 1'd0;
         end 
         if(&thread_done) begin
           done <= 1'd1;
@@ -569,7 +606,7 @@ module stage3_yott
   output reg [4-1:0] b,
   output reg [12-1:0] cs_c,
   output reg [9-1:0] dist_csb,
-  output reg [4-1:0] adj_index,
+  output reg [6-1:0] adj_index,
   output reg [4-1:0] index_list_edge,
   input [4-1:0] st9_thread_index,
   input [4-1:0] st9_thread_valid,
@@ -585,7 +622,7 @@ module stage3_yott
   output [4-1:0] conf_rd_data
 );
 
-  reg [4-1:0] thread_adj_indexes_r [0:10-1];
+  reg [6-1:0] thread_adj_indexes_r [0:10-1];
   wire [4-1:0] c_a_t;
   wire [12-1:0] cs_c_t;
 
@@ -597,7 +634,7 @@ module stage3_yott
       b <= 4'd0;
       cs_c <= 12'd0;
       dist_csb <= 9'd0;
-      adj_index <= 4'd0;
+      adj_index <= 6'd0;
       index_list_edge <= 4'd0;
     end else begin
       thread_index <= st2_thread_index;
@@ -610,10 +647,10 @@ module stage3_yott
       if(st2_thread_valid) begin
         adj_index <= thread_adj_indexes_r[st2_thread_index];
       end else begin
-        adj_index <= 4'd0;
+        adj_index <= 6'd0;
       end
       if(~s9_should_write && st9_thread_valid) begin
-        thread_adj_indexes_r[st9_thread_index] <= thread_adj_indexes_r[st9_thread_index] + 4'd1;
+        thread_adj_indexes_r[st9_thread_index] <= thread_adj_indexes_r[st9_thread_index] + 6'd1;
       end 
     end
   end
@@ -734,6 +771,89 @@ module mem_2r_1w #
       out0 <= mem[rd_addr0];
       out1 <= mem[rd_addr1];
     end 
+  end
+
+
+endmodule
+
+
+
+module stage4_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] c_a,
+  output reg [4-1:0] b,
+  output reg [8-1:0] c_s,
+  output reg [12-1:0] cs_c,
+  output reg [9-1:0] dist_csb,
+  input [4-1:0] st3_thread_index,
+  input st3_thread_valid,
+  input [4-1:0] st3_c_a,
+  input [4-1:0] st3_b,
+  input [12-1:0] st3_cs_c,
+  input [9-1:0] st3_dist_csb,
+  input [6-1:0] st3_adj_index,
+  input [4-1:0] st3_index_list_edge,
+  input conf_wr,
+  input [9-1:0] conf_addr,
+  input [6-1:0] conf_data
+);
+
+  wire [3-1:0] add_i_t;
+  wire [3-1:0] add_j_t;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 1'd0;
+      c_a <= 4'd0;
+      b <= 4'd0;
+      c_s <= 8'd0;
+      cs_c <= 12'd0;
+      dist_csb <= 9'd0;
+    end else begin
+      thread_index <= st3_thread_index;
+      thread_valid <= st3_thread_valid;
+      b <= st3_b;
+      cs_c <= st3_cs_c;
+      c_a <= st3_c_a;
+      dist_csb <= st3_dist_csb;
+      c_s[3:0] <= { 2'd0, st3_c_a[1:0] } + { add_i_t[2], add_i_t };
+      c_s[7:4] <= { 2'd0, st3_c_a[3:2] } + { add_j_t[2], add_j_t };
+    end
+  end
+
+
+  mem_1r_1w
+  #(
+    .width(6),
+    .depth(9),
+    .read_f(1),
+    .init_file("")
+  )
+  mem_1r_1w
+  (
+    .clk(clk),
+    .rd_addr({ st3_index_list_edge, st3_adj_index[4:0] }),
+    .out({ add_i_t, add_j_t }),
+    .rd(1'b1),
+    .wr(conf_wr),
+    .wr_addr(conf_addr),
+    .wr_data(conf_data)
+  );
+
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    c_a = 0;
+    b = 0;
+    c_s = 0;
+    cs_c = 0;
+    dist_csb = 0;
   end
 
 

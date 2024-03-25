@@ -54,6 +54,10 @@ class YottPipelineHw(PiplineBase):
         st4_conf_addr = m.Input('st4_conf_addr', self.th_bits + self.ij_bits * 2)
         st4_conf_data = m.Input('st4_conf_data')'''
 
+        st4_conf_wr = m.Input('st4_conf_wr')
+        st4_conf_addr = m.Input('st4_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        st4_conf_data = m.Input('st4_conf_data', (self.ij_bits + 1) * 2)
+
         m.EmbeddedCode('// St0 wires')
         st0_thread_index = m.Wire('st0_thread_index', self.th_bits)
         st0_thread_valid = m.Wire('st0_thread_valid')
@@ -88,13 +92,19 @@ class YottPipelineHw(PiplineBase):
         st3_b = m.Wire('st3_b', self.node_bits)
         st3_cs_c = m.Wire('st3_cs_c', self.ij_bits * 2 * 3)
         st3_dist_csb = m.Wire('st3_dist_csb', self.dist_bits * 3)
-        st3_adj_index = m.Wire('st3_adj_index', self.node_bits)
+        st3_adj_index = m.Wire('st3_adj_index', self.dst_counter_bits)
         st3_index_list_edge = m.Wire('st3_index_list_edge', self.distance_table_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St4 wires')
-
+        st4_thread_index = m.Wire('st4_thread_index', self.th_bits)
+        st4_thread_valid = m.Wire('st4_thread_valid')
+        st4_c_a = m.Wire('st4_c_a', self.ij_bits * 2)
+        st4_b = m.Wire('st4_b', self.node_bits)
+        st4_c_s = m.Wire('st4_c_s', (self.ij_bits + 2) * 2)
+        st4_cs_c = m.Wire('st4_cs_c', self.ij_bits * 2 * 3)
+        st4_dist_csb = m.Wire('st4_dist_csb', self.dist_bits * 3)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -191,37 +201,55 @@ class YottPipelineHw(PiplineBase):
             ('clk', clk),
             ('rst', rst),
             ('st2_thread_index', st2_thread_index),
-            ('st2_thread_valid',st2_thread_valid),
-            ('st2_a',st2_a),
-            ('st2_b',st2_b),
-            ('st2_cs',st2_cs),
-            ('st2_dist_csb',st2_dist_csb),
-            ('st2_index_list_edge',st2_index_list_edge),
+            ('st2_thread_valid', st2_thread_valid),
+            ('st2_a', st2_a),
+            ('st2_b', st2_b),
+            ('st2_cs', st2_cs),
+            ('st2_dist_csb', st2_dist_csb),
+            ('st2_index_list_edge', st2_index_list_edge),
             ('thread_index', st3_thread_index),
-            ('thread_valid',st3_thread_valid),
-            ('c_a',st3_c_a),
-            ('b',st3_b),
-            ('cs_c',st3_cs_c),
-            ('dist_csb',st3_dist_csb),
-            ('adj_index',st3_adj_index),
-            ('index_list_edge',st3_index_list_edge),
-            ('st9_thread_index',st9_thread_index),
-            ('st9_thread_valid',st9_thread_valid),
-            ('s9_should_write',st9_should_write),
-            ('st9_b',st9_b),
-            ('st9_cs_j',st9_cs_j),
-            ('st9_cs_i',st9_cs_i),
+            ('thread_valid', st3_thread_valid),
+            ('c_a', st3_c_a),
+            ('b', st3_b),
+            ('cs_c', st3_cs_c),
+            ('dist_csb', st3_dist_csb),
+            ('adj_index', st3_adj_index),
+            ('index_list_edge', st3_index_list_edge),
+            ('st9_thread_index', st9_thread_index),
+            ('st9_thread_valid', st9_thread_valid),
+            ('s9_should_write', st9_should_write),
+            ('st9_b', st9_b),
+            ('st9_cs_j', st9_cs_j),
+            ('st9_cs_i', st9_cs_i),
         ]
         m.Instance(stage3_m, stage3_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St4 instantiation')
-        '''stage4_m = self.create_stage4_yoto(cell_content_f, simulate)
+        stage4_m = self.create_stage4_yott(dst_tbl_rom_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
+            ('thread_index', st4_thread_index),
+            ('thread_valid', st4_thread_valid),
+            ('c_a', st4_c_a),
+            ('b', st4_b),
+            ('c_s', st4_c_s),
+            ('cs_c', st4_cs_c),
+            ('dist_csb', st4_dist_csb),
+            ('st3_thread_index', st3_thread_index),
+            ('st3_thread_valid', st3_thread_valid),
+            ('st3_c_a', st3_c_a),
+            ('st3_b', st3_b),
+            ('st3_cs_c', st3_cs_c),
+            ('st3_dist_csb', st3_dist_csb),
+            ('st3_adj_index', st3_adj_index),
+            ('st3_index_list_edge', st3_index_list_edge),
+            ('conf_wr', st4_conf_wr),
+            ('conf_addr', st4_conf_addr),
+            ('conf_data', st4_conf_data),
         ]
-        m.Instance(stage4_m, stage4_m.name, par, con)'''
+        m.Instance(stage4_m, stage4_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St5 instantiation')
@@ -456,6 +484,7 @@ class YottPipelineHw(PiplineBase):
                     ),
                     If(done_flag)(
                         thread_done[st0_thread_index](Int(1, 1, 10)),
+                        thread_valid(Int(0, 1, 10)),
                     ),
                     If(Uand(thread_done))(
                         done(Int(1, 1, 10)),
@@ -577,7 +606,7 @@ class YottPipelineHw(PiplineBase):
         b = m.OutputReg('b', self.node_bits)
         cs_c = m.OutputReg('cs_c', self.ij_bits * 2 * 3)
         dist_csb = m.OutputReg('dist_csb', self.dist_bits * 3)
-        adj_index = m.OutputReg('adj_index', self.node_bits)
+        adj_index = m.OutputReg('adj_index', self.dst_counter_bits)
         index_list_edge = m.OutputReg('index_list_edge', self.distance_table_bits)
 
         st9_thread_index = m.Input('st9_thread_index', self.th_bits)
@@ -587,7 +616,7 @@ class YottPipelineHw(PiplineBase):
         st9_cs_i = m.Input('st9_cs_i', self.ij_bits)
         st9_cs_j = m.Input('st9_cs_j', self.ij_bits)
 
-        thread_adj_indexes_r = m.Reg('thread_adj_indexes_r', self.node_bits, self.n_threads)
+        thread_adj_indexes_r = m.Reg('thread_adj_indexes_r', self.dst_counter_bits, self.n_threads)
         c_a_t = m.Wire('c_a_t', self.edge_bits)
         cs_c_t = m.Wire('cs_c_t', self.ij_bits * 2 * 3)
         m.Always(Posedge(clk))(
@@ -688,6 +717,88 @@ class YottPipelineHw(PiplineBase):
         ]
 
         m.Instance(n2c_m, f'{n2c_m.name}_1', par, con)
+
+        HwUtil.initialize_regs(m)
+        return m
+
+    def create_stage4_yott(self, dst_tbl_rom_f: str, simulate: bool = False):
+        name = 'stage4_yott'
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        thread_index = m.OutputReg('thread_index', self.th_bits)
+        thread_valid = m.OutputReg('thread_valid')
+        c_a = m.OutputReg('c_a', self.ij_bits * 2)
+        b = m.OutputReg('b', self.node_bits)
+        c_s = m.OutputReg('c_s', (self.ij_bits + 2) * 2)
+        cs_c = m.OutputReg('cs_c', self.ij_bits * 2 * 3)
+        dist_csb = m.OutputReg('dist_csb', self.dist_bits * 3)
+
+        st3_thread_index = m.Input('st3_thread_index', self.th_bits)
+        st3_thread_valid = m.Input('st3_thread_valid')
+        st3_c_a = m.Input('st3_c_a', self.ij_bits * 2)
+        st3_b = m.Input('st3_b', self.node_bits)
+        st3_cs_c = m.Input('st3_cs_c', self.ij_bits * 2 * 3)
+        st3_dist_csb = m.Input('st3_dist_csb', self.dist_bits * 3)
+        st3_adj_index = m.Input('st3_adj_index', self.dst_counter_bits)
+        st3_index_list_edge = m.Input('st3_index_list_edge', self.distance_table_bits)
+
+        # configuration inputs
+        conf_wr = m.Input('conf_wr')
+        conf_addr = m.Input('conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
+        conf_data = m.Input('conf_data', (self.ij_bits + 1) * 2)
+
+        add_i_t = m.Wire('add_i_t', self.ij_bits + 1)
+        add_j_t = m.Wire('add_j_t', self.ij_bits + 1)
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                thread_index(Int(0, thread_index.width)),
+                thread_valid(Int(0, 1, 10)),
+                c_a(Int(0, c_a.width, 10)),
+                b(Int(0, b.width, 10)),
+                c_s(Int(0, c_s.width, 10)),
+                cs_c(Int(0, cs_c.width, 10)),
+                dist_csb(Int(0, dist_csb.width, 10)),
+            ).Else(
+                thread_index(st3_thread_index),
+                thread_valid(st3_thread_valid),
+                b(st3_b),
+                cs_c(st3_cs_c),
+                c_a(st3_c_a),
+                dist_csb(st3_dist_csb),
+                c_s[0:self.ij_bits + 2](
+                    Cat(Int(0, 2, 10), st3_c_a[0:self.ij_bits]) +
+                    Cat(add_i_t[-1], add_i_t)
+                ),
+                c_s[self.ij_bits + 2:(self.ij_bits + 2) * 2](
+                    Cat(Int(0, 2, 10), st3_c_a[self.ij_bits:self.ij_bits * 2]) +
+                    Cat(add_j_t[-1], add_j_t)
+                ),
+            )
+        )
+
+        par = [
+            ('width', (self.ij_bits + 1) * 2),
+            ('depth', self.dst_counter_bits - 1 + self.distance_table_bits)
+        ]
+        if simulate:
+            par.append(('read_f', 1))
+            par.append(('init_file', dst_tbl_rom_f))
+        con = [
+            ('clk', clk),
+            ('rd_addr', Cat(st3_index_list_edge, st3_adj_index[:-1])),
+            ('out', Cat(add_i_t, add_j_t)),
+            ('rd', Int(1, 1, 2)),
+            ('wr', conf_wr),
+            ('wr_addr', conf_addr),
+            ('wr_data', conf_data),
+        ]
+
+        distance_table_m = self.hw_components.create_memory_1r_1w()
+        m.Instance(distance_table_m, distance_table_m.name, par, con)
 
         HwUtil.initialize_regs(m)
         return m
