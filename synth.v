@@ -52,12 +52,19 @@ module yoto_pipeline_hw
   wire st4_thread_valid;
   wire [4-1:0] st4_c_a;
   wire [4-1:0] st4_b;
-  wire [8-1:0] st4_c_s;
+  wire [4-1:0] st4_c_s;
   wire [12-1:0] st4_cs_c;
   wire [9-1:0] st4_dist_csb;
   // -----
 
   // St5 wires
+  wire [4-1:0] st5_thread_index;
+  wire st5_thread_valid;
+  wire [4-1:0] st5_b;
+  wire [4-1:0] st5_c_s;
+  wire [12-1:0] st5_cs_c;
+  wire [9-1:0] st5_dist_csb;
+  wire [3-1:0] st5_dist_ca_cs;
   // -----
 
   // St6 wires
@@ -195,6 +202,28 @@ module yoto_pipeline_hw
 
   // -----
   // St5 instantiation
+
+  stage5_yott
+  stage5_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st5_thread_index),
+    .thread_valid(st5_thread_valid),
+    .b(st5_b),
+    .c_s(st5_c_s),
+    .cs_c(st5_cs_c),
+    .dist_csb(st5_dist_csb),
+    .dist_ca_cs(st5_dist_ca_cs),
+    .st4_thread_index(st5_thread_index),
+    .st4_thread_valid(st5_thread_valid),
+    .st4_c_a(st4_c_a),
+    .st4_b(st4_b),
+    .st4_c_s(st4_c_s),
+    .st4_cs_c(st4_cs_c),
+    .st4_dist_csb(st4_dist_csb)
+  );
+
   // -----
   // St6 instantiation
   // -----
@@ -786,7 +815,7 @@ module stage4_yott
   output reg thread_valid,
   output reg [4-1:0] c_a,
   output reg [4-1:0] b,
-  output reg [8-1:0] c_s,
+  output reg [4-1:0] c_s,
   output reg [12-1:0] cs_c,
   output reg [9-1:0] dist_csb,
   input [4-1:0] st3_thread_index,
@@ -811,7 +840,7 @@ module stage4_yott
       thread_valid <= 1'd0;
       c_a <= 4'd0;
       b <= 4'd0;
-      c_s <= 8'd0;
+      c_s <= 4'd0;
       cs_c <= 12'd0;
       dist_csb <= 9'd0;
     end else begin
@@ -821,8 +850,8 @@ module stage4_yott
       cs_c <= st3_cs_c;
       c_a <= st3_c_a;
       dist_csb <= st3_dist_csb;
-      c_s[3:0] <= { 2'd0, st3_c_a[1:0] } + { add_i_t[2], add_i_t };
-      c_s[7:4] <= { 2'd0, st3_c_a[3:2] } + { add_j_t[2], add_j_t };
+      c_s[1:0] <= st3_c_a[1:0] + add_i_t;
+      c_s[7:4] <= st3_c_a[3:2] + add_j_t;
     end
   end
 
@@ -856,6 +885,129 @@ module stage4_yott
     dist_csb = 0;
   end
 
+
+endmodule
+
+
+
+module stage5_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] b,
+  output reg [4-1:0] c_s,
+  output reg [12-1:0] cs_c,
+  output reg [9-1:0] dist_csb,
+  output reg [3-1:0] dist_ca_cs,
+  input [4-1:0] st4_thread_index,
+  input st4_thread_valid,
+  input [4-1:0] st4_c_a,
+  input [4-1:0] st4_b,
+  input [4-1:0] st4_c_s,
+  input [12-1:0] st4_cs_c,
+  input [9-1:0] st4_dist_csb
+);
+
+  wire [3-1:0] d1;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 1'd0;
+      b <= 4'd0;
+      c_s <= 4'd0;
+      cs_c <= 12'd0;
+      dist_csb <= 9'd0;
+      dist_ca_cs <= 3'd0;
+    end else begin
+      thread_index <= st4_thread_index;
+      thread_valid <= st4_thread_valid;
+      b <= st4_b;
+      c_s <= st4_c_s;
+      cs_c <= st4_cs_c;
+      dist_csb <= st4_dist_csb;
+      dist_ca_cs <= d1;
+    end
+  end
+
+
+  distance_table
+  distance_table
+  (
+    .source(st4_c_a),
+    .target1(st4_c_s),
+    .d1(d1)
+  );
+
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    b = 0;
+    c_s = 0;
+    cs_c = 0;
+    dist_csb = 0;
+    dist_ca_cs = 0;
+  end
+
+
+endmodule
+
+
+
+module distance_table
+(
+  input [4-1:0] source,
+  input [4-1:0] target1,
+  input [4-1:0] target2,
+  input [4-1:0] target3,
+  output [3-1:0] d1,
+  output [3-1:0] d2,
+  output [3-1:0] d3
+);
+
+  wire [2-1:0] s_l;
+  wire [2-1:0] s_c;
+  wire [2-1:0] t1_l;
+  wire [2-1:0] t1_c;
+  wire [2-1:0] t2_l;
+  wire [2-1:0] t2_c;
+  wire [2-1:0] t3_l;
+  wire [2-1:0] t3_c;
+
+  wire [2-1:0] dist_table [0:2**4-1];
+
+  assign s_l = source[1:0];
+  assign s_c = source[3:2];
+  assign t1_l = target1[1:0];
+  assign t1_c = target1[3:2];
+  assign t2_l = target2[1:0];
+  assign t2_c = target2[3:2];
+  assign t3_l = target3[1:0];
+  assign t3_c = target3[3:2];
+
+  assign d1 = dist_table[{ s_l, t1_l }] + dist_table[{ s_c, t1_c }];
+  assign d2 = dist_table[{ s_l, t2_l }] + dist_table[{ s_c, t2_c }];
+  assign d3 = dist_table[{ s_l, t3_l }] + dist_table[{ s_c, t3_c }];
+
+  assign dist_table[0] = 3'd0;
+  assign dist_table[1] = 3'd1;
+  assign dist_table[2] = 3'd2;
+  assign dist_table[3] = 3'd3;
+  assign dist_table[4] = 3'd1;
+  assign dist_table[5] = 3'd0;
+  assign dist_table[6] = 3'd1;
+  assign dist_table[7] = 3'd2;
+  assign dist_table[8] = 3'd2;
+  assign dist_table[9] = 3'd1;
+  assign dist_table[10] = 3'd0;
+  assign dist_table[11] = 3'd1;
+  assign dist_table[12] = 3'd3;
+  assign dist_table[13] = 3'd2;
+  assign dist_table[14] = 3'd1;
+  assign dist_table[15] = 3'd0;
 
 endmodule
 
