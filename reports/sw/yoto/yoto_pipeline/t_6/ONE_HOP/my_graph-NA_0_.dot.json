@@ -1,0 +1,61 @@
+{
+    "graph_name": "my_graph.dot",
+    "algorithm": "YOTO",
+    "arch_type": "ONE_HOP",
+    "total_edges": 6,
+    "visited_edges": 5,
+    "n_copies": 1,
+    "total_threads": 6,
+    "n_cells": 9,
+    "n_lines": 3,
+    "n_columns": 3,
+    "num_annotations": 0,
+    "best_thread": "Exec_0_TH_0",
+    "best_dist": 1,
+    "exec_max_clk": 90,
+    "exec_min_clk": 90,
+    "exec_avg_clk": 90.0,
+    "th_max_clk": 15,
+    "th_min_clk": 10,
+    "th_avg_clk": 12.833333333333334,
+    "best_placement": [
+        [
+            1,
+            -1,
+            -1
+        ],
+        [
+            -1,
+            4,
+            5
+        ],
+        [
+            2,
+            3,
+            0
+        ]
+    ],
+    "th_placement_distances": {
+        "0_5": 1,
+        "5_4": 1,
+        "4_3": 1,
+        "3_2": 1,
+        "2_1": 1,
+        "1_0": 2
+    },
+    "nodes_dict": {
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5
+    },
+    "th": 74.96251874062968,
+    "path_th": [
+        "3",
+        "2",
+        "1",
+        "0"
+    ]
+}

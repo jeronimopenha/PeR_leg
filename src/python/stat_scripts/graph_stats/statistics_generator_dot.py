@@ -2,12 +2,12 @@ import re
 import pandas
 import json
 from src.python.stat_scripts.graph_stats.interface_statistics_generator import IStatisticsGenerator
+from src.python.util.util import Util
 
 
 class StatisticsGeneratorDot(IStatisticsGenerator):
     @staticmethod
     def generate_statistics_pandas(data_files: list[str], results_iter_json_file: str) -> pandas.DataFrame:
-
         df = pandas.DataFrame(columns=IStatisticsGenerator.columns)
         pattern = re.compile(".weight=(\d+)")
         for dot_file in data_files:
@@ -25,7 +25,10 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                 dist_total += distance
                 count_dists_greater_0 += 0 if distance == 0 else 1
             dirs = dot_file.split("/")
-            dict_data = IStatisticsGenerator.generate_data_dict(dirs[-1].replace('.dot', ''),
+            dot_name = dirs[-1]
+            th_worse,worse_path = Util.calc_worse_th_by_dot_file(dot_file,dot_name)
+
+            dict_data = IStatisticsGenerator.generate_data_dict(dot_name.replace('.dot', ''),
                                                                 edges,
                                                                 -1,
                                                                 dist_total,
@@ -33,9 +36,10 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
                                                                 dirs[-3],
                                                                 dirs[-4],
                                                                 dirs[-2],
-                                                                0
+                                                                0,
+                                                                th_worse
                                                                 )
-            df = df.append(dict_data, ignore_index=True)
+            df.loc[len(df)] =dict_data
         with open(results_iter_json_file, 'r') as arquivo:
             js = json.load(arquivo)
         temp_df = pandas.DataFrame(columns=[IStatisticsGenerator.columns[0], 'Iters'])
@@ -47,10 +51,6 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
         benchs = df['Bench'].unique().tolist()
 
         df = pandas.merge(df, temp_df, on=IStatisticsGenerator.columns[0])
-        new_benchs = df['Bench'].unique().tolist()
-        for bench in benchs:
-            if bench not in new_benchs:
-                print(bench)
 
         return df
 
@@ -84,6 +84,5 @@ class StatisticsGeneratorDot(IStatisticsGenerator):
             dict_data = {'Bench': bench, 'Dist Total': dist_total, 'Edges > 0': count_dists_greater_0,
                          'Arch Type': dirs[-3], 'Total Executions': dirs[-2], 'Max Iter': max_iter}
 
-            df = df.append(dict_data, ignore_index=True)
-
+            df.loc[len(df)] =dict_data
         return df

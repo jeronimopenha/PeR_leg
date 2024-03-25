@@ -21,7 +21,7 @@ dot_path_base = root_path + '/benchmarks/'
 dot_connected_paths = [dot_path_base + path_graph for path_graph in ['connected/']]
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1,10,100]
+copies = [1, 10, 100]
 
 start = time.time()
 for dot_connected_path in dot_connected_paths:
@@ -29,7 +29,7 @@ for dot_connected_path in dot_connected_paths:
         for arch_type in arch_types:
             if method != YOTTMCPipeline:
                 continue
-            len_pipe = method.len_pipeline
+            len_pipe = method.len_pipelineS
             total_executions = [len_pipe * copy for copy in copies]
             for total_execution in total_executions:
                 print()
@@ -59,15 +59,18 @@ for dot_connected_path in dot_connected_paths:
                         per_graph = PeRGraph(dot_path, dot_name)
                         print(per_graph.dot_name)
                         if method == YotoPipelineSw:
-                            pipeline_method = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle, len_pipe)
+                            pipeline_method = YotoPipelineSw(per_graph, arch_type, distance_table_bits, make_shuffle,
+                                                             len_pipe)
                         elif method == YOTTPipeline:
                             pipeline_method = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, num_annotation, len_pipe)
                         elif method == YOTTMCPipeline:
                             pipeline_method = YOTTMCPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 0.3, num_annotation, len_pipe)
                         elif method == YOTTMC0Pipeline:
-                            pipeline_method = YOTTMC0Pipeline(per_graph, arch_type, distance_table_bits, make_shuffle, [0.5,0.8,0.3], num_annotation, len_pipe)
+                            pipeline_method = YOTTMC0Pipeline(per_graph, arch_type, distance_table_bits, make_shuffle,
+                                                              [0.5, 0.8, 0.3], num_annotation, len_pipe)
                         elif method == YOTTMC1Pipeline:
-                            pipeline_method = YOTTMC1Pipeline(per_graph, arch_type, distance_table_bits, make_shuffle, [3,3,0.3], num_annotation, len_pipe)
+                            pipeline_method = YOTTMC1Pipeline(per_graph, arch_type, distance_table_bits, make_shuffle,
+                                                              [3, 3, 0.3], num_annotation, len_pipe)
 
                         if run_parallel:
                             raw_report: dict = pipeline_method.run_parallel(total_execution // threads_per_copy)
@@ -78,7 +81,9 @@ for dot_connected_path in dot_connected_paths:
                         raw_report['limiar'] = limiars_str[i]
 
                         formatted_report = Util.get_formatted_report(raw_report)
-                        Util.save_json(output_path, dot_name.replace('.dot','')+f'-NA<{num_annotation}>M<{methods[i]}={limiars_str[i]}>.dot', formatted_report)
+                        Util.save_json(output_path, dot_name.replace('.dot',
+                                                                     '') + f'-NA<{num_annotation}>M<{methods[i]}={limiars_str[i]}>.dot',
+                                       formatted_report)
                         reports.append(formatted_report)
 
 end = time.time()

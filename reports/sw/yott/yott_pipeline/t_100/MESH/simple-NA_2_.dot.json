@@ -1,0 +1,94 @@
+{
+    "graph_name": "simple.dot",
+    "algorithm": "YOTT",
+    "arch_type": "MESH",
+    "total_edges": 17,
+    "visited_edges": 15,
+    "n_copies": 10,
+    "total_threads": 100,
+    "n_cells": 16,
+    "n_lines": 4,
+    "n_columns": 4,
+    "num_annotations": 2,
+    "best_thread": "Exec_3_TH_2",
+    "best_dist": 3,
+    "exec_max_clk": 1345,
+    "exec_min_clk": 1049,
+    "exec_avg_clk": 1181.0,
+    "th_max_clk": 135,
+    "th_min_clk": 47,
+    "th_avg_clk": 85.13,
+    "best_placement": [
+        [
+            0,
+            14,
+            4,
+            3
+        ],
+        [
+            1,
+            2,
+            6,
+            5
+        ],
+        [
+            15,
+            13,
+            12,
+            11
+        ],
+        [
+            8,
+            7,
+            9,
+            10
+        ]
+    ],
+    "th_placement_distances": {
+        "12_6": 1,
+        "6_5": 1,
+        "5_3": 1,
+        "3_4": 1,
+        "14_0": 1,
+        "0_1": 1,
+        "2_6": 1,
+        "13_7": 1,
+        "7_8": 1,
+        "7_9": 1,
+        "9_10": 1,
+        "10_11": 1,
+        "11_12": 1,
+        "13_15": 1,
+        "3_14": 2,
+        "0_2": 2,
+        "14_13": 2
+    },
+    "nodes_dict": {
+        "mul0": 0,
+        "const1": 1,
+        "load2": 2,
+        "mul3": 3,
+        "const4": 4,
+        "load5": 5,
+        "add6": 6,
+        "mul7": 7,
+        "const8": 8,
+        "reg0": 9,
+        "reg1": 10,
+        "reg2": 11,
+        "store9": 12,
+        "add10": 13,
+        "radd10": 14,
+        "const11": 15
+    },
+    "th": 71.36739937196688,
+    "path_th": [
+        "const11",
+        "add10",
+        "radd10",
+        "mul0",
+        "load2",
+        "add6",
+        "store9"
+    ]
+}
