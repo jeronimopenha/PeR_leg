@@ -82,7 +82,14 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St3 wires')
-
+        st3_thread_index = m.Wire('st3_thread_index', self.th_bits)
+        st3_thread_valid = m.Wire('st3_thread_valid')
+        st3_c_a = m.Wire('st3_c_a', self.ij_bits * 2)
+        st3_b = m.Wire('st3_b', self.node_bits)
+        st3_cs_c = m.Wire('st3_cs_c', self.ij_bits * 2 * 3)
+        st3_dist_csb = m.Wire('st3_dist_csb', self.dist_bits * 3)
+        st3_adj_index = m.Wire('st3_adj_index', self.node_bits)
+        st3_index_list_edge = m.Wire('st3_index_list_edge', self.distance_table_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -112,7 +119,12 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St9 wires')
-
+        st9_thread_index = m.Wire('st9_thread_index', self.th_bits)
+        st9_thread_valid = m.Wire('st9_thread_valid', self.th_bits)
+        st9_should_write = m.Wire('s9_should_write')
+        st9_b = m.Wire('st9_b', self.node_bits)
+        st9_cs_i = m.Wire('st9_cs_i', self.ij_bits)
+        st9_cs_j = m.Wire('st9_cs_j', self.ij_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -174,12 +186,33 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St3 instantiation')
-        '''stage3_m = self.create_stage3_yoto(dst_tbl_rom_f, simulate)
+        stage3_m = self.create_stage3_yott(n2c_rom_f, simulate)
         con = [
             ('clk', clk),
             ('rst', rst),
+            ('st2_thread_index', st2_thread_index),
+            ('st2_thread_valid',st2_thread_valid),
+            ('st2_a',st2_a),
+            ('st2_b',st2_b),
+            ('st2_cs',st2_cs),
+            ('st2_dist_csb',st2_dist_csb),
+            ('st2_index_list_edge',st2_index_list_edge),
+            ('thread_index', st3_thread_index),
+            ('thread_valid',st3_thread_valid),
+            ('c_a',st3_c_a),
+            ('b',st3_b),
+            ('cs_c',st3_cs_c),
+            ('dist_csb',st3_dist_csb),
+            ('adj_index',st3_adj_index),
+            ('index_list_edge',st3_index_list_edge),
+            ('st9_thread_index',st9_thread_index),
+            ('st9_thread_valid',st9_thread_valid),
+            ('s9_should_write',st9_should_write),
+            ('st9_b',st9_b),
+            ('st9_cs_j',st9_cs_j),
+            ('st9_cs_i',st9_cs_i),
         ]
-        m.Instance(stage3_m, stage3_m.name, par, con)'''
+        m.Instance(stage3_m, stage3_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St4 instantiation')
@@ -540,19 +573,52 @@ class YottPipelineHw(PiplineBase):
 
         thread_index = m.OutputReg('thread_index', self.th_bits)
         thread_valid = m.OutputReg('thread_valid')
-        c_a = m.OutputReg('c_a')
-        b = m.OutputReg('b')
-        cs_c = m.OutputReg('cs_c')
-        dist_csb = m.OutputReg('dist_csb')
-        adl_index = m.OutputReg('adl_index')
-        index_list_edge = m.OutputReg('index_list_edge')
+        c_a = m.OutputReg('c_a', self.ij_bits * 2)
+        b = m.OutputReg('b', self.node_bits)
+        cs_c = m.OutputReg('cs_c', self.ij_bits * 2 * 3)
+        dist_csb = m.OutputReg('dist_csb', self.dist_bits * 3)
+        adj_index = m.OutputReg('adj_index', self.node_bits)
+        index_list_edge = m.OutputReg('index_list_edge', self.distance_table_bits)
 
         st9_thread_index = m.Input('st9_thread_index', self.th_bits)
+        st9_thread_valid = m.Input('st9_thread_valid', self.th_bits)
         st9_should_write = m.Input('s9_should_write')
         st9_b = m.Input('st9_b', self.node_bits)
         st9_cs_i = m.Input('st9_cs_i', self.ij_bits)
-        st9_cs_j = m.Input('st9_cs_i', self.ij_bits)
+        st9_cs_j = m.Input('st9_cs_j', self.ij_bits)
 
+        thread_adj_indexes_r = m.Reg('thread_adj_indexes_r', self.node_bits, self.n_threads)
+        c_a_t = m.Wire('c_a_t', self.edge_bits)
+        cs_c_t = m.Wire('cs_c_t', self.ij_bits * 2 * 3)
+        m.Always(Posedge(clk))(
+            If(rst)(
+                thread_index(Int(0, thread_index.width, 10)),
+                thread_valid(Int(0, 1, 10)),
+                c_a(Int(0, c_a.width, 10)),
+                b(Int(0, b.width, 10)),
+                cs_c(Int(0, cs_c.width, 10)),
+                dist_csb(Int(0, dist_csb.width, 10)),
+                adj_index(Int(0, adj_index.width, 10)),
+                index_list_edge(Int(0, index_list_edge.width, 10))
+            ).Else(
+                thread_index(st2_thread_index),
+                thread_valid(st2_thread_valid),
+                b(st2_b),
+                c_a(c_a_t),
+                cs_c(cs_c_t),
+                dist_csb(st2_dist_csb),
+                index_list_edge(st2_index_list_edge),
+                If(st2_thread_valid)(
+                    adj_index(thread_adj_indexes_r[st2_thread_index])
+                ).Else(
+                    adj_index(Int(0, adj_index.width, 10)),
+                ),
+                If(AndList(~st9_should_write, st9_thread_valid))(
+                    thread_adj_indexes_r[st9_thread_index](
+                        thread_adj_indexes_r[st9_thread_index] + Int(1, thread_adj_indexes_r.width, 10))
+                )
+            )
+        )
 
         # configuration inputs
         conf_wr = m.Input('conf_wr')
@@ -563,21 +629,28 @@ class YottPipelineHw(PiplineBase):
         conf_rd_addr = m.Input('conf_rd_addr', self.th_bits + self.node_bits)
         conf_rd_data = m.Output('conf_rd_data', self.ij_bits * 2)
 
+        conf_rd_data.assign(c_a_t)
 
-
-
-        conf_rd_data.assign(Cat(ia_t, ja_t))
-
-        mem_rd_addr = m.Wire('mem_rd_addr', self.th_bits + self.node_bits)
+        mem_rd_addr0 = m.Wire('mem_rd_addr0', self.th_bits + self.node_bits)
+        mem_rd_addr1 = m.Wire('mem_rd_addr1', self.th_bits + self.node_bits)
+        mem_rd_addr2 = m.Wire('mem_rd_addr2', self.th_bits + self.node_bits)
+        mem_rd_addr3 = m.Wire('mem_rd_addr3', self.th_bits + self.node_bits)
         mem_wr_addr = m.Wire('mem_wr_addr', self.th_bits + self.node_bits)
         mem_wr = m.Wire('mem_wr')
         mem_wr_data = m.Wire('mem_wr_data', self.ij_bits * 2)
 
-        mem_rd_addr.assign(Mux(conf_rd, conf_rd_addr, Cat(st1_th_idx, st1_a)))
-        mem_wr_addr.assign(Mux(conf_wr, conf_wr_addr, Cat(st4_th_idx, st4_b)))
-        mem_wr.assign(Mux(conf_wr, conf_wr, st4_place))
-        mem_wr_data.assign(Mux(conf_wr, conf_wr_data, Cat(st4_ib, st4_jb)))
+        mem_rd_addr0.assign(Mux(conf_rd, conf_rd_addr, Cat(st2_thread_index, st2_a)))
+        mem_rd_addr1.assign(Mux(conf_rd, conf_rd_addr, Cat(st2_thread_index, st2_cs[:self.node_bits])))
+        mem_rd_addr2.assign(
+            Mux(conf_rd, conf_rd_addr, Cat(st2_thread_index, st2_cs[self.node_bits:self.node_bits * 2])))
+        mem_rd_addr3.assign(
+            Mux(conf_rd, conf_rd_addr, Cat(st2_thread_index, st2_cs[self.node_bits * 2:self.node_bits * 3])))
 
+        mem_wr_addr.assign(Mux(conf_wr, conf_wr_addr, Cat(st9_thread_index, st9_b)))
+        mem_wr.assign(Mux(conf_wr, conf_wr, st9_should_write))
+        mem_wr_data.assign(Mux(conf_wr, conf_wr_data, Cat(st9_cs_i, st9_cs_j)))
+
+        n2c_m = self.hw_components.create_memory_2r_1w()
         par = [
             ('width', self.ij_bits * 2),
             ('depth', self.th_bits + self.node_bits)
@@ -590,16 +663,31 @@ class YottPipelineHw(PiplineBase):
 
         con = [
             ('clk', clk),
-            ('rd_addr', mem_rd_addr),
-            ('out', Cat(ia_t, ja_t)),
+            ('rd_addr0', mem_rd_addr0),
+            ('rd_addr1', mem_rd_addr1),
+            ('out0', c_a_t),
+            ('out1', cs_c_t[:self.ij_bits * 2]),
             ('rd', Int(1, 1, 2)),
             ('wr', mem_wr),
             ('wr_addr', mem_wr_addr),
             ('wr_data', mem_wr_data),
         ]
 
-        n2c_m = self.hw_components.create_memory_1r_1w()
-        m.Instance(n2c_m, n2c_m.name, par, con)
+        m.Instance(n2c_m, f'{n2c_m.name}_0', par, con)
+
+        con = [
+            ('clk', clk),
+            ('rd_addr0', mem_rd_addr2),
+            ('rd_addr1', mem_rd_addr3),
+            ('out0', cs_c_t[self.ij_bits * 2:self.ij_bits * 2 * 2]),
+            ('out1', cs_c_t[self.ij_bits * 2 * 2:self.ij_bits * 2 * 3]),
+            ('rd', Int(1, 1, 2)),
+            ('wr', mem_wr),
+            ('wr_addr', mem_wr_addr),
+            ('wr_data', mem_wr_data),
+        ]
+
+        m.Instance(n2c_m, f'{n2c_m.name}_1', par, con)
 
         HwUtil.initialize_regs(m)
         return m
