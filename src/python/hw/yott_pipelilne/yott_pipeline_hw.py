@@ -11,7 +11,7 @@ from src.python.util.util import Util
 class YottPipelineHw(PiplineBase):
     def __init__(self, per_graph: PeRGraph, arch_type: ArchType, distance_table_bits: int, make_shuffle: bool,
                  n_threads: int = 10, n_annotations: int = 3):
-        self.len_pipeline: int = 6
+        self.len_pipeline: int = 10
         super().__init__(per_graph, arch_type, distance_table_bits, make_shuffle, self.len_pipeline, n_threads, )
         self.hw_components = HwComponents()
         self.th_bits = Util.get_n_bits(self.n_threads)
@@ -27,8 +27,76 @@ class YottPipelineHw(PiplineBase):
         # fixme uncomment the line below and comment the line above
         # self.dst_counter_bits = Util.get_n_bits(self.total_dists) + 1
 
-    def create_yott_pipeline_hw(self, edges_rom_f: str, annotations_rom_f: str, n2c_rom_f: str, n2c_out_f: str,
-                                dst_tbl_rom_f: str, cell_content_f: str, simulate: bool) -> Module:
+    def create_rom_files(self, edges_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
+                         cell_content_f: str, ann_rom_f, n2c: list[list[list]], annotations: list[list[list[int]]]):
+        # Function to create ROM content
+        # edges rom file
+        edges_file_bits = self.node_bits * 2
+        edges_addr_bits = self.th_bits + self.edge_bits
+        edges_file_content = ['{0:b}'.format(0).zfill(edges_file_bits) for _ in range(pow(2, edges_addr_bits))]
+        for th, edges in enumerate(self.edges_int):
+            for edg_idx, edge in enumerate(edges):
+                idx: int = th << self.edge_bits | edg_idx
+                idx_s: str = '{0:b}'.format(idx).zfill(edges_addr_bits)
+                edg_content = edge[0] << self.node_bits | edge[1]
+                edges_file_content[idx] = '{0:b}'.format(edg_content).zfill(edges_file_bits)
+
+        # dst_table rom file
+        dst_table_file_bits = 2 * (self.ij_bits + 1)
+        dst_table_addr_bits = self.distance_table_bits + self.dst_counter_bits - 1
+        dst_table_file_content = ['{0:b}'.format(0).zfill(dst_table_file_bits) for _ in
+                                  range(pow(2, dst_table_addr_bits))]
+        dst_table: list[list[list]] = [
+            Util.get_distance_table(self.arch_type, self.n_lines, self.make_shuffle) for _ in
+            range(pow(2, self.distance_table_bits))]
+        for line_idx, lcs in enumerate(dst_table):
+            for lc_idx, lc in enumerate(lcs):
+                lc0, lc1 = lc
+                mask = (pow(2, self.ij_bits + 1) - 1)
+                if lc0 < 0:
+                    lc0 = ((lc0 * -1) ^ mask) + 1
+                if lc1 < 0:
+                    lc1 = ((lc1 * -1) ^ mask) + 1
+
+                idx: int = line_idx << (self.dst_counter_bits - 1) | lc_idx
+                idx_s: str = '{0:b}'.format(idx).zfill(dst_table_addr_bits)
+
+                dst_table_content = lc0 << (self.ij_bits + 1) | lc1
+                dst_table_file_content[idx] = '{0:b}'.format(dst_table_content).zfill(dst_table_file_bits)
+
+        # cell content rom file
+        cell_content_file_bits = 1
+        cell_content_addr_bits = self.th_bits + 2 * self.ij_bits
+        cell_content_file_content = ['{0:b}'.format(0).zfill(cell_content_file_bits) for _ in
+                                     range(pow(2, cell_content_addr_bits))]
+
+        # n2c rom file
+        n2c_file_bits = 2 * self.ij_bits
+        n2c_addr_bits = self.th_bits + self.node_bits
+        n2c_file_content = ['{0:b}'.format(0).zfill(n2c_file_bits) for _ in range(pow(2, n2c_addr_bits))]
+
+        for th, n2cs in enumerate(n2c):
+            for node_idx, n2c_ in enumerate(n2cs):
+                if n2c_[0] is None:
+                    continue
+                n2c_idx: int = th << self.node_bits | node_idx
+                n2c_idx_s: str = '{0:b}'.format(n2c_idx).zfill(n2c_addr_bits)
+                n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
+                n2c_file_content[n2c_idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
+
+                cell_content_idx: int = th << (2 * self.ij_bits) | n2c_[0] << self.ij_bits | n2c_[1]
+                cell_content_idx_str: str = '{0:b}'.format(cell_content_idx).zfill(cell_content_addr_bits)
+                cell_content = 1
+                cell_content_file_content[cell_content_idx] = '{0:b}'.format(cell_content).zfill(cell_content_file_bits)
+                break
+
+        Util.write_file(edges_rom_f, edges_file_content)
+        Util.write_file(dst_tbl_rom_f, dst_table_file_content)
+        Util.write_file(n2c_rom_f, n2c_file_content)
+        Util.write_file(cell_content_f, cell_content_file_content)
+
+    def create_yott_pipeline_hw(self, edges_rom_f: str, annotations_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
+                                cell_content_f: str, simulate: bool) -> Module:
         name = "yott_pipeline_hw"
         m = Module(name)
 
@@ -439,6 +507,85 @@ class YottPipelineHw(PiplineBase):
 
         HwUtil.initialize_regs(m)
         return m
+
+    def create_yott_pipeline_hw_test_bench(self, v_output_base: str, simulate: bool):
+        base_file_name = f'{v_output_base}{self.per_graph.dot_name}'
+        edges_rom_f: str = f'{base_file_name}_edges.rom'
+        n2c_rom_f: str = f'{base_file_name}_n2c.rom'
+        ann_rom_f: str = f'{base_file_name}_ann_rom.txt'
+        dst_tbl_rom_f: str = f'{base_file_name}_dst_tbl.rom'
+        cell_content_f: str = f'{base_file_name}_cell_content.rom'
+        dump_f: str = f'{base_file_name}.vcd'
+        run_file: str = f'{base_file_name}.out'
+
+        first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
+        n2c, c2n = self.init_traversal_placement_tables(first_nodes)
+        annotations = []
+        for ann in self.annotations:
+            tmp = list(ann.values())
+            for idx, t in enumerate(tmp):
+                while len(t) < 3:
+                    t.append([-1, -1])
+                t = t[0:3]
+                t = [(self.per_graph.nodes_to_idx[t_t[0]], t_t[1] + 1) if (
+                        t_t[0] != -1 and t_t[1] < 3) else [-1, -1] for t_t in t]
+                tmp[idx] = t
+            annotations.append(tmp)
+
+        self.create_rom_files(edges_rom_f, n2c_rom_f, dst_tbl_rom_f, cell_content_f, ann_rom_f, n2c, annotations)
+
+        name = '%s_yoto_pip_hw_test_bench' % self.per_graph.dot_name.replace(".", "_")
+        m = Module(name)
+
+        clk = m.Reg('clk')
+        rst = m.Reg('rst')
+        start = m.Reg('start')
+
+        m.EmbeddedCode('')
+        yott_visited_edges = m.Wire('yott_visited_edges', self.edge_bits)
+        yott_done = m.Wire('yott_done')
+        yott_total_pipeline_counter = m.Wire('yott_total_pipeline_counter', 32)
+
+        m.EmbeddedCode('')
+        yott_visited_edges.assign(Int(self.visited_edges, self.edge_bits, 10))
+
+        par = []
+        con = [
+            ('clk', clk),
+            ('rst', rst),
+            ('start', start),
+            ('visited_edges', yott_visited_edges),
+            ('done', yott_done),
+            ('total_pipeline_counter', yott_total_pipeline_counter),
+        ]
+        yott = self.create_yott_pipeline_hw(edges_rom_f, ann_rom_f, n2c_rom_f, dst_tbl_rom_f, cell_content_f, simulate)
+        m.Instance(yott, yott.name, par, con)
+        HwUtil.initialize_regs(m, {'clk': 0, 'rst': 1, 'start': 0})
+
+        simulation.setup_waveform(m, dumpfile=dump_f)
+        m.Initial(
+            EmbeddedCode('@(posedge clk);'),
+            EmbeddedCode('@(posedge clk);'),
+            EmbeddedCode('@(posedge clk);'),
+            rst(0),
+            start(1),
+            Delay(100000),
+            Finish(),
+        )
+        m.EmbeddedCode('always #5clk=~clk;')
+        m.Always(Posedge(clk))(
+            If(yott_done)(
+                Display('ACC DONE!'),
+                Finish()
+            )
+        )
+
+        verilog_f: str = f'{v_output_base}{m.name}.v'
+        m.to_verilog(verilog_f)
+
+        # sim = simulation.Simulator(m, sim='iverilog')
+        # rslt = sim.run(outputfile=run_file)
+        # print(rslt)
 
     def create_manhattan_dist_table(self) -> Module:
         name = 'distance_table'
@@ -1301,7 +1448,7 @@ class YottPipelineHw(PiplineBase):
         acc_data_out_width = bus_width
         bus_data_width = acc_data_in_width
 
-        name = "yoto_acc"
+        name = "yott_acc"
         m = Module(name)
 
         clk = m.Input('clk')
