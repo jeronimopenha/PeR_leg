@@ -9,7 +9,10 @@ module yoto_pipeline_hw
   output done,
   input st4_conf_wr,
   input [9-1:0] st4_conf_addr,
-  input [6-1:0] st4_conf_data
+  input [6-1:0] st4_conf_data,
+  input st7_conf_wr,
+  input [8-1:0] st7_conf_addr,
+  input st7_conf_data
 );
 
   // St0 wires
@@ -68,9 +71,22 @@ module yoto_pipeline_hw
   // -----
 
   // St6 wires
+  wire [4-1:0] st6_thread_index;
+  wire st6_thread_valid;
+  wire [4-1:0] st6_b;
+  wire [4-1:0] st6_c_s;
+  wire [5-1:0] st6_cost;
+  wire [3-1:0] st6_dist_ca_cs;
   // -----
 
   // St7 wires
+  wire [4-1:0] st7_thread_index;
+  wire st7_thread_valid;
+  wire [4-1:0] st7_b;
+  wire [4-1:0] st7_c_s;
+  wire [5-1:0] st7_cost;
+  wire [3-1:0] st7_dist_ca_cs;
+  wire st7_cell_free;
   // -----
 
   // St8 wires
@@ -81,11 +97,7 @@ module yoto_pipeline_hw
   wire [4-1:0] st9_thread_valid;
   wire s9_should_write;
   wire [4-1:0] st9_b;
-  wire [2-1:0] st9_cs_i;
-  wire [2-1:0] st9_cs_j;
-  // -----
-
-  // St10 wires
+  wire [4-1:0] st9_c_s;
   // -----
 
   // St0 instantiation
@@ -168,8 +180,7 @@ module yoto_pipeline_hw
     .st9_thread_valid(st9_thread_valid),
     .s9_should_write(s9_should_write),
     .st9_b(st9_b),
-    .st9_cs_j(st9_cs_j),
-    .st9_cs_i(st9_cs_i)
+    .st9_c_s(st9_c_s)
   );
 
   // -----
@@ -226,14 +237,60 @@ module yoto_pipeline_hw
 
   // -----
   // St6 instantiation
+
+  stage6_yott
+  stage6_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st6_thread_index),
+    .thread_valid(st6_thread_valid),
+    .b(st6_b),
+    .c_s(st6_c_s),
+    .cost(st6_cost),
+    .dist_ca_cs(st6_dist_ca_cs),
+    .st5_thread_index(st5_thread_index),
+    .st5_thread_valid(st5_thread_valid),
+    .st5_b(st5_b),
+    .st5_c_s(st5_c_s),
+    .st5_cs_c(st5_cs_c),
+    .st5_dist_csb(st5_dist_csb),
+    .st5_dist_ca_cs(st5_dist_ca_cs)
+  );
+
   // -----
   // St7 instantiation
+
+  stage7_yott
+  stage7_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st7_thread_index),
+    .thread_valid(st7_thread_valid),
+    .b(st7_b),
+    .c_s(st7_c_s),
+    .cost(st7_cost),
+    .dist_ca_cs(st7_dist_ca_cs),
+    .cell_free(st7_cell_free),
+    .st6_thread_index(st6_thread_index),
+    .st6_thread_valid(st6_thread_valid),
+    .st6_b(st6_b),
+    .st6_c_s(st6_c_s),
+    .st6_cost(st6_cost),
+    .st6_dist_ca_cs(st6_dist_ca_cs),
+    .st9_thread_index(st9_thread_index),
+    .s9_should_write(s9_should_write),
+    .st9_c_s(st9_c_s),
+    .conf_wr(st7_conf_wr),
+    .conf_addr(st7_conf_addr),
+    .conf_data(st7_conf_data)
+  );
+
   // -----
   // St8 instantiation
   // -----
   // St9 instantiation
-  // -----
-  // St10 instantiation
   // -----
 
 endmodule
@@ -536,9 +593,7 @@ module stage2_yott
   mem_1r_1w
   #(
     .width(8),
-    .depth(8),
-    .read_f(1),
-    .init_file("")
+    .depth(8)
   )
   mem_1r_1w_edges
   (
@@ -552,9 +607,7 @@ module stage2_yott
   mem_1r_1w
   #(
     .width(21),
-    .depth(8),
-    .read_f(1),
-    .init_file("")
+    .depth(8)
   )
   mem_1r_1w_annotations
   (
@@ -641,8 +694,7 @@ module stage3_yott
   input [4-1:0] st9_thread_valid,
   input s9_should_write,
   input [4-1:0] st9_b,
-  input [2-1:0] st9_cs_i,
-  input [2-1:0] st9_cs_j,
+  input [4-1:0] st9_c_s,
   input conf_wr,
   input [8-1:0] conf_wr_addr,
   input [4-1:0] conf_wr_data,
@@ -698,16 +750,12 @@ module stage3_yott
   assign mem_rd_addr3 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[11:8] };
   assign mem_wr_addr = (conf_wr)? conf_wr_addr : { st9_thread_index, st9_b };
   assign mem_wr = (conf_wr)? conf_wr : s9_should_write;
-  assign mem_wr_data = (conf_wr)? conf_wr_data : { st9_cs_i, st9_cs_j };
+  assign mem_wr_data = (conf_wr)? conf_wr_data : st9_c_s;
 
   mem_2r_1w
   #(
     .width(4),
-    .depth(8),
-    .read_f(1),
-    .init_file(""),
-    .write_f(1),
-    .output_file("")
+    .depth(8)
   )
   mem_2r_1w_0
   (
@@ -726,11 +774,7 @@ module stage3_yott
   mem_2r_1w
   #(
     .width(4),
-    .depth(8),
-    .read_f(1),
-    .init_file(""),
-    .write_f(1),
-    .output_file("")
+    .depth(8)
   )
   mem_2r_1w_1
   (
@@ -859,9 +903,7 @@ module stage4_yott
   mem_1r_1w
   #(
     .width(6),
-    .depth(9),
-    .read_f(1),
-    .init_file("")
+    .depth(9)
   )
   mem_1r_1w
   (
@@ -1008,6 +1050,173 @@ module distance_table
   assign dist_table[13] = 3'd2;
   assign dist_table[14] = 3'd1;
   assign dist_table[15] = 3'd0;
+
+endmodule
+
+
+
+module stage6_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] b,
+  output reg [4-1:0] c_s,
+  output reg [5-1:0] cost,
+  output reg [3-1:0] dist_ca_cs,
+  input [4-1:0] st5_thread_index,
+  input st5_thread_valid,
+  input [4-1:0] st5_b,
+  input [4-1:0] st5_c_s,
+  input [12-1:0] st5_cs_c,
+  input [9-1:0] st5_dist_csb,
+  input [3-1:0] st5_dist_ca_cs
+);
+
+  wire [3-1:0] d1_t;
+  wire [3-1:0] d2_t;
+  wire [3-1:0] d3_t;
+  wire [3-1:0] sub1_t;
+  wire [3-1:0] sub2_t;
+  wire [3-1:0] sub3_t;
+  assign sub1_t = d1_t - st5_dist_csb[2:0];
+  assign sub2_t = d2_t - st5_dist_csb[5:3];
+  assign sub3_t = d3_t - st5_dist_csb[8:6];
+  wire [5-1:0] cost_t;
+  assign cost_t = sub1_t + sub2_t + sub3_t;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 'd0;
+      b <= 4'd0;
+      c_s <= 4'd0;
+      cost <= 5'd0;
+      dist_ca_cs <= 3'd0;
+    end else begin
+      thread_index <= st5_thread_index;
+      thread_valid <= st5_thread_valid;
+      b <= st5_b;
+      c_s <= st5_cs_c;
+      cost <= cost_t;
+      dist_ca_cs <= st5_dist_ca_cs;
+    end
+  end
+
+
+  distance_table
+  distance_table
+  (
+    .source(st5_c_s),
+    .target1(st5_cs_c[3:0]),
+    .target2(st5_cs_c[7:4]),
+    .target3(st5_cs_c[11:8]),
+    .d1(d1_t),
+    .d2(d2_t),
+    .d3(d1_t)
+  );
+
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    b = 0;
+    c_s = 0;
+    cost = 0;
+    dist_ca_cs = 0;
+  end
+
+
+endmodule
+
+
+
+module stage7_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] b,
+  output reg [4-1:0] c_s,
+  output reg [5-1:0] cost,
+  output reg [3-1:0] dist_ca_cs,
+  output reg cell_free,
+  input [4-1:0] st6_thread_index,
+  input st6_thread_valid,
+  input [4-1:0] st6_b,
+  input [4-1:0] st6_c_s,
+  input [5-1:0] st6_cost,
+  input [3-1:0] st6_dist_ca_cs,
+  input [4-1:0] st9_thread_index,
+  input s9_should_write,
+  input [4-1:0] st9_c_s,
+  input conf_wr,
+  input [8-1:0] conf_addr,
+  input conf_data
+);
+
+  wire cell_free_t;
+  wire content_t;
+  wire out_of_border_t;
+  assign out_of_border_t = (st6_c_s[1:0] > 3'd3) || (st6_c_s[3:2] > 3'd3);
+  assign cell_free_t = &{ ~content_t, ~out_of_border_t, st6_thread_valid };
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 1'd0;
+      b <= 4'd0;
+      c_s <= 4'd0;
+      cost <= 5'd0;
+      dist_ca_cs <= 3'd0;
+      cell_free <= 1'd0;
+    end else begin
+      thread_index <= st6_thread_index;
+      thread_valid <= st6_thread_valid;
+      b <= st6_b;
+      c_s <= st6_c_s;
+      cost <= st6_cost;
+      dist_ca_cs <= st6_dist_ca_cs;
+      cell_free <= cell_free_t;
+    end
+  end
+
+  wire mem_wr;
+  wire [8-1:0] mem_addr;
+  wire mem_data;
+  assign mem_wr = (conf_wr)? conf_wr : s9_should_write;
+  assign mem_addr = (conf_wr)? conf_addr : { st9_thread_index, st9_c_s };
+  assign mem_data = (conf_wr)? conf_data : 1'd1;
+
+  mem_1r_1w
+  #(
+    .width(1),
+    .depth(8)
+  )
+  mem_1r_1w
+  (
+    .clk(clk),
+    .rd_addr({ st6_thread_index, st6_c_s }),
+    .out(content_t),
+    .rd(1'b1),
+    .wr(mem_wr),
+    .wr_addr(mem_addr),
+    .wr_data(mem_data)
+  );
+
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    b = 0;
+    c_s = 0;
+    cost = 0;
+    dist_ca_cs = 0;
+    cell_free = 0;
+  end
+
 
 endmodule
 
