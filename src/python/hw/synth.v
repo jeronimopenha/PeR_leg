@@ -1,5 +1,924 @@
 
 
+module testbench_synth
+(
+  input clk,
+  input rst,
+  output out
+);
+
+  reg start;
+  reg [15-1:0] acc_user_done_rd_data;
+  reg [15-1:0] acc_user_done_wr_data;
+  wire [15-1:0] yoto_acc_acc_user_request_read;
+  reg [15-1:0] acc_user_read_data_valid;
+  reg [480-1:0] acc_user_read_data;
+  reg [15-1:0] acc_user_available_write;
+  wire [15-1:0] yoto_acc_acc_user_request_write;
+  wire [480-1:0] yoto_acc_acc_user_write_data;
+  wire yoto_acc_acc_user_done;
+  wire [480-1:0] data;
+
+  yoto_acc
+  yoto_acc
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start),
+    .acc_user_done_rd_data(acc_user_done_rd_data),
+    .acc_user_done_wr_data(acc_user_done_wr_data),
+    .acc_user_request_read(yoto_acc_acc_user_request_read),
+    .acc_user_read_data_valid(acc_user_read_data_valid),
+    .acc_user_read_data(acc_user_read_data),
+    .acc_user_available_write(acc_user_available_write),
+    .acc_user_request_write(yoto_acc_acc_user_request_write),
+    .acc_user_write_data(yoto_acc_acc_user_write_data),
+    .acc_user_done(yoto_acc_acc_user_done)
+  );
+
+
+  always @(posedge clk) begin
+    if(rst) begin
+      acc_user_done_rd_data <= 0;
+      acc_user_done_wr_data <= 0;
+      acc_user_read_data_valid <= 0;
+      acc_user_read_data <= 0;
+      acc_user_available_write <= 0;
+    end else begin
+      acc_user_done_rd_data <= acc_user_done_rd_data + 1;
+      acc_user_done_wr_data <= acc_user_done_wr_data + 1;
+      acc_user_read_data_valid <= acc_user_read_data_valid + 1;
+      acc_user_read_data <= acc_user_read_data + 1;
+      acc_user_available_write <= acc_user_available_write + 1;
+    end
+  end
+
+
+  always @(posedge clk) begin
+    if(rst) begin
+      start <= 0;
+    end else begin
+      start <= 1;
+    end
+  end
+
+  assign data = yoto_acc_acc_user_request_read|yoto_acc_acc_user_request_write|yoto_acc_acc_user_write_data|yoto_acc_acc_user_done;
+  assign out = ^data;
+
+  initial begin
+    start = 0;
+    acc_user_done_rd_data = 0;
+    acc_user_done_wr_data = 0;
+    acc_user_read_data_valid = 0;
+    acc_user_read_data = 0;
+    acc_user_available_write = 0;
+  end
+
+
+endmodule
+
+
+
+module yoto_acc
+(
+  input clk,
+  input rst,
+  input start,
+  input [15-1:0] acc_user_done_rd_data,
+  input [15-1:0] acc_user_done_wr_data,
+  output [15-1:0] acc_user_request_read,
+  input [15-1:0] acc_user_read_data_valid,
+  input [480-1:0] acc_user_read_data,
+  input [15-1:0] acc_user_available_write,
+  output [15-1:0] acc_user_request_write,
+  output [480-1:0] acc_user_write_data,
+  output acc_user_done
+);
+
+  reg start_reg;
+  wire [15-1:0] yott_interface_done;
+  assign acc_user_done = &yott_interface_done;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      start_reg <= 0;
+    end else begin
+      start_reg <= start_reg | start;
+    end
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_0
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[0]),
+    .yott_done_wr_data(acc_user_done_wr_data[0]),
+    .yott_request_read(acc_user_request_read[0]),
+    .yott_read_data_valid(acc_user_read_data_valid[0]),
+    .yott_read_data(acc_user_read_data[31:0]),
+    .yott_available_write(acc_user_available_write[0]),
+    .yott_request_write(acc_user_request_write[0]),
+    .yott_write_data(acc_user_write_data[31:0]),
+    .yott_interface_done(yott_interface_done[0])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_1
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[1]),
+    .yott_done_wr_data(acc_user_done_wr_data[1]),
+    .yott_request_read(acc_user_request_read[1]),
+    .yott_read_data_valid(acc_user_read_data_valid[1]),
+    .yott_read_data(acc_user_read_data[63:32]),
+    .yott_available_write(acc_user_available_write[1]),
+    .yott_request_write(acc_user_request_write[1]),
+    .yott_write_data(acc_user_write_data[63:32]),
+    .yott_interface_done(yott_interface_done[1])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_2
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[2]),
+    .yott_done_wr_data(acc_user_done_wr_data[2]),
+    .yott_request_read(acc_user_request_read[2]),
+    .yott_read_data_valid(acc_user_read_data_valid[2]),
+    .yott_read_data(acc_user_read_data[95:64]),
+    .yott_available_write(acc_user_available_write[2]),
+    .yott_request_write(acc_user_request_write[2]),
+    .yott_write_data(acc_user_write_data[95:64]),
+    .yott_interface_done(yott_interface_done[2])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_3
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[3]),
+    .yott_done_wr_data(acc_user_done_wr_data[3]),
+    .yott_request_read(acc_user_request_read[3]),
+    .yott_read_data_valid(acc_user_read_data_valid[3]),
+    .yott_read_data(acc_user_read_data[127:96]),
+    .yott_available_write(acc_user_available_write[3]),
+    .yott_request_write(acc_user_request_write[3]),
+    .yott_write_data(acc_user_write_data[127:96]),
+    .yott_interface_done(yott_interface_done[3])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_4
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[4]),
+    .yott_done_wr_data(acc_user_done_wr_data[4]),
+    .yott_request_read(acc_user_request_read[4]),
+    .yott_read_data_valid(acc_user_read_data_valid[4]),
+    .yott_read_data(acc_user_read_data[159:128]),
+    .yott_available_write(acc_user_available_write[4]),
+    .yott_request_write(acc_user_request_write[4]),
+    .yott_write_data(acc_user_write_data[159:128]),
+    .yott_interface_done(yott_interface_done[4])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_5
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[5]),
+    .yott_done_wr_data(acc_user_done_wr_data[5]),
+    .yott_request_read(acc_user_request_read[5]),
+    .yott_read_data_valid(acc_user_read_data_valid[5]),
+    .yott_read_data(acc_user_read_data[191:160]),
+    .yott_available_write(acc_user_available_write[5]),
+    .yott_request_write(acc_user_request_write[5]),
+    .yott_write_data(acc_user_write_data[191:160]),
+    .yott_interface_done(yott_interface_done[5])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_6
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[6]),
+    .yott_done_wr_data(acc_user_done_wr_data[6]),
+    .yott_request_read(acc_user_request_read[6]),
+    .yott_read_data_valid(acc_user_read_data_valid[6]),
+    .yott_read_data(acc_user_read_data[223:192]),
+    .yott_available_write(acc_user_available_write[6]),
+    .yott_request_write(acc_user_request_write[6]),
+    .yott_write_data(acc_user_write_data[223:192]),
+    .yott_interface_done(yott_interface_done[6])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_7
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[7]),
+    .yott_done_wr_data(acc_user_done_wr_data[7]),
+    .yott_request_read(acc_user_request_read[7]),
+    .yott_read_data_valid(acc_user_read_data_valid[7]),
+    .yott_read_data(acc_user_read_data[255:224]),
+    .yott_available_write(acc_user_available_write[7]),
+    .yott_request_write(acc_user_request_write[7]),
+    .yott_write_data(acc_user_write_data[255:224]),
+    .yott_interface_done(yott_interface_done[7])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_8
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[8]),
+    .yott_done_wr_data(acc_user_done_wr_data[8]),
+    .yott_request_read(acc_user_request_read[8]),
+    .yott_read_data_valid(acc_user_read_data_valid[8]),
+    .yott_read_data(acc_user_read_data[287:256]),
+    .yott_available_write(acc_user_available_write[8]),
+    .yott_request_write(acc_user_request_write[8]),
+    .yott_write_data(acc_user_write_data[287:256]),
+    .yott_interface_done(yott_interface_done[8])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_9
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[9]),
+    .yott_done_wr_data(acc_user_done_wr_data[9]),
+    .yott_request_read(acc_user_request_read[9]),
+    .yott_read_data_valid(acc_user_read_data_valid[9]),
+    .yott_read_data(acc_user_read_data[319:288]),
+    .yott_available_write(acc_user_available_write[9]),
+    .yott_request_write(acc_user_request_write[9]),
+    .yott_write_data(acc_user_write_data[319:288]),
+    .yott_interface_done(yott_interface_done[9])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_10
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[10]),
+    .yott_done_wr_data(acc_user_done_wr_data[10]),
+    .yott_request_read(acc_user_request_read[10]),
+    .yott_read_data_valid(acc_user_read_data_valid[10]),
+    .yott_read_data(acc_user_read_data[351:320]),
+    .yott_available_write(acc_user_available_write[10]),
+    .yott_request_write(acc_user_request_write[10]),
+    .yott_write_data(acc_user_write_data[351:320]),
+    .yott_interface_done(yott_interface_done[10])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_11
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[11]),
+    .yott_done_wr_data(acc_user_done_wr_data[11]),
+    .yott_request_read(acc_user_request_read[11]),
+    .yott_read_data_valid(acc_user_read_data_valid[11]),
+    .yott_read_data(acc_user_read_data[383:352]),
+    .yott_available_write(acc_user_available_write[11]),
+    .yott_request_write(acc_user_request_write[11]),
+    .yott_write_data(acc_user_write_data[383:352]),
+    .yott_interface_done(yott_interface_done[11])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_12
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[12]),
+    .yott_done_wr_data(acc_user_done_wr_data[12]),
+    .yott_request_read(acc_user_request_read[12]),
+    .yott_read_data_valid(acc_user_read_data_valid[12]),
+    .yott_read_data(acc_user_read_data[415:384]),
+    .yott_available_write(acc_user_available_write[12]),
+    .yott_request_write(acc_user_request_write[12]),
+    .yott_write_data(acc_user_write_data[415:384]),
+    .yott_interface_done(yott_interface_done[12])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_13
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[13]),
+    .yott_done_wr_data(acc_user_done_wr_data[13]),
+    .yott_request_read(acc_user_request_read[13]),
+    .yott_read_data_valid(acc_user_read_data_valid[13]),
+    .yott_read_data(acc_user_read_data[447:416]),
+    .yott_available_write(acc_user_available_write[13]),
+    .yott_request_write(acc_user_request_write[13]),
+    .yott_write_data(acc_user_write_data[447:416]),
+    .yott_interface_done(yott_interface_done[13])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+  (* keep_hierarchy = "yes" *)
+
+  yott_interface
+  yott_interface_14
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_reg),
+    .yott_done_rd_data(acc_user_done_rd_data[14]),
+    .yott_done_wr_data(acc_user_done_wr_data[14]),
+    .yott_request_read(acc_user_request_read[14]),
+    .yott_read_data_valid(acc_user_read_data_valid[14]),
+    .yott_read_data(acc_user_read_data[479:448]),
+    .yott_available_write(acc_user_available_write[14]),
+    .yott_request_write(acc_user_request_write[14]),
+    .yott_write_data(acc_user_write_data[479:448]),
+    .yott_interface_done(yott_interface_done[14])
+  );
+
+
+  initial begin
+    start_reg = 0;
+  end
+
+
+endmodule
+
+
+
+module yott_interface
+(
+  input clk,
+  input rst,
+  input start,
+  input yott_done_rd_data,
+  input yott_done_wr_data,
+  output yott_request_read,
+  input yott_read_data_valid,
+  input [32-1:0] yott_read_data,
+  input yott_available_write,
+  output reg yott_request_write,
+  output reg [32-1:0] yott_write_data,
+  output yott_interface_done
+);
+
+  assign yott_interface_done = &{ yott_done_wr_data, yott_done_rd_data };
+  reg start_pipe;
+  reg pop_data;
+  wire available_pop;
+  wire [16-1:0] data_out;
+  reg [4-1:0] visited_edges;
+  wire [32-1:0] total_pipeline_counter;
+  reg [5-1:0] fms_sd;
+  localparam [5-1:0] fsm_sd_edges_idle = 0;
+  localparam [5-1:0] fsm_sd_edges_send_data = 1;
+  localparam [5-1:0] fsm_sd_edges_verify = 2;
+  localparam [5-1:0] fsm_sd_annotations_idle = 3;
+  localparam [5-1:0] fsm_sd_annotations_send_data = 4;
+  localparam [5-1:0] fsm_sd_annotations_verify = 5;
+  localparam [5-1:0] fsm_sd_n2c_idle = 6;
+  localparam [5-1:0] fsm_sd_n2c_send_data = 7;
+  localparam [5-1:0] fsm_sd_n2c_verify = 8;
+  localparam [5-1:0] fsm_sd_dist_idle = 9;
+  localparam [5-1:0] fsm_sd_dist_send_data = 10;
+  localparam [5-1:0] fsm_sd_dist_verify = 11;
+  localparam [5-1:0] fsm_sd_c_idle = 12;
+  localparam [5-1:0] fsm_sd_c_send_data = 13;
+  localparam [5-1:0] fsm_sd_c_verify = 14;
+  localparam [5-1:0] fsm_sd_vedges_idle = 15;
+  localparam [5-1:0] fsm_sd_vedges_send_data = 16;
+  localparam [5-1:0] fsm_sd_done = 17;
+  wire yott_done;
+  reg st3_conf_rd;
+  reg [8-1:0] st3_conf_rd_addr;
+  wire [4-1:0] st3_conf_rd_data;
+  reg st2_conf_wr0;
+  reg [8-1:0] st2_conf_addr0;
+  reg [8-1:0] st2_conf_data0;
+  reg st2_conf_wr1;
+  reg [8-1:0] st2_conf_addr1;
+  reg [21-1:0] st2_conf_data1;
+  reg st3_conf_wr;
+  reg [8-1:0] st3_conf_wr_addr;
+  reg [4-1:0] st3_conf_wr_data;
+  reg st4_conf_wr;
+  reg [9-1:0] st4_conf_addr;
+  reg [6-1:0] st4_conf_data;
+  reg st7_conf_wr;
+  reg [8-1:0] st7_conf_addr;
+  reg st7_conf_data;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      st2_conf_wr0 <= 0;
+      st2_conf_addr0 <= 0;
+      st2_conf_data0 <= 0;
+      st2_conf_wr1 <= 0;
+      st2_conf_addr1 <= 0;
+      st2_conf_data1 <= 0;
+      st3_conf_wr <= 0;
+      st3_conf_wr_addr <= 0;
+      st3_conf_wr_data <= 0;
+      st4_conf_wr <= 0;
+      st4_conf_addr <= 0;
+      st4_conf_data <= 0;
+      st7_conf_wr <= 0;
+      st7_conf_addr <= 0;
+      st7_conf_data <= 0;
+      pop_data <= 0;
+      start_pipe <= 0;
+      fms_sd <= fsm_sd_edges_idle;
+    end else begin
+      if(start) begin
+        st2_conf_wr0 <= 0;
+        st2_conf_wr1 <= 0;
+        st3_conf_wr <= 0;
+        st4_conf_wr <= 0;
+        st7_conf_wr <= 0;
+        start_pipe <= 0;
+        pop_data <= 0;
+        case(fms_sd)
+          fsm_sd_edges_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_edges_send_data;
+            end 
+          end
+          fsm_sd_edges_send_data: begin
+            st2_conf_wr0 <= 1;
+            st2_conf_data0 <= data_out[7:0];
+            fms_sd <= fsm_sd_edges_verify;
+          end
+          fsm_sd_edges_verify: begin
+            if(&st2_conf_addr0) begin
+              fms_sd <= fsm_sd_annotations_idle;
+            end else begin
+              st2_conf_addr0 <= st2_conf_addr0 + 1;
+              fms_sd <= fsm_sd_edges_idle;
+            end
+          end
+          fsm_sd_annotations_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_annotations_send_data;
+            end 
+          end
+          fsm_sd_annotations_send_data: begin
+            st2_conf_wr1 <= 1;
+            st2_conf_data1 <= data_out[20:0];
+            fms_sd <= fsm_sd_annotations_verify;
+          end
+          fsm_sd_annotations_verify: begin
+            if(&st2_conf_addr1) begin
+              fms_sd <= fsm_sd_n2c_idle;
+            end else begin
+              st2_conf_addr1 <= st2_conf_addr1 + 1;
+              fms_sd <= fsm_sd_annotations_idle;
+            end
+          end
+          fsm_sd_n2c_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_n2c_send_data;
+            end 
+          end
+          fsm_sd_n2c_send_data: begin
+            st3_conf_wr <= 1;
+            st3_conf_wr_data <= data_out[3:0];
+            fms_sd <= fsm_sd_n2c_verify;
+          end
+          fsm_sd_n2c_verify: begin
+            if(&st3_conf_wr_addr) begin
+              fms_sd <= fsm_sd_dist_idle;
+            end else begin
+              st3_conf_wr_addr <= st3_conf_wr_addr + 1;
+              fms_sd <= fsm_sd_n2c_idle;
+            end
+          end
+          fsm_sd_dist_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_dist_send_data;
+            end 
+          end
+          fsm_sd_dist_send_data: begin
+            st4_conf_wr <= 1;
+            st4_conf_data <= data_out[5:0];
+            fms_sd <= fsm_sd_dist_verify;
+          end
+          fsm_sd_dist_verify: begin
+            if(&st4_conf_addr) begin
+              fms_sd <= fsm_sd_c_idle;
+            end else begin
+              st4_conf_addr <= st4_conf_addr + 1;
+              fms_sd <= fsm_sd_dist_idle;
+            end
+          end
+          fsm_sd_c_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_c_send_data;
+            end 
+          end
+          fsm_sd_c_send_data: begin
+            st7_conf_wr <= 1;
+            st7_conf_data <= data_out[15:0];
+            fms_sd <= fsm_sd_c_verify;
+          end
+          fsm_sd_c_verify: begin
+            if(&st7_conf_addr) begin
+              fms_sd <= fsm_sd_vedges_idle;
+            end else begin
+              st7_conf_addr <= st7_conf_addr + 1;
+              fms_sd <= fsm_sd_c_idle;
+            end
+          end
+          fsm_sd_vedges_idle: begin
+            if(available_pop) begin
+              pop_data <= 1;
+              fms_sd <= fsm_sd_vedges_send_data;
+            end 
+          end
+          fsm_sd_vedges_send_data: begin
+            visited_edges <= data_out[3:0];
+            fms_sd <= fsm_sd_done;
+          end
+          fsm_sd_done: begin
+            start_pipe <= 1;
+          end
+        endcase
+      end 
+    end
+  end
+
+
+  //Data Consumer - Begin
+  reg [2-1:0] fsm_consume;
+  localparam fsm_consume_wait = 0;
+  localparam fsm_consume_consume = 1;
+  localparam fsm_consume_verify = 2;
+  localparam fsm_consume_done = 3;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      st3_conf_rd <= 0;
+      st3_conf_rd_addr <= 0;
+      yott_request_write <= 0;
+      fsm_consume <= fsm_consume_wait;
+    end else begin
+      st3_conf_rd <= 0;
+      yott_request_write <= 0;
+      case(fsm_consume)
+        fsm_consume_wait: begin
+          if(yott_available_write) begin
+            if(yott_done) begin
+              st3_conf_rd <= 1;
+              fsm_consume <= fsm_consume_consume;
+            end 
+          end 
+        end
+        fsm_consume_consume: begin
+          yott_request_write <= 1;
+          yott_write_data <= { 28'd0, st3_conf_rd_data };
+          st3_conf_rd_addr <= st3_conf_rd_addr + 1;
+          fsm_consume <= fsm_consume_verify;
+        end
+        fsm_consume_verify: begin
+          if(st3_conf_rd_addr == 256) begin
+            fsm_consume <= fsm_consume_done;
+          end else begin
+            fsm_consume <= fsm_consume_wait;
+          end
+        end
+        fsm_consume_done: begin
+        end
+      endcase
+    end
+  end
+
+  //Data Consumer - Begin
+  (* keep_hierarchy = "yes" *)
+
+  fetch_data_32_16
+  fetch_data_32_16
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start),
+    .request_read(yott_request_read),
+    .data_valid(yott_read_data_valid),
+    .read_data(yott_read_data),
+    .pop_data(pop_data),
+    .available_pop(available_pop),
+    .data_out(data_out)
+  );
+
+
+  yott_pipeline_hw
+  yott_pipeline_hw
+  (
+    .clk(clk),
+    .rst(rst),
+    .start(start_pipe),
+    .visited_edges(visited_edges),
+    .done(yott_done),
+    .st2_conf_wr0(st2_conf_wr0),
+    .st2_conf_addr0(st2_conf_addr0),
+    .st2_conf_data0(st2_conf_data0),
+    .st2_conf_wr1(st2_conf_wr1),
+    .st2_conf_addr1(st2_conf_addr1),
+    .st2_conf_data1(st2_conf_data1),
+    .st3_conf_wr(st3_conf_wr),
+    .st3_conf_wr_addr(st3_conf_wr_addr),
+    .st3_conf_wr_data(st3_conf_wr_data),
+    .st3_conf_rd(st3_conf_rd),
+    .st3_conf_rd_addr(st3_conf_rd_addr),
+    .st3_conf_rd_data(st3_conf_rd_data),
+    .st4_conf_wr(st4_conf_wr),
+    .st4_conf_addr(st4_conf_addr),
+    .st4_conf_data(st4_conf_data),
+    .st7_conf_wr(st7_conf_wr),
+    .st7_conf_addr(st7_conf_addr),
+    .st7_conf_data(st7_conf_data)
+  );
+
+
+  initial begin
+    yott_request_write = 0;
+    yott_write_data = 0;
+    start_pipe = 0;
+    pop_data = 0;
+    visited_edges = 0;
+    fms_sd = 0;
+    st3_conf_rd = 0;
+    st3_conf_rd_addr = 0;
+    st2_conf_wr0 = 0;
+    st2_conf_addr0 = 0;
+    st2_conf_data0 = 0;
+    st2_conf_wr1 = 0;
+    st2_conf_addr1 = 0;
+    st2_conf_data1 = 0;
+    st3_conf_wr = 0;
+    st3_conf_wr_addr = 0;
+    st3_conf_wr_data = 0;
+    st4_conf_wr = 0;
+    st4_conf_addr = 0;
+    st4_conf_data = 0;
+    st7_conf_wr = 0;
+    st7_conf_addr = 0;
+    st7_conf_data = 0;
+    fsm_consume = 0;
+  end
+
+
+endmodule
+
+
+
+module fetch_data_32_16
+(
+  input clk,
+  input start,
+  input rst,
+  output reg request_read,
+  input data_valid,
+  input [32-1:0] read_data,
+  input pop_data,
+  output reg available_pop,
+  output [16-1:0] data_out
+);
+
+  reg [1-1:0] fsm_read;
+  reg [1-1:0] fsm_control;
+  reg [32-1:0] data;
+  reg [32-1:0] buffer;
+  reg [2-1:0] count;
+  reg has_buffer;
+  reg buffer_read;
+  reg en;
+
+  assign data_out = data[15:0];
+
+  always @(posedge clk) begin
+    if(rst) begin
+      en <= 1'b0;
+    end else begin
+      en <= (en)? en : start;
+    end
+  end
+
+
+  always @(posedge clk) begin
+    if(rst) begin
+      fsm_read <= 0;
+      request_read <= 0;
+      has_buffer <= 0;
+    end else begin
+      request_read <= 0;
+      case(fsm_read)
+        0: begin
+          if(en & data_valid) begin
+            buffer <= read_data;
+            request_read <= 1;
+            has_buffer <= 1;
+            fsm_read <= 1;
+          end 
+        end
+        1: begin
+          if(buffer_read) begin
+            has_buffer <= 0;
+            fsm_read <= 0;
+          end 
+        end
+      endcase
+    end
+  end
+
+
+  always @(posedge clk) begin
+    if(rst) begin
+      fsm_control <= 0;
+      available_pop <= 0;
+      count <= 0;
+      buffer_read <= 0;
+    end else begin
+      buffer_read <= 0;
+      case(fsm_control)
+        0: begin
+          if(has_buffer) begin
+            data <= buffer;
+            count <= 1;
+            buffer_read <= 1;
+            available_pop <= 1;
+            fsm_control <= 1;
+          end 
+        end
+        1: begin
+          if(pop_data & ~count[1]) begin
+            count <= count << 1;
+            data <= data[31:16];
+          end 
+          if(pop_data & count[1] & has_buffer) begin
+            count <= 1;
+            data <= buffer;
+            buffer_read <= 1;
+          end 
+          if(count[1] & pop_data & ~has_buffer) begin
+            count <= count << 1;
+            data <= data[31:16];
+            available_pop <= 0;
+            fsm_control <= 0;
+          end 
+        end
+      endcase
+    end
+  end
+
+
+  initial begin
+    request_read = 0;
+    available_pop = 0;
+    fsm_read = 0;
+    fsm_control = 0;
+    data = 0;
+    buffer = 0;
+    count = 0;
+    has_buffer = 0;
+    buffer_read = 0;
+    en = 0;
+  end
+
+
+endmodule
+
+
+
 module yott_pipeline_hw
 (
   input clk,
@@ -7,9 +926,12 @@ module yott_pipeline_hw
   input start,
   input [4-1:0] visited_edges,
   output done,
-  input st2_conf_wr,
-  input [8-1:0] st2_conf_addr,
-  input [8-1:0] st2_conf_data,
+  input st2_conf_wr0,
+  input [8-1:0] st2_conf_addr0,
+  input [8-1:0] st2_conf_data0,
+  input st2_conf_wr1,
+  input [8-1:0] st2_conf_addr1,
+  input [21-1:0] st2_conf_data1,
   input st3_conf_wr,
   input [8-1:0] st3_conf_wr_addr,
   input [4-1:0] st3_conf_wr_data,
@@ -204,9 +1126,12 @@ module yott_pipeline_hw
     .cs(st2_cs),
     .dist_csb(st2_dist_csb),
     .index_list_edge(st2_index_list_edge),
-    .conf_wr(st2_conf_wr),
-    .conf_addr(st2_conf_addr),
-    .conf_data(st2_conf_data)
+    .conf_wr0(st2_conf_wr0),
+    .conf_addr0(st2_conf_addr0),
+    .conf_data0(st2_conf_data0),
+    .conf_wr1(st2_conf_wr1),
+    .conf_addr1(st2_conf_addr1),
+    .conf_data1(st2_conf_data1)
   );
 
   // -----
@@ -678,9 +1603,12 @@ module stage2_yott
   output reg [12-1:0] cs,
   output reg [9-1:0] dist_csb,
   output reg [4-1:0] index_list_edge,
-  input conf_wr,
-  input [8-1:0] conf_addr,
-  input [8-1:0] conf_data
+  input conf_wr0,
+  input [8-1:0] conf_addr0,
+  input [8-1:0] conf_data0,
+  input conf_wr1,
+  input [8-1:0] conf_addr1,
+  input [21-1:0] conf_data1
 );
 
   wire [4-1:0] a_t;
@@ -720,9 +1648,9 @@ module stage2_yott
     .rd_addr({ st1_thread_index, st1_edge_index }),
     .out({ a_t, b_t }),
     .rd(1'b1),
-    .wr(conf_wr),
-    .wr_addr(conf_addr),
-    .wr_data(conf_data)
+    .wr(conf_wr0),
+    .wr_addr(conf_addr0),
+    .wr_data(conf_data0)
   );
 
 
@@ -736,7 +1664,10 @@ module stage2_yott
     .clk(clk),
     .rd_addr({ st1_thread_index, st1_edge_index }),
     .out({ cs_t, dist_csb_t }),
-    .rd(1'b1)
+    .rd(1'b1),
+    .wr(conf_wr1),
+    .wr_addr(conf_addr1),
+    .wr_data(conf_data1)
   );
 
 

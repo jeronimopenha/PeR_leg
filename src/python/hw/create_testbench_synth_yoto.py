@@ -96,8 +96,8 @@ dot_connected_path = dot_path_base + 'connected/'
 report_path_base = os.getcwd() + '/reports/sw/yoto/yoto_pipeline/t_%d/%s/' % (total_threads, arch_type)
 verilog_path_base = os.getcwd() + '/verilog/yoto/yoto_pipeline/t_%d/%s/' % (total_threads, arch_type)
 
-Util.create_folder_if_not_exist(report_path_base)
-Util.create_folder_if_not_exist(verilog_path_base)
+#Util.create_folder_if_not_exist(report_path_base)
+#Util.create_folder_if_not_exist(verilog_path_base)
 
 yoto_pipeline_hw = None
 

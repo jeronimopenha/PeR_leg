@@ -981,6 +981,7 @@ class YotoPipelineHw(PiplineBase):
                 st4_conf_addr(0),
                 st4_conf_data(0),
                 pop_data(0),
+                start_pipe(0),
                 fsm_sd(fsm_sd_edges_idle),
             ).Elif(start)(
                 st1_conf_wr(0),
