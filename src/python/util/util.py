@@ -872,6 +872,7 @@ class Util:
         # print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
         df_simul = DfSimulSw(per_graph)
+        nx.drawing.nx_pydot.write_dot( df_simul.g_with_regs,'./arf_with_regs.dot')
         ths: list = df_simul.run_simulation()
         dict_ths = dict(ths)
         print(ths)
