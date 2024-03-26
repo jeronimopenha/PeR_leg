@@ -128,7 +128,14 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St8 wires')
-
+        st8_thread_index = m.Wire('st8_thread_index', self.th_bits)
+        st8_thread_valid = m.Wire('st8_thread_valid')
+        st8_b = m.Wire('st8_b', self.node_bits)
+        st8_c_s = m.Wire('st8_c_s', self.ij_bits * 2)
+        st8_cost = m.Wire('st8_cost', self.dist_bits + 2)
+        st8_dist_ca_cs = m.Wire('st8_dist_ca_cs', self.dist_bits)
+        st8_save_cell = m.Wire('st8_save_cell')
+        st8_should_write = m.Wire('st8_should_write')
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -323,12 +330,27 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St8 instantiation')
-        '''stage4_m = self.create_stage4_yoto(cell_content_f, simulate)
+        stage8_m = self.create_stage8_yott()
         con = [
             ('clk', clk),
             ('rst', rst),
+            ('thread_index', st8_thread_index),
+            ('thread_valid', st8_thread_valid),
+            ('b', st8_b),
+            ('c_s', st8_c_s),
+            ('cost', st8_cost),
+            ('dist_ca_cs', st8_dist_ca_cs),
+            ('save_cell', st8_save_cell),
+            ('should_write', st8_should_write),
+            ('st7_thread_index', st7_thread_index),
+            ('st7_thread_valid', st7_thread_valid),
+            ('st7_b', st7_b),
+            ('st7_c_s', st7_c_s),
+            ('st7_cost', st7_cost),
+            ('st7_dist_ca_cs', st7_dist_ca_cs),
+            ('st7_cell_free', st7_cell_free),
         ]
-        m.Instance(stage4_m, stage4_m.name, par, con)'''
+        m.Instance(stage8_m, stage8_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St9 instantiation')
@@ -1045,6 +1067,61 @@ class YottPipelineHw(PiplineBase):
 
         cells_m = self.hw_components.create_memory_1r_1w()
         m.Instance(cells_m, cells_m.name, par, con)
+
+        HwUtil.initialize_regs(m)
+        return m
+
+    def create_stage8_yott(self):
+        name = 'stage8_yott'
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        thread_index = m.OutputReg('thread_index', self.th_bits)
+        thread_valid = m.OutputReg('thread_valid')
+        b = m.OutputReg('b', self.node_bits)
+        c_s = m.OutputReg('c_s', self.ij_bits * 2)
+        cost = m.OutputReg('cost', self.dist_bits + 2)
+        dist_ca_cs = m.OutputReg('dist_ca_cs', self.dist_bits)
+        save_cell = m.OutputReg('save_cell')
+        should_write = m.OutputReg('should_write')
+
+        st7_thread_index = m.Input('st7_thread_index', self.th_bits)
+        st7_thread_valid = m.Input('st7_thread_valid')
+        st7_b = m.Input('st7_b', self.node_bits)
+        st7_c_s = m.Input('st7_c_s', self.ij_bits * 2)
+        st7_cost = m.Input('st7_cost', self.dist_bits + 2)
+        st7_dist_ca_cs = m.Input('st7_dist_ca_cs', self.dist_bits)
+        st7_cell_free = m.Input('st7_cell_free')
+
+        save_cell_t = m.Wire('save_cell_t')
+        should_write_t = m.Wire('should_write_t')
+
+        should_write_t.assign(AndList(st7_cell_free, OrList(AndList(dist_ca_cs < 3, cost == 0), dist_ca_cs >= 3)))
+        save_cell_t.assign(AndList(st7_cell_free, dist_ca_cs < 3, ~should_write))
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                thread_index(Int(0, thread_index.width, 10)),
+                thread_valid(Int(0, 1, 10)),
+                b(Int(0, b.width, 10)),
+                c_s(Int(0, c_s.width, 10)),
+                cost(Int(0, cost.width, 10)),
+                dist_ca_cs(Int(0, dist_ca_cs.width, 10)),
+                save_cell(Int(0, 1, 10)),
+                should_write(Int(0, 1, 10)),
+            ).Else(
+                thread_index(st7_thread_index),
+                thread_valid(st7_thread_valid),
+                b(st7_b),
+                c_s(st7_c_s),
+                cost(st7_cost),
+                dist_ca_cs(st7_dist_ca_cs),
+                save_cell(save_cell_t),
+                should_write(should_write_t),
+            ),
+        )
 
         HwUtil.initialize_regs(m)
         return m

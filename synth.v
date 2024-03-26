@@ -90,6 +90,14 @@ module yoto_pipeline_hw
   // -----
 
   // St8 wires
+  wire [4-1:0] st8_thread_index;
+  wire st8_thread_valid;
+  wire [4-1:0] st8_b;
+  wire [4-1:0] st8_c_s;
+  wire [5-1:0] st8_cost;
+  wire [3-1:0] st8_dist_ca_cs;
+  wire st8_save_cell;
+  wire st8_should_write;
   // -----
 
   // St9 wires
@@ -289,6 +297,29 @@ module yoto_pipeline_hw
 
   // -----
   // St8 instantiation
+
+  stage8_yott
+  stage8_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st8_thread_index),
+    .thread_valid(st8_thread_valid),
+    .b(st8_b),
+    .c_s(st8_c_s),
+    .cost(st8_cost),
+    .dist_ca_cs(st8_dist_ca_cs),
+    .save_cell(st8_save_cell),
+    .should_write(st8_should_write),
+    .st7_thread_index(st7_thread_index),
+    .st7_thread_valid(st7_thread_valid),
+    .st7_b(st7_b),
+    .st7_c_s(st7_c_s),
+    .st7_cost(st7_cost),
+    .st7_dist_ca_cs(st7_dist_ca_cs),
+    .st7_cell_free(st7_cell_free)
+  );
+
   // -----
   // St9 instantiation
   // -----
@@ -1215,6 +1246,71 @@ module stage7_yott
     cost = 0;
     dist_ca_cs = 0;
     cell_free = 0;
+  end
+
+
+endmodule
+
+
+
+module stage8_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] b,
+  output reg [4-1:0] c_s,
+  output reg [5-1:0] cost,
+  output reg [3-1:0] dist_ca_cs,
+  output reg save_cell,
+  output reg should_write,
+  input [4-1:0] st7_thread_index,
+  input st7_thread_valid,
+  input [4-1:0] st7_b,
+  input [4-1:0] st7_c_s,
+  input [5-1:0] st7_cost,
+  input [3-1:0] st7_dist_ca_cs,
+  input st7_cell_free
+);
+
+  wire save_cell_t;
+  wire should_write_t;
+  assign should_write_t = st7_cell_free && ((dist_ca_cs < 3) && (cost == 0) || (dist_ca_cs >= 3));
+  assign save_cell_t = st7_cell_free && (dist_ca_cs < 3) && ~should_write;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 1'd0;
+      b <= 4'd0;
+      c_s <= 4'd0;
+      cost <= 5'd0;
+      dist_ca_cs <= 3'd0;
+      save_cell <= 1'd0;
+      should_write <= 1'd0;
+    end else begin
+      thread_index <= st7_thread_index;
+      thread_valid <= st7_thread_valid;
+      b <= st7_b;
+      c_s <= st7_c_s;
+      cost <= st7_cost;
+      dist_ca_cs <= st7_dist_ca_cs;
+      save_cell <= save_cell_t;
+      should_write <= should_write_t;
+    end
+  end
+
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    b = 0;
+    c_s = 0;
+    cost = 0;
+    dist_ca_cs = 0;
+    save_cell = 0;
+    should_write = 0;
   end
 
 
