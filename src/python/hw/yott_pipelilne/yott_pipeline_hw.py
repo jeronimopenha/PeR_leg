@@ -120,7 +120,12 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('')
 
         m.EmbeddedCode('// St6 wires')
-
+        st6_thread_index = m.Wire('st6_thread_index', self.th_bits)
+        st6_thread_valid = m.Wire('st6_thread_valid')
+        st6_b = m.Wire('st6_b', self.node_bits)
+        st6_c_s = m.Wire('st6_c_s', self.ij_bits * 2)
+        st6_cost = m.Wire('st6_cost', self.dist_bits + 2)
+        st6_dist_ca_cs = m.Wire('st6_dist_ca_cs', self.dist_bits)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -282,12 +287,25 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St6 instantiation')
-        '''stage4_m = self.create_stage4_yoto(cell_content_f, simulate)
+        stage6_m = self.create_stage6_yott()
         con = [
             ('clk', clk),
             ('rst', rst),
+            ('thread_index',),
+            ('thread_valid',),
+            ('b',),
+            ('c_s',),
+            ('cost',),
+            ('dist_ca_cs',),
+            ('st5_thread_index', st5_thread_index),
+            ('st5_thread_valid', st5_thread_valid),
+            ('st5_b', st5_b),
+            ('st5_c_s', st5_c_s),
+            ('st5_cs_c', st5_cs_c),
+            ('st5_dist_csb', st5_dist_csb),
+            ('st5_dist_ca_cs', st5_dist_ca_cs),
         ]
-        m.Instance(stage4_m, stage4_m.name, par, con)'''
+        m.Instance(stage6_m, stage6_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St7 instantiation')
@@ -877,3 +895,87 @@ class YottPipelineHw(PiplineBase):
 
         HwUtil.initialize_regs(m)
         return m
+
+    def create_stage6_yott(self):
+        name = 'stage6_yott'
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        thread_index = m.OutputReg('thread_index', self.th_bits)
+        thread_valid = m.OutputReg('thread_valid')
+        b = m.OutputReg('b', self.node_bits)
+        c_s = m.OutputReg('c_s', self.ij_bits * 2)
+        cost = m.OutputReg('cost', self.dist_bits + 2)
+        dist_ca_cs = m.OutputReg('dist_ca_cs', self.dist_bits)
+
+        st5_thread_index = m.OutputReg('st5_thread_index', self.th_bits)
+        st5_thread_valid = m.OutputReg('st5_thread_valid')
+        st5_b = m.OutputReg('st5_b', self.node_bits)
+        st5_c_s = m.OutputReg('st5_c_s', self.ij_bits * 2)
+        st5_cs_c = m.OutputReg('st5_cs_c', self.ij_bits * 2 * 3)
+        st5_dist_csb = m.OutputReg('st5_dist_csb', self.dist_bits * 3)
+        st5_dist_ca_cs = m.OutputReg('st5_dist_ca_cs', self.dist_bits)
+
+        d1_t = m.Wire('d1_t', self.dist_bits)
+        d2_t = m.Wire('d2_t', self.dist_bits)
+        d3_t = m.Wire('d3_t', self.dist_bits)
+        sub1_t = m.Wire('sub1_t', self.dist_bits)
+        sub2_t = m.Wire('sub2_t', self.dist_bits)
+        sub3_t = m.Wire('sub3_t', self.dist_bits)
+
+        sub1_t.assign(d1_t - st5_dist_csb[0:self.dist_bits])
+        sub2_t.assign(d2_t - st5_dist_csb[self.dist_bits:self.dist_bits * 2])
+        sub3_t.assign(d3_t - st5_dist_csb[self.dist_bits * 2:self.dist_bits * 3])
+
+        cost_t = m.Wire('cost_t', self.dist_bits + 2)
+        cost_t.assign(sub1_t + sub2_t + sub3_t)
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                thread_index(Int(0, thread_index.width, 10)),
+                thread_valid(Int(0, thread_valid.width, 10)),
+                b(Int(0, b.width, 10)),
+                c_s(Int(0, c_s.width, 10)),
+                cost(Int(0, cost.width, 10)),
+                dist_ca_cs(Int(0, dist_ca_cs.width, 10)),
+            ).Else(
+                thread_index(st5_thread_index),
+                thread_valid(st5_thread_valid),
+                b(st5_b),
+                c_s(st5_cs_c),
+                cost(cost_t),
+                dist_ca_cs(st5_dist_ca_cs),
+            ),
+        )
+
+        dist_m = self.create_manhattan_dist_table()
+        par = []
+        con = [
+            ('source', st5_c_s),
+            ('target1', st5_cs_c[0:self.ij_bits * 2]),
+            ('target2', st5_cs_c[self.ij_bits * 2:self.ij_bits * 2 * 2]),
+            ('target3', st5_cs_c[self.ij_bits * 2 * 2:self.ij_bits * 2 * 3]),
+            ('d1', d1_t),
+            ('d2', d2_t),
+            ('d3', d1_t),
+        ]
+        m.Instance(dist_m, dist_m.name, par, con)
+
+        HwUtil.initialize_regs(m)
+        return m
+
+    def create_stage7_yott(self):
+        name = 'stage7_yott'
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        thread_index = m.OutputReg('thread_index', self.th_bits)
+        thread_valid = m.OutputReg('thread_valid')
+        b = m.OutputReg('b', self.node_bits)
+        c_s = m.OutputReg('c_s', self.ij_bits * 2)
+        cost = m.OutputReg('cost', self.dist_bits + 2)
+        dist_ca_cs = m.OutputReg('dist_ca_cs', self.dist_bits)
