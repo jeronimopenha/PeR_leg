@@ -629,13 +629,30 @@ class Util:
         th_avg_clk: int = 0
         # Total threads quantity
         total_threads: int = raw_report['total_threads']
+        idx_to_node_name = {}
+        for k,v in raw_report['nodes_dict'].items():
+            idx_to_node_name[v] = k
+        
+        vertexes = list(idx_to_node_name.values())
+        edges = []
+        
+        
         th_placement_distances: dict = {}
+        
+        best_throughput = -1
+        thread_best_throughpt = None
+        placement_best_throughput = None
+        path_best_throughpt = None
+        dist_best_throughput = None
 
         best_dist = 999999
         best_thread = None
-        # para debug
         best_placement = None
-        # fim debug
+        throughput_best_placement = None
+        throughput_path_best_placement = None
+
+
+        count = 0
         # generate data for reports
         for report_key in raw_report['reports'].keys():
             report: dict = raw_report['reports'][report_key]
@@ -656,6 +673,11 @@ class Util:
                     exec_min_clk = total_exec_clk
 
             for th_key in report['th_results'].keys():
+                if count == 0:
+                    count+=1
+                    for edge in list(report['th_results'][th_key]['th_placement_distances'].keys()):
+                        a,b = edge.split("_")
+                        edges.append((idx_to_node_name[int(a)],idx_to_node_name[int(b)]))
                 th_results: dict = report['th_results'][th_key]
                 th_placement_distances[th_key]: dict = th_results['th_placement_distances']
 
@@ -673,38 +695,73 @@ class Util:
                 else:
                     if total_th_clk < th_min_clk:
                         th_min_clk = total_th_clk
+                
+                new_th_placement_distances = {} 
+                for k,v in th_placement_distances[th_key].items():
+                    (a,b) = k.split("_")
+                    new_k = (idx_to_node_name[int(a)],idx_to_node_name[int(b)])
+                    new_th_placement_distances[new_k] = v -1
+
+
+                worse_throughput, path_worse_throughput = \
+                Util.calc_worse_throughput(vertexes, edges, new_th_placement_distances,raw_report['graph_name'])
 
                 dist_th = th_results['th_dist_total']
                 if dist_th < best_dist:
                     best_dist = dist_th
                     best_thread = th_key
                     best_placement = th_results['th_placement']
+                    throughput_best_placement = worse_throughput
+                    throughput_path_best_placement = path_worse_throughput
+                    
+
+                if worse_throughput >  best_throughput:
+                    dist_best_throughput = dist_th
+                    thread_best_throughpt = th_key
+                    placement_best_throughput = th_results['th_placement']
+                    best_throughput = worse_throughput
+                    path_best_throughpt = path_worse_throughput
 
         exec_avg_clk /= n_copies
         th_avg_clk /= total_threads
         # para debug
         sqr = int(sqrt(len(best_placement)))
-        matrix = [[-1 for i in range(sqr)] for j in range(sqr)]
+        matrix_best_placement = [[-1 for i in range(sqr)] for j in range(sqr)]
+        matrix_best_throughput = [[-1 for i in range(sqr)] for j in range(sqr)]
         for node, (a, b) in enumerate(best_placement):
             if a is not None:
-                matrix[a][b] = node
+                matrix_best_placement[a][b] = node
+        
+        for node, (a, b) in enumerate(placement_best_throughput):
+            if a is not None:
+                matrix_best_throughput[a][b] = node
         # fim debug
         formatted_report = raw_report.copy()
         del formatted_report['reports']
         del formatted_report['nodes_dict']
-        formatted_report['best_thread'] = best_thread
-        formatted_report['best_dist'] = best_dist
         formatted_report["exec_max_clk"]: int = exec_max_clk
         formatted_report["exec_min_clk"]: int = exec_min_clk
         formatted_report["exec_avg_clk"]: int = exec_avg_clk
         formatted_report["th_max_clk"]: int = th_max_clk
         formatted_report["th_min_clk"]: int = th_min_clk
         formatted_report["th_avg_clk"]: int = th_avg_clk
-        # para debug
-        formatted_report['best_placement'] = matrix
-        # fim debug
-        formatted_report["th_placement_distances"]: dict = th_placement_distances[best_thread]
         formatted_report['nodes_dict']: dict = raw_report['nodes_dict']
+        formatted_report['results'] = {'best_placement':{},'best_throughput':{}}
+        # best placement
+        formatted_report['results']['best_placement']['placement'] = matrix_best_placement
+        formatted_report['results']['best_placement']["th_placement_distances"]: dict = th_placement_distances[best_thread]
+        formatted_report['results']['best_placement']['dist'] = best_dist
+        formatted_report['results']['best_placement']['thread'] = best_thread
+        formatted_report['results']['best_placement']['throughput'] = throughput_best_placement
+        formatted_report['results']['best_placement']['path'] = throughput_path_best_placement
+
+        # best throughput
+        formatted_report['results']['best_throughput']['placement'] = matrix_best_throughput
+        formatted_report['results']['best_throughput']["th_placement_distances"]: dict = th_placement_distances[thread_best_throughpt]
+        formatted_report['results']['best_throughput']['dist'] = dist_best_throughput
+        formatted_report['results']['best_throughput']['thread'] = thread_best_throughpt
+        formatted_report['results']['best_throughput']['throughput'] = best_throughput
+        formatted_report['results']['best_throughput']['path'] = path_best_throughpt
 
         return formatted_report
 
@@ -811,13 +868,13 @@ class Util:
         return best_thread, best_dist
 
     @staticmethod
-    def calc_worse_th_by_dot_file(dot_path, dot_name, output_base=None):
-        print(f'DOT: {dot_name}')
+    def calc_worse_th_by_dot_file(dot_path, dot_name):
+        # print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
         df_simul = DfSimulSw(per_graph)
         ths: list = df_simul.run_simulation()
-        print(ths)
         dict_ths = dict(ths)
+        print(ths)
 
         G = df_simul.g_with_regs
 
@@ -847,3 +904,23 @@ class Util:
 
         th_worse = dict_ths[v_out_worse]
         return th_worse, [n for n in worse_path if n in list(per_graph.g.nodes)]
+    
+    def calc_worse_throughput(vertexes, edges, edges_dist,graph_name):
+        dot_path = Util.get_project_root()+'/temp_file.dot'
+        dot_name = 'temp_file.dot'
+        # G_aux  = nx.DiGraph()
+        # G_aux.add_nodes_from(vertexes)
+        # G_aux.add_edges_from(edges)
+        G = nx.drawing.nx_pydot.read_dot(Util.get_project_root()+'/benchmarks/'+graph_name)
+
+
+        for edge in G.edges:
+            if edges_dist.get(edge[:2]) != None:
+                G.edges[edge]['weigth'] = edges_dist[edge[:2]]
+            else:
+                inv_edge = (edge[1],edge[0])
+                G.edges[edge]['weigth'] = edges_dist[inv_edge]
+
+        nx.drawing.nx_pydot.write_dot(G, dot_path)
+        return Util.calc_worse_th_by_dot_file(dot_path,dot_name)
+    

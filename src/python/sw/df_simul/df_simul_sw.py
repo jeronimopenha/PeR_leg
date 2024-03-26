@@ -167,7 +167,10 @@ class DfSimulSw:
                 queue.put(ini_node)
             while queue.qsize() > 0:
                 no = queue.get()
+                # try:
                 level = nodes_levels[no]
+                # except:
+                    # a=1
                 node_in_size: int = g.in_degree(no)
                 node_out_size: int = g.out_degree(no)
                 if no not in visited:

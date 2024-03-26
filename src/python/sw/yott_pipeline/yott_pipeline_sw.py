@@ -63,7 +63,6 @@ class YOTTPipeline(PiplineBase):
                 exec_key: str = 'exec_%d' % exec_num
                 reports[exec_key] = Util.create_exec_report(self, exec_num, total_pipeline_counter, exec_counter, n2c)
         report: dict = Util.create_report(self, "YOTT", n_copies, reports)
-        # print()
         return report
 
     def exec_pipeline(self, exec_key: int, dic_man):
