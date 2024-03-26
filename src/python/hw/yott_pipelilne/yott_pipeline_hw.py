@@ -29,7 +29,7 @@ class YottPipelineHw(PiplineBase):
 
     def create_yott_pipeline_hw(self, edges_rom_f: str, annotations_rom_f: str, n2c_rom_f: str, n2c_out_f: str,
                                 dst_tbl_rom_f: str, cell_content_f: str, simulate: bool) -> Module:
-        name = "yoto_pipeline_hw"
+        name = "yott_pipeline_hw"
         m = Module(name)
 
         clk = m.Input('clk')
@@ -38,6 +38,51 @@ class YottPipelineHw(PiplineBase):
         visited_edges = m.Input('visited_edges', self.edge_bits)
         done = m.Output('done')
 
+        start_pipeline = m.Reg('start_pipeline')
+        init_fifo = m.Reg('init_fifo')
+        thread_counter = m.Reg('thread_counter', self.th_bits)
+
+        fsm_init_fifo = m.Reg('fsm_init_fifo', 3)
+        init = m.Localparam('init', Int(0, fsm_init_fifo.width, 10))
+        wait_init = m.Localparam('wait_init', Int(1, fsm_init_fifo.width, 10))
+        start_p = m.Localparam('start_p', Int(2, fsm_init_fifo.width, 10))
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                start_pipeline(Int(0, 1, 10)),
+                thread_counter(Int(0, thread_counter.width, 10)),
+                init_fifo(Int(0, 1, 10)),
+                fsm_init_fifo(init),
+            ).Elif(start)(
+                Case(fsm_init_fifo)(
+                    When(init)(
+                        init_fifo(Int(1, 1, 10)),
+                        fsm_init_fifo(wait_init),
+                    ),
+                    When(wait_init)(
+                        If(thread_counter == Int(self.n_threads - 1, thread_counter.width, 10))(
+                            init_fifo(Int(0, 1, 10)),
+                            fsm_init_fifo(start_p),
+                        ),
+                        thread_counter(thread_counter + Int(1, thread_counter.width, 10))
+                    ),
+                    When(start_p)(
+                        start_pipeline(Int(1, 1, 10))
+                    )
+                ),
+
+            )
+        )
+
+        st2_conf_wr = m.Input('st2_conf_wr')
+        st2_conf_addr = m.Input('st2_conf_addr', self.edge_bits + self.th_bits)
+        st2_conf_data = m.Input('st2_conf_data', self.node_bits * 2)
+        st3_conf_wr = m.Input('st3_conf_wr')
+        st3_conf_wr_addr = m.Input('st3_conf_wr_addr', self.th_bits + self.node_bits)
+        st3_conf_wr_data = m.Input('st3_conf_wr_data', self.ij_bits * 2)
+        st3_conf_rd = m.Input('st3_conf_rd')
+        st3_conf_rd_addr = m.Input('st3_conf_rd_addr', self.th_bits + self.node_bits)
+        st3_conf_rd_data = m.Output('st3_conf_rd_data', self.ij_bits * 2)
         st4_conf_wr = m.Input('st4_conf_wr')
         st4_conf_addr = m.Input('st4_conf_addr', self.dst_counter_bits - 1 + self.distance_table_bits)
         st4_conf_data = m.Input('st4_conf_data', (self.ij_bits + 1) * 2)
@@ -154,12 +199,12 @@ class YottPipelineHw(PiplineBase):
         con = [
             ('clk', clk),
             ('rst', rst),
-            ('start', start),
+            ('start', start_pipeline),
             ('thread_index', st0_thread_index),
             ('thread_valid', st0_thread_valid),
             ('should_write', st0_should_write),
-            ('st9_write_enable', st9_write_enable),
-            ('st9_input_data', st9_input_data),
+            ('st9_write_enable', Mux(init_fifo, Int(1, 1, 10), st9_write_enable)),
+            ('st9_input_data', Mux(init_fifo, Cat(thread_counter, Int(0, 1, 10)), st9_input_data)),
         ]
         m.Instance(stage0_m, stage0_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -196,6 +241,9 @@ class YottPipelineHw(PiplineBase):
             ('cs', st2_cs),
             ('dist_csb', st2_dist_csb),
             ('index_list_edge', st2_index_list_edge),
+            ('conf_wr', st2_conf_wr),
+            ('conf_addr', st2_conf_addr),
+            ('conf_data', st2_conf_data),
         ]
         m.Instance(stage2_m, stage2_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -225,6 +273,12 @@ class YottPipelineHw(PiplineBase):
             ('s9_should_write', st9_should_write),
             ('st9_b', st9_b),
             ('st9_c_s', st9_c_s),
+            ('conf_wr', st3_conf_wr),
+            ('conf_wr_addr', st3_conf_wr_addr),
+            ('conf_wr_data', st3_conf_wr_data),
+            ('conf_rd', st3_conf_rd),
+            ('conf_rd_addr', st3_conf_rd_addr),
+            ('conf_rd_data', st3_conf_rd_data),
         ]
         m.Instance(stage3_m, stage3_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -584,6 +638,11 @@ class YottPipelineHw(PiplineBase):
         dist_csb = m.OutputReg('dist_csb', self.dist_bits * 3)
         index_list_edge = m.OutputReg('index_list_edge', self.distance_table_bits)
 
+        # configuration inputs
+        conf_wr = m.Input('conf_wr')
+        conf_addr = m.Input('conf_addr', self.edge_bits + self.th_bits)
+        conf_data = m.Input('conf_data', self.node_bits * 2)
+
         a_t = m.Wire('a_t', self.node_bits)
         b_t = m.Wire('b_t', self.node_bits)
         cs_t = m.Wire('cs_t', self.node_bits * 3)
@@ -624,10 +683,10 @@ class YottPipelineHw(PiplineBase):
             ('rd_addr', Cat(st1_thread_index, st1_edge_index)),
             ('out', Cat(a_t, b_t)),
             ('rd', Int(1, 1, 2)),
+            ('wr', conf_wr),
+            ('wr_addr', conf_addr),
+            ('wr_data', conf_data)
         ]
-        '''('wr', conf_wr),
-                    ('wr_addr', conf_addr),
-                    ('wr_data', conf_data),'''
         m.Instance(mem, f'{mem.name}_edges', par, con)
 
         # Annotations Ram

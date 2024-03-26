@@ -1,12 +1,21 @@
 
 
-module yoto_pipeline_hw
+module yott_pipeline_hw
 (
   input clk,
   input rst,
   input start,
   input [4-1:0] visited_edges,
   output done,
+  input st2_conf_wr,
+  input [8-1:0] st2_conf_addr,
+  input [8-1:0] st2_conf_data,
+  input st3_conf_wr,
+  input [8-1:0] st3_conf_wr_addr,
+  input [4-1:0] st3_conf_wr_data,
+  input st3_conf_rd,
+  input [8-1:0] st3_conf_rd_addr,
+  output [4-1:0] st3_conf_rd_data,
   input st4_conf_wr,
   input [9-1:0] st4_conf_addr,
   input [6-1:0] st4_conf_data,
@@ -14,6 +23,42 @@ module yoto_pipeline_hw
   input [8-1:0] st7_conf_addr,
   input st7_conf_data
 );
+
+  reg start_pipeline;
+  reg init_fifo;
+  reg [4-1:0] thread_counter;
+  reg [3-1:0] fsm_init_fifo;
+  localparam init = 3'd0;
+  localparam wait_init = 3'd1;
+  localparam start_p = 3'd2;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      start_pipeline <= 1'd0;
+      thread_counter <= 4'd0;
+      init_fifo <= 1'd0;
+      fsm_init_fifo <= init;
+    end else begin
+      if(start) begin
+        case(fsm_init_fifo)
+          init: begin
+            init_fifo <= 1'd1;
+            fsm_init_fifo <= wait_init;
+          end
+          wait_init: begin
+            if(thread_counter == 4'd9) begin
+              init_fifo <= 1'd0;
+              fsm_init_fifo <= start_p;
+            end 
+            thread_counter <= thread_counter + 4'd1;
+          end
+          start_p: begin
+            start_pipeline <= 1'd1;
+          end
+        endcase
+      end 
+    end
+  end
 
   // St0 wires
   wire [4-1:0] st0_thread_index;
@@ -115,12 +160,12 @@ module yoto_pipeline_hw
   (
     .clk(clk),
     .rst(rst),
-    .start(start),
+    .start(start_pipeline),
     .thread_index(st0_thread_index),
     .thread_valid(st0_thread_valid),
     .should_write(st0_should_write),
-    .st9_write_enable(st9_write_enable),
-    .st9_input_data(st9_input_data)
+    .st9_write_enable((init_fifo)? 1'd1 : st9_write_enable),
+    .st9_input_data((init_fifo)? { thread_counter, 1'd0 } : st9_input_data)
   );
 
   // -----
@@ -158,7 +203,10 @@ module yoto_pipeline_hw
     .b(st2_b),
     .cs(st2_cs),
     .dist_csb(st2_dist_csb),
-    .index_list_edge(st2_index_list_edge)
+    .index_list_edge(st2_index_list_edge),
+    .conf_wr(st2_conf_wr),
+    .conf_addr(st2_conf_addr),
+    .conf_data(st2_conf_data)
   );
 
   // -----
@@ -188,7 +236,13 @@ module yoto_pipeline_hw
     .st9_thread_valid(st9_thread_valid),
     .s9_should_write(s9_should_write),
     .st9_b(st9_b),
-    .st9_c_s(st9_c_s)
+    .st9_c_s(st9_c_s),
+    .conf_wr(st3_conf_wr),
+    .conf_wr_addr(st3_conf_wr_addr),
+    .conf_wr_data(st3_conf_wr_data),
+    .conf_rd(st3_conf_rd),
+    .conf_rd_addr(st3_conf_rd_addr),
+    .conf_rd_data(st3_conf_rd_data)
   );
 
   // -----
@@ -346,6 +400,14 @@ module yoto_pipeline_hw
   );
 
   // -----
+
+  initial begin
+    start_pipeline = 0;
+    init_fifo = 0;
+    thread_counter = 0;
+    fsm_init_fifo = 0;
+  end
+
 
 endmodule
 
@@ -615,7 +677,10 @@ module stage2_yott
   output reg [4-1:0] b,
   output reg [12-1:0] cs,
   output reg [9-1:0] dist_csb,
-  output reg [4-1:0] index_list_edge
+  output reg [4-1:0] index_list_edge,
+  input conf_wr,
+  input [8-1:0] conf_addr,
+  input [8-1:0] conf_data
 );
 
   wire [4-1:0] a_t;
@@ -654,7 +719,10 @@ module stage2_yott
     .clk(clk),
     .rd_addr({ st1_thread_index, st1_edge_index }),
     .out({ a_t, b_t }),
-    .rd(1'b1)
+    .rd(1'b1),
+    .wr(conf_wr),
+    .wr_addr(conf_addr),
+    .wr_data(conf_data)
   );
 
 
