@@ -20,7 +20,6 @@ class Stage9YOTT:
             'thread_valid': 0,
             'B': 0,
             'C_S': [0, 0],
-
         }
         self.old_output: dict = self.new_output
 

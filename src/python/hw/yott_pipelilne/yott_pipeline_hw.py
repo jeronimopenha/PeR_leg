@@ -49,8 +49,6 @@ class YottPipelineHw(PiplineBase):
         st0_thread_index = m.Wire('st0_thread_index', self.th_bits)
         st0_thread_valid = m.Wire('st0_thread_valid')
         st0_should_write = m.Wire('st0_should_write')
-        st0_fifo_write_enable = m.Wire('st0_fifo_write_enable')
-        st0_fifo_input_data = m.Wire('st0_fifo_input_data', self.fifo_width)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -141,10 +139,12 @@ class YottPipelineHw(PiplineBase):
 
         m.EmbeddedCode('// St9 wires')
         st9_thread_index = m.Wire('st9_thread_index', self.th_bits)
-        st9_thread_valid = m.Wire('st9_thread_valid', self.th_bits)
+        st9_thread_valid = m.Wire('st9_thread_valid')
         st9_should_write = m.Wire('s9_should_write')
         st9_b = m.Wire('st9_b', self.node_bits)
         st9_c_s = m.Wire('st9_c_s', self.ij_bits * 2)
+        st9_write_enable = m.Wire('st9_write_enable')
+        st9_input_data = m.Wire('st9_input_data', self.fifo_width)
         m.EmbeddedCode('// -----')
         m.EmbeddedCode('')
 
@@ -158,8 +158,8 @@ class YottPipelineHw(PiplineBase):
             ('thread_index', st0_thread_index),
             ('thread_valid', st0_thread_valid),
             ('should_write', st0_should_write),
-            ('fifo_write_enable', st0_fifo_write_enable),
-            ('fifo_input_data', st0_fifo_input_data),
+            ('st9_write_enable', st9_write_enable),
+            ('st9_input_data', st9_input_data),
         ]
         m.Instance(stage0_m, stage0_m.name, par, con)
         m.EmbeddedCode('// -----')
@@ -354,12 +354,27 @@ class YottPipelineHw(PiplineBase):
         m.EmbeddedCode('// -----')
 
         m.EmbeddedCode('// St9 instantiation')
-        '''stage4_m = self.create_stage4_yoto(cell_content_f, simulate)
+        stage9_m = self.create_stage9_yott()
         con = [
             ('clk', clk),
             ('rst', rst),
+            ('thread_index', st9_thread_index),
+            ('thread_valid', st9_thread_valid),
+            ('b', st9_b),
+            ('c_s', st9_c_s),
+            ('should_write', st9_should_write),
+            ('write_enable', st9_write_enable),
+            ('input_data', st9_input_data),
+            ('st8_thread_index', st8_thread_index),
+            ('st8_thread_valid', st8_thread_valid),
+            ('st8_b', st8_b),
+            ('st8_c_s', st8_c_s),
+            ('st8_cost', st8_cost),
+            ('st8_dist_ca_cs', st8_dist_ca_cs),
+            ('st8_save_cell', st8_save_cell),
+            ('st8_should_write', st8_should_write),
         ]
-        m.Instance(stage4_m, stage4_m.name, par, con)'''
+        m.Instance(stage9_m, stage9_m.name, par, con)
         m.EmbeddedCode('// -----')
 
         HwUtil.initialize_regs(m)
@@ -424,8 +439,8 @@ class YottPipelineHw(PiplineBase):
         thread_valid = m.Output('thread_valid')
         should_write = m.Output('should_write')
 
-        fifo_write_enable = m.Input('fifo_write_enable')
-        fifo_input_data = m.Input('fifo_input_data', self.fifo_width)
+        st9_write_enable = m.Input('st9_write_enable')
+        st9_input_data = m.Input('st9_input_data', self.fifo_width)
 
         fifo_output_read_enable = m.Reg('fifo_output_read_enable')
         fifo_output_valid = m.Wire('fifo_output_valid')
@@ -470,9 +485,9 @@ class YottPipelineHw(PiplineBase):
         con = [
             ('clk', clk),
             ('rst', rst),
-            ('write_enable', fifo_write_enable),
-            ('input_data', fifo_input_data),
-            ('output_read_enable', fifo_write_enable),
+            ('write_enable', st9_write_enable),
+            ('input_data', st9_input_data),
+            ('output_read_enable', st9_write_enable),
             ('output_valid', fifo_output_valid),
             ('output_data', fifo_output_data),
             ('empty', fifo_empty),
@@ -664,7 +679,7 @@ class YottPipelineHw(PiplineBase):
         index_list_edge = m.OutputReg('index_list_edge', self.distance_table_bits)
 
         st9_thread_index = m.Input('st9_thread_index', self.th_bits)
-        st9_thread_valid = m.Input('st9_thread_valid', self.th_bits)
+        st9_thread_valid = m.Input('st9_thread_valid')
         st9_should_write = m.Input('s9_should_write')
         st9_b = m.Input('st9_b', self.node_bits)
         st9_c_s = m.Input('st9_c_s', self.ij_bits * 2)
@@ -1121,6 +1136,89 @@ class YottPipelineHw(PiplineBase):
                 save_cell(save_cell_t),
                 should_write(should_write_t),
             ),
+        )
+
+        HwUtil.initialize_regs(m)
+        return m
+
+    def create_stage9_yott(self):
+        name = 'stage9_yott'
+        m = Module(name)
+
+        clk = m.Input('clk')
+        rst = m.Input('rst')
+
+        thread_index = m.OutputReg('thread_index', self.th_bits)
+        thread_valid = m.OutputReg('thread_valid')
+        b = m.OutputReg('b', self.node_bits)
+        c_s = m.OutputReg('c_s', self.ij_bits * 2)
+        should_write = m.OutputReg('should_write')
+        write_enable = m.OutputReg('write_enable')
+        input_data = m.OutputReg('input_data', self.fifo_width)
+
+        st8_thread_index = m.Input('st8_thread_index', self.th_bits)
+        st8_thread_valid = m.Input('st8_thread_valid')
+        st8_b = m.Input('st8_b', self.node_bits)
+        st8_c_s = m.Input('st8_c_s', self.ij_bits * 2)
+        st8_cost = m.Input('st8_cost', self.dist_bits + 2)
+        st8_dist_ca_cs = m.Input('st8_dist_ca_cs', self.dist_bits)
+        st8_save_cell = m.Input('st8_save_cell')
+        st8_should_write = m.Input('st8_should_write')
+
+        threads_current_adj_dists = m.Reg('threads_current_adj_dists', self.dist_bits, self.n_threads)
+        threads_free_cell_valid = m.Reg('threads_free_cell_valid', self.n_threads)
+        threads_free_cell0 = m.Reg('threads_free_cell0', self.ij_bits * 2)
+        threads_free_cell1 = m.Reg('threads_free_cell1', self.dist_bits)
+
+        was_there_change = m.Wire('was_there_change')
+        was_there_change.assign(st8_dist_ca_cs != threads_current_adj_dists[st8_thread_index])
+
+        should = m.Wire('should')
+        should.assign(AndList(st8_should_write, st8_thread_valid))
+
+        m.Always(Posedge(clk))(
+            If(rst)(
+                thread_index(Int(0, thread_index.width, 10)),
+                thread_valid(Int(0, 1, 10)),
+                b(Int(0, b.width, 10)),
+                c_s(Int(0, c_s.width, 10)),
+                should_write(Int(0, should_write.width, 10)),
+                write_enable(Int(0, 1, 10)),
+                input_data(Int(0, input_data.width, 10)),
+                threads_free_cell_valid(Int(pow(2, self.n_threads) - 1, threads_free_cell_valid.width, 2))
+            ).Else(
+                write_enable(st8_thread_valid),
+                input_data(Cat(st8_thread_index, should)),
+                thread_index(st8_thread_index),
+                thread_valid(st8_thread_valid),
+                b(st8_b),
+                c_s(st8_c_s),
+                should_write(should),
+                If(should)(
+                    threads_current_adj_dists[st8_thread_index](Int(1, self.dist_bits, 10)),
+                    threads_free_cell1[st8_thread_index](Int(pow(2, self.dist_bits) - 1, self.dist_bits, 2)),
+                    threads_free_cell_valid[st8_thread_index](Int(0, 1, 10)),
+                ),
+                If(~st8_thread_valid)(
+                    threads_current_adj_dists[st8_thread_index](1),
+                    threads_free_cell0[st8_thread_index](Int(0, threads_free_cell0.width, 10)),
+                    threads_free_cell1[st8_thread_index](Int(pow(2, self.dist_bits) - 1, self.dist_bits, 2)),
+                ).Else(
+                    If(AndList(st8_save_cell, st8_cost < threads_free_cell1[st8_thread_index]))(
+                        threads_free_cell0[st8_thread_index](c_s),
+                        threads_free_cell1[st8_thread_index](st8_cost),
+                        threads_free_cell_valid[st8_thread_index](Int(1, 1, 10)),
+                    ),
+                    If(was_there_change)(
+                        threads_current_adj_dists[st8_thread_index](st8_dist_ca_cs),
+                        If(threads_free_cell_valid[st8_thread_index])(
+                            c_s(threads_free_cell0[st8_thread_index])
+                        )
+                    ),
+
+                ),
+
+            )
         )
 
         HwUtil.initialize_regs(m)

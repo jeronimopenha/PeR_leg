@@ -19,8 +19,6 @@ module yoto_pipeline_hw
   wire [4-1:0] st0_thread_index;
   wire st0_thread_valid;
   wire st0_should_write;
-  wire st0_fifo_write_enable;
-  wire [5-1:0] st0_fifo_input_data;
   // -----
 
   // St1 wires
@@ -102,10 +100,12 @@ module yoto_pipeline_hw
 
   // St9 wires
   wire [4-1:0] st9_thread_index;
-  wire [4-1:0] st9_thread_valid;
+  wire st9_thread_valid;
   wire s9_should_write;
   wire [4-1:0] st9_b;
   wire [4-1:0] st9_c_s;
+  wire st9_write_enable;
+  wire [5-1:0] st9_input_data;
   // -----
 
   // St0 instantiation
@@ -119,8 +119,8 @@ module yoto_pipeline_hw
     .thread_index(st0_thread_index),
     .thread_valid(st0_thread_valid),
     .should_write(st0_should_write),
-    .fifo_write_enable(st0_fifo_write_enable),
-    .fifo_input_data(st0_fifo_input_data)
+    .st9_write_enable(st9_write_enable),
+    .st9_input_data(st9_input_data)
   );
 
   // -----
@@ -322,6 +322,29 @@ module yoto_pipeline_hw
 
   // -----
   // St9 instantiation
+
+  stage9_yott
+  stage9_yott
+  (
+    .clk(clk),
+    .rst(rst),
+    .thread_index(st9_thread_index),
+    .thread_valid(st9_thread_valid),
+    .b(st9_b),
+    .c_s(st9_c_s),
+    .should_write(s9_should_write),
+    .write_enable(st9_write_enable),
+    .input_data(st9_input_data),
+    .st8_thread_index(st8_thread_index),
+    .st8_thread_valid(st8_thread_valid),
+    .st8_b(st8_b),
+    .st8_c_s(st8_c_s),
+    .st8_cost(st8_cost),
+    .st8_dist_ca_cs(st8_dist_ca_cs),
+    .st8_save_cell(st8_save_cell),
+    .st8_should_write(st8_should_write)
+  );
+
   // -----
 
 endmodule
@@ -336,8 +359,8 @@ module stage0_yott
   output [4-1:0] thread_index,
   output thread_valid,
   output should_write,
-  input fifo_write_enable,
-  input [5-1:0] fifo_input_data
+  input st9_write_enable,
+  input [5-1:0] st9_input_data
 );
 
   reg fifo_output_read_enable;
@@ -385,9 +408,9 @@ module stage0_yott
   (
     .clk(clk),
     .rst(rst),
-    .write_enable(fifo_write_enable),
-    .input_data(fifo_input_data),
-    .output_read_enable(fifo_write_enable),
+    .write_enable(st9_write_enable),
+    .input_data(st9_input_data),
+    .output_read_enable(st9_write_enable),
     .output_valid(fifo_output_valid),
     .output_data(fifo_output_data),
     .empty(fifo_empty),
@@ -722,7 +745,7 @@ module stage3_yott
   output reg [6-1:0] adj_index,
   output reg [4-1:0] index_list_edge,
   input [4-1:0] st9_thread_index,
-  input [4-1:0] st9_thread_valid,
+  input st9_thread_valid,
   input s9_should_write,
   input [4-1:0] st9_b,
   input [4-1:0] st9_c_s,
@@ -1311,6 +1334,102 @@ module stage8_yott
     dist_ca_cs = 0;
     save_cell = 0;
     should_write = 0;
+  end
+
+
+endmodule
+
+
+
+module stage9_yott
+(
+  input clk,
+  input rst,
+  output reg [4-1:0] thread_index,
+  output reg thread_valid,
+  output reg [4-1:0] b,
+  output reg [4-1:0] c_s,
+  output reg should_write,
+  output reg write_enable,
+  output reg [5-1:0] input_data,
+  input [4-1:0] st8_thread_index,
+  input st8_thread_valid,
+  input [4-1:0] st8_b,
+  input [4-1:0] st8_c_s,
+  input [5-1:0] st8_cost,
+  input [3-1:0] st8_dist_ca_cs,
+  input st8_save_cell,
+  input st8_should_write
+);
+
+  reg [3-1:0] threads_current_adj_dists [0:10-1];
+  reg [10-1:0] threads_free_cell_valid;
+  reg [4-1:0] threads_free_cell0;
+  reg [3-1:0] threads_free_cell1;
+  wire was_there_change;
+  assign was_there_change = st8_dist_ca_cs != threads_current_adj_dists[st8_thread_index];
+  wire should;
+  assign should = st8_should_write && st8_thread_valid;
+
+  always @(posedge clk) begin
+    if(rst) begin
+      thread_index <= 4'd0;
+      thread_valid <= 1'd0;
+      b <= 4'd0;
+      c_s <= 4'd0;
+      should_write <= 'd0;
+      write_enable <= 1'd0;
+      input_data <= 5'd0;
+      threads_free_cell_valid <= 10'b1111111111;
+    end else begin
+      write_enable <= st8_thread_valid;
+      input_data <= { st8_thread_index, should };
+      thread_index <= st8_thread_index;
+      thread_valid <= st8_thread_valid;
+      b <= st8_b;
+      c_s <= st8_c_s;
+      should_write <= should;
+      if(should) begin
+        threads_current_adj_dists[st8_thread_index] <= 3'd1;
+        threads_free_cell1[st8_thread_index] <= 3'b111;
+        threads_free_cell_valid[st8_thread_index] <= 1'd0;
+      end 
+      if(~st8_thread_valid) begin
+        threads_current_adj_dists[st8_thread_index] <= 1;
+        threads_free_cell0[st8_thread_index] <= 4'd0;
+        threads_free_cell1[st8_thread_index] <= 3'b111;
+      end else begin
+        if(st8_save_cell && (st8_cost < threads_free_cell1[st8_thread_index])) begin
+          threads_free_cell0[st8_thread_index] <= c_s;
+          threads_free_cell1[st8_thread_index] <= st8_cost;
+          threads_free_cell_valid[st8_thread_index] <= 1'd1;
+        end 
+        if(was_there_change) begin
+          threads_current_adj_dists[st8_thread_index] <= st8_dist_ca_cs;
+          if(threads_free_cell_valid[st8_thread_index]) begin
+            c_s <= threads_free_cell0[st8_thread_index];
+          end 
+        end 
+      end
+    end
+  end
+
+  integer i_initial;
+
+  initial begin
+    thread_index = 0;
+    thread_valid = 0;
+    b = 0;
+    c_s = 0;
+    should_write = 0;
+    write_enable = 0;
+    input_data = 0;
+    for(i_initial=0; i_initial<10; i_initial=i_initial+1) begin
+      threads_current_adj_dists[i_initial] = 0;
+    end
+    threads_free_cell_valid = 0;
+    threads_free_cell0 = 0;
+    threads_free_cell1 = 0;
   end
 
 
