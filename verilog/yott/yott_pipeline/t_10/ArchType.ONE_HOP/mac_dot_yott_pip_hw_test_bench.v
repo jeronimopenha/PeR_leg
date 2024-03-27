@@ -159,7 +159,7 @@ module yott_pipeline_hw
   wire st3_thread_valid;
   wire [4-1:0] st3_c_a;
   wire [4-1:0] st3_b;
-  wire [12-1:0] st3_cs_c;
+  wire [15-1:0] st3_cs_c;
   wire [9-1:0] st3_dist_csb;
   wire [6-1:0] st3_adj_index;
   wire [4-1:0] st3_index_list_edge;
@@ -171,7 +171,7 @@ module yott_pipeline_hw
   wire [4-1:0] st4_c_a;
   wire [4-1:0] st4_b;
   wire [4-1:0] st4_c_s;
-  wire [12-1:0] st4_cs_c;
+  wire [15-1:0] st4_cs_c;
   wire [9-1:0] st4_dist_csb;
   // -----
 
@@ -180,7 +180,7 @@ module yott_pipeline_hw
   wire st5_thread_valid;
   wire [4-1:0] st5_b;
   wire [4-1:0] st5_c_s;
-  wire [12-1:0] st5_cs_c;
+  wire [15-1:0] st5_cs_c;
   wire [9-1:0] st5_dist_csb;
   wire [3-1:0] st5_dist_ca_cs;
   // -----
@@ -363,8 +363,8 @@ module yott_pipeline_hw
     .cs_c(st5_cs_c),
     .dist_csb(st5_dist_csb),
     .dist_ca_cs(st5_dist_ca_cs),
-    .st4_thread_index(st5_thread_index),
-    .st4_thread_valid(st5_thread_valid),
+    .st4_thread_index(st4_thread_index),
+    .st4_thread_valid(st4_thread_valid),
     .st4_c_a(st4_c_a),
     .st4_b(st4_b),
     .st4_c_s(st4_c_s),
@@ -916,7 +916,7 @@ module stage3_yott
   output reg thread_valid,
   output reg [4-1:0] c_a,
   output reg [4-1:0] b,
-  output reg [12-1:0] cs_c,
+  output reg [15-1:0] cs_c,
   output reg [9-1:0] dist_csb,
   output reg [6-1:0] adj_index,
   output reg [4-1:0] index_list_edge,
@@ -935,7 +935,10 @@ module stage3_yott
 
   reg [6-1:0] thread_adj_indexes_r [0:10-1];
   wire [4-1:0] c_a_t;
-  wire [12-1:0] cs_c_t;
+  wire [15-1:0] cs_c_t;
+  assign cs_c_t[4] = st2_cs[4];
+  assign cs_c_t[9] = st2_cs[9];
+  assign cs_c_t[14] = st2_cs[14];
 
   always @(posedge clk) begin
     if(rst) begin
@@ -943,7 +946,7 @@ module stage3_yott
       thread_valid <= 1'd0;
       c_a <= 4'd0;
       b <= 4'd0;
-      cs_c <= 12'd0;
+      cs_c <= 15'd0;
       dist_csb <= 9'd0;
       adj_index <= 6'd0;
       index_list_edge <= 4'd0;
@@ -976,8 +979,8 @@ module stage3_yott
   wire [4-1:0] mem_wr_data;
   assign mem_rd_addr0 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_a };
   assign mem_rd_addr1 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[3:0] };
-  assign mem_rd_addr2 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[7:4] };
-  assign mem_rd_addr3 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[11:8] };
+  assign mem_rd_addr2 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[8:5] };
+  assign mem_rd_addr3 = (conf_rd)? conf_rd_addr : { st2_thread_index, st2_cs[13:10] };
   assign mem_wr_addr = (conf_wr)? conf_wr_addr : { st9_thread_index, st9_b };
   assign mem_wr = (conf_wr)? conf_wr : s9_should_write;
   assign mem_wr_data = (conf_wr)? conf_wr_data : st9_c_s;
@@ -1019,8 +1022,8 @@ module stage3_yott
     .clk(clk),
     .rd_addr0(mem_rd_addr2),
     .rd_addr1(mem_rd_addr3),
-    .out0(cs_c_t[7:4]),
-    .out1(cs_c_t[11:8]),
+    .out0(cs_c_t[8:5]),
+    .out1(cs_c_t[13:10]),
     .rd(1'b1),
     .wr(mem_wr),
     .wr_addr(mem_wr_addr),
@@ -1082,6 +1085,22 @@ module mem_2r_1w #
     end 
   end
 
+  //synthesis translate_off
+
+  always @(posedge clk) begin
+    if(wr && write_f) begin
+      $writememb(output_file, mem);
+    end 
+  end
+
+  //synthesis translate_on
+
+  initial begin
+    if(read_f) begin
+      $readmemb(init_file, mem);
+    end 
+  end
+
 
 endmodule
 
@@ -1096,13 +1115,13 @@ module stage4_yott
   output reg [4-1:0] c_a,
   output reg [4-1:0] b,
   output reg [4-1:0] c_s,
-  output reg [12-1:0] cs_c,
+  output reg [15-1:0] cs_c,
   output reg [9-1:0] dist_csb,
   input [4-1:0] st3_thread_index,
   input st3_thread_valid,
   input [4-1:0] st3_c_a,
   input [4-1:0] st3_b,
-  input [12-1:0] st3_cs_c,
+  input [15-1:0] st3_cs_c,
   input [9-1:0] st3_dist_csb,
   input [6-1:0] st3_adj_index,
   input [4-1:0] st3_index_list_edge,
@@ -1121,7 +1140,7 @@ module stage4_yott
       c_a <= 4'd0;
       b <= 4'd0;
       c_s <= 4'd0;
-      cs_c <= 12'd0;
+      cs_c <= 15'd0;
       dist_csb <= 9'd0;
     end else begin
       thread_index <= st3_thread_index;
@@ -1178,7 +1197,7 @@ module stage5_yott
   output reg thread_valid,
   output reg [4-1:0] b,
   output reg [4-1:0] c_s,
-  output reg [12-1:0] cs_c,
+  output reg [15-1:0] cs_c,
   output reg [9-1:0] dist_csb,
   output reg [3-1:0] dist_ca_cs,
   input [4-1:0] st4_thread_index,
@@ -1186,7 +1205,7 @@ module stage5_yott
   input [4-1:0] st4_c_a,
   input [4-1:0] st4_b,
   input [4-1:0] st4_c_s,
-  input [12-1:0] st4_cs_c,
+  input [15-1:0] st4_cs_c,
   input [9-1:0] st4_dist_csb
 );
 
@@ -1198,7 +1217,7 @@ module stage5_yott
       thread_valid <= 1'd0;
       b <= 4'd0;
       c_s <= 4'd0;
-      cs_c <= 12'd0;
+      cs_c <= 15'd0;
       dist_csb <= 9'd0;
       dist_ca_cs <= 3'd0;
     end else begin
@@ -1307,7 +1326,7 @@ module stage6_yott
   input st5_thread_valid,
   input [4-1:0] st5_b,
   input [4-1:0] st5_c_s,
-  input [12-1:0] st5_cs_c,
+  input [15-1:0] st5_cs_c,
   input [9-1:0] st5_dist_csb,
   input [3-1:0] st5_dist_ca_cs
 );
@@ -1318,9 +1337,9 @@ module stage6_yott
   wire [3-1:0] sub1_t;
   wire [3-1:0] sub2_t;
   wire [3-1:0] sub3_t;
-  assign sub1_t = d1_t - st5_dist_csb[2:0];
-  assign sub2_t = d2_t - st5_dist_csb[5:3];
-  assign sub3_t = d3_t - st5_dist_csb[8:6];
+  assign sub1_t = (st5_cs_c[4])? 3'd0 : d1_t - st5_dist_csb[2:0];
+  assign sub2_t = (st5_cs_c[9])? 3'd0 : d2_t - st5_dist_csb[5:3];
+  assign sub3_t = (st5_cs_c[14])? 3'd0 : d3_t - st5_dist_csb[8:6];
   wire [5-1:0] cost_t;
   assign cost_t = sub1_t + sub2_t + sub3_t;
 
@@ -1336,7 +1355,7 @@ module stage6_yott
       thread_index <= st5_thread_index;
       thread_valid <= st5_thread_valid;
       b <= st5_b;
-      c_s <= st5_cs_c;
+      c_s <= st5_c_s;
       cost <= cost_t;
       dist_ca_cs <= st5_dist_ca_cs;
     end
@@ -1348,11 +1367,11 @@ module stage6_yott
   (
     .source(st5_c_s),
     .target1(st5_cs_c[3:0]),
-    .target2(st5_cs_c[7:4]),
-    .target3(st5_cs_c[11:8]),
+    .target2(st5_cs_c[8:5]),
+    .target3(st5_cs_c[13:10]),
     .d1(d1_t),
     .d2(d2_t),
-    .d3(d1_t)
+    .d3(d3_t)
   );
 
 
@@ -1485,8 +1504,8 @@ module stage8_yott
 
   wire save_cell_t;
   wire should_write_t;
-  assign should_write_t = st7_cell_free && ((dist_ca_cs < 3) && (cost == 0) || (dist_ca_cs >= 3));
-  assign save_cell_t = st7_cell_free && (dist_ca_cs < 3) && ~should_write;
+  assign should_write_t = st7_cell_free && ((st7_dist_ca_cs < 3) && (st7_cost == 0) || (st7_dist_ca_cs >= 3));
+  assign save_cell_t = st7_cell_free && (st7_dist_ca_cs < 3) && ~should_write_t;
 
   always @(posedge clk) begin
     if(rst) begin
