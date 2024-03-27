@@ -149,8 +149,8 @@ class HwComponents:
         clk = m.Input('clk')
         rd = m.Input('rd')
         rd_addr = m.Input('rd_addr', depth)
-        out = m.OutputReg('out', width)
-        # out = m.Output('out', width)
+        # out = m.OutputReg('out', width)
+        out = m.Output('out', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
@@ -161,16 +161,19 @@ class HwComponents:
         mem = m.Reg('mem', width, Power(2, depth))
         m.EmbeddedCode('*/')
 
-        # out.assign(mem[rd_addr])
+        out.assign(mem[rd_addr])
 
         m.Always(Posedge(clk))(
             If(wr)(
                 mem[wr_addr](wr_data)
             ),
-            If(rd)(
+
+        )
+        '''
+        If(rd)(
                 out(mem[rd_addr])
             ),
-        )
+        '''
 
         if simulate:
             m.EmbeddedCode('//synthesis translate_off')
@@ -207,8 +210,10 @@ class HwComponents:
         rd = m.Input('rd')
         rd_addr0 = m.Input('rd_addr0', depth)
         rd_addr1 = m.Input('rd_addr1', depth)
-        out0 = m.OutputReg('out0', width)
-        out1 = m.OutputReg('out1', width)
+        # out0 = m.OutputReg('out0', width)
+        # out1 = m.OutputReg('out1', width)
+        out0 = m.Output('out0', width)
+        out1 = m.Output('out1', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
@@ -219,19 +224,21 @@ class HwComponents:
         mem = m.Reg('mem', width, Power(2, depth))
         m.EmbeddedCode('*/')
 
-        # out0.assign(mem[rd_addr0])
-        # out1.assign(mem[rd_addr1])
+        out0.assign(mem[rd_addr0])
+        out1.assign(mem[rd_addr1])
 
         m.Always(Posedge(clk))(
             If(wr)(
                 mem[wr_addr](wr_data)
             ),
-            If(rd)(
+
+        )
+        '''
+        If(rd)(
                 out0(mem[rd_addr0]),
                 out1(mem[rd_addr1]),
             ),
-        )
-
+        '''
         if simulate:
             m.EmbeddedCode('//synthesis translate_off')
             m.Always(Posedge(clk))(

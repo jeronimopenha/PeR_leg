@@ -76,10 +76,10 @@ class YottPipelineHw(PiplineBase):
         n2c_file_content = ['{0:b}'.format(0).zfill(n2c_file_bits) for _ in range(pow(2, n2c_addr_bits))]
 
         for th, n2cs in enumerate(n2c):
-            for node_idx, n2c_ in enumerate(n2cs):
+            for ann_idx, n2c_ in enumerate(n2cs):
                 if n2c_[0] is None:
                     continue
-                n2c_idx: int = th << self.node_bits | node_idx
+                n2c_idx: int = th << self.node_bits | ann_idx
                 n2c_idx_s: str = '{0:b}'.format(n2c_idx).zfill(n2c_addr_bits)
                 n2c_content = n2c_[0] << self.ij_bits | n2c_[1]
                 n2c_file_content[n2c_idx] = '{0:b}'.format(n2c_content).zfill(n2c_file_bits)
@@ -90,10 +90,31 @@ class YottPipelineHw(PiplineBase):
                 cell_content_file_content[cell_content_idx] = '{0:b}'.format(cell_content).zfill(cell_content_file_bits)
                 break
 
+        # create annotations rom content
+        ann_file_bits = (self.node_bits + self.dist_bits + 1) * 3
+        ann_addr_bits = self.th_bits + self.edge_bits
+        ann_file_content = ['{0:b}'.format(pow(2, (self.node_bits + self.dist_bits + 1) * 3) - 1).zfill(ann_file_bits)
+                            for _ in range(pow(2, ann_addr_bits))]
+        ann_mask = pow(2, (self.node_bits + self.dist_bits + 1)) - 1
+        for th_idx, anns in enumerate(annotations):
+            for edge_idx, edge_ann in enumerate(anns):
+                ann_value = 0
+                ann_value_str = ''
+                for ann_idx, ann in enumerate(edge_ann):
+                    ann_value = ann_value << (self.node_bits + self.dist_bits + 1)
+                    if -1 in ann:
+                        ann_value = ann_value | ann_mask
+                    else:
+                        ann_value = ann_value | (ann[0] << self.dist_bits | ann[1])
+                ann_value_str = '{0:b}'.format(ann_value).zfill(ann_file_bits)
+                ann_file_idx = (th_idx << self.edge_bits) | edge_idx
+                ann_file_content[ann_file_idx] = ann_value_str
+
         Util.write_file(edges_rom_f, edges_file_content)
         Util.write_file(dst_tbl_rom_f, dst_table_file_content)
         Util.write_file(n2c_rom_f, n2c_file_content)
         Util.write_file(cell_content_f, cell_content_file_content)
+        Util.write_file(ann_rom_f, ann_file_content)
 
     def create_yott_pipeline_hw(self, edges_rom_f: str, annotations_rom_f: str, n2c_rom_f: str, dst_tbl_rom_f: str,
                                 cell_content_f: str, simulate: bool) -> Module:
@@ -111,7 +132,7 @@ class YottPipelineHw(PiplineBase):
         st2_conf_data0 = m.Input('st2_conf_data0', self.node_bits * 2)
         st2_conf_wr1 = m.Input('st2_conf_wr1')
         st2_conf_addr1 = m.Input('st2_conf_addr1', self.th_bits + self.edge_bits)
-        st2_conf_data1 = m.Input('st2_conf_data1', (self.node_bits + self.dist_bits) * 3)
+        st2_conf_data1 = m.Input('st2_conf_data1', (self.node_bits + self.dist_bits + 1) * 3)
         st3_conf_wr = m.Input('st3_conf_wr')
         st3_conf_wr_addr = m.Input('st3_conf_wr_addr', self.th_bits + self.node_bits)
         st3_conf_wr_data = m.Input('st3_conf_wr_data', self.ij_bits * 2)
@@ -180,7 +201,7 @@ class YottPipelineHw(PiplineBase):
         st2_thread_valid = m.Wire('st2_thread_valid')
         st2_a = m.Wire('st2_a', self.node_bits)
         st2_b = m.Wire('st2_b', self.node_bits)
-        st2_cs = m.Wire('st2_cs', self.node_bits * 3)
+        st2_cs = m.Wire('st2_cs', (self.node_bits + 1) * 3)
         st2_dist_csb = m.Wire('st2_dist_csb', self.dist_bits * 3)
         st2_index_list_edge = m.Wire('st2_index_list_edge', self.distance_table_bits)
         m.EmbeddedCode('// -----')
@@ -509,13 +530,13 @@ class YottPipelineHw(PiplineBase):
         return m
 
     def create_yott_pipeline_hw_test_bench(self, v_output_base: str, simulate: bool):
-        base_file_name = f'{v_output_base}{self.per_graph.dot_name}'
+        base_file_name = f'{v_output_base}{self.per_graph.dot_name.replace(".", "_")}'
         edges_rom_f: str = f'{base_file_name}_edges.rom'
         n2c_rom_f: str = f'{base_file_name}_n2c.rom'
-        ann_rom_f: str = f'{base_file_name}_ann_rom.txt'
+        ann_rom_f: str = f'{base_file_name}_ann_rom.rom'
         dst_tbl_rom_f: str = f'{base_file_name}_dst_tbl.rom'
         cell_content_f: str = f'{base_file_name}_cell_content.rom'
-        dump_f: str = f'{base_file_name}.vcd'
+        dump_f: str = f'{v_output_base}{self.per_graph.dot_name}.vcd'
         run_file: str = f'{base_file_name}.out'
 
         first_nodes: list = [self.edges_int[i][0][0] for i in range(self.len_pipeline)]
@@ -534,7 +555,7 @@ class YottPipelineHw(PiplineBase):
 
         self.create_rom_files(edges_rom_f, n2c_rom_f, dst_tbl_rom_f, cell_content_f, ann_rom_f, n2c, annotations)
 
-        name = '%s_yoto_pip_hw_test_bench' % self.per_graph.dot_name.replace(".", "_")
+        name = '%s_yott_pip_hw_test_bench' % self.per_graph.dot_name.replace(".", "_")
         m = Module(name)
 
         clk = m.Reg('clk')
@@ -556,7 +577,12 @@ class YottPipelineHw(PiplineBase):
             ('start', start),
             ('visited_edges', yott_visited_edges),
             ('done', yott_done),
-            ('total_pipeline_counter', yott_total_pipeline_counter),
+            ('st2_conf_wr0', Int(0, 1, 10)),
+            ('st2_conf_wr1', Int(0, 1, 10)),
+            ('st3_conf_wr', Int(0, 1, 10)),
+            ('st3_conf_rd', Int(0, 1, 10)),
+            ('st4_conf_wr', Int(0, 1, 10)),
+            ('st7_conf_wr', Int(0, 1, 10)),
         ]
         yott = self.create_yott_pipeline_hw(edges_rom_f, ann_rom_f, n2c_rom_f, dst_tbl_rom_f, cell_content_f, simulate)
         m.Instance(yott, yott.name, par, con)
@@ -569,7 +595,7 @@ class YottPipelineHw(PiplineBase):
             EmbeddedCode('@(posedge clk);'),
             rst(0),
             start(1),
-            Delay(100000),
+            Delay(10000),
             Finish(),
         )
         m.EmbeddedCode('always #5clk=~clk;')
@@ -671,14 +697,16 @@ class YottPipelineHw(PiplineBase):
                 flag_wait(Int(0, 1, 2)),
             ).Elif(start)(
                 fifo_output_read_enable(Int(0, 1, 2)),
-                If(fifo_almostempty)(
-                    If(~flag_wait)(
-                        fifo_output_read_enable(Int(1, 1, 2)),
-                    ),
-                    flag_wait(~flag_wait)
-                ).Elif(~fifo_empty)(
-                    fifo_output_read_enable(Int(1, 1, 2))
-                )
+                If(~fifo_empty)(
+                    If(fifo_almostempty)(
+                        If(~flag_wait)(
+                            fifo_output_read_enable(Int(1, 1, 2)),
+                        ),
+                        flag_wait(~flag_wait)
+                    ).Else(
+                        fifo_output_read_enable(Int(1, 1, 2))
+                    )
+                ),
             )
         )
 
@@ -694,7 +722,7 @@ class YottPipelineHw(PiplineBase):
             ('rst', rst),
             ('write_enable', st9_write_enable),
             ('input_data', st9_input_data),
-            ('output_read_enable', st9_write_enable),
+            ('output_read_enable', fifo_output_read_enable),
             ('output_valid', fifo_output_valid),
             ('output_data', fifo_output_data),
             ('empty', fifo_empty),
@@ -787,7 +815,7 @@ class YottPipelineHw(PiplineBase):
         thread_valid = m.OutputReg('thread_valid')
         a = m.OutputReg('a', self.node_bits)
         b = m.OutputReg('b', self.node_bits)
-        cs = m.OutputReg('cs', self.node_bits * 3)
+        cs = m.OutputReg('cs', (self.node_bits + 1) * 3)
         dist_csb = m.OutputReg('dist_csb', self.dist_bits * 3)
         index_list_edge = m.OutputReg('index_list_edge', self.distance_table_bits)
 
@@ -797,14 +825,25 @@ class YottPipelineHw(PiplineBase):
         conf_data0 = m.Input('conf_data0', self.node_bits * 2)
         conf_wr1 = m.Input('conf_wr1')
         conf_addr1 = m.Input('conf_addr1', self.th_bits + self.edge_bits)
-        conf_data1 = m.Input('conf_data1', (self.node_bits + self.dist_bits) * 3)
+        conf_data1 = m.Input('conf_data1', (self.node_bits + self.dist_bits + 1) * 3)
 
         a_t = m.Wire('a_t', self.node_bits)
         b_t = m.Wire('b_t', self.node_bits)
-        cs_t = m.Wire('cs_t', self.node_bits * 3)
+        cs_t = m.Wire('cs_t', (self.node_bits + 1) * 3)
         dist_csb_t = m.Wire('dist_csb_t', self.dist_bits * 3)
+        ann_out = m.Wire('ann_out', (self.node_bits + self.dist_bits + 1) * 3)
 
-        m.Always(Posedge(rst))(
+        for i in range(3):
+            cs_t[i * (self.node_bits + 1):
+                 (i + 1) * (self.node_bits + 1)].assign(
+                ann_out[i * (self.node_bits + self.dist_bits + 1) + self.dist_bits:
+                        (i + 1) * (self.node_bits + self.dist_bits + 1)])
+        for i in range(3):
+            dist_csb_t[i * self.dist_bits:
+                       (i + 1) * self.dist_bits].assign(
+                ann_out[i * (self.node_bits + self.dist_bits + 1):
+                        i * (self.node_bits + self.dist_bits + 1) + self.dist_bits])
+        m.Always(Posedge(clk))(
             If(rst)(
                 thread_index(Int(0, thread_index.width, 10)),
                 thread_valid(Int(0, 1, 10)),
@@ -824,7 +863,7 @@ class YottPipelineHw(PiplineBase):
             )
         )
 
-        mem = self.hw_components.create_memory_1r_1w()
+        mem = self.hw_components.create_memory_1r_1w(simulate)
         # Edges_ram
         par = [
             ('width', self.node_bits * 2),
@@ -847,7 +886,7 @@ class YottPipelineHw(PiplineBase):
 
         # Annotations Ram
         par = [
-            ('width', (self.node_bits + self.dist_bits) * 3),
+            ('width', (self.node_bits + self.dist_bits + 1) * 3),
             ('depth', self.th_bits + self.edge_bits),
         ]
         if simulate:
@@ -857,7 +896,7 @@ class YottPipelineHw(PiplineBase):
         con = [
             ('clk', clk),
             ('rd_addr', Cat(st1_thread_index, st1_edge_index)),
-            ('out', Cat(cs_t, dist_csb_t)),
+            ('out', ann_out),
             ('rd', Int(1, 1, 2)),
             ('wr', conf_wr1),
             ('wr_addr', conf_addr1),
@@ -879,7 +918,7 @@ class YottPipelineHw(PiplineBase):
         st2_thread_valid = m.Input('st2_thread_valid')
         st2_a = m.Input('st2_a', self.node_bits)
         st2_b = m.Input('st2_b', self.node_bits)
-        st2_cs = m.Input('st2_cs', self.node_bits * 3)
+        st2_cs = m.Input('st2_cs', (self.node_bits + 1) * 3)
         st2_dist_csb = m.Input('st2_dist_csb', self.dist_bits * 3)
         st2_index_list_edge = m.Input('st2_index_list_edge', self.distance_table_bits)
 
@@ -1579,7 +1618,7 @@ class YottPipelineHw(PiplineBase):
         st2_conf_data0 = m.Reg('st2_conf_data0', self.node_bits * 2)
         st2_conf_wr1 = m.Reg('st2_conf_wr1')
         st2_conf_addr1 = m.Reg('st2_conf_addr1', self.th_bits + self.edge_bits)
-        st2_conf_data1 = m.Reg('st2_conf_data1', (self.node_bits + self.dist_bits) * 3)
+        st2_conf_data1 = m.Reg('st2_conf_data1', (self.node_bits + self.dist_bits + 1) * 3)
 
         st3_conf_wr = m.Reg('st3_conf_wr')
         st3_conf_wr_addr = m.Reg('st3_conf_wr_addr', self.th_bits + self.node_bits)

@@ -106,7 +106,7 @@ for dot_path, dot_name in dots_list:
     per_graph = PeRGraph(dot_path, dot_name)
     print(per_graph.dot_name)
     yott_pipeline_hw = YottPipelineHw(per_graph, arch_type, distance_table_bits, make_shuffle, threads_per_copy, )
-acc = yott_pipeline_hw.create_acc(15)
+acc = yott_pipeline_hw.create_acc(1)
 m = create_testbench_synth(acc)
 m.to_verilog('synth.v')
 
