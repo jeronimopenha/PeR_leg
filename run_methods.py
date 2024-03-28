@@ -9,19 +9,19 @@ from src.python.util.per_enum import ArchType
 from src.python.util.per_graph import PeRGraph
 from src.python.util.util import Util
 import time
-mask = [1,0,0,0,1]
+mask = [1,0,0,0,0]
 traversal = [YOTTPipeline, YOTTMCPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline, YotoPipelineSw]
 path_results = ["yott/yott_pipeline","yott/yott_pipeline","yott/yott_pipeline","yott/yott_pipeline","yoto/yoto_pipeline"]
 methods = ["default","MC","MC0","MC1","default"]
 limiars_str = ["-1","0.3","0.5|0.8|0.3","3|3|0.3","-1"]
 run_parallel = False 
-arch_types = [ArchType.MESH, ArchType.ONE_HOP]
+arch_types = [ArchType.ONE_HOP]
 root_path: str = Util.get_project_root()
-dot_path_base = root_path + '/benchmarks/'
+dot_path_base = root_path + '/bench_one_hop/'
 # dot_connected_paths = [dot_path_base + path_graph for path_graph in ['connected/']]
 make_shuffle: bool = True
 distance_table_bits: int = 4
-copies = [1,]
+copies = [100]
 
 start = time.time()
 for i, method in enumerate(traversal):

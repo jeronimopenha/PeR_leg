@@ -12,24 +12,47 @@ class StatisticsGeneratorJSON(IStatisticsGenerator):
             with open(json_file, 'r') as file:
                 print(json_file)
                 json_data = json.load(file)
-                best_dist = json_data["best_dist"]
-                count_dists_greater_0 = 0
-                for distance in json_data['th_placement_distances'].values():
-                    count_dists_greater_0 += 0 if distance == 1 else 1
-                num_annotation = re.findall('NA_\d_', json_file)[0]
-                num_annotation = num_annotation.replace('NA_', '').replace('_', '')
 
-                dict_data = IStatisticsGenerator.generate_data_dict(json_data['graph_name'].replace('.dot', ''),
+                results = json_data['results']
+                th_results = results['best_throughput']
+                placement_results = results['best_placement']
+
+                count_dists_greater_0_placement = 0
+                count_dists_greater_0_th = 0
+
+                for distance in placement_results['th_placement_distances'].values():
+                    count_dists_greater_0_placement += 0 if distance == 1 else 1
+                
+                for distance in th_results['th_placement_distances'].values():
+                    count_dists_greater_0_th += 0 if distance == 1 else 1
+
+
+                num_annotation = re.findall('NA<\d>', json_file)[0]
+                num_annotation = num_annotation.replace('NA<', '').replace('>', '')
+                dict_data_placement = IStatisticsGenerator.generate_data_dict(json_data['graph_name'].replace('.dot', ''),
                                                                     json_data['total_edges'],
                                                                     json_data['visited_edges'],
-                                                                    best_dist,
-                                                                    count_dists_greater_0,
+                                                                    placement_results['dist'],
+                                                                    count_dists_greater_0_placement,
                                                                     json_data['arch_type'],
                                                                     json_data['algorithm'],
                                                                     json_data['total_threads'],
                                                                     int(num_annotation),
-                                                                    json_data['th']
+                                                                    placement_results['throughput']
+                                                                    )
+                dict_data_throughput = IStatisticsGenerator.generate_data_dict(json_data['graph_name'].replace('.dot', ''),
+                                                                    json_data['total_edges'],
+                                                                    json_data['visited_edges'],
+                                                                    th_results['dist'],
+                                                                    count_dists_greater_0_th,
+                                                                    json_data['arch_type'],
+                                                                    json_data['algorithm'],
+                                                                    json_data['total_threads'],
+                                                                    int(num_annotation),
+                                                                    th_results['throughput']
                                                                     )
                 
-                df.loc[len(df)] =dict_data
+                
+                df.loc[len(df)] = dict_data_placement
+                df.loc[len(df)] = dict_data_throughput
         return df

@@ -180,8 +180,6 @@ class DfSimulSw:
                     visited.add(no)
                 node: Node = dfg_dic[no]
                 for succ in g._succ[no].keys():
-                    if succ == '24':
-                        a = 1
                     # succ_name: str = str.lower(succ)
                     succ_in_size: int = g.in_degree(succ)
                     succ_out_size: int = g.out_degree(succ)

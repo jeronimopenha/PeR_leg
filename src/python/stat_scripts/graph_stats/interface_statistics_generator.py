@@ -66,7 +66,7 @@ class IStatisticsGenerator(ABC):
             if i == 0:
                 new_df = final_filter[i]
             else:
-                new_df = new_df.merge(final_filter[i], on=common_columns)
+                new_df = new_df.merge(final_filter[i], on=common_columns,suffixes=('x', 'y'))
             while cur_index + num_exec_per_algorithm < len(final_filter):
                 arch_type = final_filter[cur_index + num_exec_per_algorithm]['Arch Type'].unique().tolist()[0]
                 algorithm = final_filter[cur_index + num_exec_per_algorithm]['Algorithm'].unique().tolist()[0]
@@ -76,7 +76,7 @@ class IStatisticsGenerator(ABC):
                 final_filter[cur_index + num_exec_per_algorithm] = final_filter[
                     cur_index + num_exec_per_algorithm].drop(['Arch Type', 'Algorithm', 'Total Executions'], axis=1)
 
-                new_df = new_df.merge(final_filter[cur_index + num_exec_per_algorithm], on=common_columns)
+                new_df = new_df.merge(final_filter[cur_index + num_exec_per_algorithm], on=common_columns,suffixes=('x', 'y','z','w','k','p','j'))
                 cur_index += num_exec_per_algorithm
         filename = output_file_path + output_file_name
         head += '\n'

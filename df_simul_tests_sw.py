@@ -41,7 +41,7 @@ th_worse, worse_path = Util.calc_worse_th_by_dot_file(
     # root_path + '/benchmarks/dot_simul/test_simul_40.dot', "test_simul_40.dot")
     # root_path + '/benchmarks/dot_simul/test_simul_optimal.dot', 'test_simul_optimal.dot')
     # root_path + '/benchmarks/dot_simul/arf_w1.dot', 'arf_w1.dot')
-   root_path + '/arf.dot', 'arf.dot')
+   root_path + '/reports/results_michael/sa/mesh/1/idctcol.dot', 'idctcol.dot')
 #    root_path + '/benchmarks/dot_simul/test_th_0_jer.dot', 'test_th_0_jer.dot')
 
 print(th_worse)

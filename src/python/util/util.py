@@ -651,7 +651,6 @@ class Util:
         throughput_best_placement = None
         throughput_path_best_placement = None
 
-
         count = 0
         # generate data for reports
         for report_key in raw_report['reports'].keys():
@@ -871,11 +870,11 @@ class Util:
     def calc_worse_th_by_dot_file(dot_path, dot_name):
         # print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
-        df_simul = DfSimulSw(per_graph)
-        nx.drawing.nx_pydot.write_dot( df_simul.g_with_regs,'./arf_with_regs.dot')
+        df_simul = DfSimulSw(per_graph,100)
+        # nx.drawing.nx_pydot.write_dot( df_simul.g_with_regs,f'./{dot_name}_regs.dot')
         ths: list = df_simul.run_simulation()
         dict_ths = dict(ths)
-        print(ths)
+        # print(ths)
 
         G = df_simul.g_with_regs
 
@@ -917,10 +916,10 @@ class Util:
 
         for edge in G.edges:
             if edges_dist.get(edge[:2]) != None:
-                G.edges[edge]['weigth'] = edges_dist[edge[:2]]
+                G.edges[edge]['weight'] = edges_dist[edge[:2]]
             else:
                 inv_edge = (edge[1],edge[0])
-                G.edges[edge]['weigth'] = edges_dist[inv_edge]
+                G.edges[edge]['weight'] = edges_dist[inv_edge]
 
         nx.drawing.nx_pydot.write_dot(G, dot_path)
         return Util.calc_worse_th_by_dot_file(dot_path,dot_name)

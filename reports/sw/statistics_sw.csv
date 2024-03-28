@@ -1,0 +1,6 @@
+,,,YOTT - 10 - MESH,,
+Bench,N Edges,Visited Edges,Dist Total,Edges > 0,Num Annotations,th
+conv3,32,29,12,4,3,39.9616368286445
+conv3,32,29,18,11,3,66.5513110608279
+No_V13_E16,16,13,4,4,3,99.9000999000999
+No_V13_E16,16,13,4,4,3,99.9000999000999
