@@ -870,7 +870,7 @@ class Util:
     def calc_worse_th_by_dot_file(dot_path, dot_name):
         # print(f'DOT: {dot_name}')
         per_graph = PeRGraph(dot_path, dot_name)
-        df_simul = DfSimulSw(per_graph,100)
+        df_simul = DfSimulSw(per_graph,1000)
         # nx.drawing.nx_pydot.write_dot( df_simul.g_with_regs,f'./{dot_name}_regs.dot')
         ths: list = df_simul.run_simulation()
         dict_ths = dict(ths)
