@@ -171,6 +171,11 @@ class HwComponents:
                 out(mem[rd_addr])
             ),
         )
+        '''
+        If(rd)(
+                out(mem[rd_addr])
+            ),
+        '''
 
         if simulate:
             m.EmbeddedCode('//synthesis translate_off')
@@ -209,6 +214,8 @@ class HwComponents:
         rd_addr1 = m.Input('rd_addr1', depth)
         out0 = m.OutputReg('out0', width)
         out1 = m.OutputReg('out1', width)
+        # out0 = m.Output('out0', width)
+        # out1 = m.Output('out1', width)
 
         wr = m.Input('wr')
         wr_addr = m.Input('wr_addr', depth)
@@ -231,7 +238,12 @@ class HwComponents:
                 out1(mem[rd_addr1]),
             ),
         )
-
+        '''
+        If(rd)(
+                out0(mem[rd_addr0]),
+                out1(mem[rd_addr1]),
+            ),
+        '''
         if simulate:
             m.EmbeddedCode('//synthesis translate_off')
             m.Always(Posedge(clk))(

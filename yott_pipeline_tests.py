@@ -16,7 +16,7 @@ def run_connected_graphs():
         distance_table_bits: int = 4
 
         root_path: str = Util.get_project_root()
-        dot_path_base = root_path + '/dot_db/'
+        dot_path_base = root_path + '/benchmarks/'
         dot_connected_path = dot_path_base + 'connected/'
 
         output_path_base = os.getcwd() + '/reports/sw/yott/yott_pipeline/t_%d/%s/' % (total_threads, arch_type)

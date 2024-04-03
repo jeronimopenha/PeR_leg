@@ -752,7 +752,7 @@ class YotoPipelineHw(PiplineBase):
         st4_jb = m.Wire('st4_jb', self.ij_bits)
 
         m.EmbeddedCode('')
-        content = m.Wire('content')
+        content_t = m.Wire('content_t')
         place_t = m.Wire('place_t')
         out_of_border_t = m.Wire('out_of_border_t')
 
@@ -763,7 +763,7 @@ class YotoPipelineHw(PiplineBase):
             st3_ib[:-1] > Int(self.n_lines - 1, self.ij_bits + 1, 10),
             st3_jb[:-1] > Int(self.n_lines - 1, self.ij_bits + 1, 10)
         ))
-        place_t.assign(Uand(Cat(~content, ~out_of_border_t, st3_th_valid)))
+        place_t.assign(Uand(Cat(~content_t, ~out_of_border_t, st3_th_valid)))
         # i > n_cells_sqrt - 1 or j > n_cells_sqrt - 1 or i < 0 or j < 0
 
         m.EmbeddedCode('')
@@ -810,7 +810,7 @@ class YotoPipelineHw(PiplineBase):
         con = [
             ('clk', clk),
             ('rd_addr', Cat(st3_th_idx, st3_ib[0:self.ij_bits], st3_jb[0:self.ij_bits])),
-            ('out', content),
+            ('out', content_t),
             ('rd', Int(1, 1, 2)),
             ('wr', mem_wr),
             ('wr_addr', mem_addr),
@@ -821,7 +821,6 @@ class YotoPipelineHw(PiplineBase):
         m.Instance(cells_m, cells_m.name, par, con)
 
         HwUtil.initialize_regs(m)
-
         return m
 
     def create_acc(self, copies: int = 1):
@@ -982,6 +981,7 @@ class YotoPipelineHw(PiplineBase):
                 st4_conf_addr(0),
                 st4_conf_data(0),
                 pop_data(0),
+                start_pipe(0),
                 fsm_sd(fsm_sd_edges_idle),
             ).Elif(start)(
                 st1_conf_wr(0),
