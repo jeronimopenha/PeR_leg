@@ -9,8 +9,8 @@ import pygraphviz as pgv
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from src.cython.util.per_enum import ArchType
-from src.cython.util.per_graph import PeRGraph
+from src.util.per_enum import ArchType
+from src.util.per_graph import PeRGraph
 
 
 class Util:

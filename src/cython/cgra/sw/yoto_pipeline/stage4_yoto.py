@@ -1,4 +1,4 @@
-from src.cython.util.util import Util
+from src.util.util import Util
 
 
 class Stage4YOTO(object):

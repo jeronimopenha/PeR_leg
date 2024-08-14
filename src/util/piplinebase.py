@@ -5,9 +5,9 @@ from typing import List, Tuple
 import numpy as np
 from math import sqrt
 from numpy import ndarray
-from src.cython.util.per_enum import ArchType
-from src.cython.util.per_graph import PeRGraph
-from src.cython.util.util import Util
+from src.util.per_enum import ArchType
+from src.util.per_graph import PeRGraph
+from src.util.util import Util
 
 
 class PiplineBase(object):

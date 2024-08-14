@@ -1,12 +1,12 @@
-from src.cython.util.per_graph import PeRGraph
-from src.cython.util.per_enum import ArchType
-from src.cython.util.piplinebase import PiplineBase
+from src.util.per_graph import PeRGraph
+from src.util.per_enum import ArchType
+from src.util.piplinebase import PiplineBase
 from src.cython.sw.yoto_pipeline.stage0_yoto import Stage0YOTO
 from src.cython.sw.yoto_pipeline.stage1_yoto import Stage1YOTO
 from src.cython.sw.yoto_pipeline.stage2_yoto import Stage2YOTO
 from src.cython.sw.yoto_pipeline.stage3_yoto import Stage3YOTO
 from src.cython.sw.yoto_pipeline.stage4_yoto import Stage4YOTO
-from src.cython.util.util import Util
+from src.util.util import Util
 import multiprocessing as mp
 import os
 import time
