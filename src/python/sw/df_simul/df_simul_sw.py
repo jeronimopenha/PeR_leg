@@ -1,11 +1,7 @@
-from typing import Tuple
-
 import networkx as nx
 from queue import Queue
 from src.python.util.per_graph import PeRGraph
 
-
-# from src.python.util.util import Util
 
 class Node:
     def __init__(self, name: str):
