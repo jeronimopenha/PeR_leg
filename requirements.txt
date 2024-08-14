@@ -4,5 +4,4 @@ networkx==3.3
 numpy==2.0.1
 pandas==2.2.2
 pygraphviz==1.13
-utils==1.0.2
 veriloggen==2.3.0
