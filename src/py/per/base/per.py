@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from enum import Enum, auto
 
 
 class PeR(ABC):
@@ -16,3 +17,8 @@ class PeR(ABC):
     @abstractmethod
     def per_yott(self):
         pass
+
+
+class EdgesAlgEnum(Enum):
+    ZIG_ZAG: int = auto()
+    DEPTH_FIRST: int = auto()

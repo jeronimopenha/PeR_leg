@@ -1,6 +1,7 @@
-read_verilog /home/jeronimo/GIT/PeR/benchmarks/fpga/IWLS93/5xp1.v
-hierarchy -check -top mux4
-synth -top mux4
-abc -lut 6
-show -format dot -prefix synthesized
-write_verilog synthesized.v
+
+read_verilog -sv -formal /home/jeronimo/GIT/PeR/benchmarks/fpga/IWLS93/5xp1.v
+hierarchy -check -top top
+synth -top top
+proc
+abc -lut 4
+show -prefix teste -notitle -colors 2 -width -format dot
