@@ -1,6 +1,6 @@
 from copy import deepcopy
 import json
-from src.python.util.util import Util
+from src.old.python import Util
 import networkx as nx
 dir_archs = ["MESH","ONE_HOP"]
 yott_ts = ["t_10","t_100","t_1000"]

@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from src.python.util.util import Util
+from src.old.python import Util
 
 root_path: str = Util.get_project_root()
 dir_json = ["yoto/yoto_pipeline/", "yott/yott_pipeline/"]

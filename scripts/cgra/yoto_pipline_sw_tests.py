@@ -1,12 +1,12 @@
 import os
 import time
 
-import src.util.per_enum
-from src.python.sw.cgra.yoto_pipeline import YotoPipelineSw
-from src.cython.sw.yoto_pipeline.yoto_pipeline_sw import YotoPipelineSwOpt
-from src.python.util.per_graph import PeRGraph
-from src.python.util.per_enum import ArchType
-from src.python.util.util import Util
+import src.old.util.per_enum
+from src.old.python.sw.cgra.yoto_pipeline import YotoPipelineSw
+from src.old.cython import YotoPipelineSwOpt
+from src.old.python.util.per_graph import PeRGraph
+from src.old.python.util.per_enum import ArchType
+from src.old.python import Util
 
 
 def run_connected_graphs():
@@ -14,7 +14,7 @@ def run_connected_graphs():
     total_threads: int = 60
     random_seed: int = 0
     arch_type: ArchType = ArchType.ONE_HOP
-    arch_type_opt = src.util.per_enum.ArchType.ONE_HOP
+    arch_type_opt = src.old.util.per_enum.ArchType.ONE_HOP
     make_shuffle: bool = True
     distance_table_bits: int = 4
 

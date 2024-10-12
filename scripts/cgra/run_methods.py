@@ -1,13 +1,13 @@
 import os
-from src.python.sw.cgra.yott_pipeline.monte_carlo import YOTTMC0Pipeline
-from src.python.sw.cgra.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
-from src.python.sw.cgra.yott_pipeline.monte_carlo import YOTTMCPipeline
-from src.python.sw.cgra.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.python.sw.cgra.yoto_pipeline import YotoPipelineSw
+from src.old.python.sw.cgra.yott_pipeline.monte_carlo import YOTTMC0Pipeline
+from src.old.python.sw.cgra.yott_pipeline.monte_carlo.yott_pipeline_mc1_sw import YOTTMC1Pipeline
+from src.old.python.sw.cgra.yott_pipeline.monte_carlo import YOTTMCPipeline
+from src.old.python.sw.cgra.yott_pipeline.yott_pipeline_sw import YOTTPipeline
+from src.old.python.sw.cgra.yoto_pipeline import YotoPipelineSw
 
-from src.python.util.per_enum import ArchType
-from src.python.util.per_graph import PeRGraph
-from src.python.util.util import Util
+from src.old.python.util.per_enum import ArchType
+from src.old.python.util.per_graph import PeRGraph
+from src.old.python import Util
 import time
 
 traversal = [YOTTPipeline, YOTTMCPipeline,YOTTMC0Pipeline,YOTTMC1Pipeline, YotoPipelineSw]

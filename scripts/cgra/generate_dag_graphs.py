@@ -1,10 +1,10 @@
 import math
 import random
-from src.python.stat_scripts.graph_exporter.graph_exporter import GraphExporter
-from src.python.stat_scripts.graph_generator.graph_generator import GraphGenerator
+from src.old.python.stat_scripts.graph_exporter import GraphExporter
+from src.old.python.stat_scripts.graph_generator.graph_generator import GraphGenerator
 import pygraphviz as pgv
 import networkx as nx
-from src.python.util.util import Util
+from src.old.python import Util
 def generate_connected_dags_by_num_vertexes(num_vertexes:list):
     graph_generator =  GraphGenerator
     for num_vertex in num_vertexes:

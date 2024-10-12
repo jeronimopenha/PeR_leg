@@ -1,6 +1,6 @@
 import re
 
-from src.python.util.util import Util
+from src.old.python import Util
 
 base = Util.get_project_root()
 data_files = Util.get_files_list_by_extension(base + "/reports/results_michael/", ".dot")

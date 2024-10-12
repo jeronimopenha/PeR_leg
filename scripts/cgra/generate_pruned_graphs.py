@@ -1,6 +1,6 @@
-from src.python.stat_scripts.graph_exporter.graph_exporter import GraphExporter
-from src.python.stat_scripts.graph_generator.graph_pruner import GraphPrune
-from src.python.util.util import Util
+from src.old.python.stat_scripts.graph_exporter import GraphExporter
+from src.old.python.stat_scripts.graph_generator.graph_pruner import GraphPrune
+from src.old.python import Util
 import pygraphviz as pgv 
 import networkx as nx
 def generate_pruned_graphs_from_dot_files(path_dot_files:str):

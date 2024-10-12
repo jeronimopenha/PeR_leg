@@ -1,5 +1,5 @@
-from src.python.stat_scripts.graph_exporter.graph_exporter import GraphExporter
-from src.python.util.util import Util
+from src.old.python.stat_scripts.graph_exporter import GraphExporter
+from src.old.python import Util
 import pygraphviz as pgv
 from random import choice
 def generate_out_vertexes(vertexes,edges):

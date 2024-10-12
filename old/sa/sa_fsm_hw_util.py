@@ -1,5 +1,5 @@
-from src.python.hw.sa_fsm.sa_components import SAComponents
-from src.python.util.per_graph import PeRGraph
+from src.old.python.hw import SAComponents
+from src.old.python.util.per_graph import PeRGraph
 from old.sa.sa_util import SaUtil
 
 

@@ -1,8 +1,8 @@
 import os
-from src.python.sw.cgra.yott_pipeline.yott_pipeline_sw import YOTTPipeline
-from src.python.util.per_enum import ArchType
-from src.python.util.per_graph import PeRGraph
-from src.python.util.util import Util
+from src.old.python.sw.cgra.yott_pipeline.yott_pipeline_sw import YOTTPipeline
+from src.old.python.util.per_enum import ArchType
+from src.old.python.util.per_graph import PeRGraph
+from src.old.python import Util
 
 
 def run_connected_graphs():

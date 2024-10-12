@@ -1,9 +1,9 @@
 import json
 import os
 import time
-from src.python.sw.df_simul.df_simul_sw import DfSimulSw
-from src.python.util.per_graph import PeRGraph
-from src.python.util.util import Util
+from src.old.python.sw.df_simul.df_simul_sw import DfSimulSw
+from src.old.python.util.per_graph import PeRGraph
+from src.old.python import Util
 import networkx as nx
 
 root_path: str = Util.get_project_root()

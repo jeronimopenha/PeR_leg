@@ -1,10 +1,10 @@
 import os
 import random
 
-from src.python.hw.yoto_pipeline.yoto_pipeline_hw import YotoPipelineHw
-from src.python.util.per_graph import PeRGraph
-from src.python.util.per_enum import ArchType
-from src.python.util.util import Util
+from src.old.python.hw.yoto_pipeline.yoto_pipeline_hw import YotoPipelineHw
+from src.old.python.util.per_graph import PeRGraph
+from src.old.python.util.per_enum import ArchType
+from src.old.python import Util
 
 
 def run_connected_graphs():
