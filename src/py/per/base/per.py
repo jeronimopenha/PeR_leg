@@ -3,9 +3,6 @@ from enum import Enum, auto
 
 
 class PeR(ABC):
-    def __init__(self):
-        pass
-
     @abstractmethod
     def per_sa(self):
         pass

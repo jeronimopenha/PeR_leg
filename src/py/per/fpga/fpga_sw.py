@@ -1,4 +1,7 @@
 import random
+
+from math import exp
+
 from src.py.graph.graph_fpga import GraphFGA
 from src.py.per.base.per import PeR, EdgesAlgEnum
 
@@ -10,19 +13,105 @@ class FPGAPeR(PeR):
         super().__init__()
         # random.seed(0)
         self.graph = graph
+        # I will initialize the vector with the possible positions for inputs and outputs
+        self.possible_pos_in, self.possible_pos_out = self.get_in_out_pos()
 
-    def per_sa(self):
-        pass
+    def per_sa(self, n_exec: int = 1):
+        # reports
+        reports = {}
+
+        t_min = 0.001
+        edges = self.graph.get_edges_idx(self.graph.edges)
+        nodes = self.graph.get_nodes_idx(self.graph.nodes)
+        for exe in range(n_exec):
+            # First I will start the placement of matrix
+            placement = [None for _ in range(self.graph.n_cells)]
+
+            possible_cells = [i for i in range(self.graph.n_cells)]
+
+            # Creating the n2c matrix
+            n2c = [None for _ in range(self.graph.n_cells)]
+
+            # now I need to place every note in the placement matrix
+            self.place_input_output_nodes(n2c, placement)
+            for n in self.graph.get_nodes_idx(self.graph.nodes):
+                if n2c[n] is None:
+                    while True:
+                        ch = random.choice(possible_cells)
+                        if placement[ch] is None:
+                            placement[ch] = n
+                            n2c[n] = ch
+                            break
+            t = 100
+            h, actual_cost = self.calc_distance(n2c, edges, self.graph.n_cells_sqrt)
+            while t >= t_min:
+                for cell_a in range(self.graph.n_cells):
+                    for cell_b in range(self.graph.n_cells):
+                        if (
+                                cell_a == cell_b or
+                                cell_a in self.possible_pos_in and cell_b not in self.possible_pos_in or
+                                cell_a in self.possible_pos_out and cell_b not in self.possible_pos_out or
+                                cell_b in self.possible_pos_in and cell_a not in self.possible_pos_in or
+                                cell_b in self.possible_pos_out and cell_a not in self.possible_pos_out
+                        ):
+                            continue
+                        next_cost = actual_cost
+                        a = placement[cell_a]
+                        b = placement[cell_b]
+                        if a == None and b == None:
+                            continue
+                        cost_a_b, cost_a_a, cost_b_b, cost_b_a = self.graph.get_cost(n2c, a, b, cell_a, cell_b)
+
+                        next_cost -= cost_a_b
+                        next_cost -= cost_b_b
+                        next_cost += cost_a_a
+                        next_cost += cost_b_a
+
+                        try:
+                            valor = exp((-1 * (next_cost - actual_cost) / t))
+                        except:
+                            valor = -1.0
+
+                        rnd = random.random()
+
+                        if next_cost < actual_cost or rnd <= valor:
+                            if a is not None:
+                                n2c[a] = cell_b
+
+                            if b is not None:
+                                n2c[b] = cell_a
+                            placement[cell_a], placement[cell_b] = placement[cell_b], placement[cell_a]
+
+                            # = sa_graph.get_total_cost(c_n[thread], n_c[thread])
+                            actual_cost = next_cost
+                            # print(actual_cost)
+                        a = 1
+                    t *= 0.999
+            reports[exe] = {
+                'exec_id': exe,
+                'total_cost': actual_cost,
+                'histogram': h,
+                'longest_path_cost': self.calc_distance(n2c,
+                                                        self.graph.get_edges_idx(self.graph.longest_path),
+                                                        self.graph.n_cells_sqrt)[1],
+                'longest_path': self.graph.longest_path,
+                'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
+                'nodes_idx': self.graph.nodes_to_idx,
+                'placement': placement,
+            }
+            a = 1
+        #TODO Melhorar isso
+        for r in reports.keys():
+            Util.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
+                           f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
+                           reports[r])
 
     def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG):
         # Final placements
         # placements = []
 
-        # distances histogram
-        rel = {}
-
-        # I will initialize the vector with the possible positions for inputs and outputs
-        possible_pos_in, possible_pos_out = self.get_in_out_pos()
+        # reports
+        reports = {}
 
         # starting executions
 
@@ -39,19 +128,7 @@ class FPGAPeR(PeR):
             # And then I need to draw the input and output positions
             # They will be randomly placed and the inputs can be on top and left
             # while outputs can be on bottom and right.
-            i = 0
-            while i < max(len(self.graph.input_nodes), len(self.graph.output_nodes)):
-                if i < len(self.graph.input_nodes):
-                    n = self.graph.nodes_to_idx[self.graph.input_nodes[i]]
-                    ch = self.choose_position(placement, n, possible_pos_in)
-                    n2c[n] = ch
-                    placement[ch] = n
-                if i < len(self.graph.output_nodes):
-                    n = self.graph.nodes_to_idx[self.graph.output_nodes[i]]
-                    ch = self.choose_position(placement, n, possible_pos_out)
-                    n2c[n] = ch
-                    placement[ch] = n
-                i += 1
+            self.place_input_output_nodes(n2c, placement)
             # now, I will start the yoto algorithm.
 
             # Getting the adges to be placed
@@ -92,7 +169,7 @@ class FPGAPeR(PeR):
 
             h, tc = self.calc_distance(n2c, self.graph.get_edges_idx(self.graph.edges), self.graph.n_cells_sqrt)
 
-            rel[exe] = {
+            reports[exe] = {
                 'exec_id': exe,
                 'total_cost': tc,
                 'histogram': h,
@@ -105,11 +182,11 @@ class FPGAPeR(PeR):
                 'placement': placement,
             }
             a = 1
-        # TODO Fazer o relatório e os cálculos de distancias, gerar dot.
-        for r in rel.keys():
+        #TODO Melhorar isso
+        for r in reports.keys():
             Util.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
-                           f"{self.graph.dot_name}_fpga_yoto_{rel[r]['exec_id']}.txt",
-                           rel[r])
+                           f"{self.graph.dot_name}_fpga_yoto_{EdgesAlgEnum}_{reports[r]['exec_id']}.txt",
+                           reports[r])
 
     def per_yott(self):
         pass
@@ -163,6 +240,32 @@ class FPGAPeR(PeR):
         with open(output_dot_file, 'w') as f:
             f.write(str_out)
         f.close()
+
+    def place_input_output_nodes(self, n2c, placement):
+        i = 0
+        input_nodes = self.graph.get_nodes_idx(self.graph.input_nodes)
+        output_nodes = self.graph.get_nodes_idx(self.graph.output_nodes)
+        while i < len(input_nodes):
+            if i < len(input_nodes):
+                n = input_nodes[i]
+                while True:
+                    ch = self.choose_position(placement, n, self.possible_pos_in)
+                    if placement[ch] is None:
+                        placement[ch] = n
+                        n2c[n] = ch
+                        break
+                i += 1
+        i = 0
+        while i < len(output_nodes):
+            if i < len(output_nodes):
+                n = output_nodes[i]
+                while True:
+                    ch = self.choose_position(placement, n, self.possible_pos_out)
+                    if placement[ch] is None:
+                        placement[ch] = n
+                        n2c[n] = ch
+                        break
+            i += 1
 
     @staticmethod
     def calc_distance(n2c, edges, cells_sqrt):
