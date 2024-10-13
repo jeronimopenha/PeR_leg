@@ -14,8 +14,7 @@ class Graph:
         self.gv: pgv.AGraph = pgv.AGraph(self.dot_path, strict=False, directed=True)
         self.g: nx.DiGraph = nx.DiGraph(self.gv)
         self.nodes: List[str] = []  # list(self.g.nodes)
-        self.n_nodes: int = 0  # len(self.nodes)
-        self.edges_str: List[Tuple[str, str]] = []  # list(self.g.edges)
+        self.edges: List[Tuple[str, str]] = []  # list(self.g.edges)
         self.n_edges: int = 0  # len(self.edges_str)
         self.nodes_to_idx: Dict[str, int] = {}
         self.neighbors: Dict[int, List[int]] = defaultdict(list)
@@ -25,13 +24,13 @@ class Graph:
         self.n_cells_sqrt: int = 0
         self.get_dot_vars()
 
-    def get_edges_idx(self, edges_str: List[Tuple[str, str]]) -> List[Tuple[int, int]]:
-        edges_idx: List[Tuple[int, int]] = [
-            (self.nodes_to_idx[a], self.nodes_to_idx[b])
-            for (a, b) in edges_str
-        ]
-
+    def get_edges_idx(self, edges):
+        edges_idx = [(self.nodes_to_idx[a], self.nodes_to_idx[b])
+                     for (a, b) in edges]
         return edges_idx
+
+    def get_nodes_idx(self, nodes):
+        return [self.nodes_to_idx[n] for n in nodes]
 
     def get_mesh_distances(self, make_shuffle: bool = True) -> list[list[int]]:
         distance_table_raw: list[list] = [[] for _ in range((self.n_cells_sqrt - 1) * 2)]
@@ -63,10 +62,6 @@ class Graph:
         return distance_table
 
     def get_dot_vars(self):
-        """
-        Extracts variables from the DOT graph.
-        """
-
         n_list = list(self.g.nodes)
         nodes_counter = 0
         for i, node in enumerate(n_list):
@@ -75,28 +70,22 @@ class Graph:
                 self.g.remove_node(node)
                 continue
             self.nodes.append(node)
-            self.n_nodes += 1
             self.nodes_to_idx[node] = nodes_counter
-            # FIXME alteracoes na ordem feitas por conta do grafo ser invertido
             if len(list(self.g.succ[node])) == 0:
-                self.input_nodes.append(node)
-            elif len(list(self.g.pred[node])) == 0:
                 self.output_nodes.append(node)
+            elif len(list(self.g.pred[node])) == 0:
+                self.input_nodes.append(node)
             nodes_counter += 1
-        # self.edges_str = list(self.g.edges)
-        # self.n_edges: int = len(self.edges_str)
         for e in list(self.g.edges):
-            # FIXME alteracoes na ordem feitas por conta do grafo ser invertido
-            idx_0 = self.nodes_to_idx[e[1]]
-            idx_1 = self.nodes_to_idx[e[0]]
-            # FIXME alteracoes na ordem feitas por conta do grafo ser invertido
-            self.edges_str.append((e[1], e[0]))
+            idx_1 = self.nodes_to_idx[e[1]]
+            idx_0 = self.nodes_to_idx[e[0]]
+            self.edges.append((e[0], e[1]))
             self.n_edges += 1
 
             self.neighbors[idx_0].append(idx_1)
             self.neighbors[idx_1].append(idx_0)
 
-        self.n_cells_sqrt = ceil(sqrt(self.n_nodes))
+        self.n_cells_sqrt = ceil(sqrt(len(self.nodes)))
         self.n_cells = pow(self.n_cells_sqrt, 2)
         m = max(len(self.output_nodes), len(self.input_nodes))
         if m > self.n_cells_sqrt:
@@ -142,7 +131,7 @@ class Graph:
 
     def get_edges_zigzag(self, make_shuffle: bool = True) -> tuple[list[list[str]], list[list[str]], list[list[Any]]]:
 
-        output_list = [[node, 'IN'] for node in self.g.nodes() if self.g.out_degree(node) == 0]
+        output_list = [[node, 'IN'] for node in self.output_nodes]
 
         if make_shuffle:
             random.shuffle(output_list)

@@ -1,16 +1,14 @@
-import json
 import random
-from src.py.graph.graph import Graph
+from src.py.graph.graph_fpga import GraphFGA
 from src.py.per.base.per import PeR, EdgesAlgEnum
-from math import ceil, sqrt
 
 from src.py.util.util import Util
 
 
 class FPGAPeR(PeR):
-    def __init__(self, graph: Graph):
+    def __init__(self, graph: GraphFGA):
         super().__init__()
-        #random.seed(0)
+        # random.seed(0)
         self.graph = graph
 
     def per_sa(self):
@@ -18,7 +16,7 @@ class FPGAPeR(PeR):
 
     def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG):
         # Final placements
-        placements = []
+        # placements = []
 
         # distances histogram
         rel = {}
@@ -28,7 +26,7 @@ class FPGAPeR(PeR):
 
         # starting executions
 
-        for exec in range(n_exec):
+        for exe in range(n_exec):
             # First I will start the placement of matrix
             placement = [None for _ in range(self.graph.n_cells)]
 
@@ -92,24 +90,29 @@ class FPGAPeR(PeR):
                     if placed:
                         break
 
-            h, tc = self.calc_total_distance(n2c)
-            rel[exec] = {
-                'exec_id': exec,
+            h, tc = self.calc_distance(n2c, self.graph.get_edges_idx(self.graph.edges), self.graph.n_cells_sqrt)
+
+            rel[exe] = {
+                'exec_id': exe,
                 'total_cost': tc,
                 'histogram': h,
+                'longest_path_cost': self.calc_distance(n2c,
+                                                        self.graph.get_edges_idx(self.graph.longest_path),
+                                                        self.graph.n_cells_sqrt)[1],
+                'longest_path': self.graph.longest_path,
+                'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
+                'nodes_idx': self.graph.nodes_to_idx,
+                'placement': placement,
             }
+            a = 1
         # TODO Fazer o relatório e os cálculos de distancias, gerar dot.
         for r in rel.keys():
-            self.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
-                           f"{self.graph.dot_name}_{rel[r]['exec_id']}.txt",
+            Util.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
+                           f"{self.graph.dot_name}_fpga_yoto_{rel[r]['exec_id']}.txt",
                            rel[r])
-        pass
 
-    def save_json(self, path: str, file_name: str, data):
-        if path[-1] != '/':
-            path = path + '/'
-        with open(path + file_name + '.json', 'w', encoding='utf-8') as file:
-            json.dump(data, file, ensure_ascii=False, indent=4)
+    def per_yott(self):
+        pass
 
     def write_dot(self, placement, n2c):
         output_dot_file = self.graph.dot_path + ".placed.dot"
@@ -151,7 +154,7 @@ class FPGAPeR(PeR):
                 str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
                     i, placement[i], '#ffffff')
 
-        for ed in self.graph.get_edges_idx(self.graph.edges_str):
+        for ed in self.graph.edges_idx:
             a = ed[0]
             b = ed[1]
             str_out += f"{n2c[a]} -> {n2c[b]};\n"
@@ -161,22 +164,28 @@ class FPGAPeR(PeR):
             f.write(str_out)
         f.close()
 
-    def calc_total_distance(self, n2c):
-        total_distance = self.graph.n_edges * -1
+    @staticmethod
+    def calc_distance(n2c, edges, cells_sqrt):
+        distance = len(edges) * -1
         distances = {}
-        for e in self.graph.get_edges_idx(self.graph.edges_str):
-            ia = e[0] // self.graph.n_cells_sqrt
-            ja = e[0] % self.graph.n_cells_sqrt
-            ib = e[1] // self.graph.n_cells_sqrt
-            jb = e[1] % self.graph.n_cells_sqrt
-            dist = abs(ia - ib) + abs(ja - jb)
+        for e in edges:
+            ia = n2c[e[0]] // cells_sqrt
+            ja = n2c[e[0]] % cells_sqrt
+            ib = n2c[e[1]] // cells_sqrt
+            jb = n2c[e[1]] % cells_sqrt
+            dist = FPGAPeR.manhattan_distance(ia, ja, ib, jb)
             if dist not in distances.keys():
                 distances[dist] = 0
             distances[dist] += 1
-            total_distance += dist
-        return dict(sorted(distances.items())), total_distance
+            distance += dist
+        return dict(sorted(distances.items())), distance
 
-    def choose_position(self, placement, node, choices):
+    @staticmethod
+    def manhattan_distance(ia, ja, ib, jb):
+        return abs(ia - ib) + abs(ja - jb)
+
+    @staticmethod
+    def choose_position(placement, node, choices):
         while True:
             ch = random.choice(choices)
             if placement[ch] is not None:
@@ -194,6 +203,3 @@ class FPGAPeR(PeR):
         for i in range(self.graph.n_cells_sqrt - 1, self.graph.n_cells - 1, self.graph.n_cells_sqrt):
             out_.append(i)
         return in_, out_
-
-    def per_yott(self):
-        pass
