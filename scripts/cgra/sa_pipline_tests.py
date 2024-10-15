@@ -47,7 +47,7 @@ def run_connected_graphs():
                 if not os.path.exists(output_path):
                     os.makedirs(output_path)
                 formatted_report = Util.get_formatted_report(raw_report)
-                Util.save_json(output_path, formatted_report['graph_name'], formatted_report)
+                Util.write_json(output_path, formatted_report['graph_name'], formatted_report)
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def run_connected_graphs():
             yott_pipeline_sw = YOTTPipeline(per_graph, arch_type, distance_table_bits, make_shuffle, 3)
             raw_report: dict = yott_pipeline_sw.run_single(total_threads // threads_per_copy)
             formatted_report = Util.get_formatted_report(raw_report)
-            Util.save_json(output_path, dot_name, formatted_report)
+            Util.write_json(output_path, dot_name, formatted_report)
             reports.append(formatted_report)
 
 

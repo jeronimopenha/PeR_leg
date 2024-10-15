@@ -21,8 +21,8 @@ class FPGAPeR(PeR):
         reports = {}
 
         t_min = 0.001
-        edges = self.graph.get_edges_idx(self.graph.edges)
-        nodes = self.graph.get_nodes_idx(self.graph.nodes)
+        edges = self.graph.get_edges_idx(self.graph.edges_str)
+        nodes = self.graph.get_nodes_idx(self.graph.nodes_str)
         for exe in range(n_exec):
             # First I will start the placement of matrix
             placement = [None for _ in range(self.graph.n_cells)]
@@ -34,7 +34,7 @@ class FPGAPeR(PeR):
 
             # now I need to place every note in the placement matrix
             self.place_input_output_nodes(n2c, placement)
-            for n in self.graph.get_nodes_idx(self.graph.nodes):
+            for n in self.graph.get_nodes_idx(self.graph.nodes_str):
                 if n2c[n] is None:
                     while True:
                         ch = random.choice(possible_cells)
@@ -100,13 +100,13 @@ class FPGAPeR(PeR):
                 'placement': placement,
             }
             a = 1
-        #TODO Melhorar isso
+        # TODO Melhorar isso
         for r in reports.keys():
-            Util.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
-                           f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
-                           reports[r])
+            Util.write_json(Util.get_project_root() + f"/benchmarks/fpga/",
+                            f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
+                            reports[r])
 
-    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG):
+    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
         # Final placements
         # placements = []
 
@@ -133,10 +133,10 @@ class FPGAPeR(PeR):
 
             # Getting the adges to be placed
             ed_str = []
-            if edges_alg == EdgesAlgEnum.ZIG_ZAG:
-                ed_str = self.graph.get_edges_zigzag()[0]
+            if edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
+                ed_str = self.graph.get_edges_zigzag_no_priority()[0]
             else:
-                ed_str = self.graph.get_edges_depth_first()
+                ed_str = self.graph.get_edges_depth_first_no_priority()
             ed = self.graph.get_edges_idx(ed_str)
 
             # if the node that it wants to place is placed, then it will go to next edge
@@ -167,7 +167,7 @@ class FPGAPeR(PeR):
                     if placed:
                         break
 
-            h, tc = self.calc_distance(n2c, self.graph.get_edges_idx(self.graph.edges), self.graph.n_cells_sqrt)
+            h, tc = self.calc_distance(n2c, self.graph.get_edges_idx(self.graph.edges_str), self.graph.n_cells_sqrt)
 
             reports[exe] = {
                 'exec_id': exe,
@@ -180,19 +180,16 @@ class FPGAPeR(PeR):
                 'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
                 'nodes_idx': self.graph.nodes_to_idx,
                 'placement': placement,
+                'n2c': n2c,
             }
-            a = 1
-        #TODO Melhorar isso
-        for r in reports.keys():
-            Util.save_json(Util.get_project_root() + f"/benchmarks/fpga/",
-                           f"{self.graph.dot_name}_fpga_yoto_{EdgesAlgEnum}_{reports[r]['exec_id']}.txt",
-                           reports[r])
+        return reports
 
     def per_yott(self):
         pass
 
-    def write_dot(self, placement, n2c):
-        output_dot_file = self.graph.dot_path + ".placed.dot"
+    def write_dot(self, path, file_name, placement, n2c):
+        path = Util.verify_path(path)
+        output_dot_file = path + file_name
         dot_head = 'digraph layout{\n rankdir=TB;\n splines=ortho;\n node [style=filled shape=square fixedsize=true width=0.6];\n'
         dot_foot = 'edge [constraint=true, style=invis];\n'
 
@@ -204,14 +201,14 @@ class FPGAPeR(PeR):
                 else:
                     dot_foot = dot_foot + ' -> '
 
-        for i in range(self.graph.n_cells_sqrt):
+        for i in range(self.graph.n_cells):
             if i % self.graph.n_cells_sqrt == 0:
-                dot_foot = dot_foot + 'rank = same {'
+                dot_foot += 'rank = same {'
             dot_foot = dot_foot + '%d' % i
             if (i + 1) % self.graph.n_cells_sqrt == 0:
-                dot_foot = dot_foot + '};\n'
+                dot_foot += '};\n'
             else:
-                dot_foot = dot_foot + ' -> '
+                dot_foot += ' -> '
 
         dot_foot = dot_foot + '}'
 
@@ -230,8 +227,8 @@ class FPGAPeR(PeR):
             else:
                 str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
                     i, placement[i], '#ffffff')
-
-        for ed in self.graph.edges_idx:
+        str_out += 'edge [constraint=false, style=vis];'
+        for ed in self.graph.get_edges_idx(self.graph.edges_str):
             a = ed[0]
             b = ed[1]
             str_out += f"{n2c[a]} -> {n2c[b]};\n"
@@ -301,8 +298,8 @@ class FPGAPeR(PeR):
         for i in range(self.graph.n_cells_sqrt):
             in_.append(i)
             out_.append(i + self.graph.n_cells - self.graph.n_cells_sqrt)
-        for i in range(self.graph.n_cells_sqrt, self.graph.n_cells, self.graph.n_cells_sqrt):
+        for i in range(self.graph.n_cells_sqrt, self.graph.n_cells-self.graph.n_cells_sqrt, self.graph.n_cells_sqrt):
             in_.append(i)
-        for i in range(self.graph.n_cells_sqrt - 1, self.graph.n_cells - 1, self.graph.n_cells_sqrt):
+        for i in range(self.graph.n_cells_sqrt*2 - 1, self.graph.n_cells - 1, self.graph.n_cells_sqrt):
             out_.append(i)
         return in_, out_

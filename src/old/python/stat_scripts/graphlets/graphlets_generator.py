@@ -11,7 +11,7 @@ class GraphletsGenerator:
             subgraph = graph.subgraph(nodes)
             return nx.is_connected(subgraph)
 
-        all_nodes = list(g.nodes())
+        all_nodes = list(g.nodes_str())
         all_connected_subgraphs = []
 
         for k in range(1, len(all_nodes) + 1):

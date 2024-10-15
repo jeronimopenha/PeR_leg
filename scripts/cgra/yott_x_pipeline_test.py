@@ -44,7 +44,7 @@ def run_connected_graphs():
             raw_report['method'] = 'X'
             raw_report['limiar'] = '0.9'
             formatted_report = Util.get_formatted_report(raw_report)
-            Util.save_json(output_path, dot_name.replace('.dot','')+f'-NA<{3}>-M<X=0.9>.dot', formatted_report)
+            Util.write_json(output_path, dot_name.replace('.dot', '') + f'-NA<{3}>-M<X=0.9>.dot', formatted_report)
             reports.append(formatted_report)
 if __name__ == '__main__':
     # per = PeRGraph(Util.get_project_root() + "/dot_db/connected/mults1.dot", "mults1.dot")

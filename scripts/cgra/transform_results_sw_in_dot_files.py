@@ -45,7 +45,7 @@ for algorithm_name,path_alg in algorithms:
                
                 new_digraph = nx.DiGraph()
 
-                for (a,b,_) in G_dot.edges:
+                for (a,b,_) in G_dot.edges_str:
                     if distances_dict.get(f"{node_dicts[a]}_{node_dicts[b]}") != None:
                         real_dist = distances_dict[f"{node_dicts[a]}_{node_dicts[b]}"]
                     elif distances_dict.get(f"{node_dicts[b]}_{node_dicts[a]}") != None:

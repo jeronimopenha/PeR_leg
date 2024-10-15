@@ -62,9 +62,9 @@ def create_rom_files(sa_comp, path: str):
 
     for c in range(pow(2, ceil(sqrt(n_cells)))):
         n_w.append([n_str_f.format(0) for _ in range(n_neighbors)])
-    for k in sa_graph.neighbors.keys():
+    for k in sa_graph.neighbors_idx.keys():
         idx = 0
-        for n in sa_graph.neighbors[k]:
+        for n in sa_graph.neighbors_idx[k]:
             n_w[k][idx] = n_str_f.format((1 << node_bits) | n)
             idx += 1
 

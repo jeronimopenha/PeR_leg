@@ -81,9 +81,9 @@ for dot_connected_path in dot_connected_paths:
                         raw_report['limiar'] = limiars_str[i]
 
                         formatted_report = Util.get_formatted_report(raw_report)
-                        Util.save_json(output_path, dot_name.replace('.dot',
+                        Util.write_json(output_path, dot_name.replace('.dot',
                                                                      '') + f'-NA<{num_annotation}>M<{methods[i]}={limiars_str[i]}>.dot',
-                                       formatted_report)
+                                        formatted_report)
                         reports.append(formatted_report)
 
 end = time.time()

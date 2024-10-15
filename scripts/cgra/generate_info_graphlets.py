@@ -61,15 +61,15 @@ def generate_info_graphlets(k):
         min_placement = None
 
 
-        vertexes = list(graphlet.nodes())
-        edges = list(graphlet.edges())
+        vertexes = list(graphlet.nodes_str())
+        edges = list(graphlet.edges_str())
         num_edges = len(edges)
         num_vertexes = len(vertexes)
         dim_arch = 10
-        print(graphlet.nodes(),graphlet.edges())
+        print(graphlet.nodes_str(), graphlet.edges_str())
 
         if already_calculed.get((num_vertexes,num_edges)) == None and num_vertexes > 1:
-            print(graphlet.nodes(),graphlet.edges())
+            print(graphlet.nodes_str(), graphlet.edges_str())
             find_min_placement(vertexes,edges)
             path = Util.get_project_root()+"/pattern_infos/"
             filename = f"V={num_vertexes}-E={num_edges}-MC={min_cost}"

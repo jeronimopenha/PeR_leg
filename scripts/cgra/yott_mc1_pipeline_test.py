@@ -45,7 +45,7 @@ def run_connected_graphs():
             limiars_str ='3,3,0.3'
             raw_report['limiar'] = limiars_str
             formatted_report = Util.get_formatted_report(raw_report)
-            Util.save_json(output_path, dot_name.replace('.dot','')+f'-NA<{3}>-M<MC1={limiars_str}>.dot', formatted_report)
+            Util.write_json(output_path, dot_name.replace('.dot', '') + f'-NA<{3}>-M<MC1={limiars_str}>.dot', formatted_report)
             reports.append(formatted_report)
 if __name__ == '__main__':
     per = PeRGraph(Util.get_project_root() + "/dot_db/graphs0_dag/dag18-5x5.dot", "dag18-5x5.dot")
