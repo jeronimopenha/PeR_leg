@@ -14,7 +14,8 @@ class FPGAPeR(PeR):
         # random.seed(0)
         self.graph = graph
         # I will initialize the vector with the possible positions for inputs and outputs
-        self.possible_pos_in, self.possible_pos_out = self.get_in_out_pos()
+        self.possible_pos_in_out = []
+        self.get_in_out_pos()
 
     def per_sa(self, n_exec: int = 1):
         # reports
@@ -49,9 +50,9 @@ class FPGAPeR(PeR):
                     for cell_b in range(self.graph.n_cells):
                         if (
                                 cell_a == cell_b or
-                                cell_a in self.possible_pos_in and cell_b not in self.possible_pos_in or
+                                cell_a in self.possible_pos_in_out and cell_b not in self.possible_pos_in_out or
                                 cell_a in self.possible_pos_out and cell_b not in self.possible_pos_out or
-                                cell_b in self.possible_pos_in and cell_a not in self.possible_pos_in or
+                                cell_b in self.possible_pos_in_out and cell_a not in self.possible_pos_in_out or
                                 cell_b in self.possible_pos_out and cell_a not in self.possible_pos_out
                         ):
                             continue
@@ -93,7 +94,7 @@ class FPGAPeR(PeR):
                 'histogram': h,
                 'longest_path_cost': self.calc_distance(n2c,
                                                         self.graph.get_edges_idx(self.graph.longest_path),
-                                                        self.graph.n_cells_sqrt)[1],
+                                                        self.graph.n_cells_sqrt, len(self.graph.nodes_str))[1],
                 'longest_path': self.graph.longest_path,
                 'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
                 'nodes_idx': self.graph.nodes_to_idx,
@@ -106,16 +107,19 @@ class FPGAPeR(PeR):
                             f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
                             reports[r])
 
-    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
+    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
+                 pre_placed_in: bool = False):
         # Final placements
         # placements = []
 
         # reports
         reports = {}
 
-        # starting executions
+        input_nodes_idx = self.graph.get_nodes_idx(self.graph.input_nodes)
+        output_nodes_idx = self.graph.get_nodes_idx(self.graph.output_nodes)
 
-        for exe in range(n_exec):
+        # starting executions
+        for exec_id in range(n_exec):
             # First I will start the placement of matrix
             placement = [None for _ in range(self.graph.n_cells)]
 
@@ -125,19 +129,20 @@ class FPGAPeR(PeR):
             # Creating the n2c matrix
             n2c = [None for _ in range(self.graph.n_cells)]
 
-            # And then I need to draw the input and output positions
-            # They will be randomly placed and the inputs can be on top and left
-            # while outputs can be on bottom and right.
-            self.place_input_output_nodes(n2c, placement)
-            # now, I will start the yoto algorithm.
-
-            # Getting the adges to be placed
+            # Getting the edges to be placed
             ed_str = []
             if edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
                 ed_str = self.graph.get_edges_zigzag_no_priority()[0]
             else:
                 ed_str = self.graph.get_edges_depth_first_no_priority()
             ed = self.graph.get_edges_idx(ed_str)
+
+            # And then I need to draw the input and output positions
+            # They will be randomly placed and the inputs can be on top and left
+            # while outputs can be on bottom and right.
+            self.place_input_output_nodes(n2c, placement, pre_placed_in)
+
+            # now, I will start the yoto algorithm.
 
             # if the node that it wants to place is placed, then it will go to next edge
 
@@ -149,8 +154,9 @@ class FPGAPeR(PeR):
                 ai = n2c[a] // self.graph.n_cells_sqrt
                 aj = n2c[a] % self.graph.n_cells_sqrt
                 # while not find a clear cell, I will try to find one
-                distance = 1
-                for line in distances_cells:
+
+                flag = False
+                for l_n,line in enumerate(distances_cells):
                     placed = False
                     for ij in line:
                         bi = ai + ij[0]
@@ -159,23 +165,31 @@ class FPGAPeR(PeR):
                                 bj < 0 or bj > self.graph.n_cells_sqrt - 1):
                             continue
                         ch = bi * self.graph.n_cells_sqrt + bj
+                        if ch in self.possible_pos_in_out:
+                            if b not in input_nodes_idx and b not in output_nodes_idx:
+                                continue
                         if placement[ch] is None:
                             placement[ch] = b
                             n2c[b] = ch
                             placed = True
                             break
                     if placed:
+                        flag = True
                         break
+            h, tc = self.calc_distance(n2c, ed, self.graph.n_cells_sqrt, len(self.graph.nodes_str))
 
-            h, tc = self.calc_distance(n2c, self.graph.get_edges_idx(self.graph.edges_str), self.graph.n_cells_sqrt)
-
-            reports[exe] = {
-                'exec_id': exe,
+            reports[exec_id] = {
+                'exec_id': exec_id,
+                'dot_name': self.graph.dot_name,
+                'dot_path': self.graph.dot_path,
+                'placer': 'yoto',
+                'edges_algorithm': edges_alg.name,
+                'pre_placed_in_out': pre_placed_in,
                 'total_cost': tc,
                 'histogram': h,
                 'longest_path_cost': self.calc_distance(n2c,
                                                         self.graph.get_edges_idx(self.graph.longest_path),
-                                                        self.graph.n_cells_sqrt)[1],
+                                                        self.graph.n_cells_sqrt, len(self.graph.nodes_str))[1],
                 'longest_path': self.graph.longest_path,
                 'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
                 'nodes_idx': self.graph.nodes_to_idx,
@@ -238,37 +252,41 @@ class FPGAPeR(PeR):
             f.write(str_out)
         f.close()
 
-    def place_input_output_nodes(self, n2c, placement):
-        i = 0
-        input_nodes = self.graph.get_nodes_idx(self.graph.input_nodes)
+    def place_input_output_nodes(self, n2c, placement, pre_placed_in):
         output_nodes = self.graph.get_nodes_idx(self.graph.output_nodes)
-        while i < len(input_nodes):
-            if i < len(input_nodes):
-                n = input_nodes[i]
-                while True:
-                    ch = self.choose_position(placement, n, self.possible_pos_in)
-                    if placement[ch] is None:
-                        placement[ch] = n
-                        n2c[n] = ch
-                        break
-                i += 1
         i = 0
         while i < len(output_nodes):
             if i < len(output_nodes):
                 n = output_nodes[i]
                 while True:
-                    ch = self.choose_position(placement, n, self.possible_pos_out)
+                    ch = self.choose_position(placement,  self.possible_pos_in_out)
                     if placement[ch] is None:
                         placement[ch] = n
                         n2c[n] = ch
                         break
             i += 1
+        if pre_placed_in:
+            input_nodes = self.graph.get_nodes_idx(self.graph.input_nodes)
+            i = 0
+            while i < len(input_nodes):
+                if i < len(input_nodes):
+                    n = input_nodes[i]
+                    while True:
+                        ch = self.choose_position(placement,  self.possible_pos_in_out)
+                        if placement[ch] is None:
+                            placement[ch] = n
+                            n2c[n] = ch
+                            break
+                    i += 1
 
     @staticmethod
-    def calc_distance(n2c, edges, cells_sqrt):
+    def calc_distance(n2c, edges, cells_sqrt, n_nodes):
         distance = len(edges) * -1
         distances = {}
+        counter = 0
         for e in edges:
+            if counter >= n_nodes-1:
+                break
             ia = n2c[e[0]] // cells_sqrt
             ja = n2c[e[0]] % cells_sqrt
             ib = n2c[e[1]] // cells_sqrt
@@ -278,6 +296,7 @@ class FPGAPeR(PeR):
                 distances[dist] = 0
             distances[dist] += 1
             distance += dist
+            counter +=1
         return dict(sorted(distances.items())), distance
 
     @staticmethod
@@ -285,7 +304,7 @@ class FPGAPeR(PeR):
         return abs(ia - ib) + abs(ja - jb)
 
     @staticmethod
-    def choose_position(placement, node, choices):
+    def choose_position(placement, choices):
         while True:
             ch = random.choice(choices)
             if placement[ch] is not None:
@@ -293,13 +312,13 @@ class FPGAPeR(PeR):
             return ch
 
     def get_in_out_pos(self):
-        in_ = []
-        out_ = []
+        in_out = []
         for i in range(self.graph.n_cells_sqrt):
-            in_.append(i)
-            out_.append(i + self.graph.n_cells - self.graph.n_cells_sqrt)
-        for i in range(self.graph.n_cells_sqrt, self.graph.n_cells-self.graph.n_cells_sqrt, self.graph.n_cells_sqrt):
-            in_.append(i)
-        for i in range(self.graph.n_cells_sqrt*2 - 1, self.graph.n_cells - 1, self.graph.n_cells_sqrt):
-            out_.append(i)
-        return in_, out_
+            in_out.append(i)
+        for i in range(self.graph.n_cells_sqrt):
+            in_out.append(i + self.graph.n_cells - self.graph.n_cells_sqrt)
+        for i in range(self.graph.n_cells_sqrt, self.graph.n_cells - self.graph.n_cells_sqrt, self.graph.n_cells_sqrt):
+            in_out.append(i)
+        for i in range(self.graph.n_cells_sqrt * 2 - 1, self.graph.n_cells - 1, self.graph.n_cells_sqrt):
+            in_out.append(i)
+        self.possible_pos_in_out = in_out

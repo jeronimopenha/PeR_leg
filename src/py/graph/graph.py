@@ -63,12 +63,15 @@ class Graph:
             self.dag_neighbors_str[e[0]].append(e[1])
 
     def calc_cells_qty(self):
-        self.n_cells_sqrt = ceil(sqrt(len(self.nodes_str)))
+        # n_cells to contain input/output nodes in the borders
+        # and base cells to contain base nodes
+        total_in_out = len(self.output_nodes) + len(self.input_nodes)
+        n_base_nodes = len(self.nodes_str) - total_in_out
+        n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
+        n_cells_base = pow(n_cells_base_sqrt, 2)
+        n_border_cells = (n_cells_base_sqrt) * 4 + 1
+        self.n_cells_sqrt = ceil(sqrt(n_cells_base + n_border_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
-        m = max(len(self.output_nodes), len(self.input_nodes))
-        if m > self.n_cells_sqrt * 2 - 2:
-            self.n_cells_sqrt = ceil((m + 2) / 2)
-            self.n_cells = pow(m, 2)
 
     def get_edges_idx(self, edges):
         edges_idx = [(self.nodes_to_idx[a], self.nodes_to_idx[b])
