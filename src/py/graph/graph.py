@@ -80,8 +80,14 @@ class Graph:
         n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
         n_cells_base = pow(n_cells_base_sqrt, 2)
         n_border_cells = (n_cells_base_sqrt) * 4 + 1
-        self.n_cells_sqrt = ceil(sqrt(n_cells_base + n_border_cells))
+        while total_in_out > n_border_cells:
+            n_cells_base_sqrt += 1
+            n_border_cells = (n_cells_base_sqrt) * 4 + 1
+        n_cells_base = pow(n_cells_base_sqrt, 2)
+        total_cells = n_cells_base + n_border_cells
+        self.n_cells_sqrt = ceil(sqrt(total_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
+
 
     def get_edges_idx(self, edges):
         edges_idx = [(self.nodes_to_idx[a], self.nodes_to_idx[b])

@@ -1,0 +1,36 @@
+digraph layout{
+ rankdir=TB;
+ splines=ortho;
+ node [style=filled shape=square fixedsize=true width=0.6];
+0[label="0", fontsize=8, fillcolor="#ffffff"];
+1[label="1", fontsize=8, fillcolor="#ffffff"];
+2[label="2", fontsize=8, fillcolor="#ffffff"];
+3[label="3", fontsize=8, fillcolor="#ffffff"];
+4[label="4", fontsize=8, fillcolor="#ffffff"];
+5[label="5", fontsize=8, fillcolor="#ffffff"];
+6[label="6", fontsize=8, fillcolor="#ffffff"];
+7[label="Node1", fontsize=8, fillcolor="#e3c9af"];
+8[label="Node4", fontsize=8, fillcolor="#e3c9af"];
+9[label="9", fontsize=8, fillcolor="#ffffff"];
+10[label="Node8", fontsize=8, fillcolor="#91e3bb"];
+11[label="Node3", fontsize=8, fillcolor="#e3c9af"];
+12[label="12", fontsize=8, fillcolor="#ffffff"];
+13[label="Node5", fontsize=8, fillcolor="#e3c9af"];
+14[label="Node2", fontsize=8, fillcolor="#e3c9af"];
+15[label="Node6", fontsize=8, fillcolor="#a9ccde"];
+edge [constraint=false, style=vis];10 -> 15;
+7 -> 10;
+14 -> 10;
+11 -> 10;
+8 -> 10;
+13 -> 10;
+edge [constraint=true, style=invis];
+0 -> 4 -> 8 -> 12;
+1 -> 5 -> 9 -> 13;
+2 -> 6 -> 10 -> 14;
+3 -> 7 -> 11 -> 15;
+rank = same {0 -> 1 -> 2 -> 3};
+rank = same {4 -> 5 -> 6 -> 7};
+rank = same {8 -> 9 -> 10 -> 11};
+rank = same {12 -> 13 -> 14 -> 15};
+}

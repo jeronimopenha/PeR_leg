@@ -1,0 +1,64 @@
+{
+    "exec_id": 7,
+    "dot_name": "majority_K5",
+    "dot_path": "/home/jeronimo/GIT/PeR/benchmarks/fpga/dot_IWLS93/majority_K5.dot",
+    "placer": "yoto",
+    "edges_algorithm": "DEPTH_FIRST_WITH_PRIORITY",
+    "total_cost": 4,
+    "histogram": {
+        "1": 2,
+        "2": 4
+    },
+    "longest_path_cost": 1,
+    "longest_path": [
+        [
+            "Node6",
+            "Node8"
+        ],
+        [
+            "Node8",
+            "Node1"
+        ]
+    ],
+    "longest_path_idx": [
+        0,
+        1,
+        2
+    ],
+    "nodes_idx": {
+        "Node6": 0,
+        "Node8": 1,
+        "Node1": 2,
+        "Node2": 3,
+        "Node3": 4,
+        "Node4": 5,
+        "Node5": 6
+    },
+    "placement": [
+        null,
+        5,
+        3,
+        6,
+        4,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        null
+    ],
+    "n2c": [
+        7,
+        6,
+        14,
+        2,
+        4,
+        1,
+        3
+    ]
+}

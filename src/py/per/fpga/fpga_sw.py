@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 import random
 
@@ -7,6 +8,91 @@ from src.py.graph.graph_fpga import GraphFGA
 from src.py.per.base.per import PeR, EdgesAlgEnum
 
 from src.py.util.util import Util
+
+
+def per_yoto_worker(cls, exec_id, edges_alg, report, lock):
+    # Prepare the report
+    placement = [None for _ in range(cls.graph.n_cells)]
+    distances_cells = cls.graph.get_mesh_distances()
+    n2c = [None for _ in range(cls.graph.n_nodes)]
+
+    # Getting the edges to be placed
+    ed_str = []
+    if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
+        ed_str = cls.graph.get_edges_depth_first()
+    elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+        ed_str = cls.graph.get_edges_depth_first(with_priority=True)
+    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
+        ed_str = cls.graph.get_edges_zigzag()[0]
+    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+        ed_str = cls.graph.get_edges_zigzag(with_priority=True)[0]
+    ed = cls.graph.get_edges_idx(ed_str)
+
+    # Input and output position placement
+    if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+        cls.place_input_output_nodes(n2c, placement)
+    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+        ch = cls.choose_position(placement, cls.possible_pos_in_out)
+        placement[ch] = ed[0][0]
+        n2c[ed[0][0]] = ch
+
+    # Yoto algorithm logic
+    for e in ed:
+        a = e[0]
+        b = e[1]
+        if n2c[b] is not None:
+            continue
+        if n2c[a] is None:
+            a = 1
+        ai = n2c[a] // cls.graph.n_cells_sqrt
+        aj = n2c[a] % cls.graph.n_cells_sqrt
+
+        flag = False
+        for l_n, line in enumerate(distances_cells):
+            placed = False
+            for ij in line:
+                bi = ai + ij[0]
+                bj = aj + ij[1]
+                if (bi < 0 or bi >= cls.graph.n_cells_sqrt or
+                        bj < 0 or bj >= cls.graph.n_cells_sqrt):
+                    continue
+                ch = bi * cls.graph.n_cells_sqrt + bj
+                if ch in cls.possible_pos_in_out:
+                    if b not in cls.graph.input_nodes_idx and b not in cls.graph.output_nodes_idx:
+                        continue
+                else:
+                    if b in cls.graph.input_nodes_idx or b in cls.graph.output_nodes_idx:
+                        continue
+                if placement[ch] is None:
+                    placement[ch] = b
+                    n2c[b] = ch
+                    placed = True
+                    break
+            if placed:
+                flag = True
+                break
+
+    h, tc = cls.calc_distance(n2c, ed, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+
+    # Write to the shared report with a lock
+    with lock:
+        report[exec_id] = {
+            'exec_id': exec_id,
+            'dot_name': cls.graph.dot_name,
+            'dot_path': cls.graph.dot_path,
+            'placer': 'yoto',
+            'edges_algorithm': edges_alg.name,
+            'total_cost': tc,
+            'histogram': h,
+            'longest_path_cost': cls.calc_distance(n2c,
+                                                   cls.graph.get_edges_idx(cls.graph.longest_path),
+                                                   cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
+            'longest_path': cls.graph.longest_path,
+            'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+            'nodes_idx': cls.graph.nodes_to_idx,
+            'placement': placement,
+            'n2c': n2c,
+        }
 
 
 class FPGAPeR(PeR):
@@ -109,108 +195,32 @@ class FPGAPeR(PeR):
                             f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
                             reports[r])
 
-    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
-        # Final placements
-        # placements = []
+    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY, num_workers=4):
+        # Initialize multiprocessing
+        manager = multiprocessing.Manager()
+        report = manager.dict()  # Shared report dictionary
+        lock = multiprocessing.Lock()  # Lock for synchronized access
 
-        # reports
-        reports = {}
+        # List to hold process references
+        processes = []
 
-        # starting executions
+        # Spawn processes for each exec_id
         for exec_id in range(n_exec):
-            process_id = os.getpid()
+            p = multiprocessing.Process(target=per_yoto_worker, args=(self, exec_id, edges_alg, report, lock))
+            processes.append(p)
+            p.start()
 
-            # Prepare the report
-            # First I will start the placement of matrix
-            placement = [None for _ in range(self.graph.n_cells)]
+            # Limit the number of concurrent workers
+            if len(processes) >= num_workers:
+                for proc in processes:
+                    proc.join()  # Wait for all workers to finish
+                processes = []  # Reset the list for the next batch
 
-            # possible distances to find free cells
-            distances_cells = self.graph.get_mesh_distances()
+        # Wait for the remaining processes to finish
+        for proc in processes:
+            proc.join()
 
-            # Creating the n2c matrix
-            n2c = [None for _ in range(self.graph.n_nodes)]
-
-            # Getting the edges to be placed
-            ed_str = []
-            if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
-                ed_str = self.graph.get_edges_depth_first()
-            elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-                ed_str = self.graph.get_edges_depth_first(with_priority=True)
-            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
-                ed_str = self.graph.get_edges_zigzag()[0]
-            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
-                ed_str = self.graph.get_edges_zigzag(with_priority=True)[0]
-            ed = self.graph.get_edges_idx(ed_str)
-
-            # And then I need to draw the input and output positions
-            # They will be randomly placed and the inputs can be on top and left
-            # while outputs can be on bottom and right.
-            if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-                self.place_input_output_nodes(n2c, placement)
-            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
-                ch = self.choose_position(placement, self.possible_pos_in_out)
-                placement[ch] = ed[0][0]
-                n2c[ed[0][0]] = ch
-            # now, I will start the yoto algorithm.
-
-            # if the node that it wants to place is placed, then it will go to next edge
-
-            for e in ed:
-                a = e[0]
-                b = e[1]
-                if n2c[b] is not None:
-                    continue
-                if n2c[a] is None:
-                    a = 1
-                ai = n2c[a] // self.graph.n_cells_sqrt
-                aj = n2c[a] % self.graph.n_cells_sqrt
-                # while not find a clear cell, I will try to find one
-
-                flag = False
-                for l_n, line in enumerate(distances_cells):
-                    placed = False
-                    for ij in line:
-                        bi = ai + ij[0]
-                        bj = aj + ij[1]
-                        if (bi < 0 or bi > self.graph.n_cells_sqrt - 1 or
-                                bj < 0 or bj > self.graph.n_cells_sqrt - 1):
-                            continue
-                        ch = bi * self.graph.n_cells_sqrt + bj
-                        if ch in self.possible_pos_in_out:
-                            if b not in self.graph.input_nodes_idx and b not in self.graph.output_nodes_idx:
-                                continue
-                        else:
-                            if b in self.graph.input_nodes_idx or b in self.graph.output_nodes_idx:
-                                continue
-                        if placement[ch] is None:
-                            placement[ch] = b
-                            n2c[b] = ch
-                            placed = True
-                            break
-                    if placed:
-                        flag = True
-                        break
-            h, tc = self.calc_distance(n2c, ed, self.graph.n_cells_sqrt, self.graph.n_nodes)
-
-            # Write to the shared report with a lock
-            reports[exec_id] = {
-                'exec_id': exec_id,
-                'dot_name': self.graph.dot_name,
-                'dot_path': self.graph.dot_path,
-                'placer': 'yoto',
-                'edges_algorithm': edges_alg.name,
-                'total_cost': tc,
-                'histogram': h,
-                'longest_path_cost': self.calc_distance(n2c,
-                                                        self.graph.get_edges_idx(self.graph.longest_path),
-                                                        self.graph.n_cells_sqrt, self.graph.n_nodes)[1],
-                'longest_path': self.graph.longest_path,
-                'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
-                'nodes_idx': self.graph.nodes_to_idx,
-                'placement': placement,
-                'n2c': n2c,
-            }
-        return reports
+        return dict(report)
 
     @staticmethod
     def per_yoto_worker(self, edges_alg, report, lock):
