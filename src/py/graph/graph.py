@@ -88,7 +88,6 @@ class Graph:
         self.n_cells_sqrt = ceil(sqrt(total_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
 
-
     def get_edges_idx(self, edges):
         edges_idx = [(self.nodes_to_idx[a], self.nodes_to_idx[b])
                      for (a, b) in edges]
@@ -265,25 +264,26 @@ class Graph:
         cost2_a = 0
         if node1 is not None:
             for n in self.neighbors_idx[node1]:
-                cost1_b += self.get_manhattan_distance(cell1, n_c[n])
+                cost1_b += self.get_manhattan_distance(cell1, n_c[n], self.n_cells_sqrt)
                 if cell2 == n_c[n]:
-                    cost1_a += self.get_manhattan_distance(cell1, cell2)
+                    cost1_a += self.get_manhattan_distance(cell1, cell2, self.n_cells_sqrt)
                 else:
-                    cost1_a += self.get_manhattan_distance(cell2, n_c[n])
+                    cost1_a += self.get_manhattan_distance(cell2, n_c[n], self.n_cells_sqrt)
         if node2 is not None:
             for n in self.neighbors_idx[node2]:
-                cost2_b += self.get_manhattan_distance(cell2, n_c[n])
+                cost2_b += self.get_manhattan_distance(cell2, n_c[n], self.n_cells_sqrt)
                 if cell1 == n_c[n]:
-                    cost2_a += self.get_manhattan_distance(cell2, cell1)
+                    cost2_a += self.get_manhattan_distance(cell2, cell1, self.n_cells_sqrt)
                 else:
-                    cost2_a += self.get_manhattan_distance(cell1, n_c[n])
+                    cost2_a += self.get_manhattan_distance(cell1, n_c[n], self.n_cells_sqrt)
         return cost1_b, cost1_a, cost2_b, cost2_a
 
-    def get_manhattan_distance(self, cell1: int, cell2: int) -> int:
-        cell1_x = cell1 % self.n_cells_sqrt
-        cell1_y = cell1 // self.n_cells_sqrt
-        cell2_x = cell2 % self.n_cells_sqrt
-        cell2_y = cell2 // self.n_cells_sqrt
+    @staticmethod
+    def get_manhattan_distance(cell1: int, cell2: int, n_cells_sqrt) -> int:
+        cell1_x = cell1 % n_cells_sqrt
+        cell1_y = cell1 // n_cells_sqrt
+        cell2_x = cell2 % n_cells_sqrt
+        cell2_y = cell2 // n_cells_sqrt
         return abs(cell1_y - cell2_y) + abs(cell1_x - cell2_x)
 
     def longest_path_and_length(self):

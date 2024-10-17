@@ -10,91 +10,6 @@ from src.py.per.base.per import PeR, EdgesAlgEnum
 from src.py.util.util import Util
 
 
-def per_yoto_worker(cls, exec_id, edges_alg, report, lock):
-    # Prepare the report
-    placement = [None for _ in range(cls.graph.n_cells)]
-    distances_cells = cls.graph.get_mesh_distances()
-    n2c = [None for _ in range(cls.graph.n_nodes)]
-
-    # Getting the edges to be placed
-    ed_str = []
-    if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
-        ed_str = cls.graph.get_edges_depth_first()
-    elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-        ed_str = cls.graph.get_edges_depth_first(with_priority=True)
-    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
-        ed_str = cls.graph.get_edges_zigzag()[0]
-    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
-        ed_str = cls.graph.get_edges_zigzag(with_priority=True)[0]
-    ed = cls.graph.get_edges_idx(ed_str)
-
-    # Input and output position placement
-    if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-        cls.place_input_output_nodes(n2c, placement)
-    elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
-        ch = cls.choose_position(placement, cls.possible_pos_in_out)
-        placement[ch] = ed[0][0]
-        n2c[ed[0][0]] = ch
-
-    # Yoto algorithm logic
-    for e in ed:
-        a = e[0]
-        b = e[1]
-        if n2c[b] is not None:
-            continue
-        if n2c[a] is None:
-            a = 1
-        ai = n2c[a] // cls.graph.n_cells_sqrt
-        aj = n2c[a] % cls.graph.n_cells_sqrt
-
-        flag = False
-        for l_n, line in enumerate(distances_cells):
-            placed = False
-            for ij in line:
-                bi = ai + ij[0]
-                bj = aj + ij[1]
-                if (bi < 0 or bi >= cls.graph.n_cells_sqrt or
-                        bj < 0 or bj >= cls.graph.n_cells_sqrt):
-                    continue
-                ch = bi * cls.graph.n_cells_sqrt + bj
-                if ch in cls.possible_pos_in_out:
-                    if b not in cls.graph.input_nodes_idx and b not in cls.graph.output_nodes_idx:
-                        continue
-                else:
-                    if b in cls.graph.input_nodes_idx or b in cls.graph.output_nodes_idx:
-                        continue
-                if placement[ch] is None:
-                    placement[ch] = b
-                    n2c[b] = ch
-                    placed = True
-                    break
-            if placed:
-                flag = True
-                break
-
-    h, tc = cls.calc_distance(n2c, ed, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
-
-    # Write to the shared report with a lock
-    with lock:
-        report[exec_id] = {
-            'exec_id': exec_id,
-            'dot_name': cls.graph.dot_name,
-            'dot_path': cls.graph.dot_path,
-            'placer': 'yoto',
-            'edges_algorithm': edges_alg.name,
-            'total_cost': tc,
-            'histogram': h,
-            'longest_path_cost': cls.calc_distance(n2c,
-                                                   cls.graph.get_edges_idx(cls.graph.longest_path),
-                                                   cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
-            'longest_path': cls.graph.longest_path,
-            'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
-            'nodes_idx': cls.graph.nodes_to_idx,
-            'placement': placement,
-            'n2c': n2c,
-        }
-
-
 class FPGAPeR(PeR):
     def __init__(self, graph: GraphFGA):
         super().__init__()
@@ -105,25 +20,28 @@ class FPGAPeR(PeR):
         self.get_in_out_pos()
 
     def per_sa(self, n_exec: int = 1):
-        # reports
-        reports = {}
+        # report
+        report = {}
 
         t_min = 0.001
         for exec_id in range(n_exec):
             # First I will start the placement of matrix
             placement = [None for _ in range(self.graph.n_cells)]
 
-            possible_cells = [i for i in range(self.graph.n_cells)]
-
+            possible_base_cells = [i for i in range(self.graph.n_cells)]
+            possible_base_cells = [cell for cell in possible_base_cells if cell not in self.possible_pos_in_out]
             # Creating the n2c matrix
-            n2c = [None for _ in range(self.graph.n_cells)]
+            n2c = [None for _ in range(self.graph.n_nodes)]
 
             # now I need to place every note in the placement matrix
-            self.place_input_output_nodes(n2c, placement)
+            # self.place_input_output_nodes(n2c, placement)
             for n in self.graph.get_nodes_idx(self.graph.nodes_str):
                 if n2c[n] is None:
                     while True:
-                        ch = random.choice(possible_cells)
+                        if n in self.graph.input_nodes_idx or n in self.graph.output_nodes_idx:
+                            ch = random.choice(self.possible_pos_in_out)
+                        else:
+                            ch = random.choice(possible_base_cells)
                         if placement[ch] is None:
                             placement[ch] = n
                             n2c[n] = ch
@@ -135,8 +53,8 @@ class FPGAPeR(PeR):
                     for cell_b in range(self.graph.n_cells):
                         if (
                                 cell_a == cell_b or
-                                cell_a in self.possible_pos_in_out and cell_b not in self.possible_pos_in_out or
-                                cell_b in self.possible_pos_in_out and cell_a not in self.possible_pos_in_out
+                                (cell_a in self.possible_pos_in_out and cell_b not in self.possible_pos_in_out) or
+                                (cell_b in self.possible_pos_in_out and cell_a not in self.possible_pos_in_out)
                         ):
                             continue
                         next_cost = actual_cost
@@ -168,10 +86,11 @@ class FPGAPeR(PeR):
 
                             # = sa_graph.get_total_cost(c_n[thread], n_c[thread])
                             actual_cost = next_cost
-                            # print(actual_cost)
-                        a = 1
+                            # print(t, actual_cost)
+                            # self.write_dot('/home/jeronimo/GIT/PeR/reports/fpga/', f"_placed.dot",
+                            #               placement, n2c)
                     t *= 0.999
-            reports[exec_id] = {
+            report[exec_id] = {
                 'exec_id': exec_id,
                 'dot_name': self.graph.dot_name,
                 'dot_path': self.graph.dot_path,
@@ -189,11 +108,7 @@ class FPGAPeR(PeR):
                 'n2c': n2c,
             }
             a = 1
-        # TODO Melhorar isso
-        for r in reports.keys():
-            Util.write_json(Util.get_project_root() + f"/benchmarks/fpga/",
-                            f"{self.graph.dot_name}_fpga_sa_{reports[r]['exec_id']}.txt",
-                            reports[r])
+        return report
 
     def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY, num_workers=4):
         # Initialize multiprocessing
@@ -206,7 +121,7 @@ class FPGAPeR(PeR):
 
         # Spawn processes for each exec_id
         for exec_id in range(n_exec):
-            p = multiprocessing.Process(target=per_yoto_worker, args=(self, exec_id, edges_alg, report, lock))
+            p = multiprocessing.Process(target=FPGAPeR.per_yoto_worker, args=(self, exec_id, edges_alg, report, lock))
             processes.append(p)
             p.start()
 
@@ -228,6 +143,90 @@ class FPGAPeR(PeR):
 
     def per_yott(self):
         pass
+
+    def per_yoto_worker(cls, exec_id, edges_alg, report, lock):
+        # Prepare the report
+        placement = [None for _ in range(cls.graph.n_cells)]
+        distances_cells = cls.graph.get_mesh_distances()
+        n2c = [None for _ in range(cls.graph.n_nodes)]
+
+        # Getting the edges to be placed
+        ed_str = []
+        if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
+            ed_str = cls.graph.get_edges_depth_first()
+        elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+            ed_str = cls.graph.get_edges_depth_first(with_priority=True)
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
+            ed_str = cls.graph.get_edges_zigzag()[0]
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+            ed_str = cls.graph.get_edges_zigzag(with_priority=True)[0]
+        ed = cls.graph.get_edges_idx(ed_str)
+
+        # Input and output position placement
+        if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+            cls.place_input_output_nodes(n2c, placement)
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+            ch = cls.choose_position(placement, cls.possible_pos_in_out)
+            placement[ch] = ed[0][0]
+            n2c[ed[0][0]] = ch
+
+        # Yoto algorithm logic
+        for e in ed:
+            a = e[0]
+            b = e[1]
+            if n2c[b] is not None:
+                continue
+            if n2c[a] is None:
+                a = 1
+            ai = n2c[a] // cls.graph.n_cells_sqrt
+            aj = n2c[a] % cls.graph.n_cells_sqrt
+
+            flag = False
+            for l_n, line in enumerate(distances_cells):
+                placed = False
+                for ij in line:
+                    bi = ai + ij[0]
+                    bj = aj + ij[1]
+                    if (bi < 0 or bi >= cls.graph.n_cells_sqrt or
+                            bj < 0 or bj >= cls.graph.n_cells_sqrt):
+                        continue
+                    ch = bi * cls.graph.n_cells_sqrt + bj
+                    if ch in cls.possible_pos_in_out:
+                        if b not in cls.graph.input_nodes_idx and b not in cls.graph.output_nodes_idx:
+                            continue
+                    else:
+                        if b in cls.graph.input_nodes_idx or b in cls.graph.output_nodes_idx:
+                            continue
+                    if placement[ch] is None:
+                        placement[ch] = b
+                        n2c[b] = ch
+                        placed = True
+                        break
+                if placed:
+                    flag = True
+                    break
+
+        h, tc = cls.calc_distance(n2c, ed, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+
+        # Write to the shared report with a lock
+        with lock:
+            report[exec_id] = {
+                'exec_id': exec_id,
+                'dot_name': cls.graph.dot_name,
+                'dot_path': cls.graph.dot_path,
+                'placer': 'yoto',
+                'edges_algorithm': edges_alg.name,
+                'total_cost': tc,
+                'histogram': h,
+                'longest_path_cost': cls.calc_distance(n2c,
+                                                       cls.graph.get_edges_idx(cls.graph.longest_path),
+                                                       cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
+                'longest_path': cls.graph.longest_path,
+                'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+                'nodes_idx': cls.graph.nodes_to_idx,
+                'placement': placement,
+                'n2c': n2c,
+            }
 
     def write_dot(self, path, file_name, placement, n2c):
         path = Util.verify_path(path)
@@ -264,16 +263,16 @@ class FPGAPeR(PeR):
                 str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
                     i, i, '#ffffff')
             elif placement[i] in input_nodes:
-                str_out += '%d[label="%s", fontsize=8, fillcolor="%s"];\n' % (
-                    i, self.graph.idx_to_nodes[placement[i]],
+                str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
+                    i, placement[i],
                     '#e3c9af')  ##ffffff')  # if int(c_content, 16) == 0 else '#d9d9d9')
             elif placement[i] in output_nodes:
-                str_out += '%d[label="%s", fontsize=8, fillcolor="%s"];\n' % (
-                    i, self.graph.idx_to_nodes[placement[i]],
+                str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
+                    i, placement[i],
                     '#a9ccde')  ##ffffff')  # if int(c_content, 16) == 0 else '#d9d9d9')
             else:
-                str_out += '%d[label="%s", fontsize=8, fillcolor="%s"];\n' % (
-                    i, self.graph.idx_to_nodes[placement[i]], '#91e3bb')
+                str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
+                    i, placement[i], '#91e3bb')
         str_out += 'edge [constraint=false, style=vis];'
         for ed in self.graph.get_edges_idx(self.graph.edges_str):
             a = ed[0]
@@ -301,19 +300,13 @@ class FPGAPeR(PeR):
 
     @staticmethod
     def calc_distance(n2c, edges, cells_sqrt, n_nodes):
-        distance = len(edges) * -1
+        distance = 0
         distances = {}
         counter = 0
         for e in edges:
-            if n2c[e[0]] is None or n2c[e[1]] is None:
-                a = 1
             if counter >= n_nodes - 1:
                 break
-            ia = n2c[e[0]] // cells_sqrt
-            ja = n2c[e[0]] % cells_sqrt
-            ib = n2c[e[1]] // cells_sqrt
-            jb = n2c[e[1]] % cells_sqrt
-            dist = FPGAPeR.manhattan_distance(ia, ja, ib, jb)
+            dist = GraphFGA.get_manhattan_distance(n2c[e[0]], n2c[e[1]], cells_sqrt)
             if dist not in distances.keys():
                 distances[dist] = 0
             distances[dist] += 1

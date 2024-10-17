@@ -1,3 +1,5 @@
+import networkx as nx
+
 from src.py.graph.graph_fpga import GraphFGA
 from src.py.per.base.per import EdgesAlgEnum
 from src.py.per.fpga.fpga_sw import FPGAPeR
@@ -15,18 +17,19 @@ def save_reports(per: FPGAPeR, path: str, file_name_pref: str, rpts):
 if __name__ == '__main__':
     root_path = Util.get_project_root()
     files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
-    # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/dot_IWLS93/xor5_K4.dot", "xor5_K4"]]
+    files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/dot_IWLS93/xor5_K4.dot", "xor5_K4.dot"]]
     for file in files:
         g = GraphFGA(file[0], file[1][:-4])
+        #print(nx.is_directed_acyclic_graph(g.g)) is a DAG
         per = FPGAPeR(g)
 
-        n_exec = 10
+        n_exec = 1
         base_folder = 'reports/fpga/'
-        placers = ['yoto', ]
-        yoto_algs = [  # EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
+        placers =  ['yoto', 'sa',]
+        yoto_algs = [  EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
             EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
-            # EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
-            # EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY
+            EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
+            EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY
         ]
 
         for placer in placers:
