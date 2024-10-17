@@ -23,15 +23,16 @@ if __name__ == '__main__':
         n_exec = 10
         base_folder = 'reports/fpga/'
         placers = ['yoto', ]
-        yoto_algs = [EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
-                     EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
-                     EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
-                     EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY]
+        yoto_algs = [  # EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
+            EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
+            # EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
+            # EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY
+        ]
 
         for placer in placers:
             if placer == 'yoto':
                 for alg in yoto_algs:
-                    reports = per.per_yoto(n_exec, alg)
+                    reports = per.per_yoto(n_exec, alg, num_workers=8)
                     file_name_prefix = f"yoto_{alg}"
                     save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
 
