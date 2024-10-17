@@ -1,0 +1,139 @@
+{
+    "exec_id": 6,
+    "dot_name": "misex1_K6",
+    "dot_path": "/home/jeronimo/GIT/PeR/benchmarks/fpga/dot_IWLS93/misex1_K6.dot",
+    "placer": "yoto",
+    "edges_algorithm": "DEPTH_FIRST_WITH_PRIORITY",
+    "total_cost": 12,
+    "histogram": {
+        "1": 11,
+        "2": 8,
+        "3": 4
+    },
+    "longest_path_cost": 5,
+    "longest_path": [
+        [
+            "Node9",
+            "Node10"
+        ],
+        [
+            "Node10",
+            "Node11"
+        ],
+        [
+            "Node11",
+            "Node12"
+        ],
+        [
+            "Node12",
+            "Node20"
+        ],
+        [
+            "Node20",
+            "Node21"
+        ],
+        [
+            "Node21",
+            "Node1"
+        ]
+    ],
+    "longest_path_idx": [
+        0,
+        1,
+        2,
+        3,
+        7,
+        12,
+        16
+    ],
+    "nodes_idx": {
+        "Node9": 0,
+        "Node10": 1,
+        "Node11": 2,
+        "Node12": 3,
+        "Node13": 4,
+        "Node14": 5,
+        "Node15": 6,
+        "Node20": 7,
+        "Node22": 8,
+        "Node17": 9,
+        "Node18": 10,
+        "Node19": 11,
+        "Node21": 12,
+        "Node23": 13,
+        "Node24": 14,
+        "Node25": 15,
+        "Node1": 16,
+        "Node2": 17,
+        "Node3": 18,
+        "Node4": 19,
+        "Node5": 20,
+        "Node6": 21,
+        "Node7": 22,
+        "Node8": 23
+    },
+    "placement": [
+        null,
+        16,
+        19,
+        23,
+        20,
+        22,
+        null,
+        14,
+        6,
+        12,
+        7,
+        17,
+        18,
+        13,
+        8,
+        5,
+        4,
+        21,
+        null,
+        15,
+        11,
+        2,
+        3,
+        null,
+        null,
+        null,
+        10,
+        1,
+        9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+    ],
+    "n2c": [
+        35,
+        27,
+        21,
+        22,
+        16,
+        15,
+        8,
+        10,
+        14,
+        28,
+        26,
+        20,
+        9,
+        13,
+        7,
+        19,
+        1,
+        11,
+        12,
+        2,
+        4,
+        17,
+        5,
+        3
+    ]
+}
