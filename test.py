@@ -15,24 +15,30 @@ def save_reports(per: FPGAPeR, path: str, file_name_pref: str, rpts):
 if __name__ == '__main__':
     root_path = Util.get_project_root()
     files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
+    # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/dot_IWLS93/xor5_K4.dot", "xor5_K4"]]
     for file in files:
         g = GraphFGA(file[0], file[1][:-4])
         per = FPGAPeR(g)
 
-        algs = [EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY, EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY]
-        n_exec = 10
+        n_exec = 1
         base_folder = 'reports/fpga/'
-        placers = ['yoto', 'sa']
-        pre_placed_in_out = [False, True]
+        placers = ['sa', 'yoto', ]
+        yoto_algs = [EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY, EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY]
 
         for placer in placers:
             if placer == 'yoto':
-                for alg in algs:
-                    for pre in pre_placed_in_out:
-                        reports = per.per_yoto(n_exec, alg, pre)
+                for alg in yoto_algs:
+                    if alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
+                        reports = per.per_yoto(n_exec, alg)
+                        file_name_prefix = f"yoto_{alg}"
+                        save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+                    else:
+                        reports = per.per_yoto(n_exec, alg)
                         file_name_prefix = f"yoto_{alg}"
                         save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'yott':
                 pass
             elif placer == 'sa':
-                pass
+                reports = per.per_sa(n_exec)
+                file_name_prefix = f"sa"
+                save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)

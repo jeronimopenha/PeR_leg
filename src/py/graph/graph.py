@@ -16,20 +16,26 @@ class Graph:
         self.gv: pgv.AGraph = pgv.AGraph(self.dot_path, strict=False, directed=True)
         self.g: nx.DiGraph = nx.DiGraph(self.gv)
         self.nodes_str: List[str] = []  # list(self.g.nodes)
+        self.n_nodes = 0
         self.edges_str: List[Tuple[str, str]] = []  # list(self.g.edges)
         self.n_edges: int = 0  # len(self.edges_str)
         self.nodes_to_idx: Dict[str, int] = {}
-        self.neighbors_str: Dict[int, List[int]] = defaultdict(list)
+        self.idx_to_nodes: Dict[int, str] = {}
+        self.neighbors_str: Dict[int, List[str]] = defaultdict(list)
         self.neighbors_idx: Dict[int, List[int]] = defaultdict(list)
         self.dag_neighbors_str: Dict[int, List[int]] = defaultdict(list)
         self.dag_neighbors_idx: Dict[int, List[int]] = defaultdict(list)
-        self.input_nodes: list = []
+        self.input_nodes_str: list = []
         self.output_nodes: list = []
         self.n_cells: int = 0
         self.n_cells_sqrt: int = 0
         self.get_nodes_vars()
         self.get_edges_vars()
         self.calc_cells_qty()
+        self.n_nodes = len(self.nodes_str)
+        self.input_nodes_idx = self.get_nodes_idx(self.input_nodes_str)
+        self.output_nodes_idx = self.get_nodes_idx(self.output_nodes)
+        self.edges_idx = self.get_edges_idx(self.edges_str)
 
     def get_nodes_vars(self):
         n_list = list(self.g.nodes)
@@ -41,10 +47,11 @@ class Graph:
                 continue
             self.nodes_str.append(node)
             self.nodes_to_idx[node] = nodes_counter
+            self.idx_to_nodes[nodes_counter] = node
             if len(list(self.g.succ[node])) == 0:
                 self.output_nodes.append(node)
             elif len(list(self.g.pred[node])) == 0:
-                self.input_nodes.append(node)
+                self.input_nodes_str.append(node)
             nodes_counter += 1
 
     def get_edges_vars(self):
@@ -65,7 +72,7 @@ class Graph:
     def calc_cells_qty(self):
         # n_cells to contain input/output nodes in the borders
         # and base cells to contain base nodes
-        total_in_out = len(self.output_nodes) + len(self.input_nodes)
+        total_in_out = len(self.output_nodes) + len(self.input_nodes_str)
         n_base_nodes = len(self.nodes_str) - total_in_out
         n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
         n_cells_base = pow(n_cells_base_sqrt, 2)

@@ -20,10 +20,11 @@ class GraphFGA(Graph):
                 continue
             self.nodes_str.append(node)
             self.nodes_to_idx[node] = nodes_counter
+            self.idx_to_nodes[nodes_counter] = node
             # Because of the charcteristics of ABC dot graph,
             # I needed to invert the edges
             if len(list(self.g.succ[node])) == 0:
-                self.input_nodes.append(node)
+                self.input_nodes_str.append(node)
             elif len(list(self.g.pred[node])) == 0:
                 self.output_nodes.append(node)
             nodes_counter += 1
@@ -51,7 +52,7 @@ class GraphFGA(Graph):
         nodes = []
         length = 0
         for o in self.output_nodes:
-            for i in self.input_nodes:
+            for i in self.input_nodes_str:
                 path_tmp = nx.dijkstra_path(self.g, o, i)
                 length_tmp = nx.dijkstra_path_length(self.g, o, i)
                 if length_tmp > length:
