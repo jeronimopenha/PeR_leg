@@ -1,3 +1,4 @@
+import os
 import random
 
 from math import exp
@@ -117,6 +118,9 @@ class FPGAPeR(PeR):
 
         # starting executions
         for exec_id in range(n_exec):
+            process_id = os.getpid()
+
+            # Prepare the report
             # First I will start the placement of matrix
             placement = [None for _ in range(self.graph.n_cells)]
 
@@ -129,17 +133,21 @@ class FPGAPeR(PeR):
             # Getting the edges to be placed
             ed_str = []
             if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
-                ed_str = self.graph.get_edges_depth_first_no_priority()
+                ed_str = self.graph.get_edges_depth_first()
+            elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+                ed_str = self.graph.get_edges_depth_first(with_priority=True)
             elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
-                ed_str = self.graph.get_edges_zigzag_no_priority()[0]
+                ed_str = self.graph.get_edges_zigzag()[0]
+            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+                ed_str = self.graph.get_edges_zigzag(with_priority=True)[0]
             ed = self.graph.get_edges_idx(ed_str)
 
             # And then I need to draw the input and output positions
             # They will be randomly placed and the inputs can be on top and left
             # while outputs can be on bottom and right.
-            if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
+            if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
                 self.place_input_output_nodes(n2c, placement)
-            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
+            elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
                 ch = self.choose_position(placement, self.possible_pos_in_out)
                 placement[ch] = ed[0][0]
                 n2c[ed[0][0]] = ch
@@ -184,6 +192,7 @@ class FPGAPeR(PeR):
                         break
             h, tc = self.calc_distance(n2c, ed, self.graph.n_cells_sqrt, self.graph.n_nodes)
 
+            # Write to the shared report with a lock
             reports[exec_id] = {
                 'exec_id': exec_id,
                 'dot_name': self.graph.dot_name,
@@ -202,6 +211,10 @@ class FPGAPeR(PeR):
                 'n2c': n2c,
             }
         return reports
+
+    @staticmethod
+    def per_yoto_worker(self, edges_alg, report, lock):
+        pass
 
     def per_yott(self):
         pass

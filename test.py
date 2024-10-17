@@ -20,22 +20,21 @@ if __name__ == '__main__':
         g = GraphFGA(file[0], file[1][:-4])
         per = FPGAPeR(g)
 
-        n_exec = 1
+        n_exec = 10
         base_folder = 'reports/fpga/'
-        placers = ['sa', 'yoto', ]
-        yoto_algs = [EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY, EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY]
+        placers = ['yoto', ]
+        yoto_algs = [EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
+                     EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
+                     EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
+                     EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY]
 
         for placer in placers:
             if placer == 'yoto':
                 for alg in yoto_algs:
-                    if alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY:
-                        reports = per.per_yoto(n_exec, alg)
-                        file_name_prefix = f"yoto_{alg}"
-                        save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
-                    else:
-                        reports = per.per_yoto(n_exec, alg)
-                        file_name_prefix = f"yoto_{alg}"
-                        save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+                    reports = per.per_yoto(n_exec, alg)
+                    file_name_prefix = f"yoto_{alg}"
+                    save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+
             elif placer == 'yott':
                 pass
             elif placer == 'sa':

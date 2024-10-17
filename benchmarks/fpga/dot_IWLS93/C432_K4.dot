@@ -31,7 +31,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:29 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:17 2024. "
          ];
 }
 
@@ -185,24 +185,24 @@ edge [dir = back];
   Node54 [label = "54\n", shape = ellipse];
   Node55 [label = "55\n", shape = ellipse];
   Node56 [label = "56\n", shape = ellipse];
-  Node58 [label = "58\nˆ½¾m", shape = ellipse];
-  Node59 [label = "59\nˆ½¾m", shape = ellipse];
-  Node60 [label = "60\nˆ½¾m", shape = ellipse];
-  Node61 [label = "61\nˆ½¾m", shape = ellipse];
-  Node62 [label = "62\nˆ½¾m", shape = ellipse];
-  Node64 [label = "64\nˆ½¾m", shape = ellipse];
-  Node66 [label = "66\nˆ½¾m", shape = ellipse];
-  Node70 [label = "70\nˆ½¾m", shape = ellipse];
-  Node71 [label = "71\nˆ½¾m", shape = ellipse];
-  Node74 [label = "74\nˆ½¾m", shape = ellipse];
-  Node75 [label = "75\nˆ½¾m", shape = ellipse];
-  Node77 [label = "77\nˆ½¾m", shape = ellipse];
-  Node78 [label = "78\nˆ½¾m", shape = ellipse];
-  Node80 [label = "80\nˆ½¾m", shape = ellipse];
-  Node81 [label = "81\nˆ½¾m", shape = ellipse];
-  Node83 [label = "83\nˆ½¾m", shape = ellipse];
-  Node84 [label = "84\nˆ½¾m", shape = ellipse];
-  Node86 [label = "86\nˆ½¾m", shape = ellipse];
+  Node58 [label = "58\nˆ£³", shape = ellipse];
+  Node59 [label = "59\nˆ£³", shape = ellipse];
+  Node60 [label = "60\nˆ£³", shape = ellipse];
+  Node61 [label = "61\nˆ£³", shape = ellipse];
+  Node62 [label = "62\nˆ£³", shape = ellipse];
+  Node64 [label = "64\nˆ£³", shape = ellipse];
+  Node66 [label = "66\nˆ£³", shape = ellipse];
+  Node70 [label = "70\nˆ£³", shape = ellipse];
+  Node71 [label = "71\nˆ£³", shape = ellipse];
+  Node74 [label = "74\nˆ£³", shape = ellipse];
+  Node75 [label = "75\nˆ£³", shape = ellipse];
+  Node77 [label = "77\nˆ£³", shape = ellipse];
+  Node78 [label = "78\nˆ£³", shape = ellipse];
+  Node80 [label = "80\nˆ£³", shape = ellipse];
+  Node81 [label = "81\nˆ£³", shape = ellipse];
+  Node83 [label = "83\nˆ£³", shape = ellipse];
+  Node84 [label = "84\nˆ£³", shape = ellipse];
+  Node86 [label = "86\nˆ£³", shape = ellipse];
 }
 
 {

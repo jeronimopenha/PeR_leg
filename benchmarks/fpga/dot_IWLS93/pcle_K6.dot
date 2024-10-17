@@ -23,7 +23,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:36 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:26 2024. "
          ];
 }
 

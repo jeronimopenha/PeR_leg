@@ -25,7 +25,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:29 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:16 2024. "
          ];
 }
 
@@ -68,58 +68,58 @@ edge [dir = back];
 {
   rank = same;
   Level4;
-  Node100 [label = "100\n)t¥l", shape = ellipse];
+  Node100 [label = "100\n", shape = ellipse];
 }
 
 {
   rank = same;
   Level3;
-  Node64 [label = "64\n)t¥l", shape = ellipse];
-  Node80 [label = "80\n)t¥l", shape = ellipse];
-  Node85 [label = "85\n)t¥l", shape = ellipse];
-  Node88 [label = "88\n)t¥l", shape = ellipse];
-  Node95 [label = "95\n)t¥l", shape = ellipse];
-  Node98 [label = "98\n)t¥l", shape = ellipse];
-  Node99 [label = "99\n)t¥l", shape = ellipse];
+  Node64 [label = "64\n", shape = ellipse];
+  Node80 [label = "80\n", shape = ellipse];
+  Node85 [label = "85\n", shape = ellipse];
+  Node88 [label = "88\n", shape = ellipse];
+  Node95 [label = "95\n", shape = ellipse];
+  Node98 [label = "98\n", shape = ellipse];
+  Node99 [label = "99\n", shape = ellipse];
 }
 
 {
   rank = same;
   Level2;
-  Node65 [label = "65\n)t¥l", shape = ellipse];
-  Node69 [label = "69\n)t¥l", shape = ellipse];
-  Node71 [label = "71\n)t¥l", shape = ellipse];
-  Node77 [label = "77\n)t¥l", shape = ellipse];
-  Node81 [label = "81\n)t¥l", shape = ellipse];
-  Node82 [label = "82\n)t¥l", shape = ellipse];
-  Node86 [label = "86\n)t¥l", shape = ellipse];
-  Node89 [label = "89\n)t¥l", shape = ellipse];
-  Node96 [label = "96\n)t¥l", shape = ellipse];
-  Node97 [label = "97\nt¥l", shape = ellipse];
+  Node65 [label = "65\n", shape = ellipse];
+  Node69 [label = "69\n", shape = ellipse];
+  Node71 [label = "71\n", shape = ellipse];
+  Node77 [label = "77\n", shape = ellipse];
+  Node81 [label = "81\n", shape = ellipse];
+  Node82 [label = "82\n", shape = ellipse];
+  Node86 [label = "86\n", shape = ellipse];
+  Node89 [label = "89\n", shape = ellipse];
+  Node96 [label = "96\n", shape = ellipse];
+  Node97 [label = "97\n", shape = ellipse];
 }
 
 {
   rank = same;
   Level1;
-  Node66 [label = "66\nt¥l", shape = ellipse];
-  Node67 [label = "67\nt¥l", shape = ellipse];
-  Node68 [label = "68\nt¥l", shape = ellipse];
-  Node70 [label = "70\nt¥l", shape = ellipse];
-  Node72 [label = "72\nt¥l", shape = ellipse];
-  Node73 [label = "73\nt¥l", shape = ellipse];
-  Node74 [label = "74\nt¥l", shape = ellipse];
-  Node75 [label = "75\nt¥l", shape = ellipse];
-  Node76 [label = "76\nt¥l", shape = ellipse];
-  Node78 [label = "78\nt¥l", shape = ellipse];
-  Node79 [label = "79\nt¥l", shape = ellipse];
-  Node83 [label = "83\nt¥l", shape = ellipse];
-  Node84 [label = "84\nt¥l", shape = ellipse];
-  Node87 [label = "87\nt¥l", shape = ellipse];
-  Node90 [label = "90\nt¥l", shape = ellipse];
-  Node91 [label = "91\nt¥l", shape = ellipse];
-  Node92 [label = "92\nt¥l", shape = ellipse];
-  Node93 [label = "93\nt¥l", shape = ellipse];
-  Node94 [label = "94\nt¥l", shape = ellipse];
+  Node66 [label = "66\n", shape = ellipse];
+  Node67 [label = "67\n", shape = ellipse];
+  Node68 [label = "68\n", shape = ellipse];
+  Node70 [label = "70\n", shape = ellipse];
+  Node72 [label = "72\n", shape = ellipse];
+  Node73 [label = "73\n", shape = ellipse];
+  Node74 [label = "74\n", shape = ellipse];
+  Node75 [label = "75\n", shape = ellipse];
+  Node76 [label = "76\n", shape = ellipse];
+  Node78 [label = "78\n", shape = ellipse];
+  Node79 [label = "79\n", shape = ellipse];
+  Node83 [label = "83\n", shape = ellipse];
+  Node84 [label = "84\n", shape = ellipse];
+  Node87 [label = "87\n", shape = ellipse];
+  Node90 [label = "90\n", shape = ellipse];
+  Node91 [label = "91\n", shape = ellipse];
+  Node92 [label = "92\n", shape = ellipse];
+  Node93 [label = "93\n", shape = ellipse];
+  Node94 [label = "94\n", shape = ellipse];
 }
 
 {

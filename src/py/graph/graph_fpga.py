@@ -1,14 +1,9 @@
 from src.py.graph.graph import Graph
-from math import ceil, sqrt
-import networkx as nx
 
 
 class GraphFGA(Graph):
     def __init__(self, dot_path: str, dot_name: str):
         super().__init__(dot_path, dot_name)
-        self.longest_path = []
-        self.longest_path_nodes = []
-        self.longest_path_and_length()
 
     def get_nodes_vars(self):
         n_list = list(self.g.nodes)
@@ -47,19 +42,3 @@ class GraphFGA(Graph):
 
             self.dag_neighbors_idx[idx_0].append(idx_1)
             self.dag_neighbors_str[e[0]].append(e[1])
-
-    def longest_path_and_length(self):
-        nodes = []
-        length = 0
-        for o in self.output_nodes:
-            for i in self.input_nodes_str:
-                path_tmp = nx.dijkstra_path(self.g, o, i)
-                length_tmp = nx.dijkstra_path_length(self.g, o, i)
-                if length_tmp > length:
-                    length = length_tmp
-                    nodes = path_tmp
-        self.longest_path_nodes = nodes
-        path = []
-        for i in range(0, len(nodes) - 1):
-            path.append([nodes[i], nodes[i + 1]])
-        self.longest_path = path

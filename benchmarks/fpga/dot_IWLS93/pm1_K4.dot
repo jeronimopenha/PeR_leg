@@ -24,7 +24,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:36 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:26 2024. "
          ];
 }
 
@@ -91,9 +91,9 @@ edge [dir = back];
   Node45 [label = "45\n", shape = ellipse];
   Node49 [label = "49\n", shape = ellipse];
   Node52 [label = "52\n", shape = ellipse];
-  Node53 [label = "53\näqY", shape = ellipse];
-  Node54 [label = "54\näqY", shape = ellipse];
-  Node55 [label = "55\näqY", shape = ellipse];
+  Node53 [label = "53\nq¬", shape = ellipse];
+  Node54 [label = "54\nq¬", shape = ellipse];
+  Node55 [label = "55\nq¬", shape = ellipse];
 }
 
 {

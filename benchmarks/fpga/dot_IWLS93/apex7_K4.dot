@@ -26,7 +26,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:28 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:16 2024. "
          ];
 }
 
@@ -153,58 +153,58 @@ edge [dir = back];
   Node88 [label = "88\n", shape = ellipse];
   Node95 [label = "95\n", shape = ellipse];
   Node99 [label = "99\n", shape = ellipse];
-  Node104 [label = "104\nh×", shape = ellipse];
-  Node107 [label = "107\nh×", shape = ellipse];
-  Node113 [label = "113\nh×", shape = ellipse];
-  Node115 [label = "115\nh×", shape = ellipse];
-  Node137 [label = "137\nh×", shape = ellipse];
-  Node157 [label = "157\nh×", shape = ellipse];
-  Node164 [label = "164\nh×", shape = ellipse];
-  Node165 [label = "165\nh×", shape = ellipse];
-  Node169 [label = "169\nh×", shape = ellipse];
-  Node177 [label = "177\nh×", shape = ellipse];
+  Node104 [label = "104\nhw,û", shape = ellipse];
+  Node107 [label = "107\nhw,û", shape = ellipse];
+  Node113 [label = "113\nhw,û", shape = ellipse];
+  Node115 [label = "115\nhw,û", shape = ellipse];
+  Node137 [label = "137\nhw,û", shape = ellipse];
+  Node157 [label = "157\nhw,û", shape = ellipse];
+  Node164 [label = "164\nhw,û", shape = ellipse];
+  Node165 [label = "165\nhw,û", shape = ellipse];
+  Node169 [label = "169\nhw,û", shape = ellipse];
+  Node177 [label = "177\nhw,û", shape = ellipse];
 }
 
 {
   rank = same;
   Level1;
-  Node89 [label = "89\nh×", shape = ellipse];
-  Node90 [label = "90\nh×", shape = ellipse];
-  Node91 [label = "91\nh×", shape = ellipse];
-  Node96 [label = "96\nh×", shape = ellipse];
-  Node97 [label = "97\nh×", shape = ellipse];
-  Node98 [label = "98\nh×", shape = ellipse];
-  Node100 [label = "100\nh×", shape = ellipse];
-  Node101 [label = "101\nh×", shape = ellipse];
-  Node102 [label = "102\nh×", shape = ellipse];
-  Node103 [label = "103\nh×", shape = ellipse];
-  Node105 [label = "105\nh×", shape = ellipse];
-  Node114 [label = "114\nh×", shape = ellipse];
-  Node116 [label = "116\nh×", shape = ellipse];
-  Node117 [label = "117\nh×", shape = ellipse];
-  Node118 [label = "118\nh×", shape = ellipse];
-  Node119 [label = "119\nh×", shape = ellipse];
-  Node127 [label = "127\nh×", shape = ellipse];
-  Node128 [label = "128\nh×", shape = ellipse];
-  Node131 [label = "131\nh×", shape = ellipse];
-  Node138 [label = "138\nh×", shape = ellipse];
-  Node139 [label = "139\nh×", shape = ellipse];
-  Node142 [label = "142\nh×", shape = ellipse];
-  Node146 [label = "146\nh×", shape = ellipse];
-  Node152 [label = "152\nh×", shape = ellipse];
-  Node153 [label = "153\nh×", shape = ellipse];
-  Node158 [label = "158\nh×", shape = ellipse];
-  Node159 [label = "159\nh×", shape = ellipse];
-  Node166 [label = "166\nh×", shape = ellipse];
-  Node170 [label = "170\nh×", shape = ellipse];
-  Node171 [label = "171\nh×", shape = ellipse];
-  Node173 [label = "173\nh×", shape = ellipse];
-  Node174 [label = "174\nh×", shape = ellipse];
-  Node179 [label = "179\nh×", shape = ellipse];
-  Node181 [label = "181\nh×", shape = ellipse];
-  Node184 [label = "184\nh×", shape = ellipse];
-  Node186 [label = "186\nh×", shape = ellipse];
-  Node187 [label = "187\nh×", shape = ellipse];
+  Node89 [label = "89\nhw,û", shape = ellipse];
+  Node90 [label = "90\nhw,û", shape = ellipse];
+  Node91 [label = "91\nhw,û", shape = ellipse];
+  Node96 [label = "96\nhw,û", shape = ellipse];
+  Node97 [label = "97\nhw,û", shape = ellipse];
+  Node98 [label = "98\nhw,û", shape = ellipse];
+  Node100 [label = "100\nhw,û", shape = ellipse];
+  Node101 [label = "101\nhw,û", shape = ellipse];
+  Node102 [label = "102\nhw,û", shape = ellipse];
+  Node103 [label = "103\nhw,û", shape = ellipse];
+  Node105 [label = "105\nhw,û", shape = ellipse];
+  Node114 [label = "114\nhw,û", shape = ellipse];
+  Node116 [label = "116\nhw,û", shape = ellipse];
+  Node117 [label = "117\nhw,û", shape = ellipse];
+  Node118 [label = "118\nhw,û", shape = ellipse];
+  Node119 [label = "119\nhw,û", shape = ellipse];
+  Node127 [label = "127\nhw,û", shape = ellipse];
+  Node128 [label = "128\nhw,û", shape = ellipse];
+  Node131 [label = "131\nhw,û", shape = ellipse];
+  Node138 [label = "138\nhw,û", shape = ellipse];
+  Node139 [label = "139\nhw,û", shape = ellipse];
+  Node142 [label = "142\nhw,û", shape = ellipse];
+  Node146 [label = "146\nhw,û", shape = ellipse];
+  Node152 [label = "152\nhw,û", shape = ellipse];
+  Node153 [label = "153\nhw,û", shape = ellipse];
+  Node158 [label = "158\nhw,û", shape = ellipse];
+  Node159 [label = "159\nhw,û", shape = ellipse];
+  Node166 [label = "166\nhw,û", shape = ellipse];
+  Node170 [label = "170\nhw,û", shape = ellipse];
+  Node171 [label = "171\nhw,û", shape = ellipse];
+  Node173 [label = "173\nhw,û", shape = ellipse];
+  Node174 [label = "174\nhw,û", shape = ellipse];
+  Node179 [label = "179\nhw,û", shape = ellipse];
+  Node181 [label = "181\nhw,û", shape = ellipse];
+  Node184 [label = "184\nhw,û", shape = ellipse];
+  Node186 [label = "186\nhw,û", shape = ellipse];
+  Node187 [label = "187\nhr,û", shape = ellipse];
 }
 
 {

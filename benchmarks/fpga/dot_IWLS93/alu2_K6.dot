@@ -28,7 +28,7 @@ edge [dir = back];
   title1 [shape=plaintext,
           fontsize=20,
           fontname = "Times-Roman",
-          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 16:07:27 2024. "
+          label="Network structure visualized by ABC\nBenchmark \"top\". Time was Wed Oct 16 21:57:14 2024. "
          ];
 }
 
@@ -124,118 +124,118 @@ edge [dir = back];
 {
   rank = same;
   Level3;
-  Node24 [label = "24\nèÌ«", shape = ellipse];
-  Node48 [label = "48\nèÌ«", shape = ellipse];
-  Node51 [label = "51\nèÌ«", shape = ellipse];
-  Node67 [label = "67\nèÌ«", shape = ellipse];
-  Node87 [label = "87\nèÌ«", shape = ellipse];
-  Node104 [label = "104\nèÌ«", shape = ellipse];
-  Node105 [label = "105\nèÌ«", shape = ellipse];
-  Node109 [label = "109\nèÌ«", shape = ellipse];
-  Node120 [label = "120\nèÌ«", shape = ellipse];
-  Node139 [label = "139\nèÌ«", shape = ellipse];
-  Node160 [label = "160\nèÌ«", shape = ellipse];
+  Node24 [label = "24\nèž¿«", shape = ellipse];
+  Node48 [label = "48\nèž¿«", shape = ellipse];
+  Node51 [label = "51\nèž¿«", shape = ellipse];
+  Node67 [label = "67\nèž¿«", shape = ellipse];
+  Node87 [label = "87\nèž¿«", shape = ellipse];
+  Node104 [label = "104\nèž¿«", shape = ellipse];
+  Node105 [label = "105\nèž¿«", shape = ellipse];
+  Node109 [label = "109\nèž¿«", shape = ellipse];
+  Node120 [label = "120\nèž¿«", shape = ellipse];
+  Node139 [label = "139\nèž¿«", shape = ellipse];
+  Node160 [label = "160\nèž¿«", shape = ellipse];
 }
 
 {
   rank = same;
   Level2;
-  Node18 [label = "18\nèÌ«", shape = ellipse];
-  Node25 [label = "25\nèÌ«", shape = ellipse];
-  Node27 [label = "27\nèÌ«", shape = ellipse];
-  Node29 [label = "29\nèÌ«", shape = ellipse];
-  Node36 [label = "36\nèÌ«", shape = ellipse];
-  Node39 [label = "39\nèÌ«", shape = ellipse];
-  Node45 [label = "45\nèÌ«", shape = ellipse];
-  Node49 [label = "49\nèÌ«", shape = ellipse];
-  Node52 [label = "52\nèÌ«", shape = ellipse];
-  Node53 [label = "53\nèÌ«", shape = ellipse];
-  Node55 [label = "55\nèÌ«", shape = ellipse];
-  Node56 [label = "56\nèÌ«", shape = ellipse];
-  Node64 [label = "64\nèÌ«", shape = ellipse];
-  Node68 [label = "68\nèÌ«", shape = ellipse];
-  Node71 [label = "71\nèÌ«", shape = ellipse];
-  Node73 [label = "73\nèÌ«", shape = ellipse];
-  Node76 [label = "76\nèÌ«", shape = ellipse];
-  Node88 [label = "88\nèÌ«", shape = ellipse];
-  Node89 [label = "89\nèÌ«", shape = ellipse];
-  Node93 [label = "93\nèÌ«", shape = ellipse];
-  Node100 [label = "100\nèÌ«", shape = ellipse];
-  Node106 [label = "106\nèÌ«", shape = ellipse];
-  Node113 [label = "113\nèÌ«", shape = ellipse];
-  Node121 [label = "121\nèÌ«", shape = ellipse];
-  Node122 [label = "122\nèÌ«", shape = ellipse];
-  Node125 [label = "125\nèÌ«", shape = ellipse];
-  Node127 [label = "127\nèÌ«", shape = ellipse];
-  Node129 [label = "129\nèÌ«", shape = ellipse];
-  Node130 [label = "130\nèÌ«", shape = ellipse];
-  Node132 [label = "132\nèÌ«", shape = ellipse];
-  Node140 [label = "140\nèÌ«", shape = ellipse];
-  Node141 [label = "141\nèÌ«", shape = ellipse];
-  Node144 [label = "144\nèÌ«", shape = ellipse];
-  Node145 [label = "145\nèÌ«", shape = ellipse];
-  Node154 [label = "154\nèÌ«", shape = ellipse];
-  Node157 [label = "157\nèÌ«", shape = ellipse];
-  Node161 [label = "161\nèÌ«", shape = ellipse];
-  Node162 [label = "162\nèÌ«", shape = ellipse];
-  Node164 [label = "164\nèÌ«", shape = ellipse];
-  Node165 [label = "165\nèÌ«", shape = ellipse];
+  Node18 [label = "18\nèž¿«", shape = ellipse];
+  Node25 [label = "25\nèž¿«", shape = ellipse];
+  Node27 [label = "27\nèž¿«", shape = ellipse];
+  Node29 [label = "29\nèž¿«", shape = ellipse];
+  Node36 [label = "36\nèž¿«", shape = ellipse];
+  Node39 [label = "39\nèž¿«", shape = ellipse];
+  Node45 [label = "45\nèž¿«", shape = ellipse];
+  Node49 [label = "49\nèž¿«", shape = ellipse];
+  Node52 [label = "52\nèž¿«", shape = ellipse];
+  Node53 [label = "53\nèž¿«", shape = ellipse];
+  Node55 [label = "55\nèž¿«", shape = ellipse];
+  Node56 [label = "56\nèž¿«", shape = ellipse];
+  Node64 [label = "64\nèž¿«", shape = ellipse];
+  Node68 [label = "68\nèž¿«", shape = ellipse];
+  Node71 [label = "71\nèž¿«", shape = ellipse];
+  Node73 [label = "73\nèž¿«", shape = ellipse];
+  Node76 [label = "76\nèž¿«", shape = ellipse];
+  Node88 [label = "88\nèž¿«", shape = ellipse];
+  Node89 [label = "89\nèž¿«", shape = ellipse];
+  Node93 [label = "93\nèž¿«", shape = ellipse];
+  Node100 [label = "100\nèž¿«", shape = ellipse];
+  Node106 [label = "106\nèž¿«", shape = ellipse];
+  Node113 [label = "113\nèž¿«", shape = ellipse];
+  Node121 [label = "121\nèž¿«", shape = ellipse];
+  Node122 [label = "122\nèž¿«", shape = ellipse];
+  Node125 [label = "125\nèž¿«", shape = ellipse];
+  Node127 [label = "127\nèž¿«", shape = ellipse];
+  Node129 [label = "129\nèž¿«", shape = ellipse];
+  Node130 [label = "130\nèž¿«", shape = ellipse];
+  Node132 [label = "132\nèž¿«", shape = ellipse];
+  Node140 [label = "140\nèž¿«", shape = ellipse];
+  Node141 [label = "141\nèž¿«", shape = ellipse];
+  Node144 [label = "144\nèž¿«", shape = ellipse];
+  Node145 [label = "145\nèž¿«", shape = ellipse];
+  Node154 [label = "154\nèž¿«", shape = ellipse];
+  Node157 [label = "157\nèž¿«", shape = ellipse];
+  Node161 [label = "161\nèž¿«", shape = ellipse];
+  Node162 [label = "162\nèž¿«", shape = ellipse];
+  Node164 [label = "164\nèž¿«", shape = ellipse];
+  Node165 [label = "165\nèž¿«", shape = ellipse];
 }
 
 {
   rank = same;
   Level1;
-  Node19 [label = "19\nèÌ«", shape = ellipse];
-  Node26 [label = "26\nèÌ«", shape = ellipse];
-  Node28 [label = "28\nèÌ«", shape = ellipse];
-  Node30 [label = "30\nèÌ«", shape = ellipse];
-  Node31 [label = "31\nèÌ«", shape = ellipse];
-  Node32 [label = "32\nèÌ«", shape = ellipse];
-  Node33 [label = "33\nèÌ«", shape = ellipse];
-  Node34 [label = "34\nèÌ«", shape = ellipse];
-  Node35 [label = "35\nèÌ«", shape = ellipse];
-  Node37 [label = "37\nèÌ«", shape = ellipse];
-  Node40 [label = "40\nèÌ«", shape = ellipse];
-  Node43 [label = "43\nèÌ«", shape = ellipse];
-  Node44 [label = "44\nèÌ«", shape = ellipse];
-  Node46 [label = "46\nèÌ«", shape = ellipse];
-  Node50 [label = "50\nèÌ«", shape = ellipse];
-  Node54 [label = "54\nèÌ«", shape = ellipse];
-  Node57 [label = "57\nèÌ«", shape = ellipse];
-  Node59 [label = "59\nèÌ«", shape = ellipse];
-  Node61 [label = "61\nèÌ«", shape = ellipse];
-  Node69 [label = "69\nèÌ«", shape = ellipse];
-  Node70 [label = "70\nèÌ«", shape = ellipse];
-  Node72 [label = "72\nèÌ«", shape = ellipse];
-  Node74 [label = "74\nèÌ«", shape = ellipse];
-  Node75 [label = "75\nèÌ«", shape = ellipse];
-  Node77 [label = "77\nèÌ«", shape = ellipse];
-  Node78 [label = "78\nèÌ«", shape = ellipse];
-  Node81 [label = "81\nèÌ«", shape = ellipse];
-  Node90 [label = "90\nèÌ«", shape = ellipse];
-  Node91 [label = "91\nèÌ«", shape = ellipse];
-  Node92 [label = "92\nèÌ«", shape = ellipse];
-  Node94 [label = "94\nèÌ«", shape = ellipse];
-  Node95 [label = "95\nèÌ«", shape = ellipse];
-  Node96 [label = "96\nèÌ«", shape = ellipse];
-  Node97 [label = "97\nèÌ«", shape = ellipse];
-  Node98 [label = "98\nèÌ«", shape = ellipse];
-  Node99 [label = "99\nèÌ«", shape = ellipse];
-  Node101 [label = "101\nèÌ«", shape = ellipse];
-  Node102 [label = "102\nèÌ«", shape = ellipse];
-  Node103 [label = "103\nèÌ«", shape = ellipse];
-  Node123 [label = "123\nèÌ«", shape = ellipse];
-  Node124 [label = "124\nèÌ«", shape = ellipse];
-  Node126 [label = "126\nèÌ«", shape = ellipse];
-  Node133 [label = "133\nèÌ«", shape = ellipse];
-  Node134 [label = "134\nèÌ«", shape = ellipse];
-  Node136 [label = "136\nèÌ«", shape = ellipse];
-  Node142 [label = "142\nèÌ«", shape = ellipse];
-  Node143 [label = "143\nèÌ«", shape = ellipse];
-  Node146 [label = "146\nèÌ«", shape = ellipse];
-  Node147 [label = "147\nèÌ«", shape = ellipse];
-  Node158 [label = "158\nèÌ«", shape = ellipse];
-  Node163 [label = "163\nèÌ«", shape = ellipse];
+  Node19 [label = "19\nèž¿«", shape = ellipse];
+  Node26 [label = "26\nèž¿«", shape = ellipse];
+  Node28 [label = "28\nèž¿«", shape = ellipse];
+  Node30 [label = "30\nèž¿«", shape = ellipse];
+  Node31 [label = "31\nèž¿«", shape = ellipse];
+  Node32 [label = "32\nèž¿«", shape = ellipse];
+  Node33 [label = "33\nèž¿«", shape = ellipse];
+  Node34 [label = "34\nèž¿«", shape = ellipse];
+  Node35 [label = "35\nèž¿«", shape = ellipse];
+  Node37 [label = "37\nèž¿«", shape = ellipse];
+  Node40 [label = "40\nèž¿«", shape = ellipse];
+  Node43 [label = "43\nèž¿«", shape = ellipse];
+  Node44 [label = "44\nèž¿«", shape = ellipse];
+  Node46 [label = "46\nèž¿«", shape = ellipse];
+  Node50 [label = "50\nèž¿«", shape = ellipse];
+  Node54 [label = "54\nèž¿«", shape = ellipse];
+  Node57 [label = "57\nèž¿«", shape = ellipse];
+  Node59 [label = "59\nèž¿«", shape = ellipse];
+  Node61 [label = "61\nèž¿«", shape = ellipse];
+  Node69 [label = "69\nèž¿«", shape = ellipse];
+  Node70 [label = "70\nèž¿«", shape = ellipse];
+  Node72 [label = "72\nèž¿«", shape = ellipse];
+  Node74 [label = "74\nèž¿«", shape = ellipse];
+  Node75 [label = "75\nèž¿«", shape = ellipse];
+  Node77 [label = "77\nèž¿«", shape = ellipse];
+  Node78 [label = "78\nèž¿«", shape = ellipse];
+  Node81 [label = "81\nèž¿«", shape = ellipse];
+  Node90 [label = "90\nèž¿«", shape = ellipse];
+  Node91 [label = "91\nèž¿«", shape = ellipse];
+  Node92 [label = "92\nèž¿«", shape = ellipse];
+  Node94 [label = "94\nèž¿«", shape = ellipse];
+  Node95 [label = "95\nèž¿«", shape = ellipse];
+  Node96 [label = "96\nèž¿«", shape = ellipse];
+  Node97 [label = "97\nèž¿«", shape = ellipse];
+  Node98 [label = "98\nèž¿«", shape = ellipse];
+  Node99 [label = "99\nèž¿«", shape = ellipse];
+  Node101 [label = "101\nèž¿«", shape = ellipse];
+  Node102 [label = "102\nèž¿«", shape = ellipse];
+  Node103 [label = "103\nèž¿«", shape = ellipse];
+  Node123 [label = "123\nèž¿«", shape = ellipse];
+  Node124 [label = "124\nèž¿«", shape = ellipse];
+  Node126 [label = "126\nèž¿«", shape = ellipse];
+  Node133 [label = "133\nèž¿«", shape = ellipse];
+  Node134 [label = "134\nèž¿«", shape = ellipse];
+  Node136 [label = "136\nèž¿«", shape = ellipse];
+  Node142 [label = "142\nèž¿«", shape = ellipse];
+  Node143 [label = "143\nèž¿«", shape = ellipse];
+  Node146 [label = "146\nèž¿«", shape = ellipse];
+  Node147 [label = "147\nèž¿«", shape = ellipse];
+  Node158 [label = "158\nèž¿«", shape = ellipse];
+  Node163 [label = "163\nèž¿«", shape = ellipse];
 }
 
 {

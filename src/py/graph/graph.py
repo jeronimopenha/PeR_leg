@@ -36,6 +36,9 @@ class Graph:
         self.input_nodes_idx = self.get_nodes_idx(self.input_nodes_str)
         self.output_nodes_idx = self.get_nodes_idx(self.output_nodes)
         self.edges_idx = self.get_edges_idx(self.edges_str)
+        self.longest_path = []
+        self.longest_path_nodes = []
+        self.longest_path_and_length()
 
     def get_nodes_vars(self):
         n_list = list(self.g.nodes)
@@ -118,7 +121,7 @@ class Graph:
         return distance_table
 
     # FIXME
-    def get_edges_depth_first_no_priority(self, make_shuffle: bool = True):
+    def get_edges_depth_first(self, make_shuffle: bool = True, with_priority: bool = False):
         output_list = self.output_nodes
 
         if make_shuffle:
@@ -133,15 +136,26 @@ class Graph:
                 continue
             else:
                 visited.append(n)
-            for neigh in self.dag_neighbors_str[n]:
-                if neigh not in visited:
-                    stack.append(neigh)
-                    edges.append((n, neigh))
+            if with_priority:
+                for neigh in self.dag_neighbors_str[n]:
+                    if neigh not in self.longest_path_nodes:
+                        if neigh not in visited:
+                            stack.append(neigh)
+                            edges.append((n, neigh))
+                for neigh in self.dag_neighbors_str[n]:
+                    if neigh in self.longest_path_nodes:
+                        if neigh not in visited:
+                            stack.append(neigh)
+                            edges.append((n, neigh))
+            else:
+                for neigh in self.dag_neighbors_str[n]:
+                    if neigh not in visited:
+                        stack.append(neigh)
+                        edges.append((n, neigh))
 
         return edges
 
-    def get_edges_zigzag_no_priority(self, make_shuffle: bool = True) -> tuple[
-        list[list[str]], list[list[str]], list[list[Any]]]:
+    def get_edges_zigzag(self, make_shuffle: bool = True, with_priority: bool = False):
 
         output_list = [[node, 'IN'] for node in self.output_nodes]
 
@@ -160,6 +174,19 @@ class Graph:
             for node in self.g.nodes():
                 random.shuffle(fan_in[node])
                 random.shuffle(fan_out[node])
+
+                if with_priority:
+                    in_index_map = {fan: idx for idx, fan in enumerate(fan_in[node])}
+                    out_index_map = {fan: idx for idx, fan in enumerate(fan_out[node])}
+
+                    for fan in fan_in[node]:
+                        if fan in self.longest_path_nodes:
+                            idx = in_index_map[fan]
+                            fan_in[node][-1], fan_in[node][idx] = fan_in[node][idx], fan_in[node][-1]
+                    for fan in fan_out[node]:
+                        if fan in self.longest_path_nodes:
+                            idx = out_index_map[fan]
+                            fan_out[node][-1], fan_out[node][idx] = fan_out[node][idx], fan_out[node][-1]
 
         while stack:
             a, direction = stack.pop(0)  # get the top1
@@ -252,3 +279,19 @@ class Graph:
         cell2_x = cell2 % self.n_cells_sqrt
         cell2_y = cell2 // self.n_cells_sqrt
         return abs(cell1_y - cell2_y) + abs(cell1_x - cell2_x)
+
+    def longest_path_and_length(self):
+        nodes = []
+        length = 0
+        for o in self.output_nodes:
+            for i in self.input_nodes_str:
+                path_tmp = nx.dijkstra_path(self.g, o, i)
+                length_tmp = nx.dijkstra_path_length(self.g, o, i)
+                if length_tmp > length:
+                    length = length_tmp
+                    nodes = path_tmp
+        self.longest_path_nodes = nodes
+        path = []
+        for i in range(0, len(nodes) - 1):
+            path.append([nodes[i], nodes[i + 1]])
+        self.longest_path = path
