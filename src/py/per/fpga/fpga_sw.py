@@ -47,7 +47,7 @@ class FPGAPeR(PeR):
                             n2c[n] = ch
                             break
             t = 100
-            h, actual_cost = self.calc_distance(n2c, self.graph.edges_idx, self.graph.n_cells_sqrt, self.graph.n_nodes)
+
             while t >= t_min:
                 for cell_a in range(self.graph.n_cells):
                     for cell_b in range(self.graph.n_cells):
@@ -57,46 +57,41 @@ class FPGAPeR(PeR):
                                 (cell_b in self.possible_pos_in_out and cell_a not in self.possible_pos_in_out)
                         ):
                             continue
-                        next_cost = actual_cost
                         a = placement[cell_a]
                         b = placement[cell_b]
                         if a == None and b == None:
                             continue
                         cost_a_b, cost_a_a, cost_b_b, cost_b_a = self.graph.get_cost(n2c, a, b, cell_a, cell_b)
 
-                        next_cost -= cost_a_b
-                        next_cost -= cost_b_b
-                        next_cost += cost_a_a
-                        next_cost += cost_b_a
+                        cost_a = cost_a_a + cost_b_a
+                        cost_b = cost_a_b + cost_b_b
 
                         try:
-                            valor = exp((-1 * (next_cost - actual_cost) / t))
+                            valor = exp((-1 * (cost_a - cost_b) / t))
                         except:
                             valor = -1.0
 
                         rnd = random.random()
 
-                        if next_cost < actual_cost or rnd <= valor:
+                        if cost_a < cost_b or rnd <= valor:
                             if a is not None:
                                 n2c[a] = cell_b
 
                             if b is not None:
                                 n2c[b] = cell_a
                             placement[cell_a], placement[cell_b] = placement[cell_b], placement[cell_a]
-
-                            # = sa_graph.get_total_cost(c_n[thread], n_c[thread])
-                            actual_cost = next_cost
                             # print(t, actual_cost)
                             # self.write_dot('/home/jeronimo/GIT/PeR/reports/fpga/', f"_placed.dot",
                             #               placement, n2c)
                     t *= 0.999
+            h, tc = self.calc_distance(n2c, self.graph.edges_idx, self.graph.n_cells_sqrt, self.graph.n_nodes)
             report[exec_id] = {
                 'exec_id': exec_id,
                 'dot_name': self.graph.dot_name,
                 'dot_path': self.graph.dot_path,
                 'placer': 'sa',
                 'edges_algorithm': "direct",
-                'total_cost': actual_cost,
+                'total_cost': tc,
                 'histogram': h,
                 'longest_path_cost': self.calc_distance(n2c,
                                                         self.graph.get_edges_idx(self.graph.longest_path),
@@ -206,7 +201,7 @@ class FPGAPeR(PeR):
                     flag = True
                     break
 
-        h, tc = cls.calc_distance(n2c, ed, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
         # Write to the shared report with a lock
         with lock:

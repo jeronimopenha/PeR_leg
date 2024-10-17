@@ -1,0 +1,23 @@
+Netlist file: data/net/matrixmultiply.net   Architecture file: arch/k4-n1.xml
+Array size: 4 x 4 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		0	1	1	#0
+const3		3	0	0	#1
+const7		5	2	0	#2
+const9		0	2	1	#3
+const16		4	0	2	#4
+out:output14	0	3	0	#5
+mul0		1	1	0	#6
+mul2		3	1	0	#7
+add4		2	1	0	#8
+load5		2	2	0	#9
+mul6		4	2	0	#10
+mul8		1	2	0	#11
+add10		3	2	0	#12
+load11		4	3	0	#13
+mul12		3	3	0	#14
+add13		2	3	0	#15
+output14	1	3	0	#16
+add15		4	1	0	#17

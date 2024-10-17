@@ -1,0 +1,17 @@
+Netlist file: data/net/mac.net   Architecture file: arch/k4-n1.xml
+Array size: 3 x 3 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		4	2	0	#0
+const4		3	0	1	#1
+const10		4	3	0	#2
+out:output8	1	4	1	#3
+mul0		3	2	0	#4
+load2		2	2	0	#5
+mul3		3	1	0	#6
+load5		2	1	0	#7
+mul6		1	1	0	#8
+add7		1	2	0	#9
+output8		1	3	0	#10
+add9		3	3	0	#11

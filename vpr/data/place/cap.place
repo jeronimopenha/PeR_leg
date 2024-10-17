@@ -1,0 +1,30 @@
+Netlist file: data/net/cap.net   Architecture file: arch/k4-n1.xml
+Array size: 4 x 4 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		0	4	1	#0
+const4		2	0	0	#1
+const6		0	1	0	#2
+const9		5	2	2	#3
+const11		3	5	0	#4
+const15		3	0	2	#5
+const20		5	2	0	#6
+const23		5	4	0	#7
+out:store21	4	0	1	#8
+mul0		1	4	0	#9
+load2		2	4	0	#10
+mul3		2	3	0	#11
+load5		1	1	0	#12
+mul7		1	2	0	#13
+shra8		2	2	0	#14
+mul10		3	4	0	#15
+load12		4	3	0	#16
+mul13		3	3	0	#17
+shra14		3	2	0	#18
+mul16		1	3	0	#19
+mul17		2	1	0	#20
+mul18		3	1	0	#21
+mul19		4	2	0	#22
+store21		4	1	0	#23
+add22		4	4	0	#24

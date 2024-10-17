@@ -1,0 +1,4091 @@
+.input c0
+pinlist: c0
+
+.input i0
+pinlist: i0
+
+.input j0
+pinlist: j0
+
+.input h0
+pinlist: h0
+
+.input d0
+pinlist: d0
+
+.input k0
+pinlist: k0
+
+.input x
+pinlist: x
+
+.input y
+pinlist: y
+
+.input v
+pinlist: v
+
+.input o
+pinlist: o
+
+.input z
+pinlist: z
+
+.input a0
+pinlist: a0
+
+.input g0
+pinlist: g0
+
+.input e0
+pinlist: e0
+
+.input f0
+pinlist: f0
+
+.input n
+pinlist: n
+
+.input q
+pinlist: q
+
+.input b0
+pinlist: b0
+
+.input u
+pinlist: u
+
+.input i
+pinlist: i
+
+.input m
+pinlist: m
+
+.input r
+pinlist: r
+
+.input c
+pinlist: c
+
+.input k
+pinlist: k
+
+.input l
+pinlist: l
+
+.input t
+pinlist: t
+
+.input d
+pinlist: d
+
+.input s
+pinlist: s
+
+.input j
+pinlist: j
+
+.input e
+pinlist: e
+
+.input f
+pinlist: f
+
+.input g
+pinlist: g
+
+.input h
+pinlist: h
+
+.input b
+pinlist: b
+
+.input a
+pinlist: a
+
+.input l0
+pinlist: l0
+
+.input w
+pinlist: w
+
+.input m0
+pinlist: m0
+
+.output out:n0
+pinlist: n0
+
+.output out:o0
+pinlist: o0
+
+.output out:p0
+pinlist: p0
+
+.clb n0  # Only LUT used.
+pinlist: c0 [3] [5] open n0 open
+subblock: n0 0 1 2 open 4 open
+
+.clb [3]  # Only LUT used.
+pinlist: [58] [60] [59] open [3] open
+subblock: [3] 0 1 2 open 4 open
+
+.clb [5]  # Only LUT used.
+pinlist: [57] [44] [31] [18] [5] open
+subblock: [5] 0 1 2 3 4 open
+
+.clb o0  # Only LUT used.
+pinlist: c0 [521] [523] open o0 open
+subblock: o0 0 1 2 open 4 open
+
+.clb [521]  # Only LUT used.
+pinlist: [573] [575] [574] open [521] open
+subblock: [521] 0 1 2 open 4 open
+
+.clb [523]  # Only LUT used.
+pinlist: [572] [559] [546] [533] [523] open
+subblock: [523] 0 1 2 3 4 open
+
+.clb p0  # Only LUT used.
+pinlist: c0 [1209] [1211] open p0 open
+subblock: p0 0 1 2 open 4 open
+
+.clb [1209]  # Only LUT used.
+pinlist: [1230] [1232] [1231] open [1209] open
+subblock: [1209] 0 1 2 open 4 open
+
+.clb [1211]  # Only LUT used.
+pinlist: [1229] [1224] [1219] [1214] [1211] open
+subblock: [1211] 0 1 2 3 4 open
+
+.clb [1556]  # Only LUT used.
+pinlist: o q m c [1556] open
+subblock: [1556] 0 1 2 3 4 open
+
+.clb w0  # Only LUT used.
+pinlist: [1556] [1557] [1558] open w0 open
+subblock: w0 0 1 2 open 4 open
+
+.clb [1557]  # Only LUT used.
+pinlist: x y v u [1557] open
+subblock: [1557] 0 1 2 3 4 open
+
+.clb [1558]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1558] open
+subblock: [1558] 0 1 2 3 4 open
+
+.clb [1559]  # Only LUT used.
+pinlist: n q m c [1559] open
+subblock: [1559] 0 1 2 3 4 open
+
+.clb x0  # Only LUT used.
+pinlist: [1559] [1560] [1561] open x0 open
+subblock: x0 0 1 2 open 4 open
+
+.clb [1560]  # Only LUT used.
+pinlist: x y v u [1560] open
+subblock: [1560] 0 1 2 3 4 open
+
+.clb [1561]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1561] open
+subblock: [1561] 0 1 2 3 4 open
+
+.clb [1563]  # Only LUT used.
+pinlist: c0 d0 z b0 [1563] open
+subblock: [1563] 0 1 2 3 4 open
+
+.clb y0  # Only LUT used.
+pinlist: [1563] [1564] open open y0 open
+subblock: y0 0 1 open open 4 open
+
+.clb [1564]  # Only LUT used.
+pinlist: i0 j0 h0 [1562] [1564] open
+subblock: [1564] 0 1 2 3 4 open
+
+.clb [1619]  # Only LUT used.
+pinlist: c0 d0 z b0 [1619] open
+subblock: [1619] 0 1 2 3 4 open
+
+.clb z0  # Only LUT used.
+pinlist: [1619] [1620] open open z0 open
+subblock: z0 0 1 open open 4 open
+
+.clb [1620]  # Only LUT used.
+pinlist: i0 j0 h0 [1618] [1620] open
+subblock: [1620] 0 1 2 3 4 open
+
+.clb [1565]  # Only LUT used.
+pinlist: o q u m [1565] open
+subblock: [1565] 0 1 2 3 4 open
+
+.clb a1  # Only LUT used.
+pinlist: [1565] [1566] [1567] open a1 open
+subblock: a1 0 1 2 open 4 open
+
+.clb [1566]  # Only LUT used.
+pinlist: x y v w [1566] open
+subblock: [1566] 0 1 2 3 4 open
+
+.clb [1567]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1567] open
+subblock: [1567] 0 1 2 3 4 open
+
+.clb [1621]  # Only LUT used.
+pinlist: o q u r [1621] open
+subblock: [1621] 0 1 2 3 4 open
+
+.clb b1  # Only LUT used.
+pinlist: [1621] [1622] [1623] open b1 open
+subblock: b1 0 1 2 open 4 open
+
+.clb [1622]  # Only LUT used.
+pinlist: x y v w [1622] open
+subblock: [1622] 0 1 2 3 4 open
+
+.clb [1623]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1623] open
+subblock: [1623] 0 1 2 3 4 open
+
+.clb [1568]  # Only LUT used.
+pinlist: n q u m [1568] open
+subblock: [1568] 0 1 2 3 4 open
+
+.clb c1  # Only LUT used.
+pinlist: [1568] [1569] [1570] open c1 open
+subblock: c1 0 1 2 open 4 open
+
+.clb [1569]  # Only LUT used.
+pinlist: x y v w [1569] open
+subblock: [1569] 0 1 2 3 4 open
+
+.clb [1570]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1570] open
+subblock: [1570] 0 1 2 3 4 open
+
+.clb [1600]  # Only LUT used.
+pinlist: n q u r [1600] open
+subblock: [1600] 0 1 2 3 4 open
+
+.clb d1  # Only LUT used.
+pinlist: [1600] [1601] [1602] open d1 open
+subblock: d1 0 1 2 open 4 open
+
+.clb [1601]  # Only LUT used.
+pinlist: x y v w [1601] open
+subblock: [1601] 0 1 2 3 4 open
+
+.clb [1602]  # Only LUT used.
+pinlist: c0 d0 a0 b0 [1602] open
+subblock: [1602] 0 1 2 3 4 open
+
+.clb [1572]  # Only LUT used.
+pinlist: c0 d0 x b0 [1572] open
+subblock: [1572] 0 1 2 3 4 open
+
+.clb e1  # Only LUT used.
+pinlist: [1572] [1573] open open e1 open
+subblock: e1 0 1 open open 4 open
+
+.clb [1573]  # Only LUT used.
+pinlist: i0 j0 h0 [1571] [1573] open
+subblock: [1573] 0 1 2 3 4 open
+
+.clb [1604]  # Only LUT used.
+pinlist: c0 d0 x b0 [1604] open
+subblock: [1604] 0 1 2 3 4 open
+
+.clb f1  # Only LUT used.
+pinlist: [1604] [1605] open open f1 open
+subblock: f1 0 1 open open 4 open
+
+.clb [1605]  # Only LUT used.
+pinlist: i0 j0 h0 [1603] [1605] open
+subblock: [1605] 0 1 2 3 4 open
+
+.clb g1  # Only LUT used.
+pinlist: i0 j0 [1574] [1575] g1 open
+subblock: g1 0 1 2 3 4 open
+
+.clb [1574]  # Only LUT used.
+pinlist: o q m w [1574] open
+subblock: [1574] 0 1 2 3 4 open
+
+.clb [1575]  # Only LUT used.
+pinlist: c0 d0 x b0 [1575] open
+subblock: [1575] 0 1 2 3 4 open
+
+.clb h1  # Only LUT used.
+pinlist: i0 j0 [1624] [1625] h1 open
+subblock: h1 0 1 2 3 4 open
+
+.clb [1624]  # Only LUT used.
+pinlist: o q r w [1624] open
+subblock: [1624] 0 1 2 3 4 open
+
+.clb [1625]  # Only LUT used.
+pinlist: c0 d0 x b0 [1625] open
+subblock: [1625] 0 1 2 3 4 open
+
+.clb i1  # Only LUT used.
+pinlist: i0 j0 [1576] [1577] i1 open
+subblock: i1 0 1 2 3 4 open
+
+.clb [1576]  # Only LUT used.
+pinlist: n q m w [1576] open
+subblock: [1576] 0 1 2 3 4 open
+
+.clb [1577]  # Only LUT used.
+pinlist: c0 d0 x b0 [1577] open
+subblock: [1577] 0 1 2 3 4 open
+
+.clb [1579]  # Only LUT used.
+pinlist: c0 y z b0 [1579] open
+subblock: [1579] 0 1 2 3 4 open
+
+.clb j1  # Only LUT used.
+pinlist: [1579] [1580] open open j1 open
+subblock: j1 0 1 open open 4 open
+
+.clb [1580]  # Only LUT used.
+pinlist: i0 h0 d0 [1578] [1580] open
+subblock: [1580] 0 1 2 3 4 open
+
+.clb k1  # Only LUT used.
+pinlist: i0 j0 [1606] [1607] k1 open
+subblock: k1 0 1 2 3 4 open
+
+.clb [1606]  # Only LUT used.
+pinlist: n q r w [1606] open
+subblock: [1606] 0 1 2 3 4 open
+
+.clb [1607]  # Only LUT used.
+pinlist: c0 d0 x b0 [1607] open
+subblock: [1607] 0 1 2 3 4 open
+
+.clb [1627]  # Only LUT used.
+pinlist: c0 y z b0 [1627] open
+subblock: [1627] 0 1 2 3 4 open
+
+.clb l1  # Only LUT used.
+pinlist: [1627] [1628] open open l1 open
+subblock: l1 0 1 open open 4 open
+
+.clb [1628]  # Only LUT used.
+pinlist: i0 h0 d0 [1626] [1628] open
+subblock: [1628] 0 1 2 3 4 open
+
+.clb m1  # Only LUT used.
+pinlist: j0 [1652] [1653] open m1 open
+subblock: m1 0 1 2 open 4 open
+
+.clb [1652]  # Only LUT used.
+pinlist: c0 d0 z e0 [1652] open
+subblock: [1652] 0 1 2 3 4 open
+
+.clb [1653]  # Only LUT used.
+pinlist: i0 h0 g0 f0 [1653] open
+subblock: [1653] 0 1 2 3 4 open
+
+.clb p1  # Only LUT used.
+pinlist: i0 h0 [1650] [1651] p1 open
+subblock: p1 0 1 2 3 4 open
+
+.clb [1650]  # Only LUT used.
+pinlist: c0 y z a0 [1650] open
+subblock: [1650] 0 1 2 3 4 open
+
+.clb [1651]  # Only LUT used.
+pinlist: d0 g0 e0 f0 [1651] open
+subblock: [1651] 0 1 2 3 4 open
+
+.clb q1  # Only LUT used.
+pinlist: i0 h0 [1648] [1649] q1 open
+subblock: q1 0 1 2 3 4 open
+
+.clb [1648]  # Only LUT used.
+pinlist: c0 x y z [1648] open
+subblock: [1648] 0 1 2 3 4 open
+
+.clb [1649]  # Only LUT used.
+pinlist: d0 g0 e0 f0 [1649] open
+subblock: [1649] 0 1 2 3 4 open
+
+.clb s1  # Only LUT used.
+pinlist: j0 [1632] [1633] open s1 open
+subblock: s1 0 1 2 open 4 open
+
+.clb [1632]  # Only LUT used.
+pinlist: c0 d0 o e0 [1632] open
+subblock: [1632] 0 1 2 3 4 open
+
+.clb [1633]  # Only LUT used.
+pinlist: i0 h0 g0 f0 [1633] open
+subblock: [1633] 0 1 2 3 4 open
+
+.clb [1588]  # Only LUT used.
+pinlist: c0 x y b0 [1588] open
+subblock: [1588] 0 1 2 3 4 open
+
+.clb t1  # Only LUT used.
+pinlist: [1588] [1589] open open t1 open
+subblock: t1 0 1 open open 4 open
+
+.clb [1589]  # Only LUT used.
+pinlist: i0 h0 d0 [1587] [1589] open
+subblock: [1589] 0 1 2 3 4 open
+
+.clb [1612]  # Only LUT used.
+pinlist: c0 x y b0 [1612] open
+subblock: [1612] 0 1 2 3 4 open
+
+.clb v1  # Only LUT used.
+pinlist: [1612] [1613] open open v1 open
+subblock: v1 0 1 open open 4 open
+
+.clb [1613]  # Only LUT used.
+pinlist: i0 h0 d0 [1611] [1613] open
+subblock: [1613] 0 1 2 3 4 open
+
+.clb w1  # Only LUT used.
+pinlist: i0 d0 [1590] [1591] w1 open
+subblock: w1 0 1 2 3 4 open
+
+.clb [1590]  # Only LUT used.
+pinlist: o q m w [1590] open
+subblock: [1590] 0 1 2 3 4 open
+
+.clb [1591]  # Only LUT used.
+pinlist: c0 x y b0 [1591] open
+subblock: [1591] 0 1 2 3 4 open
+
+.clb x1  # Only LUT used.
+pinlist: i0 d0 [1634] [1635] x1 open
+subblock: x1 0 1 2 3 4 open
+
+.clb [1634]  # Only LUT used.
+pinlist: o q r w [1634] open
+subblock: [1634] 0 1 2 3 4 open
+
+.clb [1635]  # Only LUT used.
+pinlist: c0 x y b0 [1635] open
+subblock: [1635] 0 1 2 3 4 open
+
+.clb y1  # Only LUT used.
+pinlist: c0 h0 [1592] [1593] y1 open
+subblock: y1 0 1 2 3 4 open
+
+.clb [1592]  # Only LUT used.
+pinlist: x o q m [1592] open
+subblock: [1592] 0 1 2 3 4 open
+
+.clb [1593]  # Only LUT used.
+pinlist: y z a0 b0 [1593] open
+subblock: [1593] 0 1 2 3 4 open
+
+.clb z1  # Only LUT used.
+pinlist: i0 h0 [1636] [1637] z1 open
+subblock: z1 0 1 2 3 4 open
+
+.clb [1636]  # Only LUT used.
+pinlist: c0 x y o [1636] open
+subblock: [1636] 0 1 2 3 4 open
+
+.clb [1637]  # Only LUT used.
+pinlist: d0 g0 e0 f0 [1637] open
+subblock: [1637] 0 1 2 3 4 open
+
+.clb a2  # Only LUT used.
+pinlist: c0 h0 [1638] [1639] a2 open
+subblock: a2 0 1 2 3 4 open
+
+.clb [1638]  # Only LUT used.
+pinlist: x o q r [1638] open
+subblock: [1638] 0 1 2 3 4 open
+
+.clb [1639]  # Only LUT used.
+pinlist: y z a0 b0 [1639] open
+subblock: [1639] 0 1 2 3 4 open
+
+.clb [1642]  # Only LUT used.
+pinlist: c0 d0 e0 w [1642] open
+subblock: [1642] 0 1 2 3 4 open
+
+.clb b2  # Only LUT used.
+pinlist: [1642] [1643] open open b2 open
+subblock: b2 0 1 open open 4 open
+
+.clb [1643]  # Only LUT used.
+pinlist: i0 j0 g0 f0 [1643] open
+subblock: [1643] 0 1 2 3 4 open
+
+.clb c2  # Only LUT used.
+pinlist: i0 d0 [1594] [1595] c2 open
+subblock: c2 0 1 2 3 4 open
+
+.clb [1594]  # Only LUT used.
+pinlist: n q m w [1594] open
+subblock: [1594] 0 1 2 3 4 open
+
+.clb [1595]  # Only LUT used.
+pinlist: c0 x y b0 [1595] open
+subblock: [1595] 0 1 2 3 4 open
+
+.clb d2  # Only LUT used.
+pinlist: c0 d0 [1596] [1597] d2 open
+subblock: d2 0 1 2 3 4 open
+
+.clb [1596]  # Only LUT used.
+pinlist: o q m w [1596] open
+subblock: [1596] 0 1 2 3 4 open
+
+.clb [1597]  # Only LUT used.
+pinlist: x y a0 b0 [1597] open
+subblock: [1597] 0 1 2 3 4 open
+
+.clb e2  # Only LUT used.
+pinlist: i0 d0 [1614] [1615] e2 open
+subblock: e2 0 1 2 3 4 open
+
+.clb [1614]  # Only LUT used.
+pinlist: n q r w [1614] open
+subblock: [1614] 0 1 2 3 4 open
+
+.clb [1615]  # Only LUT used.
+pinlist: c0 x y b0 [1615] open
+subblock: [1615] 0 1 2 3 4 open
+
+.clb f2  # Only LUT used.
+pinlist: c0 d0 [1640] [1641] f2 open
+subblock: f2 0 1 2 3 4 open
+
+.clb [1640]  # Only LUT used.
+pinlist: o q r w [1640] open
+subblock: [1640] 0 1 2 3 4 open
+
+.clb [1641]  # Only LUT used.
+pinlist: x y a0 b0 [1641] open
+subblock: [1641] 0 1 2 3 4 open
+
+.clb g2  # Only LUT used.
+pinlist: i0 [1644] [1645] open g2 open
+subblock: g2 0 1 2 open 4 open
+
+.clb [1644]  # Only LUT used.
+pinlist: c0 y a0 w [1644] open
+subblock: [1644] 0 1 2 3 4 open
+
+.clb [1645]  # Only LUT used.
+pinlist: d0 g0 e0 f0 [1645] open
+subblock: [1645] 0 1 2 3 4 open
+
+.clb h2  # Only LUT used.
+pinlist: c0 d0 [1598] [1599] h2 open
+subblock: h2 0 1 2 3 4 open
+
+.clb [1598]  # Only LUT used.
+pinlist: n q m w [1598] open
+subblock: [1598] 0 1 2 3 4 open
+
+.clb [1599]  # Only LUT used.
+pinlist: x y a0 b0 [1599] open
+subblock: [1599] 0 1 2 3 4 open
+
+.clb i2  # Only LUT used.
+pinlist: i0 [1646] [1647] open i2 open
+subblock: i2 0 1 2 open 4 open
+
+.clb [1646]  # Only LUT used.
+pinlist: c0 x y w [1646] open
+subblock: [1646] 0 1 2 3 4 open
+
+.clb [1647]  # Only LUT used.
+pinlist: d0 g0 e0 f0 [1647] open
+subblock: [1647] 0 1 2 3 4 open
+
+.clb j2  # Only LUT used.
+pinlist: c0 d0 [1616] [1617] j2 open
+subblock: j2 0 1 2 3 4 open
+
+.clb [1616]  # Only LUT used.
+pinlist: n q r w [1616] open
+subblock: [1616] 0 1 2 3 4 open
+
+.clb [1617]  # Only LUT used.
+pinlist: x y a0 b0 [1617] open
+subblock: [1617] 0 1 2 3 4 open
+
+.clb [1582]  # Only LUT used.
+pinlist: x y a0 w [1582] open
+subblock: [1582] 0 1 2 3 4 open
+
+.clb n1  # Only LUT used.
+pinlist: [1582] [1583] open open n1 open
+subblock: n1 0 1 open open 4 open
+
+.clb [1583]  # Only LUT used.
+pinlist: c0 d0 b0 [1581] [1583] open
+subblock: [1583] 0 1 2 3 4 open
+
+.clb [1630]  # Only LUT used.
+pinlist: x y a0 w [1630] open
+subblock: [1630] 0 1 2 3 4 open
+
+.clb o1  # Only LUT used.
+pinlist: [1630] [1631] open open o1 open
+subblock: o1 0 1 open open 4 open
+
+.clb [1631]  # Only LUT used.
+pinlist: c0 d0 b0 [1629] [1631] open
+subblock: [1631] 0 1 2 3 4 open
+
+.clb [1585]  # Only LUT used.
+pinlist: x y a0 w [1585] open
+subblock: [1585] 0 1 2 3 4 open
+
+.clb r1  # Only LUT used.
+pinlist: [1585] [1586] open open r1 open
+subblock: r1 0 1 open open 4 open
+
+.clb [1586]  # Only LUT used.
+pinlist: c0 d0 b0 [1584] [1586] open
+subblock: [1586] 0 1 2 3 4 open
+
+.clb [1609]  # Only LUT used.
+pinlist: x y a0 w [1609] open
+subblock: [1609] 0 1 2 3 4 open
+
+.clb u1  # Only LUT used.
+pinlist: [1609] [1610] open open u1 open
+subblock: u1 0 1 open open 4 open
+
+.clb [1610]  # Only LUT used.
+pinlist: c0 d0 b0 [1608] [1610] open
+subblock: [1610] 0 1 2 3 4 open
+
+.clb [58]  # Only LUT used.
+pinlist: k0 [509] [506] [503] [58] open
+subblock: [58] 0 1 2 3 4 open
+
+.clb [60]  # Only LUT used.
+pinlist: [61] [63] [62] open [60] open
+subblock: [60] 0 1 2 open 4 open
+
+.clb [59]  # Only LUT used.
+pinlist: i0 x y open [59] open
+subblock: [59] 0 1 2 open 4 open
+
+.clb [57]  # Only LUT used.
+pinlist: [48] [52] [56] open [57] open
+subblock: [57] 0 1 2 open 4 open
+
+.clb [44]  # Only LUT used.
+pinlist: [35] [39] [43] open [44] open
+subblock: [44] 0 1 2 open 4 open
+
+.clb [31]  # Only LUT used.
+pinlist: [22] [26] [30] open [31] open
+subblock: [31] 0 1 2 open 4 open
+
+.clb [18]  # Only LUT used.
+pinlist: [9] [13] [17] open [18] open
+subblock: [18] 0 1 2 open 4 open
+
+.clb [9]  # Only LUT used.
+pinlist: h2 i2 j2 open [9] open
+subblock: [9] 0 1 2 open 4 open
+
+.clb [13]  # Only LUT used.
+pinlist: e2 f2 g2 open [13] open
+subblock: [13] 0 1 2 open 4 open
+
+.clb [17]  # Only LUT used.
+pinlist: b2 c2 d2 open [17] open
+subblock: [17] 0 1 2 open 4 open
+
+.clb [22]  # Only LUT used.
+pinlist: y1 z1 a2 open [22] open
+subblock: [22] 0 1 2 open 4 open
+
+.clb [26]  # Only LUT used.
+pinlist: v1 w1 x1 open [26] open
+subblock: [26] 0 1 2 open 4 open
+
+.clb [30]  # Only LUT used.
+pinlist: q1 s1 t1 open [30] open
+subblock: [30] 0 1 2 open 4 open
+
+.clb [35]  # Only LUT used.
+pinlist: l1 m1 p1 open [35] open
+subblock: [35] 0 1 2 open 4 open
+
+.clb [39]  # Only LUT used.
+pinlist: i1 j1 k1 open [39] open
+subblock: [39] 0 1 2 open 4 open
+
+.clb [43]  # Only LUT used.
+pinlist: f1 g1 h1 open [43] open
+subblock: [43] 0 1 2 open 4 open
+
+.clb [48]  # Only LUT used.
+pinlist: c1 d1 e1 open [48] open
+subblock: [48] 0 1 2 open 4 open
+
+.clb [52]  # Only LUT used.
+pinlist: z0 a1 b1 open [52] open
+subblock: [52] 0 1 2 open 4 open
+
+.clb [56]  # Only LUT used.
+pinlist: w0 x0 y0 open [56] open
+subblock: [56] 0 1 2 open 4 open
+
+.clb [509]  # Only LUT used.
+pinlist: d0 h open open [509] open
+subblock: [509] 0 1 open open 4 open
+
+.clb [506]  # Only LUT used.
+pinlist: e0 f0 open open [506] open
+subblock: [506] 0 1 open open 4 open
+
+.clb [503]  # Only LUT used.
+pinlist: j0 g0 open open [503] open
+subblock: [503] 0 1 open open 4 open
+
+.clb [61]  # Only LUT used.
+pinlist: [499] [496] [493] open [61] open
+subblock: [61] 0 1 2 open 4 open
+
+.clb [63]  # Only LUT used.
+pinlist: [64] [66] [65] open [63] open
+subblock: [63] 0 1 2 open 4 open
+
+.clb [62]  # Only LUT used.
+pinlist: v [488] [490] open [62] open
+subblock: [62] 0 1 2 open 4 open
+
+.clb [499]  # Only LUT used.
+pinlist: y o open open [499] open
+subblock: [499] 0 1 open open 4 open
+
+.clb [496]  # Only LUT used.
+pinlist: e0 f0 open open [496] open
+subblock: [496] 0 1 open open 4 open
+
+.clb [493]  # Only LUT used.
+pinlist: h0 g0 open open [493] open
+subblock: [493] 0 1 open open 4 open
+
+.clb [488]  # Only LUT used.
+pinlist: i0 x a0 open [488] open
+subblock: [488] 0 1 2 open 4 open
+
+.clb [490]  # Only LUT used.
+pinlist: i0 d0 a0 open [490] open
+subblock: [490] 0 1 2 open 4 open
+
+.clb [64]  # Only LUT used.
+pinlist: j0 [487] [484] [481] [64] open
+subblock: [64] 0 1 2 3 4 open
+
+.clb [66]  # Only LUT used.
+pinlist: [67] [69] [68] open [66] open
+subblock: [66] 0 1 2 open 4 open
+
+.clb [65]  # Only LUT used.
+pinlist: o z open open [65] open
+subblock: [65] 0 1 open open 4 open
+
+.clb [487]  # Only LUT used.
+pinlist: v e0 open open [487] open
+subblock: [487] 0 1 open open 4 open
+
+.clb [484]  # Only LUT used.
+pinlist: g0 f0 open open [484] open
+subblock: [484] 0 1 open open 4 open
+
+.clb [481]  # Only LUT used.
+pinlist: i0 h0 open open [481] open
+subblock: [481] 0 1 open open 4 open
+
+.clb [67]  # Only LUT used.
+pinlist: i0 [477] [474] [471] [67] open
+subblock: [67] 0 1 2 3 4 open
+
+.clb [69]  # Only LUT used.
+pinlist: x [70] [72] open [69] open
+subblock: [69] 0 1 2 open 4 open
+
+.clb [68]  # Only LUT used.
+pinlist: j0 y a0 open [68] open
+subblock: [68] 0 1 2 open 4 open
+
+.clb [477]  # Only LUT used.
+pinlist: v u open open [477] open
+subblock: [477] 0 1 open open 4 open
+
+.clb [474]  # Only LUT used.
+pinlist: d0 e0 open open [474] open
+subblock: [474] 0 1 open open 4 open
+
+.clb [471]  # Only LUT used.
+pinlist: g0 f0 open open [471] open
+subblock: [471] 0 1 open open 4 open
+
+.clb [70]  # Only LUT used.
+pinlist: [87] [89] [88] open [70] open
+subblock: [70] 0 1 2 open 4 open
+
+.clb [72]  # Only LUT used.
+pinlist: [73] [74] open open [72] open
+subblock: [72] 0 1 open open 4 open
+
+.clb [87]  # Only LUT used.
+pinlist: [462] [463] open open [87] open
+subblock: [87] 0 1 open open 4 open
+
+.clb [89]  # Only LUT used.
+pinlist: [90] [92] [91] open [89] open
+subblock: [89] 0 1 2 open 4 open
+
+.clb [88]  # Only LUT used.
+pinlist: o z n open [88] open
+subblock: [88] 0 1 2 open 4 open
+
+.clb [73]  # Only LUT used.
+pinlist: [86] [83] [80] open [73] open
+subblock: [73] 0 1 2 open 4 open
+
+.clb [74]  # Only LUT used.
+pinlist: [76] [77] open open [74] open
+subblock: [74] 0 1 open open 4 open
+
+.clb [86]  # Only LUT used.
+pinlist: y a0 open open [86] open
+subblock: [86] 0 1 open open 4 open
+
+.clb [83]  # Only LUT used.
+pinlist: e0 f0 open open [83] open
+subblock: [83] 0 1 open open 4 open
+
+.clb [80]  # Only LUT used.
+pinlist: i0 g0 open open [80] open
+subblock: [80] 0 1 open open 4 open
+
+.clb [76]  # Only LUT used.
+pinlist: j0 d0 k0 open [76] open
+subblock: [76] 0 1 2 open 4 open
+
+.clb [77]  # Only LUT used.
+pinlist: h0 v z open [77] open
+subblock: [77] 0 1 2 open 4 open
+
+.clb [462]  # Only LUT used.
+pinlist: [465] [466] open open [462] open
+subblock: [462] 0 1 open open 4 open
+
+.clb [463]  # Only LUT used.
+pinlist: i0 j0 y open [463] open
+subblock: [463] 0 1 2 open 4 open
+
+.clb [90]  # Only LUT used.
+pinlist: q b0 open open [90] open
+subblock: [90] 0 1 open open 4 open
+
+.clb [92]  # Only LUT used.
+pinlist: [93] [94] open open [92] open
+subblock: [92] 0 1 open open 4 open
+
+.clb [91]  # Only LUT used.
+pinlist: [106] [108] [107] open [91] open
+subblock: [91] 0 1 2 open 4 open
+
+.clb [106]  # Only LUT used.
+pinlist: [459] [460] open open [106] open
+subblock: [106] 0 1 open open 4 open
+
+.clb [108]  # Only LUT used.
+pinlist: [109] [111] [110] open [108] open
+subblock: [108] 0 1 2 open 4 open
+
+.clb [107]  # Only LUT used.
+pinlist: [456] [457] open open [107] open
+subblock: [107] 0 1 open open 4 open
+
+.clb [93]  # Only LUT used.
+pinlist: i0 [105] [102] open [93] open
+subblock: [93] 0 1 2 open 4 open
+
+.clb [94]  # Only LUT used.
+pinlist: [96] [97] [98] open [94] open
+subblock: [94] 0 1 2 open 4 open
+
+.clb [105]  # Only LUT used.
+pinlist: y e0 open open [105] open
+subblock: [105] 0 1 open open 4 open
+
+.clb [102]  # Only LUT used.
+pinlist: g0 f0 open open [102] open
+subblock: [102] 0 1 open open 4 open
+
+.clb [96]  # Only LUT used.
+pinlist: j0 d0 k0 open [96] open
+subblock: [96] 0 1 2 open 4 open
+
+.clb [97]  # Only LUT used.
+pinlist: h0 v z open [97] open
+subblock: [97] 0 1 2 open 4 open
+
+.clb [98]  # Only LUT used.
+pinlist: d0 v u open [98] open
+subblock: [98] 0 1 2 open 4 open
+
+.clb [459]  # Only LUT used.
+pinlist: y f0 j h [459] open
+subblock: [459] 0 1 2 3 4 open
+
+.clb [460]  # Only LUT used.
+pinlist: m r open open [460] open
+subblock: [460] 0 1 open open 4 open
+
+.clb [456]  # Only LUT used.
+pinlist: o n open open [456] open
+subblock: [456] 0 1 open open 4 open
+
+.clb [457]  # Only LUT used.
+pinlist: i0 d0 v a0 [457] open
+subblock: [457] 0 1 2 3 4 open
+
+.clb [109]  # Only LUT used.
+pinlist: j0 [455] [452] open [109] open
+subblock: [109] 0 1 2 open 4 open
+
+.clb [111]  # Only LUT used.
+pinlist: [112] [114] [113] open [111] open
+subblock: [111] 0 1 2 open 4 open
+
+.clb [110]  # Only LUT used.
+pinlist: [446] [447] open open [110] open
+subblock: [110] 0 1 open open 4 open
+
+.clb [455]  # Only LUT used.
+pinlist: j h open open [455] open
+subblock: [455] 0 1 open open 4 open
+
+.clb [452]  # Only LUT used.
+pinlist: i0 f0 open open [452] open
+subblock: [452] 0 1 open open 4 open
+
+.clb [446]  # Only LUT used.
+pinlist: m r open open [446] open
+subblock: [446] 0 1 open open 4 open
+
+.clb [447]  # Only LUT used.
+pinlist: d0 v o n [447] open
+subblock: [447] 0 1 2 3 4 open
+
+.clb [112]  # Only LUT used.
+pinlist: [434] [435] open open [112] open
+subblock: [112] 0 1 open open 4 open
+
+.clb [114]  # Only LUT used.
+pinlist: [115] [117] [116] open [114] open
+subblock: [114] 0 1 2 open 4 open
+
+.clb [113]  # Only LUT used.
+pinlist: [431] [432] open open [113] open
+subblock: [113] 0 1 open open 4 open
+
+.clb [434]  # Only LUT used.
+pinlist: [445] [442] [439] open [434] open
+subblock: [434] 0 1 2 open 4 open
+
+.clb [435]  # Only LUT used.
+pinlist: o n open open [435] open
+subblock: [435] 0 1 open open 4 open
+
+.clb [431]  # Only LUT used.
+pinlist: d0 v c open [431] open
+subblock: [431] 0 1 2 open 4 open
+
+.clb [432]  # Only LUT used.
+pinlist: g0 i open open [432] open
+subblock: [432] 0 1 open open 4 open
+
+.clb [115]  # Only LUT used.
+pinlist: [421] [422] open open [115] open
+subblock: [115] 0 1 open open 4 open
+
+.clb [117]  # Only LUT used.
+pinlist: [118] [120] [119] open [117] open
+subblock: [117] 0 1 2 open 4 open
+
+.clb [116]  # Only LUT used.
+pinlist: [418] [419] open open [116] open
+subblock: [116] 0 1 open open 4 open
+
+.clb [421]  # Only LUT used.
+pinlist: k0 [430] [427] open [421] open
+subblock: [421] 0 1 2 open 4 open
+
+.clb [422]  # Only LUT used.
+pinlist: o n open open [422] open
+subblock: [422] 0 1 open open 4 open
+
+.clb [418]  # Only LUT used.
+pinlist: g0 i open open [418] open
+subblock: [418] 0 1 open open 4 open
+
+.clb [419]  # Only LUT used.
+pinlist: i0 a0 m r [419] open
+subblock: [419] 0 1 2 3 4 open
+
+.clb [118]  # Only LUT used.
+pinlist: d0 v u open [118] open
+subblock: [118] 0 1 2 open 4 open
+
+.clb [120]  # Only LUT used.
+pinlist: [121] [123] [122] open [120] open
+subblock: [120] 0 1 2 open 4 open
+
+.clb [119]  # Only LUT used.
+pinlist: [412] [413] open open [119] open
+subblock: [119] 0 1 open open 4 open
+
+.clb [412]  # Only LUT used.
+pinlist: m r open open [412] open
+subblock: [412] 0 1 open open 4 open
+
+.clb [413]  # Only LUT used.
+pinlist: [415] [416] open open [413] open
+subblock: [413] 0 1 open open 4 open
+
+.clb [121]  # Only LUT used.
+pinlist: [400] [401] open open [121] open
+subblock: [121] 0 1 open open 4 open
+
+.clb [123]  # Only LUT used.
+pinlist: [124] [126] [125] open [123] open
+subblock: [123] 0 1 2 open 4 open
+
+.clb [122]  # Only LUT used.
+pinlist: g0 i m r [122] open
+subblock: [122] 0 1 2 3 4 open
+
+.clb [400]  # Only LUT used.
+pinlist: [411] [408] [405] open [400] open
+subblock: [400] 0 1 2 open 4 open
+
+.clb [401]  # Only LUT used.
+pinlist: o n open open [401] open
+subblock: [401] 0 1 open open 4 open
+
+.clb [124]  # Only LUT used.
+pinlist: [385] [386] open open [124] open
+subblock: [124] 0 1 open open 4 open
+
+.clb [126]  # Only LUT used.
+pinlist: [127] [129] [128] open [126] open
+subblock: [126] 0 1 2 open 4 open
+
+.clb [125]  # Only LUT used.
+pinlist: d0 v c open [125] open
+subblock: [125] 0 1 2 open 4 open
+
+.clb [385]  # Only LUT used.
+pinlist: [399] [396] [393] [390] [385] open
+subblock: [385] 0 1 2 3 4 open
+
+.clb [386]  # Only LUT used.
+pinlist: o n open open [386] open
+subblock: [386] 0 1 open open 4 open
+
+.clb [127]  # Only LUT used.
+pinlist: [372] [373] open open [127] open
+subblock: [127] 0 1 open open 4 open
+
+.clb [129]  # Only LUT used.
+pinlist: [130] [132] [131] open [129] open
+subblock: [129] 0 1 2 open 4 open
+
+.clb [128]  # Only LUT used.
+pinlist: i0 a0 m r [128] open
+subblock: [128] 0 1 2 3 4 open
+
+.clb [372]  # Only LUT used.
+pinlist: k0 [384] [381] [378] [372] open
+subblock: [372] 0 1 2 3 4 open
+
+.clb [373]  # Only LUT used.
+pinlist: o n open open [373] open
+subblock: [373] 0 1 open open 4 open
+
+.clb [130]  # Only LUT used.
+pinlist: d0 [371] [368] open [130] open
+subblock: [130] 0 1 2 open 4 open
+
+.clb [132]  # Only LUT used.
+pinlist: [133] [135] [134] open [132] open
+subblock: [132] 0 1 2 open 4 open
+
+.clb [131]  # Only LUT used.
+pinlist: o n m r [131] open
+subblock: [131] 0 1 2 3 4 open
+
+.clb [371]  # Only LUT used.
+pinlist: v a open open [371] open
+subblock: [371] 0 1 open open 4 open
+
+.clb [368]  # Only LUT used.
+pinlist: y a0 open open [368] open
+subblock: [368] 0 1 open open 4 open
+
+.clb [133]  # Only LUT used.
+pinlist: [350] [351] open open [133] open
+subblock: [133] 0 1 open open 4 open
+
+.clb [135]  # Only LUT used.
+pinlist: [136] [138] [137] open [135] open
+subblock: [135] 0 1 2 open 4 open
+
+.clb [134]  # Only LUT used.
+pinlist: m r c open [134] open
+subblock: [134] 0 1 2 open 4 open
+
+.clb [350]  # Only LUT used.
+pinlist: [364] [361] [358] [355] [350] open
+subblock: [350] 0 1 2 3 4 open
+
+.clb [351]  # Only LUT used.
+pinlist: o n open open [351] open
+subblock: [351] 0 1 open open 4 open
+
+.clb [136]  # Only LUT used.
+pinlist: [347] [348] open open [136] open
+subblock: [136] 0 1 open open 4 open
+
+.clb [138]  # Only LUT used.
+pinlist: [139] [141] [140] open [138] open
+subblock: [138] 0 1 2 open 4 open
+
+.clb [137]  # Only LUT used.
+pinlist: [344] [345] open open [137] open
+subblock: [137] 0 1 open open 4 open
+
+.clb [347]  # Only LUT used.
+pinlist: f0 n k h [347] open
+subblock: [347] 0 1 2 3 4 open
+
+.clb [348]  # Only LUT used.
+pinlist: d0 v m r [348] open
+subblock: [348] 0 1 2 3 4 open
+
+.clb [344]  # Only LUT used.
+pinlist: l t d s [344] open
+subblock: [344] 0 1 2 3 4 open
+
+.clb [345]  # Only LUT used.
+pinlist: i0 j0 y open [345] open
+subblock: [345] 0 1 2 open 4 open
+
+.clb [139]  # Only LUT used.
+pinlist: [332] [333] open open [139] open
+subblock: [139] 0 1 open open 4 open
+
+.clb [141]  # Only LUT used.
+pinlist: [142] [144] [143] open [141] open
+subblock: [141] 0 1 2 open 4 open
+
+.clb [140]  # Only LUT used.
+pinlist: i0 d0 v a0 [140] open
+subblock: [140] 0 1 2 3 4 open
+
+.clb [332]  # Only LUT used.
+pinlist: [343] [340] [337] open [332] open
+subblock: [332] 0 1 2 open 4 open
+
+.clb [333]  # Only LUT used.
+pinlist: m r open open [333] open
+subblock: [333] 0 1 open open 4 open
+
+.clb [142]  # Only LUT used.
+pinlist: [319] [320] open open [142] open
+subblock: [142] 0 1 open open 4 open
+
+.clb [144]  # Only LUT used.
+pinlist: [145] [147] [146] open [144] open
+subblock: [144] 0 1 2 open 4 open
+
+.clb [143]  # Only LUT used.
+pinlist: d0 v open open [143] open
+subblock: [143] 0 1 open open 4 open
+
+.clb [319]  # Only LUT used.
+pinlist: j0 [331] [328] [325] [319] open
+subblock: [319] 0 1 2 3 4 open
+
+.clb [320]  # Only LUT used.
+pinlist: m r open open [320] open
+subblock: [320] 0 1 open open 4 open
+
+.clb [145]  # Only LUT used.
+pinlist: [318] [315] [312] open [145] open
+subblock: [145] 0 1 2 open 4 open
+
+.clb [147]  # Only LUT used.
+pinlist: [148] [150] [149] open [147] open
+subblock: [147] 0 1 2 open 4 open
+
+.clb [146]  # Only LUT used.
+pinlist: [307] [308] open open [146] open
+subblock: [146] 0 1 open open 4 open
+
+.clb [318]  # Only LUT used.
+pinlist: k h open open [318] open
+subblock: [318] 0 1 open open 4 open
+
+.clb [315]  # Only LUT used.
+pinlist: y n open open [315] open
+subblock: [315] 0 1 open open 4 open
+
+.clb [312]  # Only LUT used.
+pinlist: a0 f0 open open [312] open
+subblock: [312] 0 1 open open 4 open
+
+.clb [307]  # Only LUT used.
+pinlist: l t d s [307] open
+subblock: [307] 0 1 2 3 4 open
+
+.clb [308]  # Only LUT used.
+pinlist: m r open open [308] open
+subblock: [308] 0 1 open open 4 open
+
+.clb [148]  # Only LUT used.
+pinlist: h0 [306] [303] open [148] open
+subblock: [148] 0 1 2 open 4 open
+
+.clb [150]  # Only LUT used.
+pinlist: k0 [151] [153] open [150] open
+subblock: [150] 0 1 2 open 4 open
+
+.clb [149]  # Only LUT used.
+pinlist: m r open open [149] open
+subblock: [149] 0 1 open open 4 open
+
+.clb [306]  # Only LUT used.
+pinlist: o n open open [306] open
+subblock: [306] 0 1 open open 4 open
+
+.clb [303]  # Only LUT used.
+pinlist: y a0 open open [303] open
+subblock: [303] 0 1 open open 4 open
+
+.clb [151]  # Only LUT used.
+pinlist: [173] [175] [174] open [151] open
+subblock: [151] 0 1 2 open 4 open
+
+.clb [153]  # Only LUT used.
+pinlist: [154] [155] open open [153] open
+subblock: [153] 0 1 open open 4 open
+
+.clb [173]  # Only LUT used.
+pinlist: [191] [193] [192] open [173] open
+subblock: [173] 0 1 2 open 4 open
+
+.clb [175]  # Only LUT used.
+pinlist: [176] [177] open open [175] open
+subblock: [175] 0 1 open open 4 open
+
+.clb [174]  # Only LUT used.
+pinlist: g0 i open open [174] open
+subblock: [174] 0 1 open open 4 open
+
+.clb [154]  # Only LUT used.
+pinlist: d0 [172] [169] [166] [154] open
+subblock: [154] 0 1 2 3 4 open
+
+.clb [155]  # Only LUT used.
+pinlist: n [157] [159] open [155] open
+subblock: [155] 0 1 2 open 4 open
+
+.clb [172]  # Only LUT used.
+pinlist: c j open open [172] open
+subblock: [172] 0 1 open open 4 open
+
+.clb [169]  # Only LUT used.
+pinlist: v r open open [169] open
+subblock: [169] 0 1 open open 4 open
+
+.clb [166]  # Only LUT used.
+pinlist: y a0 open open [166] open
+subblock: [166] 0 1 open open 4 open
+
+.clb [157]  # Only LUT used.
+pinlist: k [160] [161] open [157] open
+subblock: [157] 0 1 2 open 4 open
+
+.clb [159]  # Only LUT used.
+pinlist: o n open open [159] open
+subblock: [159] 0 1 open open 4 open
+
+.clb [160]  # Only LUT used.
+pinlist: l t open open [160] open
+subblock: [160] 0 1 open open 4 open
+
+.clb [161]  # Only LUT used.
+pinlist: d s open open [161] open
+subblock: [161] 0 1 open open 4 open
+
+.clb [191]  # Only LUT used.
+pinlist: e f g open [191] open
+subblock: [191] 0 1 2 open 4 open
+
+.clb [193]  # Only LUT used.
+pinlist: [194] [195] open open [193] open
+subblock: [193] 0 1 open open 4 open
+
+.clb [192]  # Only LUT used.
+pinlist: [206] [208] [207] open [192] open
+subblock: [192] 0 1 2 open 4 open
+
+.clb [176]  # Only LUT used.
+pinlist: [190] [187] [184] [181] [176] open
+subblock: [176] 0 1 2 3 4 open
+
+.clb [177]  # Only LUT used.
+pinlist: o n open open [177] open
+subblock: [177] 0 1 open open 4 open
+
+.clb [190]  # Only LUT used.
+pinlist: i m open open [190] open
+subblock: [190] 0 1 open open 4 open
+
+.clb [187]  # Only LUT used.
+pinlist: y v open open [187] open
+subblock: [187] 0 1 open open 4 open
+
+.clb [184]  # Only LUT used.
+pinlist: a0 e0 open open [184] open
+subblock: [184] 0 1 open open 4 open
+
+.clb [181]  # Only LUT used.
+pinlist: j0 f0 open open [181] open
+subblock: [181] 0 1 open open 4 open
+
+.clb [206]  # Only LUT used.
+pinlist: j0 [299] [296] [293] [206] open
+subblock: [206] 0 1 2 3 4 open
+
+.clb [208]  # Only LUT used.
+pinlist: [209] [211] [210] open [208] open
+subblock: [208] 0 1 2 open 4 open
+
+.clb [207]  # Only LUT used.
+pinlist: n j b open [207] open
+subblock: [207] 0 1 2 open 4 open
+
+.clb [194]  # Only LUT used.
+pinlist: [205] [202] [199] open [194] open
+subblock: [194] 0 1 2 open 4 open
+
+.clb [195]  # Only LUT used.
+pinlist: o n open open [195] open
+subblock: [195] 0 1 open open 4 open
+
+.clb [205]  # Only LUT used.
+pinlist: m h open open [205] open
+subblock: [205] 0 1 open open 4 open
+
+.clb [202]  # Only LUT used.
+pinlist: y v open open [202] open
+subblock: [202] 0 1 open open 4 open
+
+.clb [199]  # Only LUT used.
+pinlist: a0 e0 open open [199] open
+subblock: [199] 0 1 open open 4 open
+
+.clb [299]  # Only LUT used.
+pinlist: c h open open [299] open
+subblock: [299] 0 1 open open 4 open
+
+.clb [296]  # Only LUT used.
+pinlist: o r open open [296] open
+subblock: [296] 0 1 open open 4 open
+
+.clb [293]  # Only LUT used.
+pinlist: i0 d0 open open [293] open
+subblock: [293] 0 1 open open 4 open
+
+.clb [209]  # Only LUT used.
+pinlist: d0 m c h [209] open
+subblock: [209] 0 1 2 3 4 open
+
+.clb [211]  # Only LUT used.
+pinlist: [212] [214] [213] open [211] open
+subblock: [211] 0 1 2 open 4 open
+
+.clb [210]  # Only LUT used.
+pinlist: [287] [288] open open [210] open
+subblock: [210] 0 1 open open 4 open
+
+.clb [287]  # Only LUT used.
+pinlist: o n open open [287] open
+subblock: [287] 0 1 open open 4 open
+
+.clb [288]  # Only LUT used.
+pinlist: i0 j0 y a0 [288] open
+subblock: [288] 0 1 2 3 4 open
+
+.clb [212]  # Only LUT used.
+pinlist: [286] [283] [280] open [212] open
+subblock: [212] 0 1 2 open 4 open
+
+.clb [214]  # Only LUT used.
+pinlist: [215] [217] [216] open [214] open
+subblock: [214] 0 1 2 open 4 open
+
+.clb [213]  # Only LUT used.
+pinlist: i0 j0 y a0 [213] open
+subblock: [213] 0 1 2 3 4 open
+
+.clb [286]  # Only LUT used.
+pinlist: c b open open [286] open
+subblock: [286] 0 1 open open 4 open
+
+.clb [283]  # Only LUT used.
+pinlist: n h open open [283] open
+subblock: [283] 0 1 open open 4 open
+
+.clb [280]  # Only LUT used.
+pinlist: d0 r open open [280] open
+subblock: [280] 0 1 open open 4 open
+
+.clb [215]  # Only LUT used.
+pinlist: [277] [274] [271] open [215] open
+subblock: [215] 0 1 2 open 4 open
+
+.clb [217]  # Only LUT used.
+pinlist: [218] [220] [219] open [217] open
+subblock: [217] 0 1 2 open 4 open
+
+.clb [216]  # Only LUT used.
+pinlist: n m r j [216] open
+subblock: [216] 0 1 2 3 4 open
+
+.clb [277]  # Only LUT used.
+pinlist: o h open open [277] open
+subblock: [277] 0 1 open open 4 open
+
+.clb [274]  # Only LUT used.
+pinlist: y v open open [274] open
+subblock: [274] 0 1 open open 4 open
+
+.clb [271]  # Only LUT used.
+pinlist: d0 a0 open open [271] open
+subblock: [271] 0 1 open open 4 open
+
+.clb [218]  # Only LUT used.
+pinlist: y a0 n m [218] open
+subblock: [218] 0 1 2 3 4 open
+
+.clb [220]  # Only LUT used.
+pinlist: [221] [223] [222] open [220] open
+subblock: [220] 0 1 2 open 4 open
+
+.clb [219]  # Only LUT used.
+pinlist: [266] [268] [267] open [219] open
+subblock: [219] 0 1 2 open 4 open
+
+.clb [266]  # Only LUT used.
+pinlist: j0 f0 open open [266] open
+subblock: [266] 0 1 open open 4 open
+
+.clb [268]  # Only LUT used.
+pinlist: d0 v h open [268] open
+subblock: [268] 0 1 2 open 4 open
+
+.clb [267]  # Only LUT used.
+pinlist: d0 v c open [267] open
+subblock: [267] 0 1 2 open 4 open
+
+.clb [221]  # Only LUT used.
+pinlist: j0 y f0 m [221] open
+subblock: [221] 0 1 2 3 4 open
+
+.clb [223]  # Only LUT used.
+pinlist: r [224] open open [223] open
+subblock: [223] 0 1 open open 4 open
+
+.clb [222]  # Only LUT used.
+pinlist: [263] [265] [264] open [222] open
+subblock: [222] 0 1 2 open 4 open
+
+.clb [263]  # Only LUT used.
+pinlist: d0 c open open [263] open
+subblock: [263] 0 1 open open 4 open
+
+.clb [265]  # Only LUT used.
+pinlist: d0 v o a0 [265] open
+subblock: [265] 0 1 2 3 4 open
+
+.clb [264]  # Only LUT used.
+pinlist: i0 o a0 n [264] open
+subblock: [264] 0 1 2 3 4 open
+
+.clb [224]  # Only LUT used.
+pinlist: [227] [229] [228] open [224] open
+subblock: [224] 0 1 2 open 4 open
+
+.clb [227]  # Only LUT used.
+pinlist: y c b open [227] open
+subblock: [227] 0 1 2 open 4 open
+
+.clb [229]  # Only LUT used.
+pinlist: j [230] open open [229] open
+subblock: [229] 0 1 open open 4 open
+
+.clb [228]  # Only LUT used.
+pinlist: [257] [259] [258] open [228] open
+subblock: [228] 0 1 2 open 4 open
+
+.clb [257]  # Only LUT used.
+pinlist: [260] [262] [261] open [257] open
+subblock: [257] 0 1 2 open 4 open
+
+.clb [259]  # Only LUT used.
+pinlist: v a0 n h [259] open
+subblock: [259] 0 1 2 3 4 open
+
+.clb [258]  # Only LUT used.
+pinlist: i0 d0 v a0 [258] open
+subblock: [258] 0 1 2 3 4 open
+
+.clb [230]  # Only LUT used.
+pinlist: [233] [235] [234] open [230] open
+subblock: [230] 0 1 2 open 4 open
+
+.clb [233]  # Only LUT used.
+pinlist: n [245] open open [233] open
+subblock: [233] 0 1 open open 4 open
+
+.clb [235]  # Only LUT used.
+pinlist: [236] [237] open open [235] open
+subblock: [235] 0 1 open open 4 open
+
+.clb [234]  # Only LUT used.
+pinlist: k [242] [243] open [234] open
+subblock: [234] 0 1 2 open 4 open
+
+.clb [245]  # Only LUT used.
+pinlist: [248] [250] [249] open [245] open
+subblock: [245] 0 1 2 open 4 open
+
+.clb [242]  # Only LUT used.
+pinlist: l t open open [242] open
+subblock: [242] 0 1 open open 4 open
+
+.clb [243]  # Only LUT used.
+pinlist: d s open open [243] open
+subblock: [243] 0 1 open open 4 open
+
+.clb [236]  # Only LUT used.
+pinlist: y o n open [236] open
+subblock: [236] 0 1 2 open 4 open
+
+.clb [237]  # Only LUT used.
+pinlist: [239] [241] [240] open [237] open
+subblock: [237] 0 1 2 open 4 open
+
+.clb [239]  # Only LUT used.
+pinlist: d0 c open open [239] open
+subblock: [239] 0 1 open open 4 open
+
+.clb [241]  # Only LUT used.
+pinlist: j0 d0 v a0 [241] open
+subblock: [241] 0 1 2 3 4 open
+
+.clb [240]  # Only LUT used.
+pinlist: i0 j0 a0 h [240] open
+subblock: [240] 0 1 2 3 4 open
+
+.clb [248]  # Only LUT used.
+pinlist: d0 c open open [248] open
+subblock: [248] 0 1 open open 4 open
+
+.clb [250]  # Only LUT used.
+pinlist: [251] [252] open open [250] open
+subblock: [250] 0 1 open open 4 open
+
+.clb [249]  # Only LUT used.
+pinlist: [254] [256] [255] open [249] open
+subblock: [249] 0 1 2 open 4 open
+
+.clb [254]  # Only LUT used.
+pinlist: j0 h open open [254] open
+subblock: [254] 0 1 open open 4 open
+
+.clb [256]  # Only LUT used.
+pinlist: i0 j0 y a0 [256] open
+subblock: [256] 0 1 2 3 4 open
+
+.clb [255]  # Only LUT used.
+pinlist: i0 y open open [255] open
+subblock: [255] 0 1 open open 4 open
+
+.clb [251]  # Only LUT used.
+pinlist: d0 y v a0 [251] open
+subblock: [251] 0 1 2 3 4 open
+
+.clb [252]  # Only LUT used.
+pinlist: j0 h open open [252] open
+subblock: [252] 0 1 open open 4 open
+
+.clb [260]  # Only LUT used.
+pinlist: j0 f0 open open [260] open
+subblock: [260] 0 1 open open 4 open
+
+.clb [262]  # Only LUT used.
+pinlist: o h open open [262] open
+subblock: [262] 0 1 open open 4 open
+
+.clb [261]  # Only LUT used.
+pinlist: o n open open [261] open
+subblock: [261] 0 1 open open 4 open
+
+.clb [331]  # Only LUT used.
+pinlist: k h open open [331] open
+subblock: [331] 0 1 open open 4 open
+
+.clb [328]  # Only LUT used.
+pinlist: o n open open [328] open
+subblock: [328] 0 1 open open 4 open
+
+.clb [325]  # Only LUT used.
+pinlist: i0 f0 open open [325] open
+subblock: [325] 0 1 open open 4 open
+
+.clb [343]  # Only LUT used.
+pinlist: k h open open [343] open
+subblock: [343] 0 1 open open 4 open
+
+.clb [340]  # Only LUT used.
+pinlist: o n open open [340] open
+subblock: [340] 0 1 open open 4 open
+
+.clb [337]  # Only LUT used.
+pinlist: y f0 open open [337] open
+subblock: [337] 0 1 open open 4 open
+
+.clb [364]  # Only LUT used.
+pinlist: y v open open [364] open
+subblock: [364] 0 1 open open 4 open
+
+.clb [361]  # Only LUT used.
+pinlist: a0 e0 open open [361] open
+subblock: [361] 0 1 open open 4 open
+
+.clb [358]  # Only LUT used.
+pinlist: g0 f0 open open [358] open
+subblock: [358] 0 1 open open 4 open
+
+.clb [355]  # Only LUT used.
+pinlist: j0 k0 open open [355] open
+subblock: [355] 0 1 open open 4 open
+
+.clb [384]  # Only LUT used.
+pinlist: y i open open [384] open
+subblock: [384] 0 1 open open 4 open
+
+.clb [381]  # Only LUT used.
+pinlist: d0 e0 open open [381] open
+subblock: [381] 0 1 open open 4 open
+
+.clb [378]  # Only LUT used.
+pinlist: j0 f0 open open [378] open
+subblock: [378] 0 1 open open 4 open
+
+.clb [399]  # Only LUT used.
+pinlist: i r open open [399] open
+subblock: [399] 0 1 open open 4 open
+
+.clb [396]  # Only LUT used.
+pinlist: y a0 open open [396] open
+subblock: [396] 0 1 open open 4 open
+
+.clb [393]  # Only LUT used.
+pinlist: e0 f0 open open [393] open
+subblock: [393] 0 1 open open 4 open
+
+.clb [390]  # Only LUT used.
+pinlist: j0 k0 open open [390] open
+subblock: [390] 0 1 open open 4 open
+
+.clb [411]  # Only LUT used.
+pinlist: d0 h open open [411] open
+subblock: [411] 0 1 open open 4 open
+
+.clb [408]  # Only LUT used.
+pinlist: i0 e0 open open [408] open
+subblock: [408] 0 1 open open 4 open
+
+.clb [405]  # Only LUT used.
+pinlist: j0 k0 open open [405] open
+subblock: [405] 0 1 open open 4 open
+
+.clb [415]  # Only LUT used.
+pinlist: o n open open [415] open
+subblock: [415] 0 1 open open 4 open
+
+.clb [416]  # Only LUT used.
+pinlist: i0 j0 y open [416] open
+subblock: [416] 0 1 2 open 4 open
+
+.clb [430]  # Only LUT used.
+pinlist: y h open open [430] open
+subblock: [430] 0 1 open open 4 open
+
+.clb [427]  # Only LUT used.
+pinlist: d0 e0 open open [427] open
+subblock: [427] 0 1 open open 4 open
+
+.clb [445]  # Only LUT used.
+pinlist: r h open open [445] open
+subblock: [445] 0 1 open open 4 open
+
+.clb [442]  # Only LUT used.
+pinlist: y a0 open open [442] open
+subblock: [442] 0 1 open open 4 open
+
+.clb [439]  # Only LUT used.
+pinlist: k0 e0 open open [439] open
+subblock: [439] 0 1 open open 4 open
+
+.clb [465]  # Only LUT used.
+pinlist: h0 v q b0 [465] open
+subblock: [465] 0 1 2 3 4 open
+
+.clb [466]  # Only LUT used.
+pinlist: m r open open [466] open
+subblock: [466] 0 1 open open 4 open
+
+.clb [511]  # Only LUT used.
+pinlist: c b open open [511] open
+subblock: [511] 0 1 open open 4 open
+
+.clb [512]  # Only LUT used.
+pinlist: c d b open [512] open
+subblock: [512] 0 1 2 open 4 open
+
+.clb [513]  # Only LUT used.
+pinlist: e f g open [513] open
+subblock: [513] 0 1 2 open 4 open
+
+.clb [516]  # Only LUT used.
+pinlist: k l j open [516] open
+subblock: [516] 0 1 2 open 4 open
+
+.clb [517]  # Only LUT used.
+pinlist: k l j open [517] open
+subblock: [517] 0 1 2 open 4 open
+
+.clb [518]  # Only LUT used.
+pinlist: o n q m [518] open
+subblock: [518] 0 1 2 3 4 open
+
+.clb [519]  # Only LUT used.
+pinlist: o n q m [519] open
+subblock: [519] 0 1 2 3 4 open
+
+.clb [520]  # Only LUT used.
+pinlist: o n q m [520] open
+subblock: [520] 0 1 2 3 4 open
+
+.clb [573]  # Only LUT used.
+pinlist: [1202] [1198] [1194] open [573] open
+subblock: [573] 0 1 2 open 4 open
+
+.clb [575]  # Only LUT used.
+pinlist: [576] [578] [577] open [575] open
+subblock: [575] 0 1 2 open 4 open
+
+.clb [574]  # Only LUT used.
+pinlist: [518] [520] open open [574] open
+subblock: [574] 0 1 open open 4 open
+
+.clb [572]  # Only LUT used.
+pinlist: [562] [565] [568] [571] [572] open
+subblock: [572] 0 1 2 3 4 open
+
+.clb [559]  # Only LUT used.
+pinlist: [549] [552] [555] [558] [559] open
+subblock: [559] 0 1 2 3 4 open
+
+.clb [546]  # Only LUT used.
+pinlist: [536] [539] [542] [545] [546] open
+subblock: [546] 0 1 2 3 4 open
+
+.clb [533]  # Only LUT used.
+pinlist: [526] [529] [532] open [533] open
+subblock: [533] 0 1 2 open 4 open
+
+.clb [526]  # Only LUT used.
+pinlist: r1 u1 open open [526] open
+subblock: [526] 0 1 open open 4 open
+
+.clb [529]  # Only LUT used.
+pinlist: n1 o1 open open [529] open
+subblock: [529] 0 1 open open 4 open
+
+.clb [532]  # Only LUT used.
+pinlist: i2 j2 open open [532] open
+subblock: [532] 0 1 open open 4 open
+
+.clb [536]  # Only LUT used.
+pinlist: g2 h2 open open [536] open
+subblock: [536] 0 1 open open 4 open
+
+.clb [539]  # Only LUT used.
+pinlist: e2 f2 open open [539] open
+subblock: [539] 0 1 open open 4 open
+
+.clb [542]  # Only LUT used.
+pinlist: c2 d2 open open [542] open
+subblock: [542] 0 1 open open 4 open
+
+.clb [545]  # Only LUT used.
+pinlist: a2 b2 open open [545] open
+subblock: [545] 0 1 open open 4 open
+
+.clb [549]  # Only LUT used.
+pinlist: x1 y1 open open [549] open
+subblock: [549] 0 1 open open 4 open
+
+.clb [552]  # Only LUT used.
+pinlist: q1 w1 open open [552] open
+subblock: [552] 0 1 open open 4 open
+
+.clb [555]  # Only LUT used.
+pinlist: m1 p1 open open [555] open
+subblock: [555] 0 1 open open 4 open
+
+.clb [558]  # Only LUT used.
+pinlist: k1 l1 open open [558] open
+subblock: [558] 0 1 open open 4 open
+
+.clb [562]  # Only LUT used.
+pinlist: i1 j1 open open [562] open
+subblock: [562] 0 1 open open 4 open
+
+.clb [565]  # Only LUT used.
+pinlist: g1 h1 open open [565] open
+subblock: [565] 0 1 open open 4 open
+
+.clb [568]  # Only LUT used.
+pinlist: y0 z0 open open [568] open
+subblock: [568] 0 1 open open 4 open
+
+.clb [571]  # Only LUT used.
+pinlist: w0 x0 open open [571] open
+subblock: [571] 0 1 open open 4 open
+
+.clb [1202]  # Only LUT used.
+pinlist: x u r open [1202] open
+subblock: [1202] 0 1 2 open 4 open
+
+.clb [1198]  # Only LUT used.
+pinlist: y a0 b0 open [1198] open
+subblock: [1198] 0 1 2 open 4 open
+
+.clb [1194]  # Only LUT used.
+pinlist: d0 [511] [512] open [1194] open
+subblock: [1194] 0 1 2 open 4 open
+
+.clb [576]  # Only LUT used.
+pinlist: [1190] [1187] [1184] open [576] open
+subblock: [576] 0 1 2 open 4 open
+
+.clb [578]  # Only LUT used.
+pinlist: [579] [581] [580] open [578] open
+subblock: [578] 0 1 2 open 4 open
+
+.clb [577]  # Only LUT used.
+pinlist: [1179] [1180] open open [577] open
+subblock: [577] 0 1 open open 4 open
+
+.clb [1190]  # Only LUT used.
+pinlist: x r open open [1190] open
+subblock: [1190] 0 1 open open 4 open
+
+.clb [1187]  # Only LUT used.
+pinlist: z b0 open open [1187] open
+subblock: [1187] 0 1 open open 4 open
+
+.clb [1184]  # Only LUT used.
+pinlist: h0 d0 open open [1184] open
+subblock: [1184] 0 1 open open 4 open
+
+.clb [1179]  # Only LUT used.
+pinlist: i0 j0 y open [1179] open
+subblock: [1179] 0 1 2 open 4 open
+
+.clb [1180]  # Only LUT used.
+pinlist: [518] [519] [520] open [1180] open
+subblock: [1180] 0 1 2 open 4 open
+
+.clb [579]  # Only LUT used.
+pinlist: h0 [1178] [1175] [1172] [579] open
+subblock: [579] 0 1 2 3 4 open
+
+.clb [581]  # Only LUT used.
+pinlist: [582] [584] [583] open [581] open
+subblock: [581] 0 1 2 open 4 open
+
+.clb [580]  # Only LUT used.
+pinlist: [518] [519] [520] open [580] open
+subblock: [580] 0 1 2 open 4 open
+
+.clb [1178]  # Only LUT used.
+pinlist: x r open open [1178] open
+subblock: [1178] 0 1 open open 4 open
+
+.clb [1175]  # Only LUT used.
+pinlist: y z open open [1175] open
+subblock: [1175] 0 1 open open 4 open
+
+.clb [1172]  # Only LUT used.
+pinlist: a0 b0 open open [1172] open
+subblock: [1172] 0 1 open open 4 open
+
+.clb [582]  # Only LUT used.
+pinlist: [1164] [1165] open open [582] open
+subblock: [582] 0 1 open open 4 open
+
+.clb [584]  # Only LUT used.
+pinlist: [585] [587] [586] open [584] open
+subblock: [584] 0 1 2 open 4 open
+
+.clb [583]  # Only LUT used.
+pinlist: j0 y a0 open [583] open
+subblock: [583] 0 1 2 open 4 open
+
+.clb [1164]  # Only LUT used.
+pinlist: i0 g0 e0 f0 [1164] open
+subblock: [1164] 0 1 2 3 4 open
+
+.clb [1165]  # Only LUT used.
+pinlist: [1167] [1168] open open [1165] open
+subblock: [1165] 0 1 open open 4 open
+
+.clb [585]  # Only LUT used.
+pinlist: [1154] [1155] open open [585] open
+subblock: [585] 0 1 open open 4 open
+
+.clb [587]  # Only LUT used.
+pinlist: [588] [590] [589] open [587] open
+subblock: [587] 0 1 2 open 4 open
+
+.clb [586]  # Only LUT used.
+pinlist: d0 u [518] [519] [586] open
+subblock: [586] 0 1 2 3 4 open
+
+.clb [1154]  # Only LUT used.
+pinlist: [520] [1163] [1160] open [1154] open
+subblock: [1154] 0 1 2 open 4 open
+
+.clb [1155]  # Only LUT used.
+pinlist: i0 j0 y open [1155] open
+subblock: [1155] 0 1 2 open 4 open
+
+.clb [588]  # Only LUT used.
+pinlist: [518] [1153] [1150] open [588] open
+subblock: [588] 0 1 2 open 4 open
+
+.clb [590]  # Only LUT used.
+pinlist: [591] [593] [592] open [590] open
+subblock: [590] 0 1 2 open 4 open
+
+.clb [589]  # Only LUT used.
+pinlist: [1144] [1145] open open [589] open
+subblock: [589] 0 1 open open 4 open
+
+.clb [1153]  # Only LUT used.
+pinlist: u r open open [1153] open
+subblock: [1153] 0 1 open open 4 open
+
+.clb [1150]  # Only LUT used.
+pinlist: x b0 open open [1150] open
+subblock: [1150] 0 1 open open 4 open
+
+.clb [1144]  # Only LUT used.
+pinlist: i0 j0 y open [1144] open
+subblock: [1144] 0 1 2 open 4 open
+
+.clb [1145]  # Only LUT used.
+pinlist: h0 z f0 h [1145] open
+subblock: [1145] 0 1 2 3 4 open
+
+.clb [591]  # Only LUT used.
+pinlist: d0 x v b0 [591] open
+subblock: [591] 0 1 2 3 4 open
+
+.clb [593]  # Only LUT used.
+pinlist: [594] [596] [595] open [593] open
+subblock: [593] 0 1 2 open 4 open
+
+.clb [592]  # Only LUT used.
+pinlist: [1141] [1142] open open [592] open
+subblock: [592] 0 1 open open 4 open
+
+.clb [1141]  # Only LUT used.
+pinlist: r [518] [519] [520] [1141] open
+subblock: [1141] 0 1 2 3 4 open
+
+.clb [1142]  # Only LUT used.
+pinlist: i0 j0 y open [1142] open
+subblock: [1142] 0 1 2 open 4 open
+
+.clb [594]  # Only LUT used.
+pinlist: [1140] [1137] [1134] open [594] open
+subblock: [594] 0 1 2 open 4 open
+
+.clb [596]  # Only LUT used.
+pinlist: [597] [599] [598] open [596] open
+subblock: [596] 0 1 2 open 4 open
+
+.clb [595]  # Only LUT used.
+pinlist: r [518] [519] [520] [595] open
+subblock: [595] 0 1 2 3 4 open
+
+.clb [1140]  # Only LUT used.
+pinlist: x y open open [1140] open
+subblock: [1140] 0 1 open open 4 open
+
+.clb [1137]  # Only LUT used.
+pinlist: a0 b0 open open [1137] open
+subblock: [1137] 0 1 open open 4 open
+
+.clb [1134]  # Only LUT used.
+pinlist: f0 h open open [1134] open
+subblock: [1134] 0 1 open open 4 open
+
+.clb [597]  # Only LUT used.
+pinlist: [1120] [1121] open open [597] open
+subblock: [597] 0 1 open open 4 open
+
+.clb [599]  # Only LUT used.
+pinlist: [600] [602] [601] open [599] open
+subblock: [599] 0 1 2 open 4 open
+
+.clb [598]  # Only LUT used.
+pinlist: [518] [519] open open [598] open
+subblock: [598] 0 1 open open 4 open
+
+.clb [1120]  # Only LUT used.
+pinlist: [1131] [1128] [1125] open [1120] open
+subblock: [1120] 0 1 2 open 4 open
+
+.clb [1121]  # Only LUT used.
+pinlist: i0 j0 y open [1121] open
+subblock: [1121] 0 1 2 open 4 open
+
+.clb [600]  # Only LUT used.
+pinlist: [520] [1119] [1116] [1113] [600] open
+subblock: [600] 0 1 2 3 4 open
+
+.clb [602]  # Only LUT used.
+pinlist: [603] [605] [604] open [602] open
+subblock: [602] 0 1 2 open 4 open
+
+.clb [601]  # Only LUT used.
+pinlist: i0 d0 a0 open [601] open
+subblock: [601] 0 1 2 open 4 open
+
+.clb [1119]  # Only LUT used.
+pinlist: x y open open [1119] open
+subblock: [1119] 0 1 open open 4 open
+
+.clb [1116]  # Only LUT used.
+pinlist: z b0 open open [1116] open
+subblock: [1116] 0 1 open open 4 open
+
+.clb [1113]  # Only LUT used.
+pinlist: h0 [518] open open [1113] open
+subblock: [1113] 0 1 open open 4 open
+
+.clb [603]  # Only LUT used.
+pinlist: [1109] [1106] [1103] [1100] [603] open
+subblock: [603] 0 1 2 3 4 open
+
+.clb [605]  # Only LUT used.
+pinlist: [606] [608] [607] open [605] open
+subblock: [605] 0 1 2 open 4 open
+
+.clb [604]  # Only LUT used.
+pinlist: x f0 b0 [520] [604] open
+subblock: [604] 0 1 2 3 4 open
+
+.clb [1109]  # Only LUT used.
+pinlist: d0 e0 open open [1109] open
+subblock: [1109] 0 1 open open 4 open
+
+.clb [1106]  # Only LUT used.
+pinlist: i0 g0 open open [1106] open
+subblock: [1106] 0 1 open open 4 open
+
+.clb [1103]  # Only LUT used.
+pinlist: j0 l0 open open [1103] open
+subblock: [1103] 0 1 open open 4 open
+
+.clb [1100]  # Only LUT used.
+pinlist: h [519] open open [1100] open
+subblock: [1100] 0 1 open open 4 open
+
+.clb [606]  # Only LUT used.
+pinlist: [1097] [1094] [1091] [1088] [606] open
+subblock: [606] 0 1 2 3 4 open
+
+.clb [608]  # Only LUT used.
+pinlist: [609] [611] [610] open [608] open
+subblock: [608] 0 1 2 open 4 open
+
+.clb [607]  # Only LUT used.
+pinlist: [1084] [1085] open open [607] open
+subblock: [607] 0 1 open open 4 open
+
+.clb [1097]  # Only LUT used.
+pinlist: x y open open [1097] open
+subblock: [1097] 0 1 open open 4 open
+
+.clb [1094]  # Only LUT used.
+pinlist: d0 e0 open open [1094] open
+subblock: [1094] 0 1 open open 4 open
+
+.clb [1091]  # Only LUT used.
+pinlist: i0 g0 open open [1091] open
+subblock: [1091] 0 1 open open 4 open
+
+.clb [1088]  # Only LUT used.
+pinlist: [519] l0 open open [1088] open
+subblock: [1088] 0 1 open open 4 open
+
+.clb [1084]  # Only LUT used.
+pinlist: b0 h [520] open [1084] open
+subblock: [1084] 0 1 2 open 4 open
+
+.clb [1085]  # Only LUT used.
+pinlist: j0 f0 open open [1085] open
+subblock: [1085] 0 1 open open 4 open
+
+.clb [609]  # Only LUT used.
+pinlist: [1083] [1080] [1077] [1074] [609] open
+subblock: [609] 0 1 2 3 4 open
+
+.clb [611]  # Only LUT used.
+pinlist: [612] [614] [613] open [611] open
+subblock: [611] 0 1 2 open 4 open
+
+.clb [610]  # Only LUT used.
+pinlist: [1070] [1071] open open [610] open
+subblock: [610] 0 1 open open 4 open
+
+.clb [1083]  # Only LUT used.
+pinlist: x y open open [1083] open
+subblock: [1083] 0 1 open open 4 open
+
+.clb [1080]  # Only LUT used.
+pinlist: d0 e0 open open [1080] open
+subblock: [1080] 0 1 open open 4 open
+
+.clb [1077]  # Only LUT used.
+pinlist: g0 l0 open open [1077] open
+subblock: [1077] 0 1 open open 4 open
+
+.clb [1074]  # Only LUT used.
+pinlist: h [519] open open [1074] open
+subblock: [1074] 0 1 open open 4 open
+
+.clb [1070]  # Only LUT used.
+pinlist: a0 b0 [520] open [1070] open
+subblock: [1070] 0 1 2 open 4 open
+
+.clb [1071]  # Only LUT used.
+pinlist: j0 f0 open open [1071] open
+subblock: [1071] 0 1 open open 4 open
+
+.clb [612]  # Only LUT used.
+pinlist: l0 [1069] [1066] [1063] [612] open
+subblock: [612] 0 1 2 3 4 open
+
+.clb [614]  # Only LUT used.
+pinlist: [615] [617] [616] open [614] open
+subblock: [614] 0 1 2 open 4 open
+
+.clb [613]  # Only LUT used.
+pinlist: [1057] [1058] open open [613] open
+subblock: [613] 0 1 open open 4 open
+
+.clb [1069]  # Only LUT used.
+pinlist: x y open open [1069] open
+subblock: [1069] 0 1 open open 4 open
+
+.clb [1066]  # Only LUT used.
+pinlist: d0 e0 open open [1066] open
+subblock: [1066] 0 1 open open 4 open
+
+.clb [1063]  # Only LUT used.
+pinlist: g0 f0 open open [1063] open
+subblock: [1063] 0 1 open open 4 open
+
+.clb [1057]  # Only LUT used.
+pinlist: h0 [518] [520] open [1057] open
+subblock: [1057] 0 1 2 open 4 open
+
+.clb [1058]  # Only LUT used.
+pinlist: i0 j0 h open [1058] open
+subblock: [1058] 0 1 2 open 4 open
+
+.clb [615]  # Only LUT used.
+pinlist: [1056] [1053] [1050] open [615] open
+subblock: [615] 0 1 2 open 4 open
+
+.clb [617]  # Only LUT used.
+pinlist: l0 [618] [620] open [617] open
+subblock: [617] 0 1 2 open 4 open
+
+.clb [616]  # Only LUT used.
+pinlist: [1046] [1047] open open [616] open
+subblock: [616] 0 1 open open 4 open
+
+.clb [1056]  # Only LUT used.
+pinlist: x y open open [1056] open
+subblock: [1056] 0 1 open open 4 open
+
+.clb [1053]  # Only LUT used.
+pinlist: e0 f0 open open [1053] open
+subblock: [1053] 0 1 open open 4 open
+
+.clb [1050]  # Only LUT used.
+pinlist: i0 g0 open open [1050] open
+subblock: [1050] 0 1 open open 4 open
+
+.clb [1046]  # Only LUT used.
+pinlist: h0 z u open [1046] open
+subblock: [1046] 0 1 2 open 4 open
+
+.clb [1047]  # Only LUT used.
+pinlist: d0 v open open [1047] open
+subblock: [1047] 0 1 open open 4 open
+
+.clb [618]  # Only LUT used.
+pinlist: [636] [638] [637] open [618] open
+subblock: [618] 0 1 2 open 4 open
+
+.clb [620]  # Only LUT used.
+pinlist: [621] [622] open open [620] open
+subblock: [620] 0 1 open open 4 open
+
+.clb [636]  # Only LUT used.
+pinlist: x b0 open open [636] open
+subblock: [636] 0 1 open open 4 open
+
+.clb [638]  # Only LUT used.
+pinlist: [639] [640] open open [638] open
+subblock: [638] 0 1 open open 4 open
+
+.clb [637]  # Only LUT used.
+pinlist: [652] [654] [653] open [637] open
+subblock: [637] 0 1 2 open 4 open
+
+.clb [621]  # Only LUT used.
+pinlist: d0 x b0 open [621] open
+subblock: [621] 0 1 2 open 4 open
+
+.clb [622]  # Only LUT used.
+pinlist: [624] [626] [625] open [622] open
+subblock: [622] 0 1 2 open 4 open
+
+.clb [624]  # Only LUT used.
+pinlist: f0 r h [518] [624] open
+subblock: [624] 0 1 2 3 4 open
+
+.clb [626]  # Only LUT used.
+pinlist: [635] [632] [629] open [626] open
+subblock: [626] 0 1 2 open 4 open
+
+.clb [625]  # Only LUT used.
+pinlist: i0 j0 y open [625] open
+subblock: [625] 0 1 2 open 4 open
+
+.clb [635]  # Only LUT used.
+pinlist: h0 z open open [635] open
+subblock: [635] 0 1 open open 4 open
+
+.clb [632]  # Only LUT used.
+pinlist: i0 j0 open open [632] open
+subblock: [632] 0 1 open open 4 open
+
+.clb [629]  # Only LUT used.
+pinlist: [518] [520] open open [629] open
+subblock: [629] 0 1 open open 4 open
+
+.clb [652]  # Only LUT used.
+pinlist: [520] [1045] [1042] [1039] [652] open
+subblock: [652] 0 1 2 3 4 open
+
+.clb [654]  # Only LUT used.
+pinlist: [655] [657] [656] open [654] open
+subblock: [654] 0 1 2 open 4 open
+
+.clb [653]  # Only LUT used.
+pinlist: i0 y r [518] [653] open
+subblock: [653] 0 1 2 3 4 open
+
+.clb [639]  # Only LUT used.
+pinlist: i0 [651] [648] open [639] open
+subblock: [639] 0 1 2 open 4 open
+
+.clb [640]  # Only LUT used.
+pinlist: [642] [644] [643] open [640] open
+subblock: [640] 0 1 2 open 4 open
+
+.clb [651]  # Only LUT used.
+pinlist: d0 e0 open open [651] open
+subblock: [651] 0 1 open open 4 open
+
+.clb [648]  # Only LUT used.
+pinlist: g0 f0 open open [648] open
+subblock: [648] 0 1 open open 4 open
+
+.clb [642]  # Only LUT used.
+pinlist: h0 [518] [520] open [642] open
+subblock: [642] 0 1 2 open 4 open
+
+.clb [644]  # Only LUT used.
+pinlist: j0 y a0 [519] [644] open
+subblock: [644] 0 1 2 3 4 open
+
+.clb [643]  # Only LUT used.
+pinlist: j0 y a0 h [643] open
+subblock: [643] 0 1 2 3 4 open
+
+.clb [1045]  # Only LUT used.
+pinlist: d0 e0 open open [1045] open
+subblock: [1045] 0 1 open open 4 open
+
+.clb [1042]  # Only LUT used.
+pinlist: j0 h0 open open [1042] open
+subblock: [1042] 0 1 open open 4 open
+
+.clb [1039]  # Only LUT used.
+pinlist: i h open open [1039] open
+subblock: [1039] 0 1 open open 4 open
+
+.clb [655]  # Only LUT used.
+pinlist: i [1035] [1032] open [655] open
+subblock: [655] 0 1 2 open 4 open
+
+.clb [657]  # Only LUT used.
+pinlist: [658] [660] [659] open [657] open
+subblock: [657] 0 1 2 open 4 open
+
+.clb [656]  # Only LUT used.
+pinlist: [1026] [1027] open open [656] open
+subblock: [656] 0 1 open open 4 open
+
+.clb [1035]  # Only LUT used.
+pinlist: d0 e0 open open [1035] open
+subblock: [1035] 0 1 open open 4 open
+
+.clb [1032]  # Only LUT used.
+pinlist: j0 h open open [1032] open
+subblock: [1032] 0 1 open open 4 open
+
+.clb [1026]  # Only LUT used.
+pinlist: r [518] [519] [520] [1026] open
+subblock: [1026] 0 1 2 3 4 open
+
+.clb [1027]  # Only LUT used.
+pinlist: i0 y open open [1027] open
+subblock: [1027] 0 1 open open 4 open
+
+.clb [658]  # Only LUT used.
+pinlist: h [1025] [1022] open [658] open
+subblock: [658] 0 1 2 open 4 open
+
+.clb [660]  # Only LUT used.
+pinlist: [661] [663] [662] open [660] open
+subblock: [660] 0 1 2 open 4 open
+
+.clb [659]  # Only LUT used.
+pinlist: [1016] [1017] open open [659] open
+subblock: [659] 0 1 open open 4 open
+
+.clb [1025]  # Only LUT used.
+pinlist: d0 r open open [1025] open
+subblock: [1025] 0 1 open open 4 open
+
+.clb [1022]  # Only LUT used.
+pinlist: g0 e0 open open [1022] open
+subblock: [1022] 0 1 open open 4 open
+
+.clb [1016]  # Only LUT used.
+pinlist: i0 j0 y a0 [1016] open
+subblock: [1016] 0 1 2 3 4 open
+
+.clb [1017]  # Only LUT used.
+pinlist: h0 [518] [520] open [1017] open
+subblock: [1017] 0 1 2 open 4 open
+
+.clb [661]  # Only LUT used.
+pinlist: [520] [1015] [1012] [1009] [661] open
+subblock: [661] 0 1 2 3 4 open
+
+.clb [663]  # Only LUT used.
+pinlist: [664] [666] [665] open [663] open
+subblock: [663] 0 1 2 open 4 open
+
+.clb [662]  # Only LUT used.
+pinlist: i0 a0 r [518] [662] open
+subblock: [662] 0 1 2 3 4 open
+
+.clb [1015]  # Only LUT used.
+pinlist: d0 y open open [1015] open
+subblock: [1015] 0 1 open open 4 open
+
+.clb [1012]  # Only LUT used.
+pinlist: h0 e0 open open [1012] open
+subblock: [1012] 0 1 open open 4 open
+
+.clb [1009]  # Only LUT used.
+pinlist: j0 i open open [1009] open
+subblock: [1009] 0 1 open open 4 open
+
+.clb [664]  # Only LUT used.
+pinlist: i [1005] [1002] open [664] open
+subblock: [664] 0 1 2 open 4 open
+
+.clb [666]  # Only LUT used.
+pinlist: [667] [669] [668] open [666] open
+subblock: [666] 0 1 2 open 4 open
+
+.clb [665]  # Only LUT used.
+pinlist: [996] [997] open open [665] open
+subblock: [665] 0 1 open open 4 open
+
+.clb [1005]  # Only LUT used.
+pinlist: d0 y open open [1005] open
+subblock: [1005] 0 1 open open 4 open
+
+.clb [1002]  # Only LUT used.
+pinlist: j0 e0 open open [1002] open
+subblock: [1002] 0 1 open open 4 open
+
+.clb [996]  # Only LUT used.
+pinlist: r [518] [519] [520] [996] open
+subblock: [996] 0 1 2 3 4 open
+
+.clb [997]  # Only LUT used.
+pinlist: i0 a0 open open [997] open
+subblock: [997] 0 1 open open 4 open
+
+.clb [667]  # Only LUT used.
+pinlist: [683] [685] [684] open [667] open
+subblock: [667] 0 1 2 open 4 open
+
+.clb [669]  # Only LUT used.
+pinlist: [670] [671] open open [669] open
+subblock: [669] 0 1 open open 4 open
+
+.clb [668]  # Only LUT used.
+pinlist: g0 i open open [668] open
+subblock: [668] 0 1 open open 4 open
+
+.clb [683]  # Only LUT used.
+pinlist: a [995] [992] open [683] open
+subblock: [683] 0 1 2 open 4 open
+
+.clb [685]  # Only LUT used.
+pinlist: [513] [686] open open [685] open
+subblock: [685] 0 1 open open 4 open
+
+.clb [684]  # Only LUT used.
+pinlist: [983] [984] open open [684] open
+subblock: [684] 0 1 open open 4 open
+
+.clb [670]  # Only LUT used.
+pinlist: [520] [682] [679] [676] [670] open
+subblock: [670] 0 1 2 3 4 open
+
+.clb [671]  # Only LUT used.
+pinlist: i0 j0 y a0 [671] open
+subblock: [671] 0 1 2 3 4 open
+
+.clb [682]  # Only LUT used.
+pinlist: d0 e0 open open [682] open
+subblock: [682] 0 1 open open 4 open
+
+.clb [679]  # Only LUT used.
+pinlist: h0 g0 open open [679] open
+subblock: [679] 0 1 open open 4 open
+
+.clb [676]  # Only LUT used.
+pinlist: h [518] open open [676] open
+subblock: [676] 0 1 open open 4 open
+
+.clb [995]  # Only LUT used.
+pinlist: y u open open [995] open
+subblock: [995] 0 1 open open 4 open
+
+.clb [992]  # Only LUT used.
+pinlist: a0 e0 open open [992] open
+subblock: [992] 0 1 open open 4 open
+
+.clb [983]  # Only LUT used.
+pinlist: r [986] [988] open [983] open
+subblock: [983] 0 1 2 open 4 open
+
+.clb [984]  # Only LUT used.
+pinlist: j0 h open open [984] open
+subblock: [984] 0 1 open open 4 open
+
+.clb [686]  # Only LUT used.
+pinlist: [689] [691] [690] open [686] open
+subblock: [686] 0 1 2 open 4 open
+
+.clb [689]  # Only LUT used.
+pinlist: [982] [979] [976] open [689] open
+subblock: [689] 0 1 2 open 4 open
+
+.clb [691]  # Only LUT used.
+pinlist: [692] [694] [693] open [691] open
+subblock: [691] 0 1 2 open 4 open
+
+.clb [690]  # Only LUT used.
+pinlist: [971] [972] open open [690] open
+subblock: [690] 0 1 open open 4 open
+
+.clb [982]  # Only LUT used.
+pinlist: y u open open [982] open
+subblock: [982] 0 1 open open 4 open
+
+.clb [979]  # Only LUT used.
+pinlist: d0 a0 open open [979] open
+subblock: [979] 0 1 open open 4 open
+
+.clb [976]  # Only LUT used.
+pinlist: a [520] open open [976] open
+subblock: [976] 0 1 open open 4 open
+
+.clb [971]  # Only LUT used.
+pinlist: h0 [518] [519] open [971] open
+subblock: [971] 0 1 2 open 4 open
+
+.clb [972]  # Only LUT used.
+pinlist: j0 h open open [972] open
+subblock: [972] 0 1 open open 4 open
+
+.clb [692]  # Only LUT used.
+pinlist: [970] [967] [964] open [692] open
+subblock: [692] 0 1 2 open 4 open
+
+.clb [694]  # Only LUT used.
+pinlist: [695] [697] [696] open [694] open
+subblock: [694] 0 1 2 open 4 open
+
+.clb [693]  # Only LUT used.
+pinlist: [959] [960] open open [693] open
+subblock: [693] 0 1 open open 4 open
+
+.clb [970]  # Only LUT used.
+pinlist: d0 y open open [970] open
+subblock: [970] 0 1 open open 4 open
+
+.clb [967]  # Only LUT used.
+pinlist: j0 h0 open open [967] open
+subblock: [967] 0 1 open open 4 open
+
+.clb [964]  # Only LUT used.
+pinlist: [512] [520] open open [964] open
+subblock: [964] 0 1 open open 4 open
+
+.clb [959]  # Only LUT used.
+pinlist: r [511] [518] open [959] open
+subblock: [959] 0 1 2 open 4 open
+
+.clb [960]  # Only LUT used.
+pinlist: i0 a0 open open [960] open
+subblock: [960] 0 1 open open 4 open
+
+.clb [695]  # Only LUT used.
+pinlist: [520] [958] [955] open [695] open
+subblock: [695] 0 1 2 open 4 open
+
+.clb [697]  # Only LUT used.
+pinlist: [698] [700] [699] open [697] open
+subblock: [697] 0 1 2 open 4 open
+
+.clb [696]  # Only LUT used.
+pinlist: i0 a0 [511] [512] [696] open
+subblock: [696] 0 1 2 3 4 open
+
+.clb [958]  # Only LUT used.
+pinlist: d0 y open open [958] open
+subblock: [958] 0 1 open open 4 open
+
+.clb [955]  # Only LUT used.
+pinlist: j0 [519] open open [955] open
+subblock: [955] 0 1 open open 4 open
+
+.clb [698]  # Only LUT used.
+pinlist: [940] [941] open open [698] open
+subblock: [698] 0 1 open open 4 open
+
+.clb [700]  # Only LUT used.
+pinlist: [701] [703] [702] open [700] open
+subblock: [700] 0 1 2 open 4 open
+
+.clb [699]  # Only LUT used.
+pinlist: r [511] [518] open [699] open
+subblock: [699] 0 1 2 open 4 open
+
+.clb [940]  # Only LUT used.
+pinlist: [951] [948] [945] open [940] open
+subblock: [940] 0 1 2 open 4 open
+
+.clb [941]  # Only LUT used.
+pinlist: i0 y open open [941] open
+subblock: [941] 0 1 open open 4 open
+
+.clb [701]  # Only LUT used.
+pinlist: [930] [931] open open [701] open
+subblock: [701] 0 1 open open 4 open
+
+.clb [703]  # Only LUT used.
+pinlist: r [704] [706] open [703] open
+subblock: [703] 0 1 2 open 4 open
+
+.clb [702]  # Only LUT used.
+pinlist: [511] [512] open open [702] open
+subblock: [702] 0 1 open open 4 open
+
+.clb [930]  # Only LUT used.
+pinlist: [520] [939] [936] open [930] open
+subblock: [930] 0 1 2 open 4 open
+
+.clb [931]  # Only LUT used.
+pinlist: i0 y open open [931] open
+subblock: [931] 0 1 open open 4 open
+
+.clb [704]  # Only LUT used.
+pinlist: [720] [722] [721] open [704] open
+subblock: [704] 0 1 2 open 4 open
+
+.clb [706]  # Only LUT used.
+pinlist: [707] [708] open open [706] open
+subblock: [706] 0 1 open open 4 open
+
+.clb [720]  # Only LUT used.
+pinlist: [929] [926] [923] open [720] open
+subblock: [720] 0 1 2 open 4 open
+
+.clb [722]  # Only LUT used.
+pinlist: [723] [725] [724] open [722] open
+subblock: [722] 0 1 2 open 4 open
+
+.clb [721]  # Only LUT used.
+pinlist: [918] [919] open open [721] open
+subblock: [721] 0 1 open open 4 open
+
+.clb [707]  # Only LUT used.
+pinlist: [520] [719] [716] open [707] open
+subblock: [707] 0 1 2 open 4 open
+
+.clb [708]  # Only LUT used.
+pinlist: y [710] [712] open [708] open
+subblock: [708] 0 1 2 open 4 open
+
+.clb [719]  # Only LUT used.
+pinlist: h0 d0 open open [719] open
+subblock: [719] 0 1 open open 4 open
+
+.clb [716]  # Only LUT used.
+pinlist: [511] [518] open open [716] open
+subblock: [716] 0 1 open open 4 open
+
+.clb [710]  # Only LUT used.
+pinlist: i0 j0 a0 h [710] open
+subblock: [710] 0 1 2 3 4 open
+
+.clb [712]  # Only LUT used.
+pinlist: i0 j0 h open [712] open
+subblock: [712] 0 1 2 open 4 open
+
+.clb [929]  # Only LUT used.
+pinlist: y u open open [929] open
+subblock: [929] 0 1 open open 4 open
+
+.clb [926]  # Only LUT used.
+pinlist: a0 a open open [926] open
+subblock: [926] 0 1 open open 4 open
+
+.clb [923]  # Only LUT used.
+pinlist: [511] [512] open open [923] open
+subblock: [923] 0 1 open open 4 open
+
+.clb [918]  # Only LUT used.
+pinlist: h0 [518] [520] open [918] open
+subblock: [918] 0 1 2 open 4 open
+
+.clb [919]  # Only LUT used.
+pinlist: j0 h open open [919] open
+subblock: [919] 0 1 open open 4 open
+
+.clb [723]  # Only LUT used.
+pinlist: [520] [917] [914] [911] [723] open
+subblock: [723] 0 1 2 3 4 open
+
+.clb [725]  # Only LUT used.
+pinlist: [726] [728] [727] open [725] open
+subblock: [725] 0 1 2 open 4 open
+
+.clb [724]  # Only LUT used.
+pinlist: [905] [906] open open [724] open
+subblock: [724] 0 1 open open 4 open
+
+.clb [917]  # Only LUT used.
+pinlist: y s open open [917] open
+subblock: [917] 0 1 open open 4 open
+
+.clb [914]  # Only LUT used.
+pinlist: j0 a0 open open [914] open
+subblock: [914] 0 1 open open 4 open
+
+.clb [911]  # Only LUT used.
+pinlist: [512] [518] open open [911] open
+subblock: [911] 0 1 open open 4 open
+
+.clb [905]  # Only LUT used.
+pinlist: d0 u a [511] [905] open
+subblock: [905] 0 1 2 3 4 open
+
+.clb [906]  # Only LUT used.
+pinlist: [516] [517] open open [906] open
+subblock: [906] 0 1 open open 4 open
+
+.clb [726]  # Only LUT used.
+pinlist: [893] [894] open open [726] open
+subblock: [726] 0 1 open open 4 open
+
+.clb [728]  # Only LUT used.
+pinlist: [729] [731] [730] open [728] open
+subblock: [728] 0 1 2 open 4 open
+
+.clb [727]  # Only LUT used.
+pinlist: d0 u a [511] [727] open
+subblock: [727] 0 1 2 3 4 open
+
+.clb [893]  # Only LUT used.
+pinlist: [904] [901] [898] open [893] open
+subblock: [893] 0 1 2 open 4 open
+
+.clb [894]  # Only LUT used.
+pinlist: t [517] open open [894] open
+subblock: [894] 0 1 open open 4 open
+
+.clb [729]  # Only LUT used.
+pinlist: [520] [892] [889] [886] [729] open
+subblock: [729] 0 1 2 3 4 open
+
+.clb [731]  # Only LUT used.
+pinlist: [732] [734] [733] open [731] open
+subblock: [731] 0 1 2 open 4 open
+
+.clb [730]  # Only LUT used.
+pinlist: [880] [881] open open [730] open
+subblock: [730] 0 1 open open 4 open
+
+.clb [892]  # Only LUT used.
+pinlist: d0 y open open [892] open
+subblock: [892] 0 1 open open 4 open
+
+.clb [889]  # Only LUT used.
+pinlist: j0 h0 open open [889] open
+subblock: [889] 0 1 open open 4 open
+
+.clb [886]  # Only LUT used.
+pinlist: [511] [517] open open [886] open
+subblock: [886] 0 1 open open 4 open
+
+.clb [880]  # Only LUT used.
+pinlist: s [512] [516] open [880] open
+subblock: [880] 0 1 2 open 4 open
+
+.clb [881]  # Only LUT used.
+pinlist: i0 a0 open open [881] open
+subblock: [881] 0 1 open open 4 open
+
+.clb [732]  # Only LUT used.
+pinlist: [520] [879] [876] [873] [732] open
+subblock: [732] 0 1 2 3 4 open
+
+.clb [734]  # Only LUT used.
+pinlist: [735] [737] [736] open [734] open
+subblock: [734] 0 1 2 open 4 open
+
+.clb [733]  # Only LUT used.
+pinlist: i0 a0 [516] [517] [733] open
+subblock: [733] 0 1 2 3 4 open
+
+.clb [879]  # Only LUT used.
+pinlist: d0 y open open [879] open
+subblock: [879] 0 1 open open 4 open
+
+.clb [876]  # Only LUT used.
+pinlist: j0 [511] open open [876] open
+subblock: [876] 0 1 open open 4 open
+
+.clb [873]  # Only LUT used.
+pinlist: [518] [519] open open [873] open
+subblock: [873] 0 1 open open 4 open
+
+.clb [735]  # Only LUT used.
+pinlist: [520] [869] [866] [863] [735] open
+subblock: [735] 0 1 2 3 4 open
+
+.clb [737]  # Only LUT used.
+pinlist: [738] [740] [739] open [737] open
+subblock: [737] 0 1 2 open 4 open
+
+.clb [736]  # Only LUT used.
+pinlist: [857] [858] open open [736] open
+subblock: [736] 0 1 open open 4 open
+
+.clb [869]  # Only LUT used.
+pinlist: y s open open [869] open
+subblock: [869] 0 1 open open 4 open
+
+.clb [866]  # Only LUT used.
+pinlist: d0 [511] open open [866] open
+subblock: [866] 0 1 open open 4 open
+
+.clb [863]  # Only LUT used.
+pinlist: [512] [518] open open [863] open
+subblock: [863] 0 1 open open 4 open
+
+.clb [857]  # Only LUT used.
+pinlist: i0 j0 h open [857] open
+subblock: [857] 0 1 2 open 4 open
+
+.clb [858]  # Only LUT used.
+pinlist: [516] [517] open open [858] open
+subblock: [858] 0 1 open open 4 open
+
+.clb [738]  # Only LUT used.
+pinlist: [856] [853] [850] open [738] open
+subblock: [738] 0 1 2 open 4 open
+
+.clb [740]  # Only LUT used.
+pinlist: [741] [743] [742] open [740] open
+subblock: [740] 0 1 2 open 4 open
+
+.clb [739]  # Only LUT used.
+pinlist: [845] [847] [846] open [739] open
+subblock: [739] 0 1 2 open 4 open
+
+.clb [856]  # Only LUT used.
+pinlist: y t open open [856] open
+subblock: [856] 0 1 open open 4 open
+
+.clb [853]  # Only LUT used.
+pinlist: j0 d0 open open [853] open
+subblock: [853] 0 1 open open 4 open
+
+.clb [850]  # Only LUT used.
+pinlist: [511] [516] open open [850] open
+subblock: [850] 0 1 open open 4 open
+
+.clb [845]  # Only LUT used.
+pinlist: h0 [520] open open [845] open
+subblock: [845] 0 1 open open 4 open
+
+.clb [847]  # Only LUT used.
+pinlist: i0 [518] [520] open [847] open
+subblock: [847] 0 1 2 open 4 open
+
+.clb [846]  # Only LUT used.
+pinlist: i0 a0 open open [846] open
+subblock: [846] 0 1 open open 4 open
+
+.clb [741]  # Only LUT used.
+pinlist: [842] [843] open open [741] open
+subblock: [741] 0 1 open open 4 open
+
+.clb [743]  # Only LUT used.
+pinlist: [744] [746] [745] open [743] open
+subblock: [743] 0 1 2 open 4 open
+
+.clb [742]  # Only LUT used.
+pinlist: [511] [512] [516] [517] [742] open
+subblock: [742] 0 1 2 3 4 open
+
+.clb [842]  # Only LUT used.
+pinlist: d0 [518] [520] open [842] open
+subblock: [842] 0 1 2 open 4 open
+
+.clb [843]  # Only LUT used.
+pinlist: i0 j0 y h [843] open
+subblock: [843] 0 1 2 3 4 open
+
+.clb [744]  # Only LUT used.
+pinlist: [841] [837] [833] open [744] open
+subblock: [744] 0 1 2 open 4 open
+
+.clb [746]  # Only LUT used.
+pinlist: [747] [749] [748] open [746] open
+subblock: [746] 0 1 2 open 4 open
+
+.clb [745]  # Only LUT used.
+pinlist: i0 a0 open open [745] open
+subblock: [745] 0 1 open open 4 open
+
+.clb [841]  # Only LUT used.
+pinlist: d0 y s open [841] open
+subblock: [841] 0 1 2 open 4 open
+
+.clb [837]  # Only LUT used.
+pinlist: j0 h0 [511] open [837] open
+subblock: [837] 0 1 2 open 4 open
+
+.clb [833]  # Only LUT used.
+pinlist: [512] [516] [520] open [833] open
+subblock: [833] 0 1 2 open 4 open
+
+.clb [747]  # Only LUT used.
+pinlist: [829] [826] [823] open [747] open
+subblock: [747] 0 1 2 open 4 open
+
+.clb [749]  # Only LUT used.
+pinlist: [750] [752] [751] open [749] open
+subblock: [749] 0 1 2 open 4 open
+
+.clb [748]  # Only LUT used.
+pinlist: [818] [819] open open [748] open
+subblock: [748] 0 1 open open 4 open
+
+.clb [829]  # Only LUT used.
+pinlist: d0 t open open [829] open
+subblock: [829] 0 1 open open 4 open
+
+.clb [826]  # Only LUT used.
+pinlist: j0 [511] open open [826] open
+subblock: [826] 0 1 open open 4 open
+
+.clb [823]  # Only LUT used.
+pinlist: h [516] open open [823] open
+subblock: [823] 0 1 open open 4 open
+
+.clb [818]  # Only LUT used.
+pinlist: i0 y open open [818] open
+subblock: [818] 0 1 open open 4 open
+
+.clb [819]  # Only LUT used.
+pinlist: h0 [518] [520] open [819] open
+subblock: [819] 0 1 2 open 4 open
+
+.clb [750]  # Only LUT used.
+pinlist: h [817] [814] [811] [750] open
+subblock: [750] 0 1 2 3 4 open
+
+.clb [752]  # Only LUT used.
+pinlist: y [753] [755] open [752] open
+subblock: [752] 0 1 2 open 4 open
+
+.clb [751]  # Only LUT used.
+pinlist: [805] [806] open open [751] open
+subblock: [751] 0 1 open open 4 open
+
+.clb [817]  # Only LUT used.
+pinlist: d0 s open open [817] open
+subblock: [817] 0 1 open open 4 open
+
+.clb [814]  # Only LUT used.
+pinlist: i0 j0 open open [814] open
+subblock: [814] 0 1 open open 4 open
+
+.clb [811]  # Only LUT used.
+pinlist: [511] [512] open open [811] open
+subblock: [811] 0 1 open open 4 open
+
+.clb [805]  # Only LUT used.
+pinlist: h0 [518] [520] open [805] open
+subblock: [805] 0 1 2 open 4 open
+
+.clb [806]  # Only LUT used.
+pinlist: [516] [517] open open [806] open
+subblock: [806] 0 1 open open 4 open
+
+.clb [753]  # Only LUT used.
+pinlist: [769] [771] [770] open [753] open
+subblock: [753] 0 1 2 open 4 open
+
+.clb [755]  # Only LUT used.
+pinlist: [756] [757] open open [755] open
+subblock: [755] 0 1 open open 4 open
+
+.clb [769]  # Only LUT used.
+pinlist: d0 [518] [520] open [769] open
+subblock: [769] 0 1 2 open 4 open
+
+.clb [771]  # Only LUT used.
+pinlist: [772] [774] [773] open [771] open
+subblock: [771] 0 1 2 open 4 open
+
+.clb [770]  # Only LUT used.
+pinlist: [802] [804] [803] open [770] open
+subblock: [770] 0 1 2 open 4 open
+
+.clb [756]  # Only LUT used.
+pinlist: h [768] [765] open [756] open
+subblock: [756] 0 1 2 open 4 open
+
+.clb [757]  # Only LUT used.
+pinlist: [759] [761] [760] open [757] open
+subblock: [757] 0 1 2 open 4 open
+
+.clb [768]  # Only LUT used.
+pinlist: i0 d0 open open [768] open
+subblock: [768] 0 1 open open 4 open
+
+.clb [765]  # Only LUT used.
+pinlist: j0 [511] open open [765] open
+subblock: [765] 0 1 open open 4 open
+
+.clb [759]  # Only LUT used.
+pinlist: [518] [519] [520] open [759] open
+subblock: [759] 0 1 2 open 4 open
+
+.clb [761]  # Only LUT used.
+pinlist: h0 [516] [517] [520] [761] open
+subblock: [761] 0 1 2 3 4 open
+
+.clb [760]  # Only LUT used.
+pinlist: [516] [517] open open [760] open
+subblock: [760] 0 1 open open 4 open
+
+.clb [802]  # Only LUT used.
+pinlist: j0 h [511] [519] [802] open
+subblock: [802] 0 1 2 3 4 open
+
+.clb [804]  # Only LUT used.
+pinlist: j0 a0 [511] [512] [804] open
+subblock: [804] 0 1 2 3 4 open
+
+.clb [803]  # Only LUT used.
+pinlist: [516] [517] open open [803] open
+subblock: [803] 0 1 open open 4 open
+
+.clb [772]  # Only LUT used.
+pinlist: a0 u a open [772] open
+subblock: [772] 0 1 2 open 4 open
+
+.clb [774]  # Only LUT used.
+pinlist: [775] [776] open open [774] open
+subblock: [774] 0 1 open open 4 open
+
+.clb [773]  # Only LUT used.
+pinlist: [787] [789] [788] open [773] open
+subblock: [773] 0 1 2 open 4 open
+
+.clb [787]  # Only LUT used.
+pinlist: [799] [801] [800] open [787] open
+subblock: [787] 0 1 2 open 4 open
+
+.clb [789]  # Only LUT used.
+pinlist: [790] [791] open open [789] open
+subblock: [789] 0 1 open open 4 open
+
+.clb [788]  # Only LUT used.
+pinlist: [796] [798] [797] open [788] open
+subblock: [788] 0 1 2 open 4 open
+
+.clb [775]  # Only LUT used.
+pinlist: [786] [783] [780] open [775] open
+subblock: [775] 0 1 2 open 4 open
+
+.clb [776]  # Only LUT used.
+pinlist: s [512] [516] [517] [776] open
+subblock: [776] 0 1 2 3 4 open
+
+.clb [786]  # Only LUT used.
+pinlist: h0 d0 open open [786] open
+subblock: [786] 0 1 open open 4 open
+
+.clb [783]  # Only LUT used.
+pinlist: j0 [511] open open [783] open
+subblock: [783] 0 1 open open 4 open
+
+.clb [780]  # Only LUT used.
+pinlist: h [520] open open [780] open
+subblock: [780] 0 1 open open 4 open
+
+.clb [799]  # Only LUT used.
+pinlist: s [512] open open [799] open
+subblock: [799] 0 1 open open 4 open
+
+.clb [801]  # Only LUT used.
+pinlist: t [516] [517] open [801] open
+subblock: [801] 0 1 2 open 4 open
+
+.clb [800]  # Only LUT used.
+pinlist: [516] [517] open open [800] open
+subblock: [800] 0 1 open open 4 open
+
+.clb [796]  # Only LUT used.
+pinlist: h0 [511] [520] open [796] open
+subblock: [796] 0 1 2 open 4 open
+
+.clb [798]  # Only LUT used.
+pinlist: d0 h [518] [520] [798] open
+subblock: [798] 0 1 2 3 4 open
+
+.clb [797]  # Only LUT used.
+pinlist: j0 h open open [797] open
+subblock: [797] 0 1 open open 4 open
+
+.clb [790]  # Only LUT used.
+pinlist: [793] [794] open open [790] open
+subblock: [790] 0 1 open open 4 open
+
+.clb [791]  # Only LUT used.
+pinlist: [516] [517] open open [791] open
+subblock: [791] 0 1 open open 4 open
+
+.clb [793]  # Only LUT used.
+pinlist: [511] [518] [519] [520] [793] open
+subblock: [793] 0 1 2 3 4 open
+
+.clb [794]  # Only LUT used.
+pinlist: j0 h open open [794] open
+subblock: [794] 0 1 open open 4 open
+
+.clb [904]  # Only LUT used.
+pinlist: y a0 open open [904] open
+subblock: [904] 0 1 open open 4 open
+
+.clb [901]  # Only LUT used.
+pinlist: j0 [516] open open [901] open
+subblock: [901] 0 1 open open 4 open
+
+.clb [898]  # Only LUT used.
+pinlist: [518] [520] open open [898] open
+subblock: [898] 0 1 open open 4 open
+
+.clb [939]  # Only LUT used.
+pinlist: j0 d0 open open [939] open
+subblock: [939] 0 1 open open 4 open
+
+.clb [936]  # Only LUT used.
+pinlist: h [519] open open [936] open
+subblock: [936] 0 1 open open 4 open
+
+.clb [951]  # Only LUT used.
+pinlist: h0 d0 open open [951] open
+subblock: [951] 0 1 open open 4 open
+
+.clb [948]  # Only LUT used.
+pinlist: j0 [512] open open [948] open
+subblock: [948] 0 1 open open 4 open
+
+.clb [945]  # Only LUT used.
+pinlist: h [520] open open [945] open
+subblock: [945] 0 1 open open 4 open
+
+.clb [986]  # Only LUT used.
+pinlist: h0 [518] [520] open [986] open
+subblock: [986] 0 1 2 open 4 open
+
+.clb [988]  # Only LUT used.
+pinlist: h0 [518] [519] [520] [988] open
+subblock: [988] 0 1 2 3 4 open
+
+.clb [1131]  # Only LUT used.
+pinlist: x u open open [1131] open
+subblock: [1131] 0 1 open open 4 open
+
+.clb [1128]  # Only LUT used.
+pinlist: z b0 open open [1128] open
+subblock: [1128] 0 1 open open 4 open
+
+.clb [1125]  # Only LUT used.
+pinlist: h0 [520] open open [1125] open
+subblock: [1125] 0 1 open open 4 open
+
+.clb [1163]  # Only LUT used.
+pinlist: x b0 open open [1163] open
+subblock: [1163] 0 1 open open 4 open
+
+.clb [1160]  # Only LUT used.
+pinlist: f0 h open open [1160] open
+subblock: [1160] 0 1 open open 4 open
+
+.clb [1167]  # Only LUT used.
+pinlist: h0 z u open [1167] open
+subblock: [1167] 0 1 2 open 4 open
+
+.clb [1168]  # Only LUT used.
+pinlist: d0 v open open [1168] open
+subblock: [1168] 0 1 open open 4 open
+
+.clb [1203]  # Only LUT used.
+pinlist: c e b open [1203] open
+subblock: [1203] 0 1 2 open 4 open
+
+.clb [1204]  # Only LUT used.
+pinlist: c d e b [1204] open
+subblock: [1204] 0 1 2 3 4 open
+
+.clb [1205]  # Only LUT used.
+pinlist: c d e b [1205] open
+subblock: [1205] 0 1 2 3 4 open
+
+.clb [1206]  # Only LUT used.
+pinlist: f g open open [1206] open
+subblock: [1206] 0 1 open open 4 open
+
+.clb [1230]  # Only LUT used.
+pinlist: [1553] [1554] open open [1230] open
+subblock: [1230] 0 1 open open 4 open
+
+.clb [1232]  # Only LUT used.
+pinlist: [1233] [1235] [1234] open [1232] open
+subblock: [1232] 0 1 2 open 4 open
+
+.clb [1231]  # Only LUT used.
+pinlist: v u open open [1231] open
+subblock: [1231] 0 1 open open 4 open
+
+.clb [1229]  # Only LUT used.
+pinlist: a1 b1 c1 d1 [1229] open
+subblock: [1229] 0 1 2 3 4 open
+
+.clb [1224]  # Only LUT used.
+pinlist: e1 f1 s1 t1 [1224] open
+subblock: [1224] 0 1 2 3 4 open
+
+.clb [1219]  # Only LUT used.
+pinlist: v1 z1 n1 o1 [1219] open
+subblock: [1219] 0 1 2 3 4 open
+
+.clb [1214]  # Only LUT used.
+pinlist: r1 u1 open open [1214] open
+subblock: [1214] 0 1 open open 4 open
+
+.clb [1553]  # Only LUT used.
+pinlist: d0 w open open [1553] open
+subblock: [1553] 0 1 open open 4 open
+
+.clb [1554]  # Only LUT used.
+pinlist: i0 j0 y open [1554] open
+subblock: [1554] 0 1 2 open 4 open
+
+.clb [1233]  # Only LUT used.
+pinlist: d0 x w open [1233] open
+subblock: [1233] 0 1 2 open 4 open
+
+.clb [1235]  # Only LUT used.
+pinlist: [1236] [1238] [1237] open [1235] open
+subblock: [1235] 0 1 2 open 4 open
+
+.clb [1234]  # Only LUT used.
+pinlist: [1550] [1552] [1551] open [1234] open
+subblock: [1234] 0 1 2 open 4 open
+
+.clb [1550]  # Only LUT used.
+pinlist: i0 j0 open open [1550] open
+subblock: [1550] 0 1 open open 4 open
+
+.clb [1552]  # Only LUT used.
+pinlist: i0 y open open [1552] open
+subblock: [1552] 0 1 open open 4 open
+
+.clb [1551]  # Only LUT used.
+pinlist: g0 e0 f0 open [1551] open
+subblock: [1551] 0 1 2 open 4 open
+
+.clb [1236]  # Only LUT used.
+pinlist: o w open open [1236] open
+subblock: [1236] 0 1 open open 4 open
+
+.clb [1238]  # Only LUT used.
+pinlist: [1239] [1241] [1240] open [1238] open
+subblock: [1238] 0 1 2 open 4 open
+
+.clb [1237]  # Only LUT used.
+pinlist: [1544] [1545] open open [1237] open
+subblock: [1237] 0 1 open open 4 open
+
+.clb [1544]  # Only LUT used.
+pinlist: h0 n [1547] open [1544] open
+subblock: [1544] 0 1 2 open 4 open
+
+.clb [1545]  # Only LUT used.
+pinlist: i0 j0 y open [1545] open
+subblock: [1545] 0 1 2 open 4 open
+
+.clb [1239]  # Only LUT used.
+pinlist: q b0 m r [1239] open
+subblock: [1239] 0 1 2 3 4 open
+
+.clb [1241]  # Only LUT used.
+pinlist: [1242] [1244] [1243] open [1241] open
+subblock: [1241] 0 1 2 open 4 open
+
+.clb [1240]  # Only LUT used.
+pinlist: [1538] [1540] [1539] open [1240] open
+subblock: [1240] 0 1 2 open 4 open
+
+.clb [1538]  # Only LUT used.
+pinlist: [1541] [1543] [1542] open [1538] open
+subblock: [1538] 0 1 2 open 4 open
+
+.clb [1540]  # Only LUT used.
+pinlist: d0 y a0 w [1540] open
+subblock: [1540] 0 1 2 3 4 open
+
+.clb [1539]  # Only LUT used.
+pinlist: g0 e0 f0 open [1539] open
+subblock: [1539] 0 1 2 open 4 open
+
+.clb [1242]  # Only LUT used.
+pinlist: [1535] [1536] open open [1242] open
+subblock: [1242] 0 1 open open 4 open
+
+.clb [1244]  # Only LUT used.
+pinlist: [1245] [1247] [1246] open [1244] open
+subblock: [1244] 0 1 2 open 4 open
+
+.clb [1243]  # Only LUT used.
+pinlist: g0 e0 f0 [1534] [1243] open
+subblock: [1243] 0 1 2 3 4 open
+
+.clb [1535]  # Only LUT used.
+pinlist: y a0 open open [1535] open
+subblock: [1535] 0 1 open open 4 open
+
+.clb [1536]  # Only LUT used.
+pinlist: x o n open [1536] open
+subblock: [1536] 0 1 2 open 4 open
+
+.clb [1534]  # Only LUT used.
+pinlist: d0 w open open [1534] open
+subblock: [1534] 0 1 open open 4 open
+
+.clb [1245]  # Only LUT used.
+pinlist: d0 o n open [1245] open
+subblock: [1245] 0 1 2 open 4 open
+
+.clb [1247]  # Only LUT used.
+pinlist: [1248] [1250] [1249] open [1247] open
+subblock: [1247] 0 1 2 open 4 open
+
+.clb [1246]  # Only LUT used.
+pinlist: [1528] [1529] open open [1246] open
+subblock: [1246] 0 1 open open 4 open
+
+.clb [1528]  # Only LUT used.
+pinlist: i0 j0 y open [1528] open
+subblock: [1528] 0 1 2 open 4 open
+
+.clb [1529]  # Only LUT used.
+pinlist: g0 e0 f0 open [1529] open
+subblock: [1529] 0 1 2 open 4 open
+
+.clb [1248]  # Only LUT used.
+pinlist: m0 [1251] open open [1248] open
+subblock: [1248] 0 1 open open 4 open
+
+.clb [1250]  # Only LUT used.
+pinlist: h0 y o a0 [1250] open
+subblock: [1250] 0 1 2 3 4 open
+
+.clb [1249]  # Only LUT used.
+pinlist: h0 z g0 i [1249] open
+subblock: [1249] 0 1 2 3 4 open
+
+.clb [1251]  # Only LUT used.
+pinlist: [1254] [1256] [1255] open [1251] open
+subblock: [1251] 0 1 2 open 4 open
+
+.clb [1254]  # Only LUT used.
+pinlist: j0 [1527] [1524] [1521] [1254] open
+subblock: [1254] 0 1 2 3 4 open
+
+.clb [1256]  # Only LUT used.
+pinlist: [1257] [1259] [1258] open [1256] open
+subblock: [1256] 0 1 2 open 4 open
+
+.clb [1255]  # Only LUT used.
+pinlist: m [1203] [1204] open [1255] open
+subblock: [1255] 0 1 2 open 4 open
+
+.clb [1527]  # Only LUT used.
+pinlist: k j open open [1527] open
+subblock: [1527] 0 1 open open 4 open
+
+.clb [1524]  # Only LUT used.
+pinlist: y w open open [1524] open
+subblock: [1524] 0 1 open open 4 open
+
+.clb [1521]  # Only LUT used.
+pinlist: a0 e0 open open [1521] open
+subblock: [1521] 0 1 open open 4 open
+
+.clb [1257]  # Only LUT used.
+pinlist: h [1203] open open [1257] open
+subblock: [1257] 0 1 open open 4 open
+
+.clb [1259]  # Only LUT used.
+pinlist: [1260] [1262] [1261] open [1259] open
+subblock: [1259] 0 1 2 open 4 open
+
+.clb [1258]  # Only LUT used.
+pinlist: [1512] [1514] [1513] open [1258] open
+subblock: [1258] 0 1 2 open 4 open
+
+.clb [1512]  # Only LUT used.
+pinlist: [1205] [1206] open open [1512] open
+subblock: [1512] 0 1 open open 4 open
+
+.clb [1514]  # Only LUT used.
+pinlist: y a0 e0 w [1514] open
+subblock: [1514] 0 1 2 3 4 open
+
+.clb [1513]  # Only LUT used.
+pinlist: y [1515] [1517] open [1513] open
+subblock: [1513] 0 1 2 open 4 open
+
+.clb [1260]  # Only LUT used.
+pinlist: [1497] [1498] open open [1260] open
+subblock: [1260] 0 1 open open 4 open
+
+.clb [1262]  # Only LUT used.
+pinlist: [1263] [1265] [1264] open [1262] open
+subblock: [1262] 0 1 2 open 4 open
+
+.clb [1261]  # Only LUT used.
+pinlist: m [1204] open open [1261] open
+subblock: [1261] 0 1 open open 4 open
+
+.clb [1497]  # Only LUT used.
+pinlist: [1511] [1508] [1505] [1502] [1497] open
+subblock: [1497] 0 1 2 3 4 open
+
+.clb [1498]  # Only LUT used.
+pinlist: l t open open [1498] open
+subblock: [1498] 0 1 open open 4 open
+
+.clb [1263]  # Only LUT used.
+pinlist: [1206] [1496] [1493] [1490] [1263] open
+subblock: [1263] 0 1 2 3 4 open
+
+.clb [1265]  # Only LUT used.
+pinlist: [1266] [1268] [1267] open [1265] open
+subblock: [1265] 0 1 2 open 4 open
+
+.clb [1264]  # Only LUT used.
+pinlist: [1484] [1485] open open [1264] open
+subblock: [1264] 0 1 open open 4 open
+
+.clb [1496]  # Only LUT used.
+pinlist: y k open open [1496] open
+subblock: [1496] 0 1 open open 4 open
+
+.clb [1493]  # Only LUT used.
+pinlist: j0 a0 open open [1493] open
+subblock: [1493] 0 1 open open 4 open
+
+.clb [1490]  # Only LUT used.
+pinlist: [1203] [1204] open open [1490] open
+subblock: [1490] 0 1 open open 4 open
+
+.clb [1484]  # Only LUT used.
+pinlist: f0 m j open [1484] open
+subblock: [1484] 0 1 2 open 4 open
+
+.clb [1485]  # Only LUT used.
+pinlist: d0 w open open [1485] open
+subblock: [1485] 0 1 open open 4 open
+
+.clb [1266]  # Only LUT used.
+pinlist: [1483] [1480] [1477] [1474] [1266] open
+subblock: [1266] 0 1 2 3 4 open
+
+.clb [1268]  # Only LUT used.
+pinlist: [1269] [1271] [1270] open [1268] open
+subblock: [1268] 0 1 2 open 4 open
+
+.clb [1267]  # Only LUT used.
+pinlist: f0 m j open [1267] open
+subblock: [1267] 0 1 2 open 4 open
+
+.clb [1483]  # Only LUT used.
+pinlist: y k open open [1483] open
+subblock: [1483] 0 1 open open 4 open
+
+.clb [1480]  # Only LUT used.
+pinlist: i0 d0 open open [1480] open
+subblock: [1480] 0 1 open open 4 open
+
+.clb [1477]  # Only LUT used.
+pinlist: j0 [1203] open open [1477] open
+subblock: [1477] 0 1 open open 4 open
+
+.clb [1474]  # Only LUT used.
+pinlist: [1204] [1206] open open [1474] open
+subblock: [1474] 0 1 open open 4 open
+
+.clb [1269]  # Only LUT used.
+pinlist: y a0 k [1206] [1269] open
+subblock: [1269] 0 1 2 3 4 open
+
+.clb [1271]  # Only LUT used.
+pinlist: [1272] [1274] [1273] open [1271] open
+subblock: [1271] 0 1 2 open 4 open
+
+.clb [1270]  # Only LUT used.
+pinlist: [1467] [1468] open open [1270] open
+subblock: [1270] 0 1 open open 4 open
+
+.clb [1467]  # Only LUT used.
+pinlist: [1470] [1471] open open [1467] open
+subblock: [1467] 0 1 open open 4 open
+
+.clb [1468]  # Only LUT used.
+pinlist: d0 w open open [1468] open
+subblock: [1468] 0 1 open open 4 open
+
+.clb [1272]  # Only LUT used.
+pinlist: [1206] [1466] [1463] open [1272] open
+subblock: [1272] 0 1 2 open 4 open
+
+.clb [1274]  # Only LUT used.
+pinlist: [1275] [1277] [1276] open [1274] open
+subblock: [1274] 0 1 2 open 4 open
+
+.clb [1273]  # Only LUT used.
+pinlist: [1458] [1459] open open [1273] open
+subblock: [1273] 0 1 open open 4 open
+
+.clb [1466]  # Only LUT used.
+pinlist: y k open open [1466] open
+subblock: [1466] 0 1 open open 4 open
+
+.clb [1463]  # Only LUT used.
+pinlist: i0 d0 open open [1463] open
+subblock: [1463] 0 1 open open 4 open
+
+.clb [1458]  # Only LUT used.
+pinlist: j0 j [1203] [1205] [1458] open
+subblock: [1458] 0 1 2 3 4 open
+
+.clb [1459]  # Only LUT used.
+pinlist: j h [1203] [1204] [1459] open
+subblock: [1459] 0 1 2 3 4 open
+
+.clb [1275]  # Only LUT used.
+pinlist: d0 k open open [1275] open
+subblock: [1275] 0 1 open open 4 open
+
+.clb [1277]  # Only LUT used.
+pinlist: [1278] [1280] [1279] open [1277] open
+subblock: [1277] 0 1 2 open 4 open
+
+.clb [1276]  # Only LUT used.
+pinlist: [1445] [1447] [1446] open [1276] open
+subblock: [1276] 0 1 2 open 4 open
+
+.clb [1445]  # Only LUT used.
+pinlist: j0 y e0 j [1445] open
+subblock: [1445] 0 1 2 3 4 open
+
+.clb [1447]  # Only LUT used.
+pinlist: h [1457] [1454] [1451] [1447] open
+subblock: [1447] 0 1 2 3 4 open
+
+.clb [1446]  # Only LUT used.
+pinlist: i0 a0 open open [1446] open
+subblock: [1446] 0 1 open open 4 open
+
+.clb [1278]  # Only LUT used.
+pinlist: [1432] [1433] open open [1278] open
+subblock: [1278] 0 1 open open 4 open
+
+.clb [1280]  # Only LUT used.
+pinlist: [1281] [1283] [1282] open [1280] open
+subblock: [1280] 0 1 2 open 4 open
+
+.clb [1279]  # Only LUT used.
+pinlist: m [1203] [1204] [1205] [1279] open
+subblock: [1279] 0 1 2 3 4 open
+
+.clb [1432]  # Only LUT used.
+pinlist: j0 [1444] [1441] [1438] [1432] open
+subblock: [1432] 0 1 2 3 4 open
+
+.clb [1433]  # Only LUT used.
+pinlist: l t open open [1433] open
+subblock: [1433] 0 1 open open 4 open
+
+.clb [1281]  # Only LUT used.
+pinlist: [1203] [1431] [1428] open [1281] open
+subblock: [1281] 0 1 2 open 4 open
+
+.clb [1283]  # Only LUT used.
+pinlist: [1284] [1286] [1285] open [1283] open
+subblock: [1283] 0 1 2 open 4 open
+
+.clb [1282]  # Only LUT used.
+pinlist: [1422] [1424] [1423] open [1282] open
+subblock: [1282] 0 1 2 open 4 open
+
+.clb [1431]  # Only LUT used.
+pinlist: y a0 open open [1431] open
+subblock: [1431] 0 1 open open 4 open
+
+.clb [1428]  # Only LUT used.
+pinlist: j0 f0 open open [1428] open
+subblock: [1428] 0 1 open open 4 open
+
+.clb [1422]  # Only LUT used.
+pinlist: [1205] [1206] open open [1422] open
+subblock: [1422] 0 1 open open 4 open
+
+.clb [1424]  # Only LUT used.
+pinlist: e0 w open open [1424] open
+subblock: [1424] 0 1 open open 4 open
+
+.clb [1423]  # Only LUT used.
+pinlist: d0 w open open [1423] open
+subblock: [1423] 0 1 open open 4 open
+
+.clb [1284]  # Only LUT used.
+pinlist: e0 [1421] [1418] [1415] [1284] open
+subblock: [1284] 0 1 2 3 4 open
+
+.clb [1286]  # Only LUT used.
+pinlist: [1287] [1289] [1288] open [1286] open
+subblock: [1286] 0 1 2 open 4 open
+
+.clb [1285]  # Only LUT used.
+pinlist: [1406] [1407] open open [1285] open
+subblock: [1285] 0 1 open open 4 open
+
+.clb [1421]  # Only LUT used.
+pinlist: m k open open [1421] open
+subblock: [1421] 0 1 open open 4 open
+
+.clb [1418]  # Only LUT used.
+pinlist: n w open open [1418] open
+subblock: [1418] 0 1 open open 4 open
+
+.clb [1415]  # Only LUT used.
+pinlist: y a0 open open [1415] open
+subblock: [1415] 0 1 open open 4 open
+
+.clb [1406]  # Only LUT used.
+pinlist: l t open open [1406] open
+subblock: [1406] 0 1 open open 4 open
+
+.clb [1407]  # Only LUT used.
+pinlist: [1409] [1410] open open [1407] open
+subblock: [1407] 0 1 open open 4 open
+
+.clb [1287]  # Only LUT used.
+pinlist: y a0 e0 w [1287] open
+subblock: [1287] 0 1 2 3 4 open
+
+.clb [1289]  # Only LUT used.
+pinlist: [1290] [1292] [1291] open [1289] open
+subblock: [1289] 0 1 2 open 4 open
+
+.clb [1288]  # Only LUT used.
+pinlist: [1403] [1404] open open [1288] open
+subblock: [1288] 0 1 open open 4 open
+
+.clb [1403]  # Only LUT used.
+pinlist: m j [1204] open [1403] open
+subblock: [1403] 0 1 2 open 4 open
+
+.clb [1404]  # Only LUT used.
+pinlist: j0 f0 h open [1404] open
+subblock: [1404] 0 1 2 open 4 open
+
+.clb [1290]  # Only LUT used.
+pinlist: [1391] [1392] open open [1290] open
+subblock: [1290] 0 1 open open 4 open
+
+.clb [1292]  # Only LUT used.
+pinlist: [1206] [1293] [1295] open [1292] open
+subblock: [1292] 0 1 2 open 4 open
+
+.clb [1291]  # Only LUT used.
+pinlist: s [1203] [1204] [1205] [1291] open
+subblock: [1291] 0 1 2 3 4 open
+
+.clb [1391]  # Only LUT used.
+pinlist: [1402] [1399] [1396] open [1391] open
+subblock: [1391] 0 1 2 open 4 open
+
+.clb [1392]  # Only LUT used.
+pinlist: i0 a0 l t [1392] open
+subblock: [1392] 0 1 2 3 4 open
+
+.clb [1293]  # Only LUT used.
+pinlist: [1305] [1307] [1306] open [1293] open
+subblock: [1293] 0 1 2 open 4 open
+
+.clb [1295]  # Only LUT used.
+pinlist: [1296] [1297] open open [1295] open
+subblock: [1295] 0 1 open open 4 open
+
+.clb [1305]  # Only LUT used.
+pinlist: [1378] [1379] open open [1305] open
+subblock: [1305] 0 1 open open 4 open
+
+.clb [1307]  # Only LUT used.
+pinlist: [1308] [1310] [1309] open [1307] open
+subblock: [1307] 0 1 2 open 4 open
+
+.clb [1306]  # Only LUT used.
+pinlist: d0 s [1204] w [1306] open
+subblock: [1306] 0 1 2 3 4 open
+
+.clb [1296]  # Only LUT used.
+pinlist: d0 e0 open open [1296] open
+subblock: [1296] 0 1 open open 4 open
+
+.clb [1297]  # Only LUT used.
+pinlist: y [1299] [1301] open [1297] open
+subblock: [1297] 0 1 2 open 4 open
+
+.clb [1299]  # Only LUT used.
+pinlist: [1302] [1303] open open [1299] open
+subblock: [1299] 0 1 open open 4 open
+
+.clb [1301]  # Only LUT used.
+pinlist: i0 j0 h open [1301] open
+subblock: [1301] 0 1 2 open 4 open
+
+.clb [1302]  # Only LUT used.
+pinlist: i0 a0 open open [1302] open
+subblock: [1302] 0 1 open open 4 open
+
+.clb [1303]  # Only LUT used.
+pinlist: j0 f0 h open [1303] open
+subblock: [1303] 0 1 2 open 4 open
+
+.clb [1378]  # Only LUT used.
+pinlist: [1205] [1390] [1387] [1384] [1378] open
+subblock: [1378] 0 1 2 3 4 open
+
+.clb [1379]  # Only LUT used.
+pinlist: l t open open [1379] open
+subblock: [1379] 0 1 open open 4 open
+
+.clb [1308]  # Only LUT used.
+pinlist: [1363] [1364] open open [1308] open
+subblock: [1308] 0 1 open open 4 open
+
+.clb [1310]  # Only LUT used.
+pinlist: [1311] [1313] [1312] open [1310] open
+subblock: [1310] 0 1 2 open 4 open
+
+.clb [1309]  # Only LUT used.
+pinlist: s [1204] open open [1309] open
+subblock: [1309] 0 1 open open 4 open
+
+.clb [1363]  # Only LUT used.
+pinlist: [1377] [1374] [1371] [1368] [1363] open
+subblock: [1363] 0 1 2 3 4 open
+
+.clb [1364]  # Only LUT used.
+pinlist: l t open open [1364] open
+subblock: [1364] 0 1 open open 4 open
+
+.clb [1311]  # Only LUT used.
+pinlist: [1203] [1204] open open [1311] open
+subblock: [1311] 0 1 open open 4 open
+
+.clb [1313]  # Only LUT used.
+pinlist: [1205] [1323] [1320] [1317] [1313] open
+subblock: [1313] 0 1 2 3 4 open
+
+.clb [1312]  # Only LUT used.
+pinlist: [1324] [1326] [1325] open [1312] open
+subblock: [1312] 0 1 2 open 4 open
+
+.clb [1324]  # Only LUT used.
+pinlist: y [1336] open open [1324] open
+subblock: [1324] 0 1 open open 4 open
+
+.clb [1326]  # Only LUT used.
+pinlist: [1327] [1328] open open [1326] open
+subblock: [1326] 0 1 open open 4 open
+
+.clb [1325]  # Only LUT used.
+pinlist: i0 d0 a0 w [1325] open
+subblock: [1325] 0 1 2 3 4 open
+
+.clb [1323]  # Only LUT used.
+pinlist: d0 y open open [1323] open
+subblock: [1323] 0 1 open open 4 open
+
+.clb [1320]  # Only LUT used.
+pinlist: i0 f0 open open [1320] open
+subblock: [1320] 0 1 open open 4 open
+
+.clb [1317]  # Only LUT used.
+pinlist: j0 [1203] open open [1317] open
+subblock: [1317] 0 1 open open 4 open
+
+.clb [1336]  # Only LUT used.
+pinlist: j0 [1339] [1341] open [1336] open
+subblock: [1336] 0 1 2 open 4 open
+
+.clb [1327]  # Only LUT used.
+pinlist: i0 j0 d0 h [1327] open
+subblock: [1327] 0 1 2 3 4 open
+
+.clb [1328]  # Only LUT used.
+pinlist: m j [1330] open [1328] open
+subblock: [1328] 0 1 2 open 4 open
+
+.clb [1330]  # Only LUT used.
+pinlist: n [1333] [1334] open [1330] open
+subblock: [1330] 0 1 2 open 4 open
+
+.clb [1333]  # Only LUT used.
+pinlist: s [1205] open open [1333] open
+subblock: [1333] 0 1 open open 4 open
+
+.clb [1334]  # Only LUT used.
+pinlist: l t open open [1334] open
+subblock: [1334] 0 1 open open 4 open
+
+.clb [1339]  # Only LUT used.
+pinlist: [1351] [1353] [1352] open [1339] open
+subblock: [1339] 0 1 2 open 4 open
+
+.clb [1341]  # Only LUT used.
+pinlist: h [1342] open open [1341] open
+subblock: [1341] 0 1 open open 4 open
+
+.clb [1351]  # Only LUT used.
+pinlist: n m j open [1351] open
+subblock: [1351] 0 1 2 open 4 open
+
+.clb [1353]  # Only LUT used.
+pinlist: f0 [1354] open open [1353] open
+subblock: [1353] 0 1 open open 4 open
+
+.clb [1352]  # Only LUT used.
+pinlist: l t s [1205] [1352] open
+subblock: [1352] 0 1 2 3 4 open
+
+.clb [1342]  # Only LUT used.
+pinlist: m j [1345] open [1342] open
+subblock: [1342] 0 1 2 open 4 open
+
+.clb [1345]  # Only LUT used.
+pinlist: n [1348] [1349] open [1345] open
+subblock: [1345] 0 1 2 open 4 open
+
+.clb [1348]  # Only LUT used.
+pinlist: s [1205] open open [1348] open
+subblock: [1348] 0 1 open open 4 open
+
+.clb [1349]  # Only LUT used.
+pinlist: l t open open [1349] open
+subblock: [1349] 0 1 open open 4 open
+
+.clb [1354]  # Only LUT used.
+pinlist: m j [1357] open [1354] open
+subblock: [1354] 0 1 2 open 4 open
+
+.clb [1357]  # Only LUT used.
+pinlist: n [1360] [1361] open [1357] open
+subblock: [1357] 0 1 2 open 4 open
+
+.clb [1360]  # Only LUT used.
+pinlist: s [1205] open open [1360] open
+subblock: [1360] 0 1 open open 4 open
+
+.clb [1361]  # Only LUT used.
+pinlist: l t open open [1361] open
+subblock: [1361] 0 1 open open 4 open
+
+.clb [1377]  # Only LUT used.
+pinlist: n j open open [1377] open
+subblock: [1377] 0 1 open open 4 open
+
+.clb [1374]  # Only LUT used.
+pinlist: d0 y open open [1374] open
+subblock: [1374] 0 1 open open 4 open
+
+.clb [1371]  # Only LUT used.
+pinlist: i0 j0 open open [1371] open
+subblock: [1371] 0 1 open open 4 open
+
+.clb [1368]  # Only LUT used.
+pinlist: [1203] [1205] open open [1368] open
+subblock: [1368] 0 1 open open 4 open
+
+.clb [1390]  # Only LUT used.
+pinlist: n j open open [1390] open
+subblock: [1390] 0 1 open open 4 open
+
+.clb [1387]  # Only LUT used.
+pinlist: y a0 open open [1387] open
+subblock: [1387] 0 1 open open 4 open
+
+.clb [1384]  # Only LUT used.
+pinlist: j0 [1203] open open [1384] open
+subblock: [1384] 0 1 open open 4 open
+
+.clb [1402]  # Only LUT used.
+pinlist: n j open open [1402] open
+subblock: [1402] 0 1 open open 4 open
+
+.clb [1399]  # Only LUT used.
+pinlist: d0 y open open [1399] open
+subblock: [1399] 0 1 open open 4 open
+
+.clb [1396]  # Only LUT used.
+pinlist: j0 e0 open open [1396] open
+subblock: [1396] 0 1 open open 4 open
+
+.clb [1409]  # Only LUT used.
+pinlist: s [1205] open open [1409] open
+subblock: [1409] 0 1 open open 4 open
+
+.clb [1410]  # Only LUT used.
+pinlist: j0 f0 h open [1410] open
+subblock: [1410] 0 1 2 open 4 open
+
+.clb [1444]  # Only LUT used.
+pinlist: n j open open [1444] open
+subblock: [1444] 0 1 open open 4 open
+
+.clb [1441]  # Only LUT used.
+pinlist: y w open open [1441] open
+subblock: [1441] 0 1 open open 4 open
+
+.clb [1438]  # Only LUT used.
+pinlist: a0 e0 open open [1438] open
+subblock: [1438] 0 1 open open 4 open
+
+.clb [1457]  # Only LUT used.
+pinlist: i0 j open open [1457] open
+subblock: [1457] 0 1 open open 4 open
+
+.clb [1454]  # Only LUT used.
+pinlist: j0 [1203] open open [1454] open
+subblock: [1454] 0 1 open open 4 open
+
+.clb [1451]  # Only LUT used.
+pinlist: [1204] [1206] open open [1451] open
+subblock: [1451] 0 1 open open 4 open
+
+.clb [1470]  # Only LUT used.
+pinlist: j h [1203] [1204] [1470] open
+subblock: [1470] 0 1 2 3 4 open
+
+.clb [1471]  # Only LUT used.
+pinlist: j0 j [1203] [1205] [1471] open
+subblock: [1471] 0 1 2 3 4 open
+
+.clb [1511]  # Only LUT used.
+pinlist: n j open open [1511] open
+subblock: [1511] 0 1 open open 4 open
+
+.clb [1508]  # Only LUT used.
+pinlist: s w open open [1508] open
+subblock: [1508] 0 1 open open 4 open
+
+.clb [1505]  # Only LUT used.
+pinlist: y a0 open open [1505] open
+subblock: [1505] 0 1 open open 4 open
+
+.clb [1502]  # Only LUT used.
+pinlist: j0 e0 open open [1502] open
+subblock: [1502] 0 1 open open 4 open
+
+.clb [1515]  # Only LUT used.
+pinlist: i0 d0 a0 w [1515] open
+subblock: [1515] 0 1 2 3 4 open
+
+.clb [1517]  # Only LUT used.
+pinlist: i0 j0 d0 open [1517] open
+subblock: [1517] 0 1 2 open 4 open
+
+.clb [1541]  # Only LUT used.
+pinlist: d0 w open open [1541] open
+subblock: [1541] 0 1 open open 4 open
+
+.clb [1543]  # Only LUT used.
+pinlist: y a0 open open [1543] open
+subblock: [1543] 0 1 open open 4 open
+
+.clb [1542]  # Only LUT used.
+pinlist: i0 j0 y open [1542] open
+subblock: [1542] 0 1 2 open 4 open
+
+.clb [1547]  # Only LUT used.
+pinlist: g0 e0 f0 open [1547] open
+subblock: [1547] 0 1 2 open 4 open
+
+.clb [1562]  # Only LUT used.
+pinlist: x o q m [1562] open
+subblock: [1562] 0 1 2 3 4 open
+
+.clb [1571]  # Only LUT used.
+pinlist: o n q m [1571] open
+subblock: [1571] 0 1 2 3 4 open
+
+.clb [1578]  # Only LUT used.
+pinlist: x o q m [1578] open
+subblock: [1578] 0 1 2 3 4 open
+
+.clb [1581]  # Only LUT used.
+pinlist: v o q m [1581] open
+subblock: [1581] 0 1 2 3 4 open
+
+.clb [1584]  # Only LUT used.
+pinlist: v n q m [1584] open
+subblock: [1584] 0 1 2 3 4 open
+
+.clb [1587]  # Only LUT used.
+pinlist: o n q m [1587] open
+subblock: [1587] 0 1 2 3 4 open
+
+.clb [1603]  # Only LUT used.
+pinlist: o n q r [1603] open
+subblock: [1603] 0 1 2 3 4 open
+
+.clb [1608]  # Only LUT used.
+pinlist: v n q r [1608] open
+subblock: [1608] 0 1 2 3 4 open
+
+.clb [1611]  # Only LUT used.
+pinlist: o n q r [1611] open
+subblock: [1611] 0 1 2 3 4 open
+
+.clb [1618]  # Only LUT used.
+pinlist: x o q r [1618] open
+subblock: [1618] 0 1 2 3 4 open
+
+.clb [1626]  # Only LUT used.
+pinlist: x o q r [1626] open
+subblock: [1626] 0 1 2 3 4 open
+
+.clb [1629]  # Only LUT used.
+pinlist: v o q r [1629] open
+subblock: [1629] 0 1 2 3 4 open
+

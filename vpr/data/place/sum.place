@@ -1,0 +1,13 @@
+Netlist file: data/net/sum.net   Architecture file: arch/k4-n1.xml
+Array size: 3 x 3 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		1	0	0	#0
+const6		0	2	2	#1
+out:output4	3	0	1	#2
+mul0		1	1	0	#3
+load2		2	2	0	#4
+add3		2	1	0	#5
+output4		3	1	0	#6
+add5		1	2	0	#7

@@ -1,0 +1,272 @@
+.input 23
+pinlist: 23
+
+.input 32
+pinlist: 32
+
+.input 27
+pinlist: 27
+
+.input 21
+pinlist: 21
+
+.input 36
+pinlist: 36
+
+.input 38
+pinlist: 38
+
+.input 24
+pinlist: 24
+
+.input 33
+pinlist: 33
+
+.input 35
+pinlist: 35
+
+.input 26
+pinlist: 26
+
+.input 18
+pinlist: 18
+
+.input 20
+pinlist: 20
+
+.input 30
+pinlist: 30
+
+.input 17
+pinlist: 17
+
+.input 29
+pinlist: 29
+
+.input 39
+pinlist: 39
+
+.output out:80
+pinlist: 80
+
+.output out:75
+pinlist: 75
+
+.output out:81
+pinlist: 81
+
+.output out:82
+pinlist: 82
+
+.output out:79
+pinlist: 79
+
+.output out:76
+pinlist: 76
+
+.output out:78
+pinlist: 78
+
+.output out:77
+pinlist: 77
+
+.clb 70  # Only LUT used.
+pinlist: 64 open open open 70 open
+subblock: 70 0 open open open 4 open
+
+.clb 67  # Only LUT used.
+pinlist: 62 open open open 67 open
+subblock: 67 0 open open open 4 open
+
+.clb 71  # Only LUT used.
+pinlist: 67 65 open open 71 open
+subblock: 71 0 1 open open 4 open
+
+.clb 81  # Only LUT used.
+pinlist: 73 open open open 81 open
+subblock: 81 0 open open open 4 open
+
+.clb 58  # Only LUT used.
+pinlist: 51 53 open open 58 open
+subblock: 58 0 1 open open 4 open
+
+.clb 47  # Only LUT used.
+pinlist: 28 44 open open 47 open
+subblock: 47 0 1 open open 4 open
+
+.clb 37  # Only LUT used.
+pinlist: 36 35 open open 37 open
+subblock: 37 0 1 open open 4 open
+
+.clb 52  # Only LUT used.
+pinlist: 46 open open open 52 open
+subblock: 52 0 open open open 4 open
+
+.clb 40  # Only LUT used.
+pinlist: 38 39 open open 40 open
+subblock: 40 0 1 open open 4 open
+
+.clb 50  # Only LUT used.
+pinlist: 45 open open open 50 open
+subblock: 50 0 open open open 4 open
+
+.clb 78  # Only LUT used.
+pinlist: 60 open open open 78 open
+subblock: 78 0 open open open 4 open
+
+.clb 74  # Only LUT used.
+pinlist: 69 70 open open 74 open
+subblock: 74 0 1 open open 4 open
+
+.clb 44  # Only LUT used.
+pinlist: 41 42 open open 44 open
+subblock: 44 0 1 open open 4 open
+
+.clb 80  # Only LUT used.
+pinlist: 72 open open open 80 open
+subblock: 80 0 open open open 4 open
+
+.clb 31  # Only LUT used.
+pinlist: 30 29 open open 31 open
+subblock: 31 0 1 open open 4 open
+
+.clb 46  # Only LUT used.
+pinlist: 43 19 open open 46 open
+subblock: 46 0 1 open open 4 open
+
+.clb 19  # Only LUT used.
+pinlist: 17 18 open open 19 open
+subblock: 19 0 1 open open 4 open
+
+.clb 73  # Only LUT used.
+pinlist: 69 70 open open 73 open
+subblock: 73 0 1 open open 4 open
+
+.clb 66  # Only LUT used.
+pinlist: 61 open open open 66 open
+subblock: 66 0 open open open 4 open
+
+.clb 51  # Only LUT used.
+pinlist: 46 open open open 51 open
+subblock: 51 0 open open open 4 open
+
+.clb 41  # Only LUT used.
+pinlist: 22 open open open 41 open
+subblock: 41 0 open open open 4 open
+
+.clb 22  # Only LUT used.
+pinlist: 20 21 open open 22 open
+subblock: 22 0 1 open open 4 open
+
+.clb 64  # Only LUT used.
+pinlist: 31 40 open open 64 open
+subblock: 64 0 1 open open 4 open
+
+.clb 63  # Only LUT used.
+pinlist: 34 37 open open 63 open
+subblock: 63 0 1 open open 4 open
+
+.clb 43  # Only LUT used.
+pinlist: 41 42 open open 43 open
+subblock: 43 0 1 open open 4 open
+
+.clb 42  # Only LUT used.
+pinlist: 25 open open open 42 open
+subblock: 42 0 open open open 4 open
+
+.clb 34  # Only LUT used.
+pinlist: 33 32 open open 34 open
+subblock: 34 0 1 open open 4 open
+
+.clb 61  # Only LUT used.
+pinlist: 31 40 open open 61 open
+subblock: 61 0 1 open open 4 open
+
+.clb 76  # Only LUT used.
+pinlist: 58 open open open 76 open
+subblock: 76 0 open open open 4 open
+
+.clb 82  # Only LUT used.
+pinlist: 74 open open open 82 open
+subblock: 82 0 open open open 4 open
+
+.clb 60  # Only LUT used.
+pinlist: 50 56 open open 60 open
+subblock: 60 0 1 open open 4 open
+
+.clb 79  # Only LUT used.
+pinlist: 71 open open open 79 open
+subblock: 79 0 open open open 4 open
+
+.clb 68  # Only LUT used.
+pinlist: 62 open open open 68 open
+subblock: 68 0 open open open 4 open
+
+.clb 69  # Only LUT used.
+pinlist: 63 open open open 69 open
+subblock: 69 0 open open open 4 open
+
+.clb 28  # Only LUT used.
+pinlist: 26 27 open open 28 open
+subblock: 28 0 1 open open 4 open
+
+.clb 72  # Only LUT used.
+pinlist: 68 66 open open 72 open
+subblock: 72 0 1 open open 4 open
+
+.clb 62  # Only LUT used.
+pinlist: 34 37 open open 62 open
+subblock: 62 0 1 open open 4 open
+
+.clb 53  # Only LUT used.
+pinlist: 47 open open open 53 open
+subblock: 53 0 open open open 4 open
+
+.clb 59  # Only LUT used.
+pinlist: 52 54 open open 59 open
+subblock: 59 0 1 open open 4 open
+
+.clb 56  # Only LUT used.
+pinlist: 48 open open open 56 open
+subblock: 56 0 open open open 4 open
+
+.clb 45  # Only LUT used.
+pinlist: 43 19 open open 45 open
+subblock: 45 0 1 open open 4 open
+
+.clb 75  # Only LUT used.
+pinlist: 57 open open open 75 open
+subblock: 75 0 open open open 4 open
+
+.clb 65  # Only LUT used.
+pinlist: 61 open open open 65 open
+subblock: 65 0 open open open 4 open
+
+.clb 55  # Only LUT used.
+pinlist: 48 open open open 55 open
+subblock: 55 0 open open open 4 open
+
+.clb 49  # Only LUT used.
+pinlist: 45 open open open 49 open
+subblock: 49 0 open open open 4 open
+
+.clb 57  # Only LUT used.
+pinlist: 49 55 open open 57 open
+subblock: 57 0 1 open open 4 open
+
+.clb 48  # Only LUT used.
+pinlist: 28 44 open open 48 open
+subblock: 48 0 1 open open 4 open
+
+.clb 54  # Only LUT used.
+pinlist: 47 open open open 54 open
+subblock: 54 0 open open open 4 open
+
+.clb 25  # Only LUT used.
+pinlist: 23 24 open open 25 open
+subblock: 25 0 1 open open 4 open
+
+.clb 77  # Only LUT used.
+pinlist: 59 open open open 77 open
+subblock: 77 0 open open open 4 open
+

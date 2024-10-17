@@ -1,0 +1,198 @@
+.input G0
+pinlist: G0
+
+.output out:A0
+pinlist: A0
+
+.clb imult_15  # Only LUT used.
+pinlist: copy_14 open open open imult_15 open
+subblock: imult_15 0 open open open 4 open
+
+.clb copy_3  # Only LUT used.
+pinlist: copy_2 open open open copy_3 open
+subblock: copy_3 0 open open open 4 open
+
+.clb imult_9  # Only LUT used.
+pinlist: copy_9 open open open imult_9 open
+subblock: imult_9 0 open open open 4 open
+
+.clb copy_2  # Only LUT used.
+pinlist: copy_1 open open open copy_2 open
+subblock: copy_2 0 open open open 4 open
+
+.clb iadd_12  # Only LUT used.
+pinlist: iadd_9 iadd_8 open open iadd_12 open
+subblock: iadd_12 0 1 open open 4 open
+
+.clb imult_0  # Only LUT used.
+pinlist: copy_0 open open open imult_0 open
+subblock: imult_0 0 open open open 4 open
+
+.clb iadd_5  # Only LUT used.
+pinlist: imult_10 imult_11 open open iadd_5 open
+subblock: iadd_5 0 1 open open 4 open
+
+.clb copy_8  # Only LUT used.
+pinlist: copy_7 open open open copy_8 open
+subblock: copy_8 0 open open open 4 open
+
+.clb copy_10  # Only LUT used.
+pinlist: copy_9 open open open copy_10 open
+subblock: copy_10 0 open open open 4 open
+
+.clb S0  # Only LUT used.
+pinlist: iadd_14 open open open S0 open
+subblock: S0 0 open open open 4 open
+
+.clb imult_1  # Only LUT used.
+pinlist: copy_1 open open open imult_1 open
+subblock: imult_1 0 open open open 4 open
+
+.clb copy_5  # Only LUT used.
+pinlist: copy_4 open open open copy_5 open
+subblock: copy_5 0 open open open 4 open
+
+.clb iadd_4  # Only LUT used.
+pinlist: imult_9 imult_8 open open iadd_4 open
+subblock: iadd_4 0 1 open open 4 open
+
+.clb iadd_8  # Only LUT used.
+pinlist: iadd_1 iadd_0 open open iadd_8 open
+subblock: iadd_8 0 1 open open 4 open
+
+.clb imult_6  # Only LUT used.
+pinlist: copy_6 open open open imult_6 open
+subblock: imult_6 0 open open open 4 open
+
+.clb iadd_7  # Only LUT used.
+pinlist: imult_15 imult_14 open open iadd_7 open
+subblock: iadd_7 0 1 open open 4 open
+
+.clb iadd_0  # Only LUT used.
+pinlist: imult_0 imult_1 open open iadd_0 open
+subblock: iadd_0 0 1 open open 4 open
+
+.clb iadd_11  # Only LUT used.
+pinlist: iadd_7 iadd_6 open open iadd_11 open
+subblock: iadd_11 0 1 open open 4 open
+
+.clb imult_4  # Only LUT used.
+pinlist: copy_4 open open open imult_4 open
+subblock: imult_4 0 open open open 4 open
+
+.clb imult_7  # Only LUT used.
+pinlist: copy_7 open open open imult_7 open
+subblock: imult_7 0 open open open 4 open
+
+.clb iadd_10  # Only LUT used.
+pinlist: iadd_5 iadd_4 open open iadd_10 open
+subblock: iadd_10 0 1 open open 4 open
+
+.clb copy_6  # Only LUT used.
+pinlist: copy_5 open open open copy_6 open
+subblock: copy_6 0 open open open 4 open
+
+.clb A0  # Only LUT used.
+pinlist: S0 open open open A0 open
+subblock: A0 0 open open open 4 open
+
+.clb copy_4  # Only LUT used.
+pinlist: copy_3 open open open copy_4 open
+subblock: copy_4 0 open open open 4 open
+
+.clb copy_11  # Only LUT used.
+pinlist: copy_10 open open open copy_11 open
+subblock: copy_11 0 open open open 4 open
+
+.clb iadd_6  # Only LUT used.
+pinlist: imult_13 imult_12 open open iadd_6 open
+subblock: iadd_6 0 1 open open 4 open
+
+.clb iadd_2  # Only LUT used.
+pinlist: imult_5 imult_4 open open iadd_2 open
+subblock: iadd_2 0 1 open open 4 open
+
+.clb imult_8  # Only LUT used.
+pinlist: copy_8 open open open imult_8 open
+subblock: imult_8 0 open open open 4 open
+
+.clb iadd_9  # Only LUT used.
+pinlist: iadd_3 iadd_2 open open iadd_9 open
+subblock: iadd_9 0 1 open open 4 open
+
+.clb copy_13  # Only LUT used.
+pinlist: copy_12 open open open copy_13 open
+subblock: copy_13 0 open open open 4 open
+
+.clb copy_7  # Only LUT used.
+pinlist: copy_6 open open open copy_7 open
+subblock: copy_7 0 open open open 4 open
+
+.clb imult_13  # Only LUT used.
+pinlist: copy_13 open open open imult_13 open
+subblock: imult_13 0 open open open 4 open
+
+.clb copy_0  # Only LUT used.
+pinlist: G0 open open open copy_0 open
+subblock: copy_0 0 open open open 4 open
+
+.clb imult_10  # Only LUT used.
+pinlist: copy_10 open open open imult_10 open
+subblock: imult_10 0 open open open 4 open
+
+.clb iadd_1  # Only LUT used.
+pinlist: imult_3 imult_2 open open iadd_1 open
+subblock: iadd_1 0 1 open open 4 open
+
+.clb imult_11  # Only LUT used.
+pinlist: copy_11 open open open imult_11 open
+subblock: imult_11 0 open open open 4 open
+
+.clb iadd_3  # Only LUT used.
+pinlist: imult_6 imult_7 open open iadd_3 open
+subblock: iadd_3 0 1 open open 4 open
+
+.clb copy_14  # Only LUT used.
+pinlist: copy_13 open open open copy_14 open
+subblock: copy_14 0 open open open 4 open
+
+.clb copy_9  # Only LUT used.
+pinlist: copy_8 open open open copy_9 open
+subblock: copy_9 0 open open open 4 open
+
+.clb iadd_13  # Only LUT used.
+pinlist: iadd_11 iadd_10 open open iadd_13 open
+subblock: iadd_13 0 1 open open 4 open
+
+.clb imult_5  # Only LUT used.
+pinlist: copy_5 open open open imult_5 open
+subblock: imult_5 0 open open open 4 open
+
+.clb copy_1  # Only LUT used.
+pinlist: copy_0 open open open copy_1 open
+subblock: copy_1 0 open open open 4 open
+
+.clb copy_12  # Only LUT used.
+pinlist: copy_11 open open open copy_12 open
+subblock: copy_12 0 open open open 4 open
+
+.clb imult_2  # Only LUT used.
+pinlist: copy_2 open open open imult_2 open
+subblock: imult_2 0 open open open 4 open
+
+.clb imult_12  # Only LUT used.
+pinlist: copy_12 open open open imult_12 open
+subblock: imult_12 0 open open open 4 open
+
+.clb iadd_14  # Only LUT used.
+pinlist: iadd_13 iadd_12 open open iadd_14 open
+subblock: iadd_14 0 1 open open 4 open
+
+.clb imult_14  # Only LUT used.
+pinlist: copy_14 open open open imult_14 open
+subblock: imult_14 0 open open open 4 open
+
+.clb imult_3  # Only LUT used.
+pinlist: copy_3 open open open imult_3 open
+subblock: imult_3 0 open open open 4 open
+

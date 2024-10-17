@@ -1,0 +1,96 @@
+.input const1
+pinlist: const1
+
+.input const4
+pinlist: const4
+
+.input const6
+pinlist: const6
+
+.input const10
+pinlist: const10
+
+.input const13
+pinlist: const13
+
+.input const15
+pinlist: const15
+
+.input const19
+pinlist: const19
+
+.output out:output24
+pinlist: output24
+
+.clb mul0  # Only LUT used.
+pinlist: const1 add3 open open mul0 open
+subblock: mul0 0 1 open open 4 open
+
+.clb load2  # Only LUT used.
+pinlist: mul0 open open open load2 open
+subblock: load2 0 open open open 4 open
+
+.clb add3  # Only LUT used.
+pinlist: const4 open open open add3 open
+subblock: add3 0 open open open 4 open
+
+.clb mul5  # Only LUT used.
+pinlist: add3 const6 open open mul5 open
+subblock: mul5 0 1 open open 4 open
+
+.clb load7  # Only LUT used.
+pinlist: mul5 open open open load7 open
+subblock: load7 0 open open open 4 open
+
+.clb add8  # Only LUT used.
+pinlist: load2 load7 open open add8 open
+subblock: add8 0 1 open open 4 open
+
+.clb mul9  # Only LUT used.
+pinlist: add3 const10 open open mul9 open
+subblock: mul9 0 1 open open 4 open
+
+.clb load11  # Only LUT used.
+pinlist: mul9 open open open load11 open
+subblock: load11 0 open open open 4 open
+
+.clb add12  # Only LUT used.
+pinlist: add3 const13 open open add12 open
+subblock: add12 0 1 open open 4 open
+
+.clb mul14  # Only LUT used.
+pinlist: add12 const15 open open mul14 open
+subblock: mul14 0 1 open open 4 open
+
+.clb load16  # Only LUT used.
+pinlist: mul14 open open open load16 open
+subblock: load16 0 open open open 4 open
+
+.clb add17  # Only LUT used.
+pinlist: load11 load16 open open add17 open
+subblock: add17 0 1 open open 4 open
+
+.clb mul18  # Only LUT used.
+pinlist: add8 const19 open open mul18 open
+subblock: mul18 0 1 open open 4 open
+
+.clb mul20  # Only LUT used.
+pinlist: load11 mul18 open open mul20 open
+subblock: mul20 0 1 open open 4 open
+
+.clb mul21  # Only LUT used.
+pinlist: load16 mul20 open open mul21 open
+subblock: mul21 0 1 open open 4 open
+
+.clb mul22  # Only LUT used.
+pinlist: add17 mul21 open open mul22 open
+subblock: mul22 0 1 open open 4 open
+
+.clb add23  # Only LUT used.
+pinlist: mul22 open open open add23 open
+subblock: add23 0 open open open 4 open
+
+.clb output24  # Only LUT used.
+pinlist: add23 open open open output24 open
+subblock: output24 0 open open open 4 open
+

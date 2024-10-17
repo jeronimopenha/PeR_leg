@@ -1,0 +1,22 @@
+Netlist file: data/net/two_loops1.net   Architecture file: arch/k4-n1.xml
+Array size: 4 x 4 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		0	2	0	#0
+const4		2	5	0	#1
+const8		5	2	0	#2
+const10		2	0	2	#3
+const12		4	0	1	#4
+const15		1	0	0	#5
+out:store13	3	0	0	#6
+mul0		1	2	0	#7
+load2		2	2	0	#8
+add3		2	3	0	#9
+mul5		3	3	0	#10
+add6		3	2	0	#11
+mul7		4	2	0	#12
+add9		2	1	0	#13
+mul11		4	1	0	#14
+store13		3	1	0	#15
+add14		1	1	0	#16

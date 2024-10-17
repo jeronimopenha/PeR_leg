@@ -1,0 +1,186 @@
+.input X
+pinlist: X
+
+.output out:out_0
+pinlist: out_0
+
+.clb copy_0  # Only LUT used.
+pinlist: X open open open copy_0 open
+subblock: copy_0 0 open open open 4 open
+
+.clb sub_3  # Only LUT used.
+pinlist: sep_7 sep_6 open open sub_3 open
+subblock: sub_3 0 1 open open 4 open
+
+.clb mul_7  # Only LUT used.
+pinlist: copy_6 open open open mul_7 open
+subblock: mul_7 0 open open open 4 open
+
+.clb sub_2  # Only LUT used.
+pinlist: sep_5 sep_4 open open sub_2 open
+subblock: sub_2 0 1 open open 4 open
+
+.clb copy_5  # Only LUT used.
+pinlist: copy_4 open open open copy_5 open
+subblock: copy_5 0 open open open 4 open
+
+.clb ATadd_2  # Only LUT used.
+pinlist: ATadd_1 ATadd_0 open open ATadd_2 open
+subblock: ATadd_2 0 1 open open 4 open
+
+.clb copy_6  # Only LUT used.
+pinlist: I_5 open open open copy_6 open
+subblock: copy_6 0 open open open 4 open
+
+.clb sep_2  # Only LUT used.
+pinlist: mul_2 open open open sep_2 open
+subblock: sep_2 0 open open open 4 open
+
+.clb mul_2  # Only LUT used.
+pinlist: copy_2 open open open mul_2 open
+subblock: mul_2 0 open open open 4 open
+
+.clb copy_3  # Only LUT used.
+pinlist: copy_2 open open open copy_3 open
+subblock: copy_3 0 open open open 4 open
+
+.clb mul_4  # Only LUT used.
+pinlist: copy_4 open open open mul_4 open
+subblock: mul_4 0 open open open 4 open
+
+.clb ATadd_1  # Only LUT used.
+pinlist: add_2 add_3 open open ATadd_1 open
+subblock: ATadd_1 0 1 open open 4 open
+
+.clb I_0  # Only LUT used.
+pinlist: copy_1 open open open I_0 open
+subblock: I_0 0 open open open 4 open
+
+.clb sep_3  # Only LUT used.
+pinlist: mul_3 open open open sep_3 open
+subblock: sep_3 0 open open open 4 open
+
+.clb STadd_2  # Only LUT used.
+pinlist: STadd_0 STadd_1 open open STadd_2 open
+subblock: STadd_2 0 1 open open 4 open
+
+.clb mul_0  # Only LUT used.
+pinlist: copy_0 open open open mul_0 open
+subblock: mul_0 0 open open open 4 open
+
+.clb sub_0  # Only LUT used.
+pinlist: sep_0 sep_1 open open sub_0 open
+subblock: sub_0 0 1 open open 4 open
+
+.clb copy_1  # Only LUT used.
+pinlist: copy_0 open open open copy_1 open
+subblock: copy_1 0 open open open 4 open
+
+.clb mul_6  # Only LUT used.
+pinlist: copy_6 open open open mul_6 open
+subblock: mul_6 0 open open open 4 open
+
+.clb sep_7  # Only LUT used.
+pinlist: mul_7 open open open sep_7 open
+subblock: sep_7 0 open open open 4 open
+
+.clb add_1  # Only LUT used.
+pinlist: sep_2 sep_3 open open add_1 open
+subblock: add_1 0 1 open open 4 open
+
+.clb I_4  # Only LUT used.
+pinlist: copy_5 open open open I_4 open
+subblock: I_4 0 open open open 4 open
+
+.clb I_3  # Only LUT used.
+pinlist: I_2 open open open I_3 open
+subblock: I_3 0 open open open 4 open
+
+.clb I_1  # Only LUT used.
+pinlist: I_0 open open open I_1 open
+subblock: I_1 0 open open open 4 open
+
+.clb ATadd_0  # Only LUT used.
+pinlist: add_1 add_0 open open ATadd_0 open
+subblock: ATadd_0 0 1 open open 4 open
+
+.clb mul_1  # Only LUT used.
+pinlist: copy_1 open open open mul_1 open
+subblock: mul_1 0 open open open 4 open
+
+.clb I_2  # Only LUT used.
+pinlist: copy_3 open open open I_2 open
+subblock: I_2 0 open open open 4 open
+
+.clb add_2  # Only LUT used.
+pinlist: sep_5 sep_4 open open add_2 open
+subblock: add_2 0 1 open open 4 open
+
+.clb sub_1  # Only LUT used.
+pinlist: sep_2 sep_3 open open sub_1 open
+subblock: sub_1 0 1 open open 4 open
+
+.clb sep_6  # Only LUT used.
+pinlist: mul_6 open open open sep_6 open
+subblock: sep_6 0 open open open 4 open
+
+.clb STadd_0  # Only LUT used.
+pinlist: sub_1 sub_0 open open STadd_0 open
+subblock: STadd_0 0 1 open open 4 open
+
+.clb add_0  # Only LUT used.
+pinlist: sep_0 sep_1 open open add_0 open
+subblock: add_0 0 1 open open 4 open
+
+.clb sep_1  # Only LUT used.
+pinlist: mul_1 open open open sep_1 open
+subblock: sep_1 0 open open open 4 open
+
+.clb sep_4  # Only LUT used.
+pinlist: mul_4 open open open sep_4 open
+subblock: sep_4 0 open open open 4 open
+
+.clb mul_3  # Only LUT used.
+pinlist: copy_3 open open open mul_3 open
+subblock: mul_3 0 open open open 4 open
+
+.clb mul_5  # Only LUT used.
+pinlist: copy_5 open open open mul_5 open
+subblock: mul_5 0 open open open 4 open
+
+.clb sep_0  # Only LUT used.
+pinlist: mul_0 open open open sep_0 open
+subblock: sep_0 0 open open open 4 open
+
+.clb pas_0  # Only LUT used.
+pinlist: ATadd_2 STadd_2 open open pas_0 open
+subblock: pas_0 0 1 open open 4 open
+
+.clb add_3  # Only LUT used.
+pinlist: sep_7 sep_6 open open add_3 open
+subblock: add_3 0 1 open open 4 open
+
+.clb STadd_1  # Only LUT used.
+pinlist: sub_2 sub_3 open open STadd_1 open
+subblock: STadd_1 0 1 open open 4 open
+
+.clb copy_4  # Only LUT used.
+pinlist: I_3 open open open copy_4 open
+subblock: copy_4 0 open open open 4 open
+
+.clb out_0  # Only LUT used.
+pinlist: pas_0 open open open out_0 open
+subblock: out_0 0 open open open 4 open
+
+.clb copy_2  # Only LUT used.
+pinlist: I_1 open open open copy_2 open
+subblock: copy_2 0 open open open 4 open
+
+.clb I_5  # Only LUT used.
+pinlist: I_4 open open open I_5 open
+subblock: I_5 0 open open open 4 open
+
+.clb sep_5  # Only LUT used.
+pinlist: mul_5 open open open sep_5 open
+subblock: sep_5 0 open open open 4 open
+

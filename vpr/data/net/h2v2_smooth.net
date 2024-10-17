@@ -1,0 +1,195 @@
+.input LOD_1
+pinlist: LOD_1
+
+.input ADD_96
+pinlist: ADD_96
+
+.input ADD_104
+pinlist: ADD_104
+
+.input LOD_26
+pinlist: LOD_26
+
+.input LOD_37
+pinlist: LOD_37
+
+.input ADD_32
+pinlist: ADD_32
+
+.input ADD_76
+pinlist: ADD_76
+
+.input ADD_60
+pinlist: ADD_60
+
+.input ADD_89
+pinlist: ADD_89
+
+.input ADD_52
+pinlist: ADD_52
+
+.input ADD_68
+pinlist: ADD_68
+
+.input ADD_112
+pinlist: ADD_112
+
+.input ADD_44
+pinlist: ADD_44
+
+.input ADD_7
+pinlist: ADD_7
+
+.input LOD_12
+pinlist: LOD_12
+
+.input ADD_19
+pinlist: ADD_19
+
+.output out:STR_130
+pinlist: STR_130
+
+.clb ADD_48  # Only LUT used.
+pinlist: LOD_45 ADD_40 open open ADD_48 open
+subblock: ADD_48 0 1 open open 4 open
+
+.clb ADD_23  # Only LUT used.
+pinlist: ADD_15 LOD_20 open open ADD_23 open
+subblock: ADD_23 0 1 open open 4 open
+
+.clb ADD_15  # Only LUT used.
+pinlist: LOD_12 ADD_11 open open ADD_15 open
+subblock: ADD_15 0 1 open open 4 open
+
+.clb LOD_97  # Only LUT used.
+pinlist: ADD_96 open open open LOD_97 open
+subblock: LOD_97 0 open open open 4 open
+
+.clb ADD_126  # Only LUT used.
+pinlist: ADD_23 ADD_123 open open ADD_126 open
+subblock: ADD_126 0 1 open open 4 open
+
+.clb ADD_56  # Only LUT used.
+pinlist: ADD_48 LOD_53 open open ADD_56 open
+subblock: ADD_56 0 1 open open 4 open
+
+.clb ADD_100  # Only LUT used.
+pinlist: LOD_97 LOD_90 open open ADD_100 open
+subblock: ADD_100 0 1 open open 4 open
+
+.clb LOD_90  # Only LUT used.
+pinlist: ADD_89 open open open LOD_90 open
+subblock: LOD_90 0 open open open 4 open
+
+.clb ADD_80_AUX_1  # Only LUT used.
+pinlist: ADD_80 open open open ADD_80_AUX_1 open
+subblock: ADD_80_AUX_1 0 open open open 4 open
+
+.clb ADD_36  # Only LUT used.
+pinlist: LOD_33 LOD_26 open open ADD_36 open
+subblock: ADD_36 0 1 open open 4 open
+
+.clb ADD_80  # Only LUT used.
+pinlist: ADD_72 LOD_77 open open ADD_80 open
+subblock: ADD_80 0 1 open open 4 open
+
+.clb LOD_8  # Only LUT used.
+pinlist: ADD_7 open open open LOD_8 open
+subblock: LOD_8 0 open open open 4 open
+
+.clb LOD_61  # Only LUT used.
+pinlist: ADD_60 open open open LOD_61 open
+subblock: LOD_61 0 open open open 4 open
+
+.clb LOD_77  # Only LUT used.
+pinlist: ADD_76 open open open LOD_77 open
+subblock: LOD_77 0 open open open 4 open
+
+.clb LOD_45  # Only LUT used.
+pinlist: ADD_44 open open open LOD_45 open
+subblock: LOD_45 0 open open open 4 open
+
+.clb ADD_118_AUX_0  # Only LUT used.
+pinlist: ADD_83 ADD_80 open open ADD_118_AUX_0 open
+subblock: ADD_118_AUX_0 0 1 open open 4 open
+
+.clb MUL_122  # Only LUT used.
+pinlist: MUL_122_AUX_2 ADD_80_AUX_1 open open MUL_122 open
+subblock: MUL_122 0 1 open open 4 open
+
+.clb ADD_64  # Only LUT used.
+pinlist: ADD_56 LOD_61 open open ADD_64 open
+subblock: ADD_64 0 1 open open 4 open
+
+.clb LOD_20  # Only LUT used.
+pinlist: ADD_19 open open open LOD_20 open
+subblock: LOD_20 0 open open open 4 open
+
+.clb ADD_40  # Only LUT used.
+pinlist: LOD_37 ADD_36 open open ADD_40 open
+subblock: ADD_40 0 1 open open 4 open
+
+.clb ADD_11  # Only LUT used.
+pinlist: LOD_8 LOD_1 open open ADD_11 open
+subblock: ADD_11 0 1 open open 4 open
+
+.clb MUL_121  # Only LUT used.
+pinlist: ADD_23 open open open MUL_121 open
+subblock: MUL_121 0 open open open 4 open
+
+.clb ADD_83  # Only LUT used.
+pinlist: ADD_80_AUX_1 open open open ADD_83 open
+subblock: ADD_83 0 open open open 4 open
+
+.clb ADD_118  # Only LUT used.
+pinlist: ADD_116 ADD_118_AUX_0 open open ADD_118 open
+subblock: ADD_118 0 1 open open 4 open
+
+.clb ASR_128  # Only LUT used.
+pinlist: ADD_126 open open open ASR_128 open
+subblock: ASR_128 0 open open open 4 open
+
+.clb ADD_108  # Only LUT used.
+pinlist: ADD_100 LOD_105 open open ADD_108 open
+subblock: ADD_108 0 1 open open 4 open
+
+.clb LOD_33  # Only LUT used.
+pinlist: ADD_32 open open open LOD_33 open
+subblock: LOD_33 0 open open open 4 open
+
+.clb ADD_72  # Only LUT used.
+pinlist: LOD_69 ADD_64 open open ADD_72 open
+subblock: ADD_72 0 1 open open 4 open
+
+.clb LOD_105  # Only LUT used.
+pinlist: ADD_104 open open open LOD_105 open
+subblock: LOD_105 0 open open open 4 open
+
+.clb ADD_123  # Only LUT used.
+pinlist: MUL_121 MUL_122 open open ADD_123 open
+subblock: ADD_123 0 1 open open 4 open
+
+.clb MUL_122_AUX_2  # Only LUT used.
+pinlist: ADD_83 ADD_118 open open MUL_122_AUX_2 open
+subblock: MUL_122_AUX_2 0 1 open open 4 open
+
+.clb LOD_113  # Only LUT used.
+pinlist: ADD_112 open open open LOD_113 open
+subblock: LOD_113 0 open open open 4 open
+
+.clb ADD_116  # Only LUT used.
+pinlist: ADD_108 LOD_113 open open ADD_116 open
+subblock: ADD_116 0 1 open open 4 open
+
+.clb STR_130  # Only LUT used.
+pinlist: ASR_128 open open open STR_130 open
+subblock: STR_130 0 open open open 4 open
+
+.clb LOD_69  # Only LUT used.
+pinlist: ADD_68 open open open LOD_69 open
+subblock: LOD_69 0 open open open 4 open
+
+.clb LOD_53  # Only LUT used.
+pinlist: ADD_52 open open open LOD_53 open
+subblock: LOD_53 0 open open open 4 open
+

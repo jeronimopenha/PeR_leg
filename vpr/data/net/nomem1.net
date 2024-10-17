@@ -1,0 +1,25 @@
+.input const1
+pinlist: const1
+
+.input const5
+pinlist: const5
+
+.output out:output3
+pinlist: output3
+
+.clb mul0  # Only LUT used.
+pinlist: const1 add4 open open mul0 open
+subblock: mul0 0 1 open open 4 open
+
+.clb add2  # Only LUT used.
+pinlist: mul0 open open open add2 open
+subblock: add2 0 open open open 4 open
+
+.clb output3  # Only LUT used.
+pinlist: add2 open open open output3 open
+subblock: output3 0 open open open 4 open
+
+.clb add4  # Only LUT used.
+pinlist: const5 open open open add4 open
+subblock: add4 0 open open open 4 open
+

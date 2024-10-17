@@ -1,0 +1,229 @@
+.input rgb
+pinlist: rgb
+
+.input brighter
+pinlist: brighter
+
+.output out:out_0
+pinlist: out_0
+
+.clb switch_g  # Only LUT used.
+pinlist: and_g copyswitch_1 open open switch_g open
+subblock: switch_g 0 1 open open 4 open
+
+.clb mux_r0  # Only LUT used.
+pinlist: lt_r copymux_r0 open open mux_r0 open
+subblock: mux_r0 0 1 open open 4 open
+
+.clb mul_b0  # Only LUT used.
+pinlist: sub_b0 open open open mul_b0 open
+subblock: mul_b0 0 open open open 4 open
+
+.clb copyshr_g  # Only LUT used.
+pinlist: copyshr_r open open open copyshr_g open
+subblock: copyshr_g 0 open open open 4 open
+
+.clb shlreturn_r  # Only LUT used.
+pinlist: mux_r1 open open open shlreturn_r open
+subblock: shlreturn_r 0 open open open 4 open
+
+.clb mux_b1  # Only LUT used.
+pinlist: gt_b copymux_b1 open open mux_b1 open
+subblock: mux_b1 0 1 open open 4 open
+
+.clb or_r  # Only LUT used.
+pinlist: andreturn shlreturn_r open open or_r open
+subblock: or_r 0 1 open open 4 open
+
+.clb shlreturn_g  # Only LUT used.
+pinlist: mux_g1 open open open shlreturn_g open
+subblock: shlreturn_g 0 open open open 4 open
+
+.clb mux_r1  # Only LUT used.
+pinlist: gt_r copymux_r1 open open mux_r1 open
+subblock: mux_r1 0 1 open open 4 open
+
+.clb mul_g1  # Only LUT used.
+pinlist: switch_g open open open mul_g1 open
+subblock: mul_g1 0 open open open 4 open
+
+.clb copymux_b0  # Only LUT used.
+pinlist: merge_b open open open copymux_b0 open
+subblock: copymux_b0 0 open open open 4 open
+
+.clb sub_b0  # Only LUT used.
+pinlist: switch_b open open open sub_b0 open
+subblock: sub_b0 0 open open open 4 open
+
+.clb or_g  # Only LUT used.
+pinlist: shlreturn_g shlreturn_b open open or_g open
+subblock: or_g 0 1 open open 4 open
+
+.clb copymux_b1  # Only LUT used.
+pinlist: mux_b0 open open open copymux_b1 open
+subblock: copymux_b1 0 open open open 4 open
+
+.clb and_r  # Only LUT used.
+pinlist: shr_r open open open and_r open
+subblock: and_r 0 open open open 4 open
+
+.clb lt_g  # Only LUT used.
+pinlist: copymux_g0 open open open lt_g open
+subblock: lt_g 0 open open open 4 open
+
+.clb mul_g0  # Only LUT used.
+pinlist: sub_g0 open open open mul_g0 open
+subblock: mul_g0 0 open open open 4 open
+
+.clb shr_b  # Only LUT used.
+pinlist: copyshr_b open open open shr_b open
+subblock: shr_b 0 open open open 4 open
+
+.clb or_b  # Only LUT used.
+pinlist: or_r or_g open open or_b open
+subblock: or_b 0 1 open open 4 open
+
+.clb copymux_g1  # Only LUT used.
+pinlist: mux_g0 open open open copymux_g1 open
+subblock: copymux_g1 0 open open open 4 open
+
+.clb mul_r0  # Only LUT used.
+pinlist: sub_r0 open open open mul_r0 open
+subblock: mul_r0 0 open open open 4 open
+
+.clb copyswitch_0  # Only LUT used.
+pinlist: brighter open open open copyswitch_0 open
+subblock: copyswitch_0 0 open open open 4 open
+
+.clb copymux_r1  # Only LUT used.
+pinlist: mux_r0 open open open copymux_r1 open
+subblock: copymux_r1 0 open open open 4 open
+
+.clb merge_b  # Only LUT used.
+pinlist: mul_b1 sub_b1 open open merge_b open
+subblock: merge_b 0 1 open open 4 open
+
+.clb sub_r1  # Only LUT used.
+pinlist: mul_r0 open open open sub_r1 open
+subblock: sub_r1 0 open open open 4 open
+
+.clb lt_b  # Only LUT used.
+pinlist: copymux_b0 open open open lt_b open
+subblock: lt_b 0 open open open 4 open
+
+.clb merge_r  # Only LUT used.
+pinlist: mul_r1 sub_r1 open open merge_r open
+subblock: merge_r 0 1 open open 4 open
+
+.clb shr_r  # Only LUT used.
+pinlist: copyshr_r open open open shr_r open
+subblock: shr_r 0 open open open 4 open
+
+.clb merge_g  # Only LUT used.
+pinlist: mul_g1 sub_g1 open open merge_g open
+subblock: merge_g 0 1 open open 4 open
+
+.clb lt_r  # Only LUT used.
+pinlist: copymux_r0 open open open lt_r open
+subblock: lt_r 0 open open open 4 open
+
+.clb mux_g0  # Only LUT used.
+pinlist: copymux_g0 lt_g open open mux_g0 open
+subblock: mux_g0 0 1 open open 4 open
+
+.clb and_g  # Only LUT used.
+pinlist: shr_g open open open and_g open
+subblock: and_g 0 open open open 4 open
+
+.clb gt_g  # Only LUT used.
+pinlist: copymux_g1 open open open gt_g open
+subblock: gt_g 0 open open open 4 open
+
+.clb gt_r  # Only LUT used.
+pinlist: copymux_r1 open open open gt_r open
+subblock: gt_r 0 open open open 4 open
+
+.clb copymux_r0  # Only LUT used.
+pinlist: merge_r open open open copymux_r0 open
+subblock: copymux_r0 0 open open open 4 open
+
+.clb out_0  # Only LUT used.
+pinlist: or_b open open open out_0 open
+subblock: out_0 0 open open open 4 open
+
+.clb mux_b0  # Only LUT used.
+pinlist: copymux_b0 lt_b open open mux_b0 open
+subblock: mux_b0 0 1 open open 4 open
+
+.clb sub_r0  # Only LUT used.
+pinlist: switch_r open open open sub_r0 open
+subblock: sub_r0 0 open open open 4 open
+
+.clb sub_g0  # Only LUT used.
+pinlist: switch_g open open open sub_g0 open
+subblock: sub_g0 0 open open open 4 open
+
+.clb mul_r1  # Only LUT used.
+pinlist: switch_r open open open mul_r1 open
+subblock: mul_r1 0 open open open 4 open
+
+.clb sub_b1  # Only LUT used.
+pinlist: mul_b0 open open open sub_b1 open
+subblock: sub_b1 0 open open open 4 open
+
+.clb and_b  # Only LUT used.
+pinlist: shr_b open open open and_b open
+subblock: and_b 0 open open open 4 open
+
+.clb switch_b  # Only LUT used.
+pinlist: and_b copyswitch_1 open open switch_b open
+subblock: switch_b 0 1 open open 4 open
+
+.clb sub_g1  # Only LUT used.
+pinlist: mul_g0 open open open sub_g1 open
+subblock: sub_g1 0 open open open 4 open
+
+.clb copyshr_b  # Only LUT used.
+pinlist: copyshr_g open open open copyshr_b open
+subblock: copyshr_b 0 open open open 4 open
+
+.clb andreturn  # Only LUT used.
+pinlist: copyshr_b open open open andreturn open
+subblock: andreturn 0 open open open 4 open
+
+.clb gt_b  # Only LUT used.
+pinlist: copymux_b1 open open open gt_b open
+subblock: gt_b 0 open open open 4 open
+
+.clb shr_g  # Only LUT used.
+pinlist: copyshr_g open open open shr_g open
+subblock: shr_g 0 open open open 4 open
+
+.clb shlreturn_b  # Only LUT used.
+pinlist: mux_b1 open open open shlreturn_b open
+subblock: shlreturn_b 0 open open open 4 open
+
+.clb copyshr_r  # Only LUT used.
+pinlist: rgb open open open copyshr_r open
+subblock: copyshr_r 0 open open open 4 open
+
+.clb switch_r  # Only LUT used.
+pinlist: and_r copyswitch_0 open open switch_r open
+subblock: switch_r 0 1 open open 4 open
+
+.clb copymux_g0  # Only LUT used.
+pinlist: merge_g open open open copymux_g0 open
+subblock: copymux_g0 0 open open open 4 open
+
+.clb copyswitch_1  # Only LUT used.
+pinlist: copyswitch_0 open open open copyswitch_1 open
+subblock: copyswitch_1 0 open open open 4 open
+
+.clb mul_b1  # Only LUT used.
+pinlist: switch_b open open open mul_b1 open
+subblock: mul_b1 0 open open open 4 open
+
+.clb mux_g1  # Only LUT used.
+pinlist: gt_g copymux_g1 open open mux_g1 open
+subblock: mux_g1 0 1 open open 4 open
+

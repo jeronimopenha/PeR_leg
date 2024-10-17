@@ -1,0 +1,644 @@
+.input pi04
+pinlist: pi04
+
+.input pi42
+pinlist: pi42
+
+.input pi37
+pinlist: pi37
+
+.input pi03
+pinlist: pi03
+
+.input pi02
+pinlist: pi02
+
+.input pi41
+pinlist: pi41
+
+.input pi36
+pinlist: pi36
+
+.input pi39
+pinlist: pi39
+
+.input pi28
+pinlist: pi28
+
+.input pi21
+pinlist: pi21
+
+.input pi35
+pinlist: pi35
+
+.input pi20
+pinlist: pi20
+
+.input pi38
+pinlist: pi38
+
+.input pi12
+pinlist: pi12
+
+.input pi15
+pinlist: pi15
+
+.input pi16
+pinlist: pi16
+
+.input pi47
+pinlist: pi47
+
+.input pi17
+pinlist: pi17
+
+.input pi24
+pinlist: pi24
+
+.input pi33
+pinlist: pi33
+
+.input pi29
+pinlist: pi29
+
+.input pi26
+pinlist: pi26
+
+.input pi46
+pinlist: pi46
+
+.input pi13
+pinlist: pi13
+
+.input pi22
+pinlist: pi22
+
+.input pi09
+pinlist: pi09
+
+.input pi19
+pinlist: pi19
+
+.input pi34
+pinlist: pi34
+
+.input pi48
+pinlist: pi48
+
+.input pi11
+pinlist: pi11
+
+.input pi05
+pinlist: pi05
+
+.input pi30
+pinlist: pi30
+
+.input pi31
+pinlist: pi31
+
+.input pi00
+pinlist: pi00
+
+.input pi44
+pinlist: pi44
+
+.input pi27
+pinlist: pi27
+
+.input pi32
+pinlist: pi32
+
+.input pi18
+pinlist: pi18
+
+.input pi08
+pinlist: pi08
+
+.input pi07
+pinlist: pi07
+
+.input pi25
+pinlist: pi25
+
+.input pi10
+pinlist: pi10
+
+.input pi23
+pinlist: pi23
+
+.input pi14
+pinlist: pi14
+
+.input pi43
+pinlist: pi43
+
+.input pi01
+pinlist: pi01
+
+.input pi40
+pinlist: pi40
+
+.input pi45
+pinlist: pi45
+
+.input pi06
+pinlist: pi06
+
+.output out:po00
+pinlist: po00
+
+.output out:po01
+pinlist: po01
+
+.output out:po02
+pinlist: po02
+
+.output out:po05
+pinlist: po05
+
+.output out:po06
+pinlist: po06
+
+.output out:po07
+pinlist: po07
+
+.output out:po08
+pinlist: po08
+
+.output out:po09
+pinlist: po09
+
+.output out:po10
+pinlist: po10
+
+.output out:po11
+pinlist: po11
+
+.output out:po12
+pinlist: po12
+
+.output out:po13
+pinlist: po13
+
+.output out:po14
+pinlist: po14
+
+.output out:po15
+pinlist: po15
+
+.output out:po16
+pinlist: po16
+
+.output out:po17
+pinlist: po17
+
+.output out:po18
+pinlist: po18
+
+.output out:po19
+pinlist: po19
+
+.output out:po20
+pinlist: po20
+
+.output out:po21
+pinlist: po21
+
+.output out:po22
+pinlist: po22
+
+.output out:po23
+pinlist: po23
+
+.output out:po24
+pinlist: po24
+
+.output out:po25
+pinlist: po25
+
+.output out:po26
+pinlist: po26
+
+.output out:po28
+pinlist: po28
+
+.output out:po29
+pinlist: po29
+
+.output out:po30
+pinlist: po30
+
+.output out:po31
+pinlist: po31
+
+.output out:po32
+pinlist: po32
+
+.output out:po33
+pinlist: po33
+
+.output out:po34
+pinlist: po34
+
+.output out:po35
+pinlist: po35
+
+.output out:po36
+pinlist: po36
+
+.output out:po27
+pinlist: po27
+
+.clb new_n88_  # Only LUT used.
+pinlist: pi04 pi42 open open new_n88_ open
+subblock: new_n88_ 0 1 open open 4 open
+
+.clb new_n89_  # Only LUT used.
+pinlist: new_n88_ pi37 pi03 open new_n89_ open
+subblock: new_n89_ 0 1 2 open 4 open
+
+.clb new_n90_  # Only LUT used.
+pinlist: pi04 pi42 pi03 pi02 new_n90_ open
+subblock: new_n90_ 0 1 2 3 4 open
+
+.clb po00  # Only LUT used.
+pinlist: pi37 new_n89_ new_n90_ pi02 po00 open
+subblock: po00 0 1 2 3 4 open
+
+.clb new_n92_  # Only LUT used.
+pinlist: pi42 pi41 open open new_n92_ open
+subblock: new_n92_ 0 1 open open 4 open
+
+.clb new_n93_  # Only LUT used.
+pinlist: pi36 pi39 open open new_n93_ open
+subblock: new_n93_ 0 1 open open 4 open
+
+.clb new_n94_  # Only LUT used.
+pinlist: new_n93_ pi28 open open new_n94_ open
+subblock: new_n94_ 0 1 open open 4 open
+
+.clb new_n95_  # Only LUT used.
+pinlist: pi21 pi35 open open new_n95_ open
+subblock: new_n95_ 0 1 open open 4 open
+
+.clb new_n96_  # Only LUT used.
+pinlist: pi21 pi35 pi20 pi38 new_n96_ open
+subblock: new_n96_ 0 1 2 3 4 open
+
+.clb new_n97_  # Only LUT used.
+pinlist: pi21 pi35 pi38 pi12 new_n97_ open
+subblock: new_n97_ 0 1 2 3 4 open
+
+.clb new_n98_  # Only LUT used.
+pinlist: pi21 pi35 pi38 pi15 new_n98_ open
+subblock: new_n98_ 0 1 2 3 4 open
+
+.clb new_n99_  # Only LUT used.
+pinlist: new_n96_ new_n97_ new_n98_ open new_n99_ open
+subblock: new_n99_ 0 1 2 open 4 open
+
+.clb new_n100_  # Only LUT used.
+pinlist: pi21 pi35 pi38 pi16 new_n100_ open
+subblock: new_n100_ 0 1 2 3 4 open
+
+.clb new_n101_  # Only LUT used.
+pinlist: pi21 pi35 pi38 pi47 new_n101_ open
+subblock: new_n101_ 0 1 2 3 4 open
+
+.clb new_n102_  # Only LUT used.
+pinlist: new_n95_ pi38 new_n101_ pi17 new_n102_ open
+subblock: new_n102_ 0 1 2 3 4 open
+
+.clb new_n103_  # Only LUT used.
+pinlist: new_n100_ new_n102_ open open new_n103_ open
+subblock: new_n103_ 0 1 open open 4 open
+
+.clb po03  # Only LUT used.
+pinlist: pi04 new_n99_ new_n100_ new_n102_ po03 open
+subblock: po03 0 1 2 3 4 open
+
+.clb new_n105_  # Only LUT used.
+pinlist: new_n92_ new_n94_ po03 open new_n105_ open
+subblock: new_n105_ 0 1 2 open 4 open
+
+.clb po01  # Only LUT used.
+pinlist: pi42 pi41 new_n105_ pi24 po01 open
+subblock: po01 0 1 2 3 4 open
+
+.clb new_n107_  # Only LUT used.
+pinlist: pi04 pi37 pi03 pi02 new_n107_ open
+subblock: new_n107_ 0 1 2 3 4 open
+
+.clb po02  # Only LUT used.
+pinlist: pi42 new_n107_ pi33 open po02 open
+subblock: po02 0 1 2 open 4 open
+
+.clb po04  # Only LUT used.
+pinlist: pi42 new_n107_ pi33 pi29 po04 open
+subblock: po04 0 1 2 3 4 open
+
+.clb new_n110_  # Only LUT used.
+pinlist: pi33 pi29 pi26 pi46 new_n110_ open
+subblock: new_n110_ 0 1 2 3 4 open
+
+.clb new_n111_  # Only LUT used.
+pinlist: pi37 pi03 pi02 new_n110_ new_n111_ open
+subblock: new_n111_ 0 1 2 3 4 open
+
+.clb new_n112_  # Only LUT used.
+pinlist: pi42 pi24 pi13 pi22 new_n112_ open
+subblock: new_n112_ 0 1 2 3 4 open
+
+.clb new_n113_  # Only LUT used.
+pinlist: pi42 pi24 pi09 pi19 new_n113_ open
+subblock: new_n113_ 0 1 2 3 4 open
+
+.clb new_n114_  # Only LUT used.
+pinlist: pi42 pi24 new_n113_ pi34 new_n114_ open
+subblock: new_n114_ 0 1 2 3 4 open
+
+.clb new_n115_  # Only LUT used.
+pinlist: new_n88_ new_n111_ new_n112_ new_n114_ new_n115_ open
+subblock: new_n115_ 0 1 2 3 4 open
+
+.clb new_n116_  # Only LUT used.
+pinlist: pi21 pi38 new_n115_ open new_n116_ open
+subblock: new_n116_ 0 1 2 open 4 open
+
+.clb po05  # Only LUT used.
+pinlist: pi42 pi35 new_n116_ pi48 po05 open
+subblock: po05 0 1 2 3 4 open
+
+.clb po06  # Only LUT used.
+pinlist: pi04 pi42 pi11 pi05 po06 open
+subblock: po06 0 1 2 3 4 open
+
+.clb new_n119_  # Only LUT used.
+pinlist: pi42 new_n107_ pi33 pi29 new_n119_ open
+subblock: new_n119_ 0 1 2 3 4 open
+
+.clb new_n120_  # Only LUT used.
+pinlist: pi42 new_n107_ pi26 new_n119_ new_n120_ open
+subblock: new_n120_ 0 1 2 3 4 open
+
+.clb new_n121_  # Only LUT used.
+pinlist: pi42 pi33 po04 pi26 new_n121_ open
+subblock: new_n121_ 0 1 2 3 4 open
+
+.clb po07  # Only LUT used.
+pinlist: new_n120_ new_n121_ open open po07 open
+subblock: po07 0 1 open open 4 open
+
+.clb new_n123_  # Only LUT used.
+pinlist: pi42 pi29 pi26 pi46 new_n123_ open
+subblock: new_n123_ 0 1 2 3 4 open
+
+.clb new_n124_  # Only LUT used.
+pinlist: pi42 pi37 pi33 pi46 new_n124_ open
+subblock: new_n124_ 0 1 2 3 4 open
+
+.clb new_n125_  # Only LUT used.
+pinlist: new_n90_ new_n107_ pi29 pi26 new_n125_ open
+subblock: new_n125_ 0 1 2 3 4 open
+
+.clb new_n126_  # Only LUT used.
+pinlist: pi42 new_n107_ pi33 pi26 new_n126_ open
+subblock: new_n126_ 0 1 2 3 4 open
+
+.clb new_n127_  # Only LUT used.
+pinlist: new_n90_ pi29 pi46 new_n126_ new_n127_ open
+subblock: new_n127_ 0 1 2 3 4 open
+
+.clb new_n128_  # Only LUT used.
+pinlist: pi33 new_n125_ new_n127_ open new_n128_ open
+subblock: new_n128_ 0 1 2 open 4 open
+
+.clb po08  # Only LUT used.
+pinlist: new_n123_ new_n124_ new_n128_ open po08 open
+subblock: po08 0 1 2 open 4 open
+
+.clb po09  # Only LUT used.
+pinlist: pi42 pi35 new_n116_ pi30 po09 open
+subblock: po09 0 1 2 3 4 open
+
+.clb po10  # Only LUT used.
+pinlist: pi41 pi31 pi00 pi44 po10 open
+subblock: po10 0 1 2 3 4 open
+
+.clb new_n132_  # Only LUT used.
+pinlist: pi21 pi38 new_n115_ open new_n132_ open
+subblock: new_n132_ 0 1 2 open 4 open
+
+.clb po11  # Only LUT used.
+pinlist: pi42 pi35 new_n132_ pi27 po11 open
+subblock: po11 0 1 2 3 4 open
+
+.clb new_n134_  # Only LUT used.
+pinlist: new_n88_ new_n99_ new_n103_ open new_n134_ open
+subblock: new_n134_ 0 1 2 open 4 open
+
+.clb new_n135_  # Only LUT used.
+pinlist: pi41 new_n94_ new_n134_ pi32 new_n135_ open
+subblock: new_n135_ 0 1 2 3 4 open
+
+.clb new_n136_  # Only LUT used.
+pinlist: pi42 pi32 pi18 open new_n136_ open
+subblock: new_n136_ 0 1 2 open 4 open
+
+.clb new_n137_  # Only LUT used.
+pinlist: pi42 pi41 new_n94_ pi18 new_n137_ open
+subblock: new_n137_ 0 1 2 3 4 open
+
+.clb po12  # Only LUT used.
+pinlist: new_n135_ new_n136_ new_n137_ open po12 open
+subblock: po12 0 1 2 open 4 open
+
+.clb po13  # Only LUT used.
+pinlist: pi42 pi22 pi08 open po13 open
+subblock: po13 0 1 2 open 4 open
+
+.clb new_n140_  # Only LUT used.
+pinlist: pi42 pi41 new_n94_ pi07 new_n140_ open
+subblock: new_n140_ 0 1 2 3 4 open
+
+.clb new_n141_  # Only LUT used.
+pinlist: new_n88_ new_n99_ new_n103_ pi07 new_n141_ open
+subblock: new_n141_ 0 1 2 3 4 open
+
+.clb new_n142_  # Only LUT used.
+pinlist: new_n92_ new_n93_ new_n134_ pi07 new_n142_ open
+subblock: new_n142_ 0 1 2 3 4 open
+
+.clb new_n143_  # Only LUT used.
+pinlist: pi42 new_n93_ open open new_n143_ open
+subblock: new_n143_ 0 1 open open 4 open
+
+.clb new_n144_  # Only LUT used.
+pinlist: pi42 new_n93_ pi28 open new_n144_ open
+subblock: new_n144_ 0 1 2 open 4 open
+
+.clb new_n145_  # Only LUT used.
+pinlist: pi42 pi41 new_n93_ pi28 new_n145_ open
+subblock: new_n145_ 0 1 2 3 4 open
+
+.clb new_n146_  # Only LUT used.
+pinlist: pi41 new_n134_ pi07 new_n144_ new_n146_ open
+subblock: new_n146_ 0 1 2 3 4 open
+
+.clb po14  # Only LUT used.
+pinlist: new_n140_ new_n142_ new_n145_ new_n146_ po14 open
+subblock: po14 0 1 2 3 4 open
+
+.clb new_n148_  # Only LUT used.
+pinlist: new_n92_ pi36 pi39 new_n141_ new_n148_ open
+subblock: new_n148_ 0 1 2 3 4 open
+
+.clb new_n149_  # Only LUT used.
+pinlist: pi42 pi41 po03 pi07 new_n149_ open
+subblock: new_n149_ 0 1 2 3 4 open
+
+.clb new_n150_  # Only LUT used.
+pinlist: pi42 pi36 pi39 new_n149_ new_n150_ open
+subblock: new_n150_ 0 1 2 3 4 open
+
+.clb po15  # Only LUT used.
+pinlist: new_n148_ new_n150_ open open po15 open
+subblock: po15 0 1 open open 4 open
+
+.clb po16  # Only LUT used.
+pinlist: pi42 pi24 pi13 pi25 po16 open
+subblock: po16 0 1 2 3 4 open
+
+.clb po17  # Only LUT used.
+pinlist: pi42 pi41 new_n105_ pi10 po17 open
+subblock: po17 0 1 2 3 4 open
+
+.clb new_n154_  # Only LUT used.
+pinlist: pi04 new_n95_ pi20 pi17 new_n154_ open
+subblock: new_n154_ 0 1 2 3 4 open
+
+.clb new_n155_  # Only LUT used.
+pinlist: new_n94_ po03 pi32 new_n154_ new_n155_ open
+subblock: new_n155_ 0 1 2 3 4 open
+
+.clb new_n156_  # Only LUT used.
+pinlist: pi42 pi41 open open new_n156_ open
+subblock: new_n156_ 0 1 open open 4 open
+
+.clb po18  # Only LUT used.
+pinlist: new_n105_ pi22 new_n155_ new_n156_ po18 open
+subblock: po18 0 1 2 3 4 open
+
+.clb po19  # Only LUT used.
+pinlist: pi04 pi42 new_n111_ pi23 po19 open
+subblock: po19 0 1 2 3 4 open
+
+.clb po20  # Only LUT used.
+pinlist: new_n92_ pi36 new_n141_ new_n149_ po20 open
+subblock: po20 0 1 2 3 4 open
+
+.clb new_n160_  # Only LUT used.
+pinlist: new_n93_ pi32 open open new_n160_ open
+subblock: new_n160_ 0 1 open open 4 open
+
+.clb new_n161_  # Only LUT used.
+pinlist: new_n92_ pi28 new_n141_ new_n160_ new_n161_ open
+subblock: new_n161_ 0 1 2 3 4 open
+
+.clb new_n162_  # Only LUT used.
+pinlist: pi42 pi28 pi32 new_n149_ new_n162_ open
+subblock: new_n162_ 0 1 2 3 4 open
+
+.clb po21  # Only LUT used.
+pinlist: pi32 new_n143_ new_n161_ new_n162_ po21 open
+subblock: po21 0 1 2 3 4 open
+
+.clb po22  # Only LUT used.
+pinlist: pi44 pi14 open open po22 open
+subblock: po22 0 1 open open 4 open
+
+.clb new_n165_  # Only LUT used.
+pinlist: new_n92_ new_n93_ pi28 new_n141_ new_n165_ open
+subblock: new_n165_ 0 1 2 3 4 open
+
+.clb po23  # Only LUT used.
+pinlist: pi28 new_n143_ new_n149_ new_n165_ po23 open
+subblock: po23 0 1 2 3 4 open
+
+.clb po24  # Only LUT used.
+pinlist: pi41 pi13 pi19 pi44 po24 open
+subblock: po24 0 1 2 3 4 open
+
+.clb po25  # Only LUT used.
+pinlist: pi42 pi41 pi34 pi00 po25 open
+subblock: po25 0 1 2 3 4 open
+
+.clb new_n169_  # Only LUT used.
+pinlist: pi24 pi22 pi44 open new_n169_ open
+subblock: new_n169_ 0 1 2 open 4 open
+
+.clb po26  # Only LUT used.
+pinlist: pi04 new_n111_ new_n169_ open po26 open
+subblock: po26 0 1 2 open 4 open
+
+.clb po28  # Only LUT used.
+pinlist: pi41 pi13 pi31 pi44 po28 open
+subblock: po28 0 1 2 3 4 open
+
+.clb new_n172_  # Only LUT used.
+pinlist: new_n95_ new_n115_ open open new_n172_ open
+subblock: new_n172_ 0 1 open open 4 open
+
+.clb po29  # Only LUT used.
+pinlist: pi42 pi38 new_n172_ pi43 po29 open
+subblock: po29 0 1 2 3 4 open
+
+.clb new_n174_  # Only LUT used.
+pinlist: pi42 pi24 pi34 pi01 new_n174_ open
+subblock: new_n174_ 0 1 2 3 4 open
+
+.clb po30  # Only LUT used.
+pinlist: new_n113_ new_n174_ open open po30 open
+subblock: po30 0 1 open open 4 open
+
+.clb po31  # Only LUT used.
+pinlist: pi42 pi38 new_n172_ pi40 po31 open
+subblock: po31 0 1 2 3 4 open
+
+.clb po32  # Only LUT used.
+pinlist: pi11 pi44 open open po32 open
+subblock: po32 0 1 open open 4 open
+
+.clb po33  # Only LUT used.
+pinlist: pi42 pi35 new_n132_ pi45 po33 open
+subblock: po33 0 1 2 3 4 open
+
+.clb po34  # Only LUT used.
+pinlist: pi04 pi42 pi03 open po34 open
+subblock: po34 0 1 2 open 4 open
+
+.clb new_n180_  # Only LUT used.
+pinlist: new_n111_ new_n155_ pi06 open new_n180_ open
+subblock: new_n180_ 0 1 2 open 4 open
+
+.clb new_n181_  # Only LUT used.
+pinlist: pi04 new_n105_ pi06 open new_n181_ open
+subblock: new_n181_ 0 1 2 open 4 open
+
+.clb new_n182_  # Only LUT used.
+pinlist: new_n105_ new_n111_ new_n156_ pi06 new_n182_ open
+subblock: new_n182_ 0 1 2 3 4 open
+
+.clb po35  # Only LUT used.
+pinlist: new_n180_ new_n181_ new_n182_ open po35 open
+subblock: po35 0 1 2 open 4 open
+
+.clb po36  # Only LUT used.
+pinlist: pi04 pi42 pi03 pi02 po36 open
+subblock: po36 0 1 2 3 4 open
+
+.clb po27  # Only LUT used.
+pinlist: pi19 open open open po27 open
+subblock: po27 0 open open open 4 open
+

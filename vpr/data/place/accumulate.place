@@ -1,0 +1,25 @@
+Netlist file: data/net/accumulate.net   Architecture file: arch/k4-n1.xml
+Array size: 4 x 4 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+const1		0	2	2	#0
+const3		0	4	2	#1
+const6		5	2	1	#2
+const8		5	3	1	#3
+const12		0	1	0	#4
+out:store15	2	0	2	#5
+out:output17	4	0	0	#6
+add0		1	2	0	#7
+mul2		1	4	0	#8
+load4		1	3	0	#9
+add5		4	2	0	#10
+mul7		4	3	0	#11
+load9		3	3	0	#12
+add10		2	3	0	#13
+mul11		1	1	0	#14
+load13		2	2	0	#15
+mul14		3	2	0	#16
+store15		2	1	0	#17
+add16		3	1	0	#18
+output17	4	1	0	#19
