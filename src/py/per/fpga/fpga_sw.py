@@ -20,96 +20,124 @@ class FPGAPeR(PeR):
         self.get_in_out_pos()
 
     def per_sa(self, n_exec: int = 1):
-        # report
-        report = {}
-
-        t_min = 0.001
-        for exec_id in range(n_exec):
-            # First I will start the placement of matrix
-            placement = [None for _ in range(self.graph.n_cells)]
-
-            possible_base_cells = [i for i in range(self.graph.n_cells)]
-            possible_base_cells = [cell for cell in possible_base_cells if cell not in self.possible_pos_in_out]
-            # Creating the n2c matrix
-            n2c = [None for _ in range(self.graph.n_nodes)]
-
-            # now I need to place every note in the placement matrix
-            # self.place_input_output_nodes(n2c, placement)
-            for n in self.graph.get_nodes_idx(self.graph.nodes_str):
-                if n2c[n] is None:
-                    while True:
-                        if n in self.graph.input_nodes_idx or n in self.graph.output_nodes_idx:
-                            ch = random.choice(self.possible_pos_in_out)
-                        else:
-                            ch = random.choice(possible_base_cells)
-                        if placement[ch] is None:
-                            placement[ch] = n
-                            n2c[n] = ch
-                            break
-            t = 100
-
-            while t >= t_min:
-                for cell_a in range(self.graph.n_cells):
-                    for cell_b in range(self.graph.n_cells):
-                        if (
-                                cell_a == cell_b or
-                                (cell_a in self.possible_pos_in_out and cell_b not in self.possible_pos_in_out) or
-                                (cell_b in self.possible_pos_in_out and cell_a not in self.possible_pos_in_out)
-                        ):
-                            continue
-                        a = placement[cell_a]
-                        b = placement[cell_b]
-                        if a == None and b == None:
-                            continue
-                        cost_a_b, cost_a_a, cost_b_b, cost_b_a = self.graph.get_cost(n2c, a, b, cell_a, cell_b)
-
-                        cost_a = cost_a_a + cost_b_a
-                        cost_b = cost_a_b + cost_b_b
-
-                        try:
-                            valor = exp((-1 * (cost_a - cost_b) / t))
-                        except:
-                            valor = -1.0
-
-                        rnd = random.random()
-
-                        if cost_a < cost_b or rnd <= valor:
-                            if a is not None:
-                                n2c[a] = cell_b
-
-                            if b is not None:
-                                n2c[b] = cell_a
-                            placement[cell_a], placement[cell_b] = placement[cell_b], placement[cell_a]
-                            # print(t, actual_cost)
-                            # self.write_dot('/home/jeronimo/GIT/PeR/reports/fpga/', f"_placed.dot",
-                            #               placement, n2c)
-                    t *= 0.999
-            h, tc = self.calc_distance(n2c, self.graph.edges_idx, self.graph.n_cells_sqrt, self.graph.n_nodes)
-            report[exec_id] = {
-                'exec_id': exec_id,
-                'dot_name': self.graph.dot_name,
-                'dot_path': self.graph.dot_path,
-                'placer': 'sa',
-                'edges_algorithm': "direct",
-                'total_cost': tc,
-                'histogram': h,
-                'longest_path_cost': self.calc_distance(n2c,
-                                                        self.graph.get_edges_idx(self.graph.longest_path),
-                                                        self.graph.n_cells_sqrt, self.graph.n_nodes)[1],
-                'longest_path': self.graph.longest_path,
-                'longest_path_idx': self.graph.get_nodes_idx(self.graph.longest_path_nodes),
-                'nodes_idx': self.graph.nodes_to_idx,
-                'placement': placement,
-                'n2c': n2c,
-            }
-            a = 1
-        return report
-
-    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY, num_workers=4):
         # Initialize multiprocessing
         manager = multiprocessing.Manager()
         report = manager.dict()  # Shared report dictionary
         lock = multiprocessing.Lock()  # Lock for synchronized access
+        num_workers = multiprocessing.cpu_count()
+
+        # List to hold process references
+        processes = []
+
+        # Spawn processes for each exec_id
+        for exec_id in range(n_exec):
+            p = multiprocessing.Process(target=FPGAPeR.per_sa_worker, args=(self, exec_id, report, lock))
+            processes.append(p)
+            p.start()
+
+            # Limit the number of concurrent workers
+            if len(processes) >= num_workers:
+                for proc in processes:
+                    proc.join()  # Wait for all workers to finish
+                processes = []  # Reset the list for the next batch
+
+        # Wait for the remaining processes to finish
+        for proc in processes:
+            proc.join()
+        rep = dict(report)
+        return rep
+
+    def per_sa_worker(cls, exec_id, report, lock):
+        # report
+        t_min = 0.001
+        t = 100
+
+        # First I will start the placement of matrix
+        placement = [None for _ in range(cls.graph.n_cells)]
+
+        possible_base_cells = [i for i in range(cls.graph.n_cells)]
+        possible_base_cells = [cell for cell in possible_base_cells if cell not in cls.possible_pos_in_out]
+        # Creating the n2c matrix
+        n2c = [None for _ in range(cls.graph.n_nodes)]
+
+        # now I need to place every note in the placement matrix
+        # self.place_input_output_nodes(n2c, placement)
+        for n in cls.graph.get_nodes_idx(cls.graph.nodes_str):
+            if n2c[n] is None:
+                while True:
+                    if n in cls.graph.input_nodes_idx or n in cls.graph.output_nodes_idx:
+                        ch = random.choice(cls.possible_pos_in_out)
+                    else:
+                        ch = random.choice(possible_base_cells)
+                    if placement[ch] is None:
+                        placement[ch] = n
+                        n2c[n] = ch
+                        break
+
+        while t >= t_min:
+            for cell_a in range(cls.graph.n_cells):
+                for cell_b in range(cls.graph.n_cells):
+                    if (
+                            cell_a == cell_b or
+                            (cell_a in cls.possible_pos_in_out and cell_b not in cls.possible_pos_in_out) or
+                            (cell_b in cls.possible_pos_in_out and cell_a not in cls.possible_pos_in_out)
+                    ):
+                        continue
+                    a = placement[cell_a]
+                    b = placement[cell_b]
+                    if a == None and b == None:
+                        continue
+                    cost_a_b, cost_a_a, cost_b_b, cost_b_a = cls.graph.get_cost(n2c, a, b, cell_a, cell_b)
+
+                    cost_a = cost_a_a + cost_b_a
+                    cost_b = cost_a_b + cost_b_b
+
+                    try:
+                        valor = exp((-1 * (cost_a - cost_b) / t))
+                    except:
+                        valor = -1.0
+
+                    rnd = random.random()
+
+                    if cost_a < cost_b or rnd <= valor:
+                        if a is not None:
+                            n2c[a] = cell_b
+
+                        if b is not None:
+                            n2c[b] = cell_a
+                        placement[cell_a], placement[cell_b] = placement[cell_b], placement[cell_a]
+                        # print(t, actual_cost)
+                        # self.write_dot('/home/jeronimo/GIT/PeR/reports/fpga/', f"_placed.dot",
+                        #               placement, n2c)
+                t *= 0.999
+        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+
+        # Write to the shared report with a lock
+        with lock:
+            report[exec_id] = {
+                'exec_id': exec_id,
+                'dot_name': cls.graph.dot_name,
+                'dot_path': cls.graph.dot_path,
+                'placer': 'sa',
+                'edges_algorithm': "direct",
+                'total_cost': tc,
+                'histogram': h,
+                'longest_path_cost': cls.calc_distance(n2c,
+                                                        cls.graph.get_edges_idx(cls.graph.longest_path),
+                                                        cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
+                'longest_path': cls.graph.longest_path,
+                'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+                'nodes_idx': cls.graph.nodes_to_idx,
+                'placement': placement,
+                'n2c': n2c,
+            }
+
+    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
+        # Initialize multiprocessing
+        manager = multiprocessing.Manager()
+        report = manager.dict()  # Shared report dictionary
+        lock = multiprocessing.Lock()  # Lock for synchronized access
+        num_workers = multiprocessing.cpu_count()
 
         # List to hold process references
         processes = []
@@ -131,10 +159,6 @@ class FPGAPeR(PeR):
             proc.join()
 
         return dict(report)
-
-    @staticmethod
-    def per_yoto_worker(self, edges_alg, report, lock):
-        pass
 
     def per_yott(self):
         pass

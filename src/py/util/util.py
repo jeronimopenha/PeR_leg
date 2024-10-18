@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 import json
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 class Util:
@@ -32,3 +32,9 @@ class Util:
             if os.path.splitext(file_name)[1] == file_extension
         ]
         return files_list_by_extension
+
+    @staticmethod
+    def read_json(file: str) -> Dict:
+        with open(file) as p_file:
+            content_dic = json.load(p_file)
+        return content_dic
