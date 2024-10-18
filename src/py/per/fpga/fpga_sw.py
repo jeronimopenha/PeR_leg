@@ -123,13 +123,14 @@ class FPGAPeR(PeR):
                 'total_cost': tc,
                 'histogram': h,
                 'longest_path_cost': cls.calc_distance(n2c,
-                                                        cls.graph.get_edges_idx(cls.graph.longest_path),
-                                                        cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
+                                                       cls.graph.get_edges_idx(cls.graph.longest_path),
+                                                       cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
                 'longest_path': cls.graph.longest_path,
                 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
                 'nodes_idx': cls.graph.nodes_to_idx,
                 'placement': placement,
                 'n2c': n2c,
+                'edges': cls.graph.edges_idx,
             }
 
     def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
@@ -207,7 +208,9 @@ class FPGAPeR(PeR):
                     bi = ai + ij[0]
                     bj = aj + ij[1]
                     if (bi < 0 or bi >= cls.graph.n_cells_sqrt or
-                            bj < 0 or bj >= cls.graph.n_cells_sqrt):
+                            bj < 0 or bj >= cls.graph.n_cells_sqrt or
+                            (bi == 0 and (bj == 0 or bj == cls.graph.n_cells_sqrt)) or
+                            (bj == 0 and (bi == 0 or bi == cls.graph.n_cells_sqrt))):
                         continue
                     ch = bi * cls.graph.n_cells_sqrt + bj
                     if ch in cls.possible_pos_in_out:
@@ -243,8 +246,11 @@ class FPGAPeR(PeR):
                 'longest_path': cls.graph.longest_path,
                 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
                 'nodes_idx': cls.graph.nodes_to_idx,
+                'input_nodes':cls.graph.input_nodes_idx,
+                'output_nodes': cls.graph.output_nodes_idx,
                 'placement': placement,
                 'n2c': n2c,
+                'edges': cls.graph.edges_idx,
             }
 
     def write_dot(self, path, file_name, placement, n2c):
