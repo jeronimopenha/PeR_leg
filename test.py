@@ -37,4 +37,4 @@ if __name__ == '__main__':
                 file_name_prefix = f"sa"
                 Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
     Util.generate_pic()
-    Util.generate_blif_vpr()
+    #Util.generate_net_vpr()

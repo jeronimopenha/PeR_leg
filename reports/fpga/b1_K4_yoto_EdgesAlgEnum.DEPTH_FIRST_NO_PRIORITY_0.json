@@ -1,0 +1,130 @@
+{
+    "exec_id": 0,
+    "dot_name": "b1_K4",
+    "dot_path": "/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/b1_K4.dot",
+    "placer": "yoto",
+    "edges_algorithm": "DEPTH_FIRST_NO_PRIORITY",
+    "total_cost": 20,
+    "histogram": {
+        "1": 4,
+        "2": 2,
+        "3": 4
+    },
+    "longest_path_cost": 5,
+    "longest_path": [
+        [
+            "Node5",
+            "Node9"
+        ],
+        [
+            "Node9",
+            "Node1"
+        ]
+    ],
+    "longest_path_idx": [
+        1,
+        4,
+        8
+    ],
+    "nodes_idx": {
+        "Node4": 0,
+        "Node5": 1,
+        "Node6": 2,
+        "Node7": 3,
+        "Node9": 4,
+        "Node10": 5,
+        "Node11": 6,
+        "Node12": 7,
+        "Node1": 8,
+        "Node2": 9,
+        "Node3": 10
+    },
+    "input_nodes": [
+        8,
+        9,
+        10
+    ],
+    "output_nodes": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "placement": [
+        1,
+        10,
+        9,
+        null,
+        3,
+        6,
+        7,
+        null,
+        null,
+        4,
+        5,
+        8,
+        null,
+        0,
+        2,
+        null
+    ],
+    "n2c": [
+        13,
+        0,
+        14,
+        4,
+        9,
+        10,
+        5,
+        6,
+        11,
+        2,
+        1
+    ],
+    "edges": [
+        [
+            7,
+            0
+        ],
+        [
+            4,
+            1
+        ],
+        [
+            5,
+            2
+        ],
+        [
+            6,
+            3
+        ],
+        [
+            8,
+            4
+        ],
+        [
+            9,
+            4
+        ],
+        [
+            8,
+            5
+        ],
+        [
+            9,
+            5
+        ],
+        [
+            10,
+            5
+        ],
+        [
+            10,
+            6
+        ],
+        [
+            10,
+            7
+        ]
+    ]
+}

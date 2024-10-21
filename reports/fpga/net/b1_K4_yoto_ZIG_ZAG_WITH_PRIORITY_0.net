@@ -1,0 +1,53 @@
+.input 8
+pinlist:  8
+
+.input 9
+pinlist:  9
+
+.input 10
+pinlist:  10
+
+.output out:0
+pinlist:  0
+
+.output out:1
+pinlist:  1
+
+.output out:2
+pinlist:  2
+
+.output out:3
+pinlist:  3
+
+.clb 0  # Only LUT used.
+pinlist: 7 open open open 0 open
+subblock: 0 0 open open open 4 open
+
+.clb 1  # Only LUT used.
+pinlist: 4 open open open 1 open
+subblock: 1 0 open open open 4 open
+
+.clb 2  # Only LUT used.
+pinlist: 5 open open open 2 open
+subblock: 2 0 open open open 4 open
+
+.clb 3  # Only LUT used.
+pinlist: 6 open open open 3 open
+subblock: 3 0 open open open 4 open
+
+.clb 4  # Only LUT used.
+pinlist: 8 9 open open 4 open
+subblock: 4 0 1 open open 4 open
+
+.clb 5  # Only LUT used.
+pinlist: 8 9 10 open 5 open
+subblock: 5 0 1 2 open 4 open
+
+.clb 6  # Only LUT used.
+pinlist: 10 open open open 6 open
+subblock: 6 0 open open open 4 open
+
+.clb 7  # Only LUT used.
+pinlist: 10 open open open 7 open
+subblock: 7 0 open open open 4 open
+

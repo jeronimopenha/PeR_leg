@@ -131,6 +131,7 @@ class FPGAPeR(PeR):
                 'placement': placement,
                 'n2c': n2c,
                 'edges': cls.graph.edges_idx,
+                #'neigh': cls.graph.neighbors_idx
             }
 
     def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
@@ -160,9 +161,6 @@ class FPGAPeR(PeR):
             proc.join()
 
         return dict(report)
-
-    def per_yott(self):
-        pass
 
     def per_yoto_worker(cls, exec_id, edges_alg, report, lock):
         # Prepare the report
@@ -246,12 +244,16 @@ class FPGAPeR(PeR):
                 'longest_path': cls.graph.longest_path,
                 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
                 'nodes_idx': cls.graph.nodes_to_idx,
-                'input_nodes':cls.graph.input_nodes_idx,
+                'input_nodes': cls.graph.input_nodes_idx,
                 'output_nodes': cls.graph.output_nodes_idx,
                 'placement': placement,
                 'n2c': n2c,
                 'edges': cls.graph.edges_idx,
+                #'neigh': cls.graph.neighbors_idx
             }
+
+    def per_yott(self):
+        pass
 
     def write_dot(self, path, file_name, placement, n2c):
         path = Util.verify_path(path)

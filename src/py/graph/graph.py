@@ -3,9 +3,7 @@ import networkx as nx
 import random
 from math import ceil, sqrt
 from collections import defaultdict
-from typing import List, Tuple, Dict, Any
-
-from networkx.classes import is_empty
+from typing import List, Tuple, Dict
 
 
 class Graph:
@@ -29,6 +27,7 @@ class Graph:
         self.output_nodes: list = []
         self.n_cells: int = 0
         self.n_cells_sqrt: int = 0
+        self.clear_graph_perfumaries()
         self.get_nodes_vars()
         self.get_edges_vars()
         self.calc_cells_qty()
@@ -39,6 +38,13 @@ class Graph:
         self.longest_path = []
         self.longest_path_nodes = []
         self.longest_path_and_length()
+
+    def clear_graph_perfumaries(self):
+        g = self.g.copy()
+        for edge in self.g.edges:
+            if "invis" in self.g.edges[edge]["style"]:
+                g.remove_edge(edge[0], edge[1])
+        self.g = g
 
     def get_nodes_vars(self):
         n_list = list(self.g.nodes)
@@ -289,13 +295,10 @@ class Graph:
     def longest_path_and_length(self):
         nodes = []
         length = 0
-        for o in self.output_nodes:
-            for i in self.input_nodes_str:
-                path_tmp = nx.dijkstra_path(self.g, o, i)
-                length_tmp = nx.dijkstra_path_length(self.g, o, i)
-                if length_tmp > length:
-                    length = length_tmp
-                    nodes = path_tmp
+        if nx.is_directed_acyclic_graph(self.g):
+            # Find the longest path in the DAG
+            nodes = nx.dag_longest_path(self.g)
+            length = nx.dag_longest_path_length(self.g)
         self.longest_path_nodes = nodes
         path = []
         for i in range(0, len(nodes) - 1):

@@ -18,12 +18,11 @@ class GraphFGA(Graph):
             self.idx_to_nodes[nodes_counter] = node
             # Because of the charcteristics of ABC dot graph,
             # I needed to invert the edges
-            if len(list(self.g.succ[node])) == 0:
+            if len(list(self.g.successors(node))) == 0:
                 self.input_nodes_str.append(node)
-            elif len(list(self.g.pred[node])) == 0:
+            elif len(list(self.g.predecessors(node))) == 0:
                 self.output_nodes.append(node)
             nodes_counter += 1
-
     def get_edges_vars(self):
         for e in list(self.g.edges):
             # Because of the characteristics of ABC dot graph,
