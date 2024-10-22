@@ -94,8 +94,8 @@ class Graph:
         while total_in_out > n_border_cells - 4:
             n_cells_base_sqrt += 1
             n_border_cells = (n_cells_base_sqrt) * 4 + 1
-        # n_cells_base = pow(n_cells_base_sqrt, 2)
-        total_cells = pow(n_cells_base_sqrt + 1, 2)  # n_cells_base + n_border_cells
+        n_cells_base = pow(n_cells_base_sqrt, 2)
+        total_cells =  n_cells_base + n_border_cells
         self.n_cells_sqrt = ceil(sqrt(total_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
 

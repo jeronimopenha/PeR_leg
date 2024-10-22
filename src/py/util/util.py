@@ -162,7 +162,7 @@ class Util:
         with open(place_path + place_name, 'w') as place_file:
             # Cabeçalho do arquivo PLACE
             place_file.write(f"Netlist file: net/{net_name}  Architecture file: arch/k4-n1.xml\n")
-            place_file.write(f"Array size: {grid_width-1} x {grid_height-1} logic blocks \n")
+            place_file.write(f"Array size: {grid_width-2} x {grid_height-2} logic blocks \n")
             place_file.write("#block name\tX\tY\tsubblk\tblock_number\n")
             place_file.write("#----------\t--\t--\t------\t------------\n")
 

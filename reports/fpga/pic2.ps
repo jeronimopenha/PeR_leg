@@ -1,0 +1,350 @@
+%!PS-Adobe-1.0
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%BoundingBox: 36 234 576 542
+%%EndComments
+/censhow   %draw a centered string
+ { moveto               % move to proper spot
+   dup stringwidth pop  % get x length of string
+   -2 div               % Proper left start
+   yoff rmoveto         % Move left that much and down half font height
+   show newpath } def   % show the string
+
+/setfontsize     % set font to desired size and compute centering yoff
+ { /Helvetica findfont
+   exch scalefont
+   setfont         % Font size set ...
+
+   0 0 moveto      % Get vertical centering offset
+   (Xg) true charpath
+   flattenpath pathbbox
+   /ascent exch def pop -1 mul /descent exch def pop
+   newpath
+   descent ascent sub 2 div /yoff exch def } def
+
+% Next two lines for debugging only.
+/str 20 string def
+/pnum {str cvs print (  ) print} def
+/drawline      % draw a line from (x2,y2) to (x1,y1)
+ { moveto lineto stroke } def
+
+/rect          % outline a rectangle 
+ { /y2 exch def /x2 exch def /y1 exch def /x1 exch def
+   x1 y1 moveto
+   x2 y1 lineto
+   x2 y2 lineto
+   x1 y2 lineto
+   closepath } def
+
+/drawrect      % draw outline of a rectanagle
+ { rect stroke } def
+
+/fillrect      % fill in a rectanagle
+ { rect fill } def
+
+/drawarc { arc stroke } def           % draw an arc
+/drawarcn { arcn stroke } def         % draw an arc in the opposite direction
+
+%Fill a counterclockwise or clockwise arc sector, respectively.
+/fillarc { moveto currentpoint 5 2 roll arc closepath fill } def
+/fillarcn { moveto currentpoint 5 2 roll arcn closepath fill } def
+
+/fillpoly { 3 1 roll moveto         % move to first point
+   2 exch 1 exch {pop lineto} for   % line to all other points
+   closepath fill } def
+
+%Color Definitions:
+/white { 1 setgray } def
+/black { 0 setgray } def
+/grey55 { .55 setgray } def
+/grey75 { .75 setgray } def
+/blue { 0 0 1 setrgbcolor } def
+/green { 0 1 0 setrgbcolor } def
+/yellow { 1 1 0 setrgbcolor } def
+/cyan { 0 1 1 setrgbcolor } def
+/red { 1 0 0 setrgbcolor } def
+/darkgreen { 0 0.5 0 setrgbcolor } def
+/magenta { 1 0 1 setrgbcolor } def
+/bisque { 1 0.9 0.8 setrgbcolor } def
+/lightblue { 0.7 0.8 0.9 setrgbcolor } def
+/thistle { 0.8 0.7 0.8 setrgbcolor } def
+/plum {0.8 0.6 0.8 setrgbcolor } def
+/khaki { 1 0.9 0.6 setrgbcolor } def
+/coral { 1 0.7 0.6 setrgbcolor } def
+/turquoise { 0.5 0.6 0.9 setrgbcolor } def
+/mediumpurple { 0.7 0.6 0.7 setrgbcolor } def
+/darkslateblue { 0.7 0.5 0.7 setrgbcolor } def
+/darkkhaki { 0.9 0.7 0.4 setrgbcolor } def
+
+%Solid and dashed line definitions:
+/linesolid {[] 0 setdash} def
+/linedashed {[3 3] 0 setdash} def
+
+%%EndProlog
+%%Page: 1 1
+
+black
+linesolid
+0 setlinewidth
+20 setfontsize
+12 setfontsize
+(Routing succeeded with a channel width factor of 8.) 306.00 241.77 censhow
+20 setfontsize
+36.00 249.77 576.00 542.23 rect clip newpath
+
+white
+clippath fill
+
+black
+white
+208.38 328.88 220.58 341.09 fillrect
+black
+linedashed
+208.38 328.88 220.58 341.09 drawrect
+white
+208.38 359.39 220.58 371.59 fillrect
+black
+208.38 359.39 220.58 371.59 drawrect
+grey75
+208.38 389.90 220.58 402.10 fillrect
+black
+linesolid
+208.38 389.90 220.58 402.10 drawrect
+white
+208.38 420.41 220.58 432.61 fillrect
+black
+linedashed
+208.38 420.41 220.58 432.61 drawrect
+white
+208.38 450.91 220.58 463.12 fillrect
+black
+208.38 450.91 220.58 463.12 drawrect
+white
+238.88 298.38 251.09 310.58 fillrect
+black
+238.88 298.38 251.09 310.58 drawrect
+grey75
+238.88 328.88 251.09 341.09 fillrect
+black
+linesolid
+238.88 328.88 251.09 341.09 drawrect
+(18) 244.98 334.98 censhow
+(.clb) 244.98 331.93 censhow
+grey75
+238.88 359.39 251.09 371.59 fillrect
+black
+238.88 359.39 251.09 371.59 drawrect
+(8) 244.98 365.49 censhow
+(.clb) 244.98 362.44 censhow
+grey75
+238.88 389.90 251.09 402.10 fillrect
+black
+238.88 389.90 251.09 402.10 drawrect
+(1) 244.98 396.00 censhow
+(.clb) 244.98 392.95 censhow
+white
+238.88 420.41 251.09 432.61 fillrect
+black
+linedashed
+238.88 420.41 251.09 432.61 drawrect
+(.clb) 244.98 423.46 censhow
+white
+238.88 450.91 251.09 463.12 fillrect
+black
+238.88 450.91 251.09 463.12 drawrect
+(.clb) 244.98 453.96 censhow
+white
+238.88 481.42 251.09 493.62 fillrect
+black
+238.88 481.42 251.09 493.62 drawrect
+grey75
+269.39 298.38 281.59 310.58 fillrect
+black
+linesolid
+269.39 298.38 281.59 310.58 drawrect
+(22) 275.49 304.48 censhow
+grey75
+269.39 328.88 281.59 341.09 fillrect
+black
+269.39 328.88 281.59 341.09 drawrect
+(19) 275.49 334.98 censhow
+(.clb) 275.49 331.93 censhow
+grey75
+269.39 359.39 281.59 371.59 fillrect
+black
+269.39 359.39 281.59 371.59 drawrect
+(16) 275.49 365.49 censhow
+(.clb) 275.49 362.44 censhow
+grey75
+269.39 389.90 281.59 402.10 fillrect
+black
+269.39 389.90 281.59 402.10 drawrect
+(3) 275.49 396.00 censhow
+(.clb) 275.49 392.95 censhow
+white
+269.39 420.41 281.59 432.61 fillrect
+black
+linedashed
+269.39 420.41 281.59 432.61 drawrect
+(.clb) 275.49 423.46 censhow
+white
+269.39 450.91 281.59 463.12 fillrect
+black
+269.39 450.91 281.59 463.12 drawrect
+(.clb) 275.49 453.96 censhow
+white
+269.39 481.42 281.59 493.62 fillrect
+black
+269.39 481.42 281.59 493.62 drawrect
+grey75
+299.90 298.38 312.10 310.58 fillrect
+black
+linesolid
+299.90 298.38 312.10 310.58 drawrect
+(23) 306.00 304.48 censhow
+grey75
+299.90 328.88 312.10 341.09 fillrect
+black
+299.90 328.88 312.10 341.09 drawrect
+(6) 306.00 334.98 censhow
+(.clb) 306.00 331.93 censhow
+grey75
+299.90 359.39 312.10 371.59 fillrect
+black
+299.90 359.39 312.10 371.59 drawrect
+(12) 306.00 365.49 censhow
+(.clb) 306.00 362.44 censhow
+grey75
+299.90 389.90 312.10 402.10 fillrect
+black
+299.90 389.90 312.10 402.10 drawrect
+(10) 306.00 396.00 censhow
+(.clb) 306.00 392.95 censhow
+grey75
+299.90 420.41 312.10 432.61 fillrect
+black
+299.90 420.41 312.10 432.61 drawrect
+(4) 306.00 426.51 censhow
+(.clb) 306.00 423.46 censhow
+white
+299.90 450.91 312.10 463.12 fillrect
+black
+linedashed
+299.90 450.91 312.10 463.12 drawrect
+(.clb) 306.00 453.96 censhow
+white
+299.90 481.42 312.10 493.62 fillrect
+black
+299.90 481.42 312.10 493.62 drawrect
+grey75
+330.41 298.38 342.61 310.58 fillrect
+black
+linesolid
+330.41 298.38 342.61 310.58 drawrect
+(24) 336.51 304.48 censhow
+grey75
+330.41 328.88 342.61 341.09 fillrect
+black
+330.41 328.88 342.61 341.09 drawrect
+(15) 336.51 334.98 censhow
+(.clb) 336.51 331.93 censhow
+grey75
+330.41 359.39 342.61 371.59 fillrect
+black
+330.41 359.39 342.61 371.59 drawrect
+(11) 336.51 365.49 censhow
+(.clb) 336.51 362.44 censhow
+grey75
+330.41 389.90 342.61 402.10 fillrect
+black
+330.41 389.90 342.61 402.10 drawrect
+(14) 336.51 396.00 censhow
+(.clb) 336.51 392.95 censhow
+grey75
+330.41 420.41 342.61 432.61 fillrect
+black
+330.41 420.41 342.61 432.61 drawrect
+(9) 336.51 426.51 censhow
+(.clb) 336.51 423.46 censhow
+white
+330.41 450.91 342.61 463.12 fillrect
+black
+linedashed
+330.41 450.91 342.61 463.12 drawrect
+(.clb) 336.51 453.96 censhow
+white
+330.41 481.42 342.61 493.62 fillrect
+black
+330.41 481.42 342.61 493.62 drawrect
+white
+360.91 298.38 373.12 310.58 fillrect
+black
+360.91 298.38 373.12 310.58 drawrect
+grey75
+360.91 328.88 373.12 341.09 fillrect
+black
+linesolid
+360.91 328.88 373.12 341.09 drawrect
+(7) 367.02 334.98 censhow
+(.clb) 367.02 331.93 censhow
+grey75
+360.91 359.39 373.12 371.59 fillrect
+black
+360.91 359.39 373.12 371.59 drawrect
+(17) 367.02 365.49 censhow
+(.clb) 367.02 362.44 censhow
+grey75
+360.91 389.90 373.12 402.10 fillrect
+black
+360.91 389.90 373.12 402.10 drawrect
+(5) 367.02 396.00 censhow
+(.clb) 367.02 392.95 censhow
+grey75
+360.91 420.41 373.12 432.61 fillrect
+black
+360.91 420.41 373.12 432.61 drawrect
+(13) 367.02 426.51 censhow
+(.clb) 367.02 423.46 censhow
+grey75
+360.91 450.91 373.12 463.12 fillrect
+black
+360.91 450.91 373.12 463.12 drawrect
+(2) 367.02 457.02 censhow
+(.clb) 367.02 453.96 censhow
+white
+360.91 481.42 373.12 493.62 fillrect
+black
+linedashed
+360.91 481.42 373.12 493.62 drawrect
+white
+391.42 328.88 403.62 341.09 fillrect
+black
+391.42 328.88 403.62 341.09 drawrect
+grey75
+391.42 359.39 403.62 371.59 fillrect
+black
+linesolid
+391.42 359.39 403.62 371.59 drawrect
+(20) 397.52 365.49 censhow
+white
+391.42 389.90 403.62 402.10 fillrect
+black
+linedashed
+391.42 389.90 403.62 402.10 drawrect
+grey75
+391.42 420.41 403.62 432.61 fillrect
+black
+linesolid
+391.42 420.41 403.62 432.61 drawrect
+(21) 397.52 426.51 censhow
+white
+391.42 450.91 403.62 463.12 fillrect
+black
+linedashed
+391.42 450.91 403.62 463.12 drawrect
+3 setlinewidth
+linesolid
+0 setlinewidth
+showpage
+
+%%Trailer

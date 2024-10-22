@@ -230,6 +230,8 @@ class FPGAPeR(PeR):
                 if placed:
                     flag = True
                     break
+            if not placed:
+                a = 1
 
         h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
@@ -362,7 +364,7 @@ class FPGAPeR(PeR):
         in_out = []
         for i in range(1, self.graph.n_cells_sqrt - 1):
             in_out.append(i)
-        for i in range(1,self.graph.n_cells_sqrt-1):
+        for i in range(1, self.graph.n_cells_sqrt - 1):
             in_out.append(i + self.graph.n_cells - self.graph.n_cells_sqrt)
         for i in range(self.graph.n_cells_sqrt, self.graph.n_cells - self.graph.n_cells_sqrt, self.graph.n_cells_sqrt):
             in_out.append(i)
