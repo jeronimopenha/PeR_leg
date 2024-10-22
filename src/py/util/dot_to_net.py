@@ -1,0 +1,85 @@
+import sys
+import networkx as nx
+
+from src.py.graph.graph import Graph
+from src.py.util.util import Util
+
+
+def create_statistic(path_dot):
+    g = nx.DiGraph(nx.drawing.nx_pydot.read_dot(path_dot))
+
+    cont_input = 0
+    cont_output = 0
+    cont_no = 0
+    cont_edges = 0
+    cont_fanout = 0
+
+    for no in list(g.nodes()):
+        cont_no += 1
+        cont_edges += g.out_degree(no)
+        if g.in_degree(no) == 0:
+            cont_input += 1
+        if g.out_degree(no) == 0:
+            cont_output += 1
+        cont_fanout += g.out_degree(no)
+
+    print("INPUT      = %d" % (cont_input))
+    print("OUTPUT     = %d" % (cont_output))
+    print("NODES      = %d" % (cont_no))
+    print("EDGES      = %d" % (cont_edges))
+    print("FANOUT AVG = %.2f" % (cont_fanout / (cont_no - cont_output)))
+
+
+def create_net(dot_origin, dot_destiny):
+    # print(path_net)
+    arq = open(dot_destiny, 'w')
+
+    graph = Graph(dot_origin, "dot")
+
+    with open(dot_destiny, 'w') as net_file:
+
+        out_nodes = []
+        pred_out_nodes = []
+
+        for no in list(graph.g.nodes()):
+            a = graph.g.in_degree(no)
+            b = graph.g.out_degree(no)
+            if graph.g.out_degree(no) == 0:
+                for pre in list(graph.g.predecessors(no)):
+                    net_file.write(f".output out:{pre}\n")
+                    net_file.write(f"pinlist:  {pre}\n\n")
+                    out_nodes.append(no)
+                    pred_out_nodes.append(pre)
+
+            elif graph.g.in_degree(no) == 0:
+                net_file.write(f".input {no}\n")
+                net_file.write(f"pinlist:  {no}\n\n")
+            else:
+                net_file.write(f".clb {no}  # Only LUT used.\n")
+                net_file.write('pinlist:')
+                i = 0
+                for pre in list(graph.g.predecessors(no)):
+                    net_file.write(f" {pre}")
+                    i += 1
+                net_file.write(' open' * (4 - i))
+                net_file.write(f" {no}")
+                net_file.write(' open\n')
+
+                net_file.write(f"subblock: {no}")
+                for j in range(i):
+                    net_file.write(f" {j}")
+                net_file.write(' open' * (4 - i))
+                net_file.write(' 4 open\n\n')
+
+    net_file.close()
+
+
+if __name__ == "__main__":
+
+    root_path = Util.verify_path(Util.get_project_root())
+    base_path_origin = root_path + "benchmarks/fpga/dot_IWLS93/"
+    base_path_destiny = root_path + "benchmarks/fpga/net_IWLS93/"
+
+    files = Util.get_files_list_by_extension(base_path_origin, ".dot")
+    for file in files:
+        create_net(file[0], f"{base_path_destiny}{file[1][:-4]}.net")
