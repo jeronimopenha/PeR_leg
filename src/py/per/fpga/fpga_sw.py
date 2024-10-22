@@ -4,14 +4,14 @@ import random
 
 from math import exp
 
-from src.py.graph.graph_fpga import GraphFGA
+from src.py.graph.graph import Graph
 from src.py.per.base.per import PeR, EdgesAlgEnum
 
 from src.py.util.util import Util
 
 
 class FPGAPeR(PeR):
-    def __init__(self, graph: GraphFGA):
+    def __init__(self, graph: Graph):
         super().__init__()
         # random.seed(0)
         self.graph = graph
@@ -131,10 +131,10 @@ class FPGAPeR(PeR):
                 'placement': placement,
                 'n2c': n2c,
                 'edges': cls.graph.edges_idx,
-                #'neigh': cls.graph.neighbors_idx
+                # 'neigh': cls.graph.neighbors_idx
             }
 
-    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY):
+    def per_yoto(self, n_exec: int = 1, edges_alg: EdgesAlgEnum = EdgesAlgEnum.ZIG_ZAG):
         # Initialize multiprocessing
         manager = multiprocessing.Manager()
         report = manager.dict()  # Shared report dictionary
@@ -174,16 +174,15 @@ class FPGAPeR(PeR):
             ed_str = cls.graph.get_edges_depth_first()
         elif edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
             ed_str = cls.graph.get_edges_depth_first(with_priority=True)
-        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY:
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
             ed_str = cls.graph.get_edges_zigzag()[0]
-        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
-            ed_str = cls.graph.get_edges_zigzag(with_priority=True)[0]
+
         ed = cls.graph.get_edges_idx(ed_str)
 
         # Input and output position placement
         if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-            cls.place_input_output_nodes(n2c, placement)
-        elif edges_alg == EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY or edges_alg == EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY:
+            cls.place_input_nodes(n2c, placement)
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
             ch = cls.choose_position(placement, cls.possible_pos_in_out)
             placement[ch] = ed[0][0]
             n2c[ed[0][0]] = ch
@@ -205,10 +204,16 @@ class FPGAPeR(PeR):
                 for ij in line:
                     bi = ai + ij[0]
                     bj = aj + ij[1]
-                    if (bi < 0 or bi >= cls.graph.n_cells_sqrt or
-                            bj < 0 or bj >= cls.graph.n_cells_sqrt or
-                            (bi == 0 and (bj == 0 or bj == cls.graph.n_cells_sqrt)) or
-                            (bj == 0 and (bi == 0 or bi == cls.graph.n_cells_sqrt))):
+                    if (
+                            bi < 0 or
+                            bi >= cls.graph.n_cells_sqrt or
+                            bj < 0 or
+                            bj >= cls.graph.n_cells_sqrt or
+                            (bi == 0 and bj == 0) or
+                            (bi == (cls.graph.n_cells_sqrt - 1) and bj == (cls.graph.n_cells_sqrt - 1)) or
+                            (bi == (cls.graph.n_cells_sqrt - 1) and bj == 0) or
+                            (bi == 0 and bj >= (cls.graph.n_cells_sqrt - 1))
+                    ):
                         continue
                     ch = bi * cls.graph.n_cells_sqrt + bj
                     if ch in cls.possible_pos_in_out:
@@ -249,7 +254,7 @@ class FPGAPeR(PeR):
                 'placement': placement,
                 'n2c': n2c,
                 'edges': cls.graph.edges_idx,
-                #'neigh': cls.graph.neighbors_idx
+                # 'neigh': cls.graph.neighbors_idx
             }
 
     def per_yott(self):
@@ -283,7 +288,7 @@ class FPGAPeR(PeR):
         str_out = dot_head
 
         input_nodes = [self.graph.nodes_to_idx[node] for node in self.graph.input_nodes_str]
-        output_nodes = [self.graph.nodes_to_idx[node] for node in self.graph.output_nodes]
+        output_nodes = [self.graph.nodes_to_idx[node] for node in self.graph.output_nodes_str]
 
         for i in range(self.graph.n_cells):
             if placement[i] is None:
@@ -311,12 +316,12 @@ class FPGAPeR(PeR):
             f.write(str_out)
         f.close()
 
-    def place_input_output_nodes(self, n2c, placement):
-        output_nodes = self.graph.get_nodes_idx(self.graph.output_nodes)
+    def place_input_nodes(self, n2c, placement):
+        input_nodes = self.graph.get_nodes_idx(self.graph.input_nodes_str)
         i = 0
-        while i < len(output_nodes):
-            if i < len(output_nodes):
-                n = output_nodes[i]
+        while i < len(input_nodes):
+            if i < len(input_nodes):
+                n = input_nodes[i]
                 while True:
                     ch = self.choose_position(placement, self.possible_pos_in_out)
                     if placement[ch] is None:
@@ -333,7 +338,7 @@ class FPGAPeR(PeR):
         for e in edges:
             if counter >= n_nodes - 1:
                 break
-            dist = GraphFGA.get_manhattan_distance(n2c[e[0]], n2c[e[1]], cells_sqrt)
+            dist = Graph.get_manhattan_distance(n2c[e[0]], n2c[e[1]], cells_sqrt)
             if dist not in distances.keys():
                 distances[dist] = 0
             distances[dist] += 1
@@ -355,9 +360,9 @@ class FPGAPeR(PeR):
 
     def get_in_out_pos(self):
         in_out = []
-        for i in range(self.graph.n_cells_sqrt):
+        for i in range(1, self.graph.n_cells_sqrt - 1):
             in_out.append(i)
-        for i in range(self.graph.n_cells_sqrt):
+        for i in range(1,self.graph.n_cells_sqrt-1):
             in_out.append(i + self.graph.n_cells - self.graph.n_cells_sqrt)
         for i in range(self.graph.n_cells_sqrt, self.graph.n_cells - self.graph.n_cells_sqrt, self.graph.n_cells_sqrt):
             in_out.append(i)

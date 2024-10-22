@@ -103,63 +103,39 @@ class Util:
             plt.close()
 
     @staticmethod
-    def generate_place_vpr(data, base_path):
-
-        f_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.place"
+    def generate_vpr_data(graph: Graph, data, net_path, place_path):
+        net_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.net"
         nodes_idx = data["nodes_idx"]
-        placement = data["placement"]
-        n2c = data["n2c"]
-        output_nodes = data["output_nodes"]
-        # Definindo o tamanho da matriz (grid) da FPGA
-        grid_height = grid_width = int(sqrt(len(data["placement"])))
-
-        # Abrindo o arquivo .place para escrita
-        with open(base_path + f_name, 'w') as place_file:
-            # Cabeçalho do arquivo PLACE
-            place_file.write(f"# Placement file generated from {data['dot_name']}\n")
-            place_file.write(f"# FPGA grid: {grid_width}x{grid_height}\n")
-            place_file.write("# Block Name\tX\tY\tSubtile\n")
-
-            # Para cada bloco lógico (nó), escreva a posição de colocação (placement)
-            for node, idx in nodes_idx.items():
-                cell = n2c[idx]
-                if placement[cell] is not None:
-                    # Calculando as coordenadas X, Y com base no índice do placement
-                    x = cell % grid_width
-                    y = cell // grid_width
-                    sub_tile = 0  # Subtile pode ser 0 se não for relevante
-                    if idx in output_nodes:
-                        place_file.write(f"out:{idx}\t{x}\t{y}\t{sub_tile}\n")
-                    else:
-                        place_file.write(f"{idx}\t{x}\t{y}\t{sub_tile}\n")
-
-    @staticmethod
-    def generate_net_vpr(fpga_graph: Graph, data, base_path):
-        f_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.net"
-        input_nodes = data["input_nodes"]
-        output_nodes = data["output_nodes"]
-        nodes_idx = data["nodes_idx"]
-
         # Abrindo o arquivo .blif para escrita
-        with open(base_path + f_name, 'w') as net_file:
+        with open(net_path + net_name, 'w') as net_file:
             # Cabeçalho do arquivo BLIF
-            #net_file.write(f"# BLIF file generated from {data['dot_name']}\n")
-            #net_file.write(f".model {data['dot_name']}\n\n")
+            # net_file.write(f"# BLIF file generated from {data['dot_name']}\n")
+            # net_file.write(f".model {data['dot_name']}\n\n")
 
-            # Declaração das entradas e saídas
-            for in_ in input_nodes:
-                net_file.write(f".input {in_}\n")
-                net_file.write(f"pinlist:  {in_}\n\n")
-            for out_ in output_nodes:
-                net_file.write(f".output out:{out_}\n")
-                net_file.write(f"pinlist:  {out_}\n\n")
+            out_nodes = []
+            pred_out_nodes = []
 
-            for no in list(fpga_graph.g.nodes()):
-                if fpga_graph.g.out_degree(no) != 0 and "Level" not in no and "title" not in no:
+            for no in list(graph.g.nodes()):
+                a = graph.g.in_degree(no)
+                b = graph.g.out_degree(no)
+                if "Level" in no and "title" in no:
+                    continue
+                elif graph.g.out_degree(no) == 0:
+                    for pre in list(graph.g.predecessors(no)):
+                        pre_ = nodes_idx[pre]
+                        net_file.write(f".output out:{pre_}\n")
+                        net_file.write(f"pinlist:  {pre_}\n\n")
+                        out_nodes.append(nodes_idx[no])
+                        pred_out_nodes.append(nodes_idx[pre])
+
+                elif graph.g.in_degree(no) == 0:
+                    net_file.write(f".input {nodes_idx[no]}\n")
+                    net_file.write(f"pinlist:  {nodes_idx[no]}\n\n")
+                else:
                     net_file.write(f".clb {nodes_idx[no]}  # Only LUT used.\n")
                     net_file.write('pinlist:')
                     i = 0
-                    for pre in list(fpga_graph.g.successors(no)):
+                    for pre in list(graph.g.predecessors(no)):
                         net_file.write(f" {nodes_idx[pre]}")
                         i += 1
                     net_file.write(' open' * (4 - i))
@@ -171,4 +147,37 @@ class Util:
                         net_file.write(f" {j}")
                     net_file.write(' open' * (4 - i))
                     net_file.write(' 4 open\n\n')
+
         net_file.close()
+
+        place_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.place"
+        nodes_idx = data["nodes_idx"]
+        placement = data["placement"]
+        n2c = data["n2c"]
+        output_nodes = data["output_nodes"]
+        # Definindo o tamanho da matriz (grid) da FPGA
+        grid_height = grid_width = int(sqrt(len(data["placement"])))
+
+        # Abrindo o arquivo .place para escrita
+        with open(place_path + place_name, 'w') as place_file:
+            # Cabeçalho do arquivo PLACE
+            place_file.write(f"Netlist file: net/{net_name}  Architecture file: arch/k4-n1.xml\n")
+            place_file.write(f"Array size: {grid_width-1} x {grid_height-1} logic blocks \n")
+            place_file.write("#block name\tX\tY\tsubblk\tblock_number\n")
+            place_file.write("#----------\t--\t--\t------\t------------\n")
+
+            # Para cada bloco lógico (nó), escreva a posição de colocação (placement)
+            counter = 0
+            for node, idx in nodes_idx.items():
+                cell = n2c[idx]
+                if placement[cell] is not None:
+                    # Calculando as coordenadas X, Y com base no índice do placement
+                    x = cell % grid_width
+                    y = cell // grid_width
+                    subblk = 0  # Subtile pode ser 0 se não for relevante
+                    if idx in output_nodes:
+                        i = out_nodes.index(idx)
+                        place_file.write(f"out:{pred_out_nodes[i]}\t{x}\t{y}\t{subblk}\t#{counter}\n")
+                    else:
+                        place_file.write(f"{idx}\t{x}\t{y}\t{subblk}\t#{counter}\n")
+                    counter += 1

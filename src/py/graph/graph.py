@@ -24,26 +24,31 @@ class Graph:
         self.dag_neighbors_str: Dict[int, List[int]] = defaultdict(list)
         self.dag_neighbors_idx: Dict[int, List[int]] = defaultdict(list)
         self.input_nodes_str: list = []
-        self.output_nodes: list = []
+        self.output_nodes_str: list = []
         self.n_cells: int = 0
         self.n_cells_sqrt: int = 0
-        self.clear_graph_perfumaries()
+        self.clear_graph()
         self.get_nodes_vars()
         self.get_edges_vars()
         self.calc_cells_qty()
         self.n_nodes = len(self.nodes_str)
         self.input_nodes_idx = self.get_nodes_idx(self.input_nodes_str)
-        self.output_nodes_idx = self.get_nodes_idx(self.output_nodes)
+        self.output_nodes_idx = self.get_nodes_idx(self.output_nodes_str)
         self.edges_idx = self.get_edges_idx(self.edges_str)
         self.longest_path = []
         self.longest_path_nodes = []
         self.longest_path_and_length()
 
-    def clear_graph_perfumaries(self):
+    def clear_graph(self):
         g = self.g.copy()
         for edge in self.g.edges:
             if "invis" in self.g.edges[edge]["style"]:
                 g.remove_edge(edge[0], edge[1])
+            else:
+                # correct the edges
+                g.add_edge(edge[1], edge[0])
+                g.remove_edge(edge[0], edge[1])
+
         self.g = g
 
     def get_nodes_vars(self):
@@ -58,7 +63,7 @@ class Graph:
             self.nodes_to_idx[node] = nodes_counter
             self.idx_to_nodes[nodes_counter] = node
             if len(list(self.g.succ[node])) == 0:
-                self.output_nodes.append(node)
+                self.output_nodes_str.append(node)
             elif len(list(self.g.pred[node])) == 0:
                 self.input_nodes_str.append(node)
             nodes_counter += 1
@@ -81,16 +86,16 @@ class Graph:
     def calc_cells_qty(self):
         # n_cells to contain input/output nodes in the borders
         # and base cells to contain base nodes
-        total_in_out = len(self.output_nodes) + len(self.input_nodes_str)
+        total_in_out = len(self.output_nodes_str) + len(self.input_nodes_str)
         n_base_nodes = len(self.nodes_str) - total_in_out
         n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
         n_cells_base = pow(n_cells_base_sqrt, 2)
         n_border_cells = (n_cells_base_sqrt) * 4 + 1
-        while total_in_out > n_border_cells:
+        while total_in_out > n_border_cells - 4:
             n_cells_base_sqrt += 1
             n_border_cells = (n_cells_base_sqrt) * 4 + 1
-        n_cells_base = pow(n_cells_base_sqrt, 2)
-        total_cells = n_cells_base + n_border_cells
+        # n_cells_base = pow(n_cells_base_sqrt, 2)
+        total_cells = pow(n_cells_base_sqrt + 1, 2)  # n_cells_base + n_border_cells
         self.n_cells_sqrt = ceil(sqrt(total_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
 
@@ -133,12 +138,12 @@ class Graph:
 
     # FIXME
     def get_edges_depth_first(self, make_shuffle: bool = True, with_priority: bool = False):
-        output_list = self.output_nodes
+        input_list = self.input_nodes_str
 
         if make_shuffle:
-            random.shuffle(output_list)
+            random.shuffle(input_list)
 
-        stack = output_list.copy()
+        stack = input_list.copy()
         edges = []
         visited = []
         while stack:
@@ -166,9 +171,9 @@ class Graph:
 
         return edges
 
-    def get_edges_zigzag(self, make_shuffle: bool = True, with_priority: bool = False):
+    def get_edges_zigzag(self, make_shuffle: bool = True):
 
-        output_list = [[node, 'IN'] for node in self.output_nodes]
+        output_list = [[node, 'IN'] for node in self.output_nodes_str]
 
         if make_shuffle:
             random.shuffle(output_list)
@@ -185,19 +190,6 @@ class Graph:
             for node in self.g.nodes():
                 random.shuffle(fan_in[node])
                 random.shuffle(fan_out[node])
-
-                if with_priority:
-                    in_index_map = {fan: idx for idx, fan in enumerate(fan_in[node])}
-                    out_index_map = {fan: idx for idx, fan in enumerate(fan_out[node])}
-
-                    for fan in fan_in[node]:
-                        if fan in self.longest_path_nodes:
-                            idx = in_index_map[fan]
-                            fan_in[node][-1], fan_in[node][idx] = fan_in[node][idx], fan_in[node][-1]
-                    for fan in fan_out[node]:
-                        if fan in self.longest_path_nodes:
-                            idx = out_index_map[fan]
-                            fan_out[node][-1], fan_out[node][idx] = fan_out[node][idx], fan_out[node][-1]
 
         while stack:
             a, direction = stack.pop(0)  # get the top1

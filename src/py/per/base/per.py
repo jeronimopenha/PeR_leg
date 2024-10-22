@@ -17,7 +17,6 @@ class PeR(ABC):
 
 
 class EdgesAlgEnum(Enum):
-    ZIG_ZAG_NO_PRIORITY: int = auto()
+    ZIG_ZAG: int = auto()
     DEPTH_FIRST_NO_PRIORITY: int = auto()
-    ZIG_ZAG_WITH_PRIORITY: int = auto()
     DEPTH_FIRST_WITH_PRIORITY: int = auto()
