@@ -91,7 +91,7 @@ class Graph:
         n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
         n_cells_base = pow(n_cells_base_sqrt, 2)
         n_border_cells = (n_cells_base_sqrt) * 4
-        while total_in_out > n_border_cells - 4:
+        while total_in_out > n_border_cells :
             n_cells_base_sqrt += 2
             n_border_cells = (n_cells_base_sqrt) * 4
         n_cells_base = pow(n_cells_base_sqrt, 2)

@@ -179,25 +179,28 @@ class FPGAPeR(PeR):
 
         ed = cls.graph.get_edges_idx(ed_str)
 
+        nodes = []
         # Input and output position placement
         if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-            cls.place_input_nodes(n2c, placement)
+            nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
         elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
-            ch = cls.choose_position(placement, cls.possible_pos_in_out)
-            placement[ch] = ed[0][0]
-            n2c[ed[0][0]] = ch
+            nodes = cls.graph.get_nodes_idx(cls.graph.output_nodes_str)
+        cls.place_nodes(n2c, placement, nodes)
 
         # Yoto algorithm logic
-        for e in ed:
+        for i,e in enumerate(ed):
             a = e[0]
             b = e[1]
             if n2c[b] is not None:
                 continue
             if n2c[a] is None:
                 a = 1
-            ai = n2c[a] // cls.graph.n_cells_sqrt
-            aj = n2c[a] % cls.graph.n_cells_sqrt
-
+            try:
+                ai = n2c[a] // cls.graph.n_cells_sqrt
+                aj = n2c[a] % cls.graph.n_cells_sqrt
+            except:
+                print(cls.graph.dot_name)
+                exit()
             flag = False
             for l_n, line in enumerate(distances_cells):
                 placed = False
@@ -232,8 +235,11 @@ class FPGAPeR(PeR):
                     break
             if not placed:
                 a = 1
-
-        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+        try:
+            h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+        except:
+            print(cls.graph.dot_name)
+            exit()
 
         # Write to the shared report with a lock
         with lock:
@@ -318,12 +324,11 @@ class FPGAPeR(PeR):
             f.write(str_out)
         f.close()
 
-    def place_input_nodes(self, n2c, placement):
-        input_nodes = self.graph.get_nodes_idx(self.graph.input_nodes_str)
+    def place_nodes(self, n2c, placement, nodes):
         i = 0
-        while i < len(input_nodes):
-            if i < len(input_nodes):
-                n = input_nodes[i]
+        while i < len(nodes):
+            if i < len(nodes):
+                n = nodes[i]
                 while True:
                     ch = self.choose_position(placement, self.possible_pos_in_out)
                     if placement[ch] is None:
