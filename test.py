@@ -6,8 +6,8 @@ from src.py.util.util import Util
 
 if __name__ == '__main__':
     root_path = Util.get_project_root()
-    #files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
-    files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
+    files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
+    #files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/xor5_K4.dot", "xor5_K4.dot"]]
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/z4ml_K4.dot", "z4ml_K4.dot"]]
     for file in files:
@@ -15,13 +15,15 @@ if __name__ == '__main__':
         # print(nx.is_directed_acyclic_graph(g.g)) is a DAG
         per = FPGAPeR(g)
 
+        disconnected_components = list(nx.weakly_connected_components(g.g))
+
         n_exec = 1
         base_folder = 'reports/fpga/outputs/'
-        placers = ['yoto', ]
+        placers = ['sa', ]
         yoto_algs = [
             EdgesAlgEnum.ZIG_ZAG,
-            #EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY,
-            #EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
+            EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY,
+            EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
         ]
 
         for placer in placers:

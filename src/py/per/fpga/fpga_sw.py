@@ -62,17 +62,27 @@ class FPGAPeR(PeR):
 
         # now I need to place every note in the placement matrix
         # self.place_input_output_nodes(n2c, placement)
-        for n in cls.graph.get_nodes_idx(cls.graph.nodes_str):
-            if n2c[n] is None:
-                while True:
-                    if n in cls.graph.input_nodes_idx or n in cls.graph.output_nodes_idx:
-                        ch = random.choice(cls.possible_pos_in_out)
-                    else:
-                        ch = random.choice(possible_base_cells)
-                    if placement[ch] is None:
-                        placement[ch] = n
-                        n2c[n] = ch
-                        break
+        nodes = []
+        nodes.extend(cls.graph.input_nodes_idx)
+        nodes.extend(cls.graph.output_nodes_idx)
+        cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
+
+        nodes_clb = [node for node in cls.graph.get_nodes_idx(cls.graph.nodes_str) if node not in nodes]
+
+        possible_clb_pos = []
+
+        # Loop through rows (ignoring first and last row)
+        matrix = [n for n in range(cls.graph.n_cells)]
+        m = cls.graph.n_cells_sqrt
+        for i in range(1, m - 1):
+            # Calculate start and end index for this row (ignoring first and last column)
+            start = i * m + 1
+            end = (i + 1) * m - 1
+
+            # Iterate over the possible_clb_pos elements of this row
+            for j in range(start, end):
+                possible_clb_pos.append(matrix[j])
+        cls.place_nodes(n2c, placement, possible_clb_pos, nodes_clb)
 
         while t >= t_min:
             for cell_a in range(cls.graph.n_cells):
@@ -184,17 +194,18 @@ class FPGAPeR(PeR):
         if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
             nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
         elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
-            nodes = cls.graph.get_nodes_idx(cls.graph.output_nodes_str)
-        cls.place_nodes(n2c, placement, nodes)
+            nodes = [ed[0][0]]
+        cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
 
         # Yoto algorithm logic
-        for i,e in enumerate(ed):
+        for i, e in enumerate(ed):
             a = e[0]
             b = e[1]
             if n2c[b] is not None:
                 continue
             if n2c[a] is None:
-                a = 1
+                nodes = [a]
+                cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
             try:
                 ai = n2c[a] // cls.graph.n_cells_sqrt
                 aj = n2c[a] % cls.graph.n_cells_sqrt
@@ -324,13 +335,13 @@ class FPGAPeR(PeR):
             f.write(str_out)
         f.close()
 
-    def place_nodes(self, n2c, placement, nodes):
+    def place_nodes(self, n2c, placement, possible_pos, nodes):
         i = 0
         while i < len(nodes):
             if i < len(nodes):
                 n = nodes[i]
                 while True:
-                    ch = self.choose_position(placement, self.possible_pos_in_out)
+                    ch = self.choose_position(placement, possible_pos)
                     if placement[ch] is None:
                         placement[ch] = n
                         n2c[n] = ch
