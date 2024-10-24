@@ -1,3 +1,4 @@
+import csv
 import os
 from math import sqrt
 from pathlib import Path
@@ -17,13 +18,13 @@ class Util:
         return str(path)
 
     @staticmethod
-    def write_json(path: str, file_name: str, data):
-        path = Util.verify_path(path)
+    def write_json(path: str, file_name: str, data: Dict):
+        path: str = Util.verify_path(path)
         with open(path + file_name + '.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
     @staticmethod
-    def verify_path(path):
+    def verify_path(path: str) -> str:
         if path[-1] != '/':
             path = path + '/'
         return path
@@ -41,16 +42,27 @@ class Util:
     @staticmethod
     def read_json(file: str) -> Dict:
         with open(file) as p_file:
-            content_dic = json.load(p_file)
+            content_dic: Dict = json.load(p_file)
         return content_dic
 
     @staticmethod
-    def save_reports(per, path: str, file_name_pref: str, rpts):
-        for rpt in rpts.keys():
-            Util.write_json(path, f"{per.graph.dot_name}_{file_name_pref}_{rpts[rpt]['exec_id']}", rpts[rpt])
-            per.write_dot(path, f"{per.graph.dot_name}_{file_name_pref}_{rpts[rpt]['exec_id']}_placed.dot",
-                          rpts[rpt]['placement'],
-                          rpts[rpt]['n2c'])
+    def save_cvs_data_rows(path: str, file_name: str, data: Dict) -> None:
+        with open(f"{path}{file_name}.csv", mode='w', newline='') as file:
+            print(data.keys())
+            writer: csv.DictWriter = csv.DictWriter(file, fieldnames=data.keys())
+            writer.writeheader()
+            rows = zip(*data.values())
+            for row in rows:
+                writer.writerow(dict(zip(data.keys(), row)))
+        file.close()
+
+    @staticmethod
+    def save_reports(per, path: str, file_name_pref: str, data):
+        for rpt in data.keys():
+            Util.write_json(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}", data[rpt])
+            per.write_dot(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}_placed.dot",
+                          data[rpt]['placement'],
+                          data[rpt]['n2c'])
 
     @staticmethod
     def generate_pic():
@@ -106,18 +118,12 @@ class Util:
     def generate_vpr_data(graph: Graph, data, net_path, place_path):
         net_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.net"
         nodes_idx = data["nodes_idx"]
-        # Abrindo o arquivo .blif para escrita
         with open(net_path + net_name, 'w') as net_file:
-            # Cabeçalho do arquivo BLIF
-            # net_file.write(f"# BLIF file generated from {data['dot_name']}\n")
-            # net_file.write(f".model {data['dot_name']}\n\n")
 
             out_nodes = []
             pred_out_nodes = []
 
             for no in list(graph.g.nodes()):
-                a = graph.g.in_degree(no)
-                b = graph.g.out_degree(no)
                 if "Level" in no and "title" in no:
                     continue
                 elif graph.g.out_degree(no) == 0:
@@ -155,26 +161,22 @@ class Util:
         placement = data["placement"]
         n2c = data["n2c"]
         output_nodes = data["output_nodes"]
-        # Definindo o tamanho da matriz (grid) da FPGA
+
         grid_height = grid_width = int(sqrt(len(data["placement"])))
 
-        # Abrindo o arquivo .place para escrita
         with open(place_path + place_name, 'w') as place_file:
-            # Cabeçalho do arquivo PLACE
             place_file.write(f"Netlist file: net/{net_name}  Architecture file: arch/k4-n1.xml\n")
-            place_file.write(f"Array size: {grid_width-2} x {grid_height-2} logic blocks \n")
+            place_file.write(f"Array size: {grid_width - 2} x {grid_height - 2} logic blocks \n")
             place_file.write("#block name\tX\tY\tsubblk\tblock_number\n")
             place_file.write("#----------\t--\t--\t------\t------------\n")
 
-            # Para cada bloco lógico (nó), escreva a posição de colocação (placement)
             counter = 0
             for node, idx in nodes_idx.items():
                 cell = n2c[idx]
                 if placement[cell] is not None:
-                    # Calculando as coordenadas X, Y com base no índice do placement
                     x = cell % grid_width
                     y = cell // grid_width
-                    subblk = 0  # Subtile pode ser 0 se não for relevante
+                    subblk = 0
                     if idx in output_nodes:
                         i = out_nodes.index(idx)
                         place_file.write(f"out:{pred_out_nodes[i]}\t{x}\t{y}\t{subblk}\t#{counter}\n")

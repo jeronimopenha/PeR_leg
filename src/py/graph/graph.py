@@ -21,8 +21,8 @@ class Graph:
         self.idx_to_nodes: Dict[int, str] = {}
         self.neighbors_str: Dict[int, List[str]] = defaultdict(list)
         self.neighbors_idx: Dict[int, List[int]] = defaultdict(list)
-        self.dag_neighbors_str: Dict[int, List[int]] = defaultdict(list)
-        self.dag_neighbors_idx: Dict[int, List[int]] = defaultdict(list)
+        self.dir_neighbors_str: Dict[int, List[int]] = defaultdict(list)
+        self.dir_neighbors_idx: Dict[int, List[int]] = defaultdict(list)
         self.input_nodes_str: list = []
         self.output_nodes_str: list = []
         self.n_cells: int = 0
@@ -80,8 +80,8 @@ class Graph:
             self.neighbors_str[e[0]].append(e[1])
             self.neighbors_str[e[1]].append(e[0])
 
-            self.dag_neighbors_idx[idx_0].append(idx_1)
-            self.dag_neighbors_str[e[0]].append(e[1])
+            self.dir_neighbors_idx[idx_0].append(idx_1)
+            self.dir_neighbors_str[e[0]].append(e[1])
 
     def calc_cells_qty(self):
         # n_cells to contain input/output nodes in the borders
@@ -153,18 +153,18 @@ class Graph:
             else:
                 visited.append(n)
             if with_priority:
-                for neigh in self.dag_neighbors_str[n]:
+                for neigh in self.dir_neighbors_str[n]:
                     if neigh not in self.longest_path_nodes:
                         if neigh not in visited:
                             stack.append(neigh)
                             edges.append((n, neigh))
-                for neigh in self.dag_neighbors_str[n]:
+                for neigh in self.dir_neighbors_str[n]:
                     if neigh in self.longest_path_nodes:
                         if neigh not in visited:
                             stack.append(neigh)
                             edges.append((n, neigh))
             else:
-                for neigh in self.dag_neighbors_str[n]:
+                for neigh in self.dir_neighbors_str[n]:
                     if neigh not in visited:
                         stack.append(neigh)
                         edges.append((n, neigh))
