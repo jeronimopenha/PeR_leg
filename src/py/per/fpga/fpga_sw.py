@@ -276,8 +276,25 @@ class FPGAPeR(PeR):
                 # 'neigh': cls.graph.neighbors_idx
             }
 
-    def per_yott(self):
-        pass
+    def per_yott(self, n_exec):
+        # Prepare the report
+        placement = [None for _ in range(self.graph.n_cells)]
+        distances_cells = self.graph.get_mesh_distances()
+        n2c = [None for _ in range(self.graph.n_nodes)]
+
+        # Getting the edges to be placed
+        ed_str, tmp, convergences_str = self.graph.get_edges_zigzag()
+        ed = self.graph.get_edges_idx(ed_str)
+        convergences = self.graph.get_edges_idx(convergences_str)
+        annotations = self.graph.get_graph_annotations(ed, convergences)
+
+        nodes = []
+        # Input and output position placement
+        if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
+            nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
+        elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
+            nodes = [ed[0][0]]
+        cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
 
     def write_dot(self, path, file_name, placement, n2c):
         path = Util.verify_path(path)

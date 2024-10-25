@@ -91,11 +91,11 @@ class Graph:
         n_cells_base_sqrt = ceil(sqrt(n_base_nodes))
         n_cells_base = pow(n_cells_base_sqrt, 2)
         n_border_cells = (n_cells_base_sqrt) * 4
-        while total_in_out > n_border_cells :
+        while total_in_out > n_border_cells:
             n_cells_base_sqrt += 2
             n_border_cells = (n_cells_base_sqrt) * 4
         n_cells_base = pow(n_cells_base_sqrt, 2)
-        total_cells =  n_cells_base + n_border_cells
+        total_cells = n_cells_base + n_border_cells
         self.n_cells_sqrt = ceil(sqrt(total_cells))
         self.n_cells = pow(self.n_cells_sqrt, 2)
 
@@ -296,3 +296,63 @@ class Graph:
         for i in range(0, len(nodes) - 1):
             path.append([nodes[i], nodes[i + 1]])
         self.longest_path = path
+
+    def get_graph_annotations(self, edges: List[List[int]], convergences: List[List[int]]) -> Dict[
+        int, List[List[int]]]:
+        annotations: Dict[str, List[List[str]]] = {}
+
+        # Initialization dictionary
+        for edge in edges:
+            key: str = self.func_key(f"{edge[0]}", f"{edge[1]}")
+            annotations[key] = []
+
+        for elem_cycle_begin, elem_cycle_end in convergences:
+            walk_key: List[str] = []
+            found_start = False
+            count = 0
+            value1 = ''
+
+            for edge in reversed(edges):
+                if elem_cycle_begin == edge[1] and not found_start:
+                    value1 = edge[0]
+                    key = Graph.func_key(f"{value1}", f"{elem_cycle_begin}")
+                    walk_key.insert(0, key)
+                    annotations[key].append([elem_cycle_end, count])
+                    count += 1
+                    found_start = True
+
+                elif found_start and (value1 == edge[1] or elem_cycle_end == edge[0]):
+                    value1, value2 = edge[0], edge[1]
+                    key = Graph.func_key(f"{value1}", f"{value2}")
+                    if value1 != elem_cycle_end and value2 != elem_cycle_end:
+                        walk_key.insert(0, key)
+                        annotations[key].append([elem_cycle_end, count])
+                        count += 1
+                    else:
+                        # Go back and update values
+                        for k in range(count // 2):
+                            dic_actual = annotations[walk_key[k]]
+                            for dic_key, (node, count) in enumerate(dic_actual):
+                                if node == elem_cycle_end:
+                                    dic_actual[dic_key][1] = k + 1
+                        break  # to the next on the vector CYCLE
+
+        # clear invalid annotations
+        placed_nodes = {None: True}
+        for k, v in annotations.items():
+            a, b = k.split()
+            placed_nodes[a] = True
+            placed_nodes[b] = True
+            for (c, _) in (v.copy()):
+                if placed_nodes.get(c) is None:
+                    annotations[k].remove([c, _])
+
+        return annotations
+
+    @staticmethod
+    def func_key(val1: str, val2: str) -> str:
+        return val1 + " " + val2
+
+    @staticmethod
+    def func_unkey(text: str) -> List[str]:
+        return text.split(" ")

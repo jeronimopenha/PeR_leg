@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
         n_exec = 1
         base_folder = 'reports/fpga/outputs/'
-        placers = ['sa', ]
+        placers = ['yott', ]
         yoto_algs = [
             EdgesAlgEnum.ZIG_ZAG,
             EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY,
@@ -34,7 +34,9 @@ if __name__ == '__main__':
                     Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
 
             elif placer == 'yott':
-                pass
+                reports = per.per_yott(n_exec)
+                file_name_prefix = f"yott_{alg}"
+                Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'sa':
                 reports = per.per_sa(n_exec)
                 file_name_prefix = f"sa"
