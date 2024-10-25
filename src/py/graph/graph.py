@@ -310,20 +310,22 @@ class Graph:
             walk_key: List[str] = []
             found_start = False
             count = 0
-            value1 = ''
+            value1 = -1
 
             for edge in reversed(edges):
-                if elem_cycle_begin == edge[1] and not found_start:
-                    value1 = edge[0]
+                a = edge[0]
+                b = edge[1]
+                if elem_cycle_begin == b and not found_start:
+                    value1 = a
                     key = Graph.func_key(f"{value1}", f"{elem_cycle_begin}")
                     walk_key.insert(0, key)
                     annotations[key].append([elem_cycle_end, count])
                     count += 1
                     found_start = True
 
-                elif found_start and (value1 == edge[1] or elem_cycle_end == edge[0]):
-                    value1, value2 = edge[0], edge[1]
-                    key = Graph.func_key(f"{value1}", f"{value2}")
+                elif found_start and (value1 == b or elem_cycle_end == edge[0]):
+                    value1, value2 = a, b
+                    key = self.func_key(f"{value1}", f"{value2}")
                     if value1 != elem_cycle_end and value2 != elem_cycle_end:
                         walk_key.insert(0, key)
                         annotations[key].append([elem_cycle_end, count])
@@ -335,12 +337,12 @@ class Graph:
                             for dic_key, (node, count) in enumerate(dic_actual):
                                 if node == elem_cycle_end:
                                     dic_actual[dic_key][1] = k + 1
-                        break  # to the next on the vector CYCLE
+                        break  # to the next on the vector convergence
 
         # clear invalid annotations
         placed_nodes = {None: True}
         for k, v in annotations.items():
-            a, b = k.split()
+            (a, b) = [int(i) for i in k.split()]
             placed_nodes[a] = True
             placed_nodes[b] = True
             for (c, _) in (v.copy()):

@@ -206,13 +206,10 @@ class FPGAPeR(PeR):
             if n2c[a] is None:
                 nodes = [a]
                 cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
-            try:
-                ai = n2c[a] // cls.graph.n_cells_sqrt
-                aj = n2c[a] % cls.graph.n_cells_sqrt
-            except:
-                print(cls.graph.dot_name)
-                exit()
-            flag = False
+
+            ai = n2c[a] // cls.graph.n_cells_sqrt
+            aj = n2c[a] % cls.graph.n_cells_sqrt
+
             for l_n, line in enumerate(distances_cells):
                 placed = False
                 for ij in line:
@@ -242,15 +239,9 @@ class FPGAPeR(PeR):
                         placed = True
                         break
                 if placed:
-                    flag = True
                     break
-            if not placed:
-                a = 1
-        try:
-            h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
-        except:
-            print(cls.graph.dot_name)
-            exit()
+
+        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
         # Write to the shared report with a lock
         with lock:
@@ -288,13 +279,79 @@ class FPGAPeR(PeR):
         convergences = self.graph.get_edges_idx(convergences_str)
         annotations = self.graph.get_graph_annotations(ed, convergences)
 
-        nodes = []
         # Input and output position placement
-        if edges_alg == EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-            nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
-        elif edges_alg == EdgesAlgEnum.ZIG_ZAG:
-            nodes = [ed[0][0]]
-        cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
+        nodes = [ed[0][0]]
+        self.place_nodes(n2c, placement, self.possible_pos_in_out, nodes)
+
+        # Yott algorithm logic
+        for i, e in enumerate(ed):
+            a = e[0]
+            b = e[1]
+            if n2c[b] is not None:
+                continue
+            if n2c[a] is None:
+                nodes = [a]
+                self.place_nodes(n2c, placement, self.possible_pos_in_out, nodes)
+
+            ai = n2c[a] // self.graph.n_cells_sqrt
+            aj = n2c[a] % self.graph.n_cells_sqrt
+
+            for l_n, line in enumerate(distances_cells):
+                placed = False
+                for ij in line:
+                    bi = ai + ij[0]
+                    bj = aj + ij[1]
+                    if (
+                            bi < 0 or
+                            bi >= self.graph.n_cells_sqrt or
+                            bj < 0 or
+                            bj >= self.graph.n_cells_sqrt or
+                            (bi == 0 and bj == 0) or
+                            (bi == (self.graph.n_cells_sqrt - 1) and bj == (self.graph.n_cells_sqrt - 1)) or
+                            (bi == (self.graph.n_cells_sqrt - 1) and bj == 0) or
+                            (bi == 0 and bj >= (self.graph.n_cells_sqrt - 1))
+                    ):
+                        continue
+                    ch = bi * self.graph.n_cells_sqrt + bj
+                    if ch in self.possible_pos_in_out:
+                        if b not in self.graph.input_nodes_idx and b not in self.graph.output_nodes_idx:
+                            continue
+                    else:
+                        if b in self.graph.input_nodes_idx or b in self.graph.output_nodes_idx:
+                            continue
+                    if placement[ch] is None:
+                        placement[ch] = b
+                        n2c[b] = ch
+                        placed = True
+                        break
+                if placed:
+                    break
+
+        h, tc = self.calc_distance(n2c, self.graph.edges_idx, self.graph.n_cells_sqrt, self.graph.n_nodes)
+
+        # Write to the shared report with a lock
+        # with lock:
+        report[exec_id] = {
+            'exec_id': exec_id,
+            'dot_name': self.graph.dot_name,
+            'dot_path': self.graph.dot_path,
+            'placer': 'yoto',
+            'edges_algorithm': EdgesAlgEnum.ZIG_ZAG.name,
+            'total_cost': tc,
+            'histogram': h,
+            'longest_path_cost': self.calc_distance(self,
+                                                   cls.graph.get_edges_idx(cls.graph.longest_path),
+                                                   cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
+            'longest_path': cls.graph.longest_path,
+            'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+            'nodes_idx': cls.graph.nodes_to_idx,
+            'input_nodes': cls.graph.input_nodes_idx,
+            'output_nodes': cls.graph.output_nodes_idx,
+            'placement': placement,
+            'n2c': n2c,
+            'edges': cls.graph.edges_idx,
+            # 'neigh': cls.graph.neighbors_idx
+        }
 
     def write_dot(self, path, file_name, placement, n2c):
         path = Util.verify_path(path)
