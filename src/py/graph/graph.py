@@ -14,7 +14,6 @@ class Graph:
         self.gv: pgv.AGraph = pgv.AGraph(self.dot_path, strict=False, directed=True)
         self.g: nx.DiGraph = nx.DiGraph(self.gv)
         self.nodes_str: List[str] = []  # list(self.g.nodes)
-        self.n_nodes = 0
         self.edges_str: List[Tuple[str, str]] = []  # list(self.g.edges)
         self.n_edges: int = 0  # len(self.edges_str)
         self.nodes_to_idx: Dict[str, int] = {}
@@ -31,8 +30,8 @@ class Graph:
         self.get_nodes_vars()
         self.get_edges_vars()
         self.calc_cells_qty()
-        self.n_nodes = len(self.nodes_str)
-        self.input_nodes_idx = self.get_nodes_idx(self.input_nodes_str)
+        self.n_nodes: int = len(self.nodes_str)
+        self.input_nodes_idx: List[int] = self.get_nodes_idx(self.input_nodes_str)
         self.output_nodes_idx = self.get_nodes_idx(self.output_nodes_str)
         self.edges_idx = self.get_edges_idx(self.edges_str)
         self.longest_path = []
