@@ -58,11 +58,13 @@ class Util:
 
     @staticmethod
     def save_reports(per, path: str, file_name_pref: str, data):
-        for rpt in data.keys():
+        # l_data = len(data) // 10
+        for i, rpt in enumerate(data):
             Util.write_json(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}", data[rpt])
-            per.write_dot(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}_placed.dot",
-                          data[rpt]['placement'],
-                          data[rpt]['n2c'])
+            # if i % l_data  == 0:
+            #    per.write_dot(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}_placed.dot",
+            #                  data[rpt]['placement'],
+            #                  data[rpt]['n2c'])
 
     @staticmethod
     def generate_pic():
@@ -102,7 +104,7 @@ class Util:
             for (placer, edges_algorithm), group in graph_data.groupby(['placer', 'edges_algorithm']):
                 # Plot multiple points for each combination of placer and edges_algorithm
                 plt.scatter(group['total_cost'], group['longest_path_cost'], label=f'{placer} - {edges_algorithm}',
-                            s=100)
+                            s=50)
 
             # Customize plot
             plt.title(f'Scatter Plot for {graph}')
@@ -117,7 +119,7 @@ class Util:
     @staticmethod
     def generate_vpr_data(graph: Graph, data, net_path, place_path):
         net_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.net"
-        nodes_idx = data["nodes_idx"]
+        nodes_idx = graph.nodes_to_idx  # data["nodes_idx"]
         with open(net_path + net_name, 'w') as net_file:
 
             out_nodes = []
@@ -157,10 +159,9 @@ class Util:
         net_file.close()
 
         place_name = f"{data['dot_name']}_{data['placer']}_{data['edges_algorithm']}_{data['exec_id']}.place"
-        nodes_idx = data["nodes_idx"]
         placement = data["placement"]
         n2c = data["n2c"]
-        output_nodes = data["output_nodes"]
+        output_nodes = graph.output_nodes_idx
 
         grid_height = grid_width = int(sqrt(len(data["placement"])))
 

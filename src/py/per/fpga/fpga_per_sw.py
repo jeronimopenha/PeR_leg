@@ -23,7 +23,7 @@ class FPGAPeR(PeR):
         manager: mp.Manager = mp.Manager()
         report = manager.dict()  # Shared report dictionary
         lock = mp.Lock()  # Lock for synchronized access
-        n_workers = mp.cpu_count()
+        n_workers = mp.cpu_count() - 1
 
         # List to hold process references
         processes: List = []
@@ -130,6 +130,14 @@ class FPGAPeR(PeR):
                 t *= 0.999
         h, tc = cls.calc_distance(n2c, edges_idx, n_cells_sqrt, cls.graph.n_nodes)
 
+        tc -= cls.graph.n_edges
+
+        longest_path_cost = cls.calc_distance(n2c,
+                                              cls.graph.get_edges_idx(cls.graph.longest_path),
+                                              cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
+
+        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+
         # Write to the shared report with a lock
         with lock:
             report[exec_id] = {
@@ -140,14 +148,15 @@ class FPGAPeR(PeR):
                 'edges_algorithm': "direct",
                 'total_cost': tc,
                 'histogram': h,
-                'longest_path_cost': cls.calc_distance(n2c, longest_path_edges,
-                                                       n_cells_sqrt, cls.graph.n_nodes)[1],
-                'longest_path': cls.graph.longest_path,
-                'longest_path_idx': longest_path_nodes,
-                'nodes_idx': cls.graph.nodes_to_idx,
+                'longest_path_cost': longest_path_cost,
+                # 'longest_path': cls.graph.longest_path,
+                # 'longest_path_idx': longest_path_nodes,
+                # 'nodes_idx': cls.graph.nodes_to_idx,
+                # 'input_nodes': cls.graph.input_nodes_idx,
+                # 'output_nodes': cls.graph.output_nodes_idx,
                 'placement': placement,
                 'n2c': n2c,
-                'edges': edges_idx,
+                # 'edges': edges_idx,
             }
 
     def yoto_worker(cls, exec_id, report, lock, parameters: List):
@@ -222,6 +231,14 @@ class FPGAPeR(PeR):
 
         h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
+        tc -= cls.graph.n_edges
+
+        longest_path_cost = cls.calc_distance(n2c,
+                                              cls.graph.get_edges_idx(cls.graph.longest_path),
+                                              cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
+
+        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+
         # Write to the shared report with a lock
         with lock:
             report[exec_id] = {
@@ -232,18 +249,15 @@ class FPGAPeR(PeR):
                 'edges_algorithm': edges_alg.name,
                 'total_cost': tc,
                 'histogram': h,
-                'longest_path_cost': cls.calc_distance(n2c,
-                                                       cls.graph.get_edges_idx(cls.graph.longest_path),
-                                                       cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
-                'longest_path': cls.graph.longest_path,
-                'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
-                'nodes_idx': cls.graph.nodes_to_idx,
-                'input_nodes': cls.graph.input_nodes_idx,
-                'output_nodes': cls.graph.output_nodes_idx,
+                'longest_path_cost': longest_path_cost,
+                # 'longest_path': cls.graph.longest_path,
+                # 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+                # 'nodes_idx': cls.graph.nodes_to_idx,
+                # 'input_nodes': cls.graph.input_nodes_idx,
+                # 'output_nodes': cls.graph.output_nodes_idx,
                 'placement': placement,
                 'n2c': n2c,
-                'edges': cls.graph.edges_idx,
-                # 'neigh': cls.graph.neighbors_idx
+                # 'edges': cls.graph.edges_idx,
             }
 
     # Works only with one annotation
@@ -341,29 +355,35 @@ class FPGAPeR(PeR):
 
         h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
+        tc -= cls.graph.n_edges
+
+        longest_path_cost = cls.calc_distance(n2c,
+                                              cls.graph.get_edges_idx(cls.graph.longest_path),
+                                              cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
+
+        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+
         # Write to the shared report with a lock
-        # with lock:
-        report[exec_id] = {
-            'exec_id': exec_id,
-            'dot_name': cls.graph.dot_name,
-            'dot_path': cls.graph.dot_path,
-            'placer': 'yott',
-            'edges_algorithm': EdAlgEnum.ZIG_ZAG.name,
-            'total_cost': tc,
-            'histogram': h,
-            'longest_path_cost': cls.calc_distance(n2c,
-                                                   cls.graph.get_edges_idx(cls.graph.longest_path),
-                                                   cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1],
-            'longest_path': cls.graph.longest_path,
-            'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
-            'nodes_idx': cls.graph.nodes_to_idx,
-            'input_nodes': cls.graph.input_nodes_idx,
-            'output_nodes': cls.graph.output_nodes_idx,
-            'placement': placement,
-            'n2c': n2c,
-            'edges': cls.graph.edges_idx,
-            # 'neigh': cls.graph.neighbors_idx
-        }
+        with lock:
+            report[exec_id] = {
+                'exec_id': exec_id,
+                'dot_name': cls.graph.dot_name,
+                'dot_path': cls.graph.dot_path,
+                'placer': 'yott',
+                'edges_algorithm': EdAlgEnum.ZIG_ZAG.name,
+                'total_cost': tc,
+                'histogram': h,
+                'longest_path_cost': longest_path_cost,
+                # 'longest_path': cls.graph.longest_path,
+                # 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
+                # 'nodes_idx': cls.graph.nodes_to_idx,
+                # 'input_nodes': cls.graph.input_nodes_idx,
+                # 'output_nodes': cls.graph.output_nodes_idx,
+                'placement': placement,
+                'n2c': n2c,
+                # 'edges': cls.graph.edges_idx,
+                # 'neigh': cls.graph.neighbors_idx
+            }
 
     def write_dot(self, path, file_name, placement, n2c):
         path = Util.verify_path(path)
