@@ -1,6 +1,5 @@
 import multiprocessing as mp
 import random
-from logging import Manager
 
 from math import exp
 from typing import List
@@ -19,7 +18,7 @@ class FPGAPeR(PeR):
         self.possible_pos_in_out: List[int] = []
         self.get_in_out_pos()
 
-    def per(self, per_alg: PeR_Enum, parameters: List, n_exec: int = 1):
+    def per(self, per_alg: PeR_Enum, parameters: List, n_exec: int = 1, parrallel: bool = False):
         manager: mp.Manager = mp.Manager()
         report = manager.dict()  # Shared report dictionary
         lock = mp.Lock()  # Lock for synchronized access
@@ -28,31 +27,43 @@ class FPGAPeR(PeR):
         # List to hold process references
         processes: List = []
 
-        # Spawn processes for each exec_id
-        for exec_id in range(n_exec):
-            if per_alg == PeR_Enum.SA:
-                p = mp.Process(target=FPGAPeR.sa_worker, args=(self, exec_id, report, lock, parameters))
-            elif per_alg == PeR_Enum.YOTT:
-                p = mp.Process(target=FPGAPeR.yott_worker, args=(self, exec_id, report, lock, parameters))
-            else:
-                p = mp.Process(target=FPGAPeR.yoto_worker, args=(self, exec_id, report, lock, parameters))
+        if parrallel:
 
-            processes.append(p)
-            p.start()
+            # Spawn processes for each exec_id
+            for exec_id in range(n_exec):
+                if per_alg == PeR_Enum.SA:
+                    p = mp.Process(target=FPGAPeR.sa_worker, args=(self, exec_id, report, lock, parameters))
+                elif per_alg == PeR_Enum.YOTT:
+                    p = mp.Process(target=FPGAPeR.yott_worker, args=(self, exec_id, report, lock, parameters))
+                else:
+                    p = mp.Process(target=FPGAPeR.yoto_worker, args=(self, exec_id, report, lock, parameters))
 
-            # Limit the number of concurrent workers
-            if len(processes) >= n_workers:
-                for proc in processes:
-                    proc.join()  # Wait for all workers to finish
-                processes.clear()  # Reset the list for the next batch
+                processes.append(p)
+                p.start()
 
-        # Wait for the remaining processes to finish
-        for proc in processes:
-            proc.join()
+                # Limit the number of concurrent workers
+                if len(processes) >= n_workers:
+                    for proc in processes:
+                        proc.join()  # Wait for all workers to finish
+                    processes.clear()  # Reset the list for the next batch
+
+            # Wait for the remaining processes to finish
+            for proc in processes:
+                proc.join()
+
+        else:
+            for exec_id in range(n_exec):
+                if per_alg == PeR_Enum.SA:
+                    FPGAPeR.sa_worker(self, exec_id, report, lock, parameters)
+                elif per_alg == PeR_Enum.YOTT:
+                    FPGAPeR.yott_worker(self, exec_id, report, lock, parameters)
+                else:
+                    FPGAPeR.yoto_worker(self, exec_id, report, lock, parameters)
         rep = dict(report)
         return rep
 
     def sa_worker(cls, exec_id: int, report, lock, parameters: List):
+        print(f"Starting SA {exec_id}_{cls.graph.dot_name}")
         # report
         t_min: float = 0.001
         t: int = 100
@@ -92,16 +103,22 @@ class FPGAPeR(PeR):
                 possible_clb_pos.append(matrix[j])
         cls.place_nodes(n2c, placement, possible_clb_pos, nodes_clb)
 
+        # cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
+
         while t >= t_min:
-            for cell_a in range(n_cells):
-                for cell_b in range(n_cells):
+            for cell_a in range(1, n_cells - 1):
+                for cell_b in range(1, n_cells - 1):
                     a = placement[cell_a]
                     b = placement[cell_b]
                     if (
-                            cell_a == cell_b or
-                            (a is None and b is None) or
+                            cell_a == cell_b or  # same cell
+                            (a is None and b is None) or  # empty cells
+                            cell_a == n_cells_sqrt - 1 or
+                            cell_b == n_cells_sqrt - 1 or
+                            cell_a == n_cells - n_cells_sqrt or
+                            cell_b == n_cells - n_cells_sqrt or
                             (cell_a in cls.possible_pos_in_out and cell_b not in cls.possible_pos_in_out) or
-                            (cell_b in cls.possible_pos_in_out and cell_a not in cls.possible_pos_in_out)
+                            (cell_a not in cls.possible_pos_in_out and cell_b in cls.possible_pos_in_out)
                     ):
                         continue
 
@@ -124,19 +141,21 @@ class FPGAPeR(PeR):
                         if b is not None:
                             n2c[b] = cell_a
                         placement[cell_a], placement[cell_b] = b, a
+                        # cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
                         # print(t, actual_cost)
                         # self.write_dot('/home/jeronimo/GIT/PeR/reports/fpga/', f"_placed.dot",
                         #               placement, n2c)
                 t *= 0.999
-        h, tc = cls.calc_distance(n2c, edges_idx, n_cells_sqrt, cls.graph.n_nodes)
 
-        tc -= cls.graph.n_edges
+        # cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
+
+        h, tc = cls.calc_distance(n2c, edges_idx, n_cells_sqrt, cls.graph.n_nodes)
 
         longest_path_cost = cls.calc_distance(n2c,
                                               cls.graph.get_edges_idx(cls.graph.longest_path),
                                               cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
 
-        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+        print(f"Ending {exec_id}")
 
         # Write to the shared report with a lock
         with lock:
@@ -160,6 +179,7 @@ class FPGAPeR(PeR):
             }
 
     def yoto_worker(cls, exec_id, report, lock, parameters: List):
+        print(f"Starting YOTO {exec_id}_{cls.graph.dot_name}")
         edges_alg: EdAlgEnum = parameters[0]
         # Prepare the report
         placement = [None for _ in range(cls.graph.n_cells)]
@@ -180,7 +200,7 @@ class FPGAPeR(PeR):
         nodes = []
         # Input and output position placement
         if edges_alg == EdAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-            nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
+            nodes = [ed[0][0]]  # cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
         elif edges_alg == EdAlgEnum.ZIG_ZAG:
             nodes = [ed[0][0]]
         cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
@@ -231,13 +251,15 @@ class FPGAPeR(PeR):
 
         h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
 
-        tc -= cls.graph.n_edges
+        tc += 0.1
 
         longest_path_cost = cls.calc_distance(n2c,
                                               cls.graph.get_edges_idx(cls.graph.longest_path),
                                               cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
 
-        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+        longest_path_cost += 0.1
+
+        print(f"Ending {exec_id}")
 
         # Write to the shared report with a lock
         with lock:
@@ -262,8 +284,12 @@ class FPGAPeR(PeR):
 
     # Works only with one annotation
     def yott_worker(cls, exec_id, report, lock, parameters: List):
+        print(f"Starting YOTT {exec_id}_{cls.graph.dot_name}")
         # Prepare the report
-        placement = [None for _ in range(cls.graph.n_cells)]
+        n_cells = cls.graph.n_cells
+        n_cells_sqrt = cls.graph.n_cells_sqrt
+
+        placement = [None for _ in range(n_cells)]
         distances_cells = cls.graph.get_mesh_distances()
         n2c = [None for _ in range(cls.graph.n_nodes)]
 
@@ -276,7 +302,7 @@ class FPGAPeR(PeR):
         # Input and output position placement
         nodes = [ed[0][0]]
         cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
-
+        # cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
         # Yott algorithm logic
         for i, e in enumerate(ed):
             a = e[0]
@@ -287,11 +313,11 @@ class FPGAPeR(PeR):
                 nodes = [a]
                 cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
 
-            ia = n2c[a] // cls.graph.n_cells_sqrt
-            ja = n2c[a] % cls.graph.n_cells_sqrt
+            ia = n2c[a] // n_cells_sqrt
+            ja = n2c[a] % n_cells_sqrt
 
             better_cell = None
-            better_cell_dist = cls.graph.n_cells
+            better_cell_dist = n_cells
 
             for l_n, line in enumerate(distances_cells):
                 placed = False
@@ -300,51 +326,45 @@ class FPGAPeR(PeR):
                     jb = ja + ij[1]
                     if (
                             ib < 0 or
-                            ib >= cls.graph.n_cells_sqrt or
+                            ib >= n_cells_sqrt or
                             jb < 0 or
-                            jb >= cls.graph.n_cells_sqrt or
+                            jb >= n_cells_sqrt or
                             (ib == 0 and jb == 0) or
-                            (ib == (cls.graph.n_cells_sqrt - 1) and jb == (cls.graph.n_cells_sqrt - 1)) or
-                            (ib == (cls.graph.n_cells_sqrt - 1) and jb == 0) or
-                            (ib == 0 and jb >= (cls.graph.n_cells_sqrt - 1))
+                            (ib >= (n_cells_sqrt - 1) and jb >= (n_cells_sqrt - 1)) or
+                            (ib >= (n_cells_sqrt - 1) and jb == 0) or
+                            (ib == 0 and jb >= (n_cells_sqrt - 1))
                     ):
                         continue
-                    ch = ib * cls.graph.n_cells_sqrt + jb
+                    ch = ib * n_cells_sqrt + jb
                     if ch in cls.possible_pos_in_out:
                         if b not in cls.graph.input_nodes_idx and b not in cls.graph.output_nodes_idx:
                             continue
                     else:
                         if b in cls.graph.input_nodes_idx or b in cls.graph.output_nodes_idx:
                             continue
-                    ann = annotations[f"{a} {b}"]
-                    if len(ann) > 0:
-                        if l_n < 3:
-                            if placement[ch] is not None:
-                                continue
-                            t_ch = n2c[ann[0][0]]
-                            dist = cls.manhattan_distance(ia, ja, ib, jb)
-                            if dist == ann[0][1] + 1:
+                    annotation = annotations[f"{a} {b}"]
+                    if len(annotation) > 0:
+                        if placement[ch] is not None:
+                            continue
+                        target_ch: int = n2c[annotation[0][0]]
+                        # TODO
+                        for ann_idx, ann in annotation:
+                            pass
+
+                        dist = cls.graph.get_manhattan_distance(target_ch, ch, n_cells_sqrt)
+                        if dist == annotation[0][1] + 1:
+                            if placement[ch] is None:
                                 placement[ch] = b
                                 n2c[b] = ch
                                 placed = True
                                 break
 
-                            mod_dist = abs(ann[0][1] + 1 - dist)
+                        mod_dist = abs(annotation[0][1] + 1 - dist)
 
-                            if mod_dist < better_cell_dist:
-                                better_cell_dist = dist
-                                better_cell = ch
-                            continue
-                        else:
-                            if better_cell is not None:
-                                placement[better_cell] = b
-                                n2c[b] = better_cell
-                            else:
-                                placement[ch] = b
-                                n2c[b] = ch
-                            placed = True
-                            break
-
+                        if mod_dist < better_cell_dist:
+                            better_cell_dist = dist
+                            better_cell = ch
+                        continue
                     if placement[ch] is None:
                         placement[ch] = b
                         n2c[b] = ch
@@ -352,16 +372,23 @@ class FPGAPeR(PeR):
                         break
                 if placed:
                     break
+            if not placed:
+                placement[better_cell] = b
+                n2c[b] = better_cell
+            cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
 
-        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, n_cells_sqrt, cls.graph.n_nodes)
 
-        tc -= cls.graph.n_edges
+        tc -= 0.1
 
         longest_path_cost = cls.calc_distance(n2c,
                                               cls.graph.get_edges_idx(cls.graph.longest_path),
-                                              cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
+                                              n_cells_sqrt, cls.graph.n_nodes)[1]
+        longest_path_cost -= 0.1
+        if longest_path_cost < 0:
+            print(f"longest_path_cost {longest_path_cost}")
 
-        longest_path_cost -= len(cls.graph.longest_path_nodes) - 1
+        print(f"Ending {exec_id}")
 
         # Write to the shared report with a lock
         with lock:
@@ -456,18 +483,21 @@ class FPGAPeR(PeR):
 
     @staticmethod
     def calc_distance(n2c, edges, cells_sqrt, n_nodes):
-        distance = 0
+        distance = -len(edges)
         distances = {}
-        counter = 0
         for e in edges:
-            if counter >= n_nodes - 1:
-                break
             dist = Graph.get_manhattan_distance(n2c[e[0]], n2c[e[1]], cells_sqrt)
+            if dist == 0:
+                a = 1
             if dist not in distances.keys():
                 distances[dist] = 0
             distances[dist] += 1
             distance += dist
-            counter += 1
+        if distance < 0:
+            a = 1
+        else:
+            a = 1
+
         return dict(sorted(distances.items())), distance
 
     @staticmethod

@@ -21,6 +21,8 @@ mkdir -p "$OUTPUT_DIR"  # Create the output directory if it doesn't exist
 
 # ABC binary path (assuming ABC is installed and accessible)
 ABC_BINARY="/usr/bin/abc"  # Modify this path as needed
+YOSYS_BINARY="/usr/bin/yosys"
+
 
 # List of K values for the "if" command
 K_VALUES=(4 5 6)
@@ -35,9 +37,12 @@ for verilog_file in "$INPUT_DIR"/*.v; do
     for K in "${K_VALUES[@]}"; do
       # Define the output .dot file path, including the K value in the name
       dot_file="$OUTPUT_DIR/${base_filename}_K${K}.dot"
+      blif_file="$OUTPUT_DIR/${base_filename}_K${K}.blif"
+
 
       # Run ABC with the Verilog file, using the "if" command with -K $K, and export to .dot
-      $ABC_BINARY -c "read $verilog_file; if -K $K; write_dot $dot_file"
+      $ABC_BINARY -c "read $verilog_file; if -K $K; write_blif $blif_file"
+      $YOSYS_BINARY -p "read_blif $blif_file; show -format dot -o $dot_file"
 
       # Check if ABC successfully created the .dot file
       if [ -f "$dot_file" ]; then

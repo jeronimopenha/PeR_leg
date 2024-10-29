@@ -26,7 +26,7 @@ class Graph:
         self.output_nodes_str: list = []
         self.n_cells: int = 0
         self.n_cells_sqrt: int = 0
-        self.clear_graph()
+        # self.clear_graph()
         self.get_nodes_vars()
         self.get_edges_vars()
         self.calc_cells_qty()

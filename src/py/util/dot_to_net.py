@@ -36,20 +36,20 @@ def create_net(dot_origin, dot_destiny):
 
     graph = Graph(dot_origin, "dot")
 
+    graph.output_nodes_str.sort()
+
     with open(dot_destiny, 'w') as net_file:
 
-        out_nodes = []
-        pred_out_nodes = []
+        nodes = list(graph.g.nodes())
+        nodes.sort()
 
-        for no in list(graph.g.nodes()):
+        for no in nodes:
             a = graph.g.in_degree(no)
             b = graph.g.out_degree(no)
             if graph.g.out_degree(no) == 0:
                 for pre in list(graph.g.predecessors(no)):
-                    net_file.write(f".output out:{pre}\n")
+                    net_file.write(f".output out_{no}:{pre}\n")
                     net_file.write(f"pinlist:  {pre}\n\n")
-                    out_nodes.append(no)
-                    pred_out_nodes.append(pre)
 
             elif graph.g.in_degree(no) == 0:
                 net_file.write(f".input {no}\n")
@@ -77,8 +77,8 @@ def create_net(dot_origin, dot_destiny):
 if __name__ == "__main__":
 
     root_path = Util.verify_path(Util.get_project_root())
-    base_path_origin = root_path + "benchmarks/fpga/dot_IWLS93/"
-    base_path_destiny = root_path + "benchmarks/fpga/net_IWLS93/"
+    base_path_origin = root_path + "benchmarks/fpga/dot_EPFL/"
+    base_path_destiny = root_path + "benchmarks/fpga/net_EPFL/"
 
     files = Util.get_files_list_by_extension(base_path_origin, ".dot")
     for file in files:

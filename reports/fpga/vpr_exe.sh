@@ -14,7 +14,7 @@ input_dir="$1"
 #mkdir -p "$output_dir"
 
 # Loop over all files in the input directory that contain "_k4" in their name
-for file in "$input_dir"/*_K4*; do
+for file in "$input_dir"/*; do
     # Check if the file exists to avoid issues when no matching files are found
     if [ -f "$file" ]; then
         # Get the file name without the path and extension
