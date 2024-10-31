@@ -110,7 +110,7 @@ alias wv write_verilog
 alias resyn       "b; rw; rwz; b; rwz; b"
 alias resyn2      "b; rw; rf; b; rw; rwz; b; rfz; rwz; b"
 alias resyn2a     "b; rw; b; rw; rwz; b; rwz; b"
-alias resyn3      "b; rs; rs -K 4; b; rsz; rsz -K 4; b; rsz -K 4; b"
+alias resyn3      "b; rs; rs -K 6; b; rsz; rsz -K 6; b; rsz -K 5; b"
 alias compress    "b -l; rw -l; rwz -l; b -l; rwz -l; b -l"
 alias compress2   "b -l; rw -l; rf -l; b -l; rw -l; rwz -l; b -l; rfz -l; rwz -l; b -l"
 alias choice      "fraig_store; resyn; fraig_store; resyn2; fraig_store; fraig_restore"
@@ -145,25 +145,59 @@ alias fix_blif    "undc; strash; zero"
 # lazy man's synthesis
 alias recadd3     "st; rec_add3; b; rec_add3; dc2; rec_add3; if -K 8; bidec; st; rec_add3; dc2; rec_add3; if -g -K 6; st; rec_add3"
 
-rv EPFL/adder.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/adder.blif
-rv EPFL/arbiter.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/arbiter.blif
-rv EPFL/bar.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/bar.blif
-rv EPFL/cavlc.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/cavlc.blif
-rv EPFL/ctrl.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/ctrl.blif
-rv EPFL/dec.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/dec.blif
-rv EPFL/div.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/div.blif
-rv EPFL/hyp.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/hyp.blif
-rv EPFL/i2c.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/i2c.blif
-rv EPFL/int2float.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/int2float.blif
-rv EPFL/log2.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/log2.blif
-rv EPFL/max.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/max.blif
-rv EPFL/multiplier.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/multiplier.blif
-rv EPFL/priority.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/priority.blif
-rv EPFL/router.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/router.blif
-rv EPFL/sin.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/sin.blif
-rv EPFL/sqrt.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/sqrt.blif
-rv EPFL/square.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/square.blif
-rv EPFL/voter.v; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; write_blif dot_EPFL/voter.blif
+
+rl TRETS_blif/alu4.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/alu4_k3.blif
+rl TRETS_blif/apex2.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/apex2_k3.blif
+rl TRETS_blif/apex4.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/apex4_k3.blif
+rl TRETS_blif/apex7.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/apex7_k3.blif
+rl TRETS_blif/ex1010.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/ex1010_k3.blif
+rl TRETS_blif/ex5p.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/ex5p_k3.blif
+rl TRETS_blif/k2.blif     ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/k2_k3.blif
+rl TRETS_blif/misex3.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/misex3_k3.blif
+rl TRETS_blif/pdc.blif    ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/pdc_k3.blif
+rl TRETS_blif/spla.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/spla_k3.blif
+rl TRETS_blif/term1.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/term1_k3.blif
+rl TRETS_blif/too-lrg.blif; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 3; write_blif dot_TRETS/too-lrg_k3.blif
+
+
+rl TRETS_blif/alu4.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/alu4_k4.blif
+rl TRETS_blif/apex2.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/apex2_k4.blif
+rl TRETS_blif/apex4.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/apex4_k4.blif
+rl TRETS_blif/apex7.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/apex7_k4.blif
+rl TRETS_blif/ex1010.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/ex1010_k4.blif
+rl TRETS_blif/ex5p.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/ex5p_k4.blif
+rl TRETS_blif/k2.blif     ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/k2_k4.blif
+rl TRETS_blif/misex3.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/misex3_k4.blif
+rl TRETS_blif/pdc.blif    ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/pdc_k4.blif
+rl TRETS_blif/spla.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/spla_k4.blif
+rl TRETS_blif/term1.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/term1_k4.blif
+rl TRETS_blif/too-lrg.blif; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 4 ;write_blif dot_TRETS/too-lrg_k4.blif
+
+rl TRETS_blif/alu4.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/alu4_k5.blif
+rl TRETS_blif/apex2.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/apex2_k5.blif
+rl TRETS_blif/apex4.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/apex4_k5.blif
+rl TRETS_blif/apex7.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/apex7_k5.blif
+rl TRETS_blif/ex1010.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/ex1010_k5.blif
+rl TRETS_blif/ex5p.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/ex5p_k5.blif
+rl TRETS_blif/k2.blif     ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/k2_k5.blif
+rl TRETS_blif/misex3.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/misex3_k5.blif
+rl TRETS_blif/pdc.blif    ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/pdc_k5.blif
+rl TRETS_blif/spla.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/spla_k5.blif
+rl TRETS_blif/term1.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/term1_k5.blif
+rl TRETS_blif/too-lrg.blif; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 5 ;write_blif dot_TRETS/too-lrg_k5.blif
+
+rl TRETS_blif/alu4.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/alu4_k6.blif
+rl TRETS_blif/apex2.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/apex2_k6.blif
+rl TRETS_blif/apex4.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/apex4_k6.blif
+rl TRETS_blif/apex7.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/apex7_k6.blif
+rl TRETS_blif/ex1010.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/ex1010_k6.blif
+rl TRETS_blif/ex5p.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/ex5p_k6.blif
+rl TRETS_blif/k2.blif     ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/k2_k6.blif
+rl TRETS_blif/misex3.blif ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/misex3_k6.blif
+rl TRETS_blif/pdc.blif    ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/pdc_k6.blif
+rl TRETS_blif/spla.blif   ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/spla_k6.blif
+rl TRETS_blif/term1.blif  ; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/term1_k6.blif
+rl TRETS_blif/too-lrg.blif; ps; resyn3; ps;resyn3; ps; resyn3; ps;  resyn; ps; if -K 6 ;write_blif dot_TRETS/too-lrg_k6.blif
 
 
 

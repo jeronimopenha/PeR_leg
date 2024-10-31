@@ -61,10 +61,10 @@ class Util:
         # l_data = len(data) // 10
         for i, rpt in enumerate(data):
             Util.write_json(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}", data[rpt])
-            if i == 0:
+            '''if i == 0:
                 per.write_dot(path, f"{per.graph.dot_name}_{file_name_pref}_{data[rpt]['exec_id']}_placed.dot",
                               data[rpt]['placement'],
-                              data[rpt]['n2c'])
+                              data[rpt]['n2c'])'''
 
     @staticmethod
     def generate_pic():

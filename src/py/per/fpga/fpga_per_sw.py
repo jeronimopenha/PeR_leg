@@ -18,7 +18,7 @@ class FPGAPeR(PeR):
         self.possible_pos_in_out: List[int] = []
         self.get_in_out_pos()
 
-    def per(self, per_alg: PeR_Enum, parameters: List, n_exec: int = 1, parrallel: bool = False):
+    def per(self, per_alg: PeR_Enum, parameters: List, n_exec: int = 1, parrallel: bool = True):
         manager: mp.Manager = mp.Manager()
         report = manager.dict()  # Shared report dictionary
         lock = mp.Lock()  # Lock for synchronized access
@@ -186,6 +186,9 @@ class FPGAPeR(PeR):
         distances_cells = cls.graph.get_mesh_distances()
         n2c = [None for _ in range(cls.graph.n_nodes)]
 
+        tries = 0
+        swaps = 0
+
         # Getting the edges to be placed
         ed_str = []
         if edges_alg == EdAlgEnum.DEPTH_FIRST_NO_PRIORITY:
@@ -200,7 +203,7 @@ class FPGAPeR(PeR):
         nodes = []
         # Input and output position placement
         if edges_alg == EdAlgEnum.DEPTH_FIRST_NO_PRIORITY or edges_alg == EdAlgEnum.DEPTH_FIRST_WITH_PRIORITY:
-            nodes = [ed[0][0]]  # cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
+            nodes = cls.graph.get_nodes_idx(cls.graph.input_nodes_str)
         elif edges_alg == EdAlgEnum.ZIG_ZAG:
             nodes = [ed[0][0]]
         cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
@@ -219,6 +222,7 @@ class FPGAPeR(PeR):
             ja = n2c[a] % cls.graph.n_cells_sqrt
 
             for l_n, line in enumerate(distances_cells):
+                tries += 1
                 placed = False
                 for ij in line:
                     ib = ia + ij[0]
@@ -245,6 +249,7 @@ class FPGAPeR(PeR):
                         placement[ch] = b
                         n2c[b] = ch
                         placed = True
+                        swaps += 1
                         break
                 if placed:
                     break
@@ -268,6 +273,8 @@ class FPGAPeR(PeR):
                 'dot_name': cls.graph.dot_name,
                 'dot_path': cls.graph.dot_path,
                 'placer': 'yoto',
+                'tries': tries,
+                'swaps': swaps,
                 'edges_algorithm': edges_alg.name,
                 'total_cost': tc,
                 'histogram': h,

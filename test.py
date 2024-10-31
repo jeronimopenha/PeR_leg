@@ -19,14 +19,14 @@ if __name__ == '__main__':
 
         disconnected_components = list(nx.weakly_connected_components(g.g))
 
-        n_exec = 1
+        n_exec = 100
         base_folder = 'reports/fpga/outputs/'
-        #placers = ['yoto','yott', ]
-        placers = ['sa' ]
+        # placers = ['yoto','yott', ]
+        placers = ['yoto', 'yott']
         yoto_algs = [
             EdAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
-            EdAlgEnum.ZIG_ZAG,
-            EdAlgEnum.DEPTH_FIRST_NO_PRIORITY,
+            # EdAlgEnum.ZIG_ZAG,
+            # EdAlgEnum.DEPTH_FIRST_NO_PRIORITY,
         ]
 
         for placer in placers:

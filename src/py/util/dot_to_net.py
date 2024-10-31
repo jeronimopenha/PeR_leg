@@ -77,8 +77,8 @@ def create_net(dot_origin, dot_destiny):
 if __name__ == "__main__":
 
     root_path = Util.verify_path(Util.get_project_root())
-    base_path_origin = root_path + "benchmarks/fpga/dot_EPFL/"
-    base_path_destiny = root_path + "benchmarks/fpga/net_EPFL/"
+    base_path_origin = root_path + "benchmarks/fpga/dot_TRETS/"
+    base_path_destiny = root_path + "benchmarks/fpga/net_TRETS/"
 
     files = Util.get_files_list_by_extension(base_path_origin, ".dot")
     for file in files:
