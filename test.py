@@ -22,7 +22,7 @@ if __name__ == '__main__':
         n_exec = 100
         base_folder = 'reports/fpga/outputs/'
         # placers = ['yoto','yott', ]
-        placers = ['yoto', 'yott']
+        placers = ['yoto']
         yoto_algs = [
             EdAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
             # EdAlgEnum.ZIG_ZAG,

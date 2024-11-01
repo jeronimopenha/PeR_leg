@@ -222,9 +222,9 @@ class FPGAPeR(PeR):
             ja = n2c[a] % cls.graph.n_cells_sqrt
 
             for l_n, line in enumerate(distances_cells):
-                tries += 1
                 placed = False
                 for ij in line:
+                    tries += 1
                     ib = ia + ij[0]
                     jb = ja + ij[1]
                     if (
@@ -296,6 +296,9 @@ class FPGAPeR(PeR):
         n_cells = cls.graph.n_cells
         n_cells_sqrt = cls.graph.n_cells_sqrt
 
+        tries = 0
+        swaps = 0
+
         placement = [None for _ in range(n_cells)]
         distances_cells = cls.graph.get_mesh_distances()
         n2c = [None for _ in range(cls.graph.n_nodes)]
@@ -329,6 +332,7 @@ class FPGAPeR(PeR):
             for l_n, line in enumerate(distances_cells):
                 placed = False
                 for ij in line:
+                    tries += 1
                     ib = ia + ij[0]
                     jb = ja + ij[1]
                     if (
@@ -364,6 +368,7 @@ class FPGAPeR(PeR):
                                 placement[ch] = b
                                 n2c[b] = ch
                                 placed = True
+                                swaps+=1
                                 break
 
                         mod_dist = abs(annotation[0][1] + 1 - dist)
@@ -376,12 +381,14 @@ class FPGAPeR(PeR):
                         placement[ch] = b
                         n2c[b] = ch
                         placed = True
+                        swaps += 1
                         break
                 if placed:
                     break
             if not placed:
                 placement[better_cell] = b
                 n2c[b] = better_cell
+                swaps += 1
             cls.write_dot(f"/home/jeronimo/GIT/PeR/reports/fpga/", "placed.dot", placement, n2c)
 
         h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, n_cells_sqrt, cls.graph.n_nodes)
@@ -404,6 +411,8 @@ class FPGAPeR(PeR):
                 'dot_name': cls.graph.dot_name,
                 'dot_path': cls.graph.dot_path,
                 'placer': 'yott',
+                'tries': tries,
+                'swaps': swaps,
                 'edges_algorithm': EdAlgEnum.ZIG_ZAG.name,
                 'total_cost': tc,
                 'histogram': h,
