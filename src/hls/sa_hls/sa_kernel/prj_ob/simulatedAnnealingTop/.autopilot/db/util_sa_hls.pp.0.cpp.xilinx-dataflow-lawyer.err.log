@@ -1,0 +1,9 @@
+absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value
+use function 'std::abs' instead
+absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value
+use function 'std::abs' instead
+absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value
+use function 'std::abs' instead
+absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value
+use function 'std::abs' instead
+4 warnings generated.

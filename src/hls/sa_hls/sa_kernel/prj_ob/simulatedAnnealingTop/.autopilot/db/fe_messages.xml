@@ -1,0 +1,501 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="" msg_id="207-4583" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:9" msg_body="absolute value function 'abs' given an argument of type 'ap_int_base&lt;9, true&gt;::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value">
+        <args ClangWarningOption="absolute-value"/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4500" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:9" msg_body="use function 'std::abs' instead">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4583" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:24" msg_body="absolute value function 'abs' given an argument of type 'ap_int_base&lt;9, true&gt;::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value">
+        <args ClangWarningOption="absolute-value"/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4500" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:24" msg_body="use function 'std::abs' instead">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4583" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:25:16" msg_body="absolute value function 'abs' given an argument of type 'ap_int_base&lt;9, true&gt;::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value">
+        <args ClangWarningOption="absolute-value"/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4500" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:25:16" msg_body="use function 'std::abs' instead">
+        <args/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4583" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:26:19" msg_body="absolute value function 'abs' given an argument of type 'ap_int_base&lt;9, true&gt;::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value">
+        <args ClangWarningOption="absolute-value"/>
+    </msg>
+    <msg msg_groups="" msg_id="207-4500" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:26:19" msg_body="use function 'std::abs' instead">
+        <args/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="get_line_column_from_cell" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:15:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="dist_manhattan" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:23:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="dist_one_hop" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage9_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage8_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage7_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:16:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:37:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:14:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:22:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:42:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:88:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:96:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:16:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:38:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:72:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:21:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:31:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:110:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:140:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:22:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:65:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:82:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:102:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:28:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="compute" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:30:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="exec_pipeline" ARG_PragmaIsValid="1" ARG_PragmaOptions="II = 1 style = frp" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="and_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="or_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="xor_reduce" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/xo_generate.tcl:27:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=simulatedAnnealingTop" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:7:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port = n2c offset = slave" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:8:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port = c2n offset = slave" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:9:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port = n offset = slave" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port = return" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:19:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable = n2c_l type = block factor = 100" ARG_PragmaType="array_reshape" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:20:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable = c2n_l type = block factor = 100" ARG_PragmaType="array_reshape" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:21:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="simulatedAnnealingTop" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable = n_l type = block factor = 4" ARG_PragmaType="array_reshape" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:60:23" msg_body="Inlining function 'dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:56:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:55:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:49:23" msg_body="Inlining function 'dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:45:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:44:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage4SaHls::compute(ST3_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage4SaHls::compute(ST3_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:78:23" msg_body="Inlining function 'dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:73:17" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:69:17" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:66:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:60:23" msg_body="Inlining function 'dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="dist_manhattan(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:55:17" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:51:17" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:48:13" msg_body="Inlining function 'get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)' into 'Stage5SaHls::compute(ST4_OUT)'">
+        <args Callee="get_line_column_from_cell(ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;, ap_int&lt;8&gt;&amp;, ap_int&lt;8&gt;&amp;)" Caller="Stage5SaHls::compute(ST4_OUT)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:32:6" msg_body="Inlining function 'Stage0SaHls::compute()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage0SaHls::compute()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:41:13" msg_body="Inlining function 'Stage9SaHls::compute(ST8_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage9SaHls::compute(ST8_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:40:13" msg_body="Inlining function 'Stage8SaHls::compute(ST7_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage8SaHls::compute(ST7_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:39:13" msg_body="Inlining function 'Stage7SaHls::compute(ST6_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage7SaHls::compute(ST6_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:38:13" msg_body="Inlining function 'Stage6SaHls::compute(ST5_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage6SaHls::compute(ST5_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:37:13" msg_body="Inlining function 'Stage5SaHls::compute(ST4_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage5SaHls::compute(ST4_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:33:13" msg_body="Inlining function 'Stage1SaHls::compute(ST0_OUT, ST9_OUT, W, ap_int&lt;8&gt;*)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage1SaHls::compute(ST0_OUT, ST9_OUT, W, ap_int&lt;8&gt;*)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:34:13" msg_body="Inlining function 'Stage2SaHls::compute(ST1_OUT, ap_int&lt;8&gt;*)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage2SaHls::compute(ST1_OUT, ap_int&lt;8&gt;*)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:35:13" msg_body="Inlining function 'Stage3SaHls::compute(ST2_OUT, W, ap_int&lt;8&gt;*)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage3SaHls::compute(ST2_OUT, W, ap_int&lt;8&gt;*)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:36:13" msg_body="Inlining function 'Stage4SaHls::compute(ST3_OUT)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage4SaHls::compute(ST3_OUT)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:19:22" msg_body="Loop 'VITIS_LOOP_19_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_19_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:62:26" msg_body="Loop 'VITIS_LOOP_62_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_62_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:79:26" msg_body="Loop 'VITIS_LOOP_79_3' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_79_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:99:22" msg_body="Loop 'VITIS_LOOP_99_4' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_99_4"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:28:22" msg_body="Loop 'VITIS_LOOP_28_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_28_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:107:23" msg_body="Loop 'VITIS_LOOP_107_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_107_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:137:23" msg_body="Loop 'VITIS_LOOP_137_3' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_137_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:13:22" msg_body="Loop 'VITIS_LOOP_13_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_13_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:35:22" msg_body="Loop 'VITIS_LOOP_35_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_35_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:69:22" msg_body="Loop 'VITIS_LOOP_69_3' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_69_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:11:22" msg_body="Loop 'VITIS_LOOP_11_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_11_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:19:22" msg_body="Loop 'VITIS_LOOP_19_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_19_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:39:22" msg_body="Loop 'VITIS_LOOP_39_3' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_39_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:85:22" msg_body="Loop 'VITIS_LOOP_85_4' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_85_4"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:93:22" msg_body="Loop 'VITIS_LOOP_93_5' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_93_5"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:13:22" msg_body="Loop 'VITIS_LOOP_13_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_13_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:34:22" msg_body="Loop 'VITIS_LOOP_34_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_34_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_19_1' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:19:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:19:22" LoopName="VITIS_LOOP_19_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_62_2' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:62:26) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:62:26" LoopName="VITIS_LOOP_62_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_79_3' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:79:26) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:79:26" LoopName="VITIS_LOOP_79_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_99_4' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:99:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:99:22" LoopName="VITIS_LOOP_99_4"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_28_1' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:28:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:28:22" LoopName="VITIS_LOOP_28_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_107_2' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:107:23) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:107:23" LoopName="VITIS_LOOP_107_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_137_3' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:137:23) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:137:23" LoopName="VITIS_LOOP_137_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_13_1' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:13:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:13:22" LoopName="VITIS_LOOP_13_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_35_2' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:35:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:35:22" LoopName="VITIS_LOOP_35_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_69_3' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:69:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:69:22" LoopName="VITIS_LOOP_69_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_11_1' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:11:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 2">
+        <args Factor="2" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:11:22" LoopName="VITIS_LOOP_11_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_19_2' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:19:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:19:22" LoopName="VITIS_LOOP_19_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_39_3' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:39:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:39:22" LoopName="VITIS_LOOP_39_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_85_4' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:85:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 2">
+        <args Factor="2" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:85:22" LoopName="VITIS_LOOP_85_4"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_93_5' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:93:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 4">
+        <args Factor="4" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:93:22" LoopName="VITIS_LOOP_93_5"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_13_1' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:13:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 2">
+        <args Factor="2" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:13:22" LoopName="VITIS_LOOP_13_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_34_2' (/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:34:22) in function 'PipelineSaHls::exec_pipeline' completely with a factor of 2">
+        <args Factor="2" LoopLoc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:34:22" LoopName="VITIS_LOOP_34_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:11:0" msg_body="Inlining function 'FifoSaHls::isFull() const (.472.490.510.528.548.566.586.604.624.642.662.680.700.718.738.756.776.794.814.832)' into 'FifoSaHls::enqueue(W)'">
+        <args Callee="FifoSaHls::isFull() const (.472.490.510.528.548.566.586.604.624.642.662.680.700.718.738.756.776.794.814.832)" Caller="FifoSaHls::enqueue(W)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:4:0" msg_body="Inlining function 'FifoSaHls::FifoSaHls()' into 'Stage1SaHls::Stage1SaHls()'">
+        <args Callee="FifoSaHls::FifoSaHls()" Caller="Stage1SaHls::Stage1SaHls()"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:4:0" msg_body="Inlining function 'FifoSaHls::enqueue(W)' into 'Stage1SaHls::Stage1SaHls()'">
+        <args Callee="FifoSaHls::enqueue(W)" Caller="Stage1SaHls::Stage1SaHls()"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:22:0" msg_body="Inlining function 'FifoSaHls::isEmpty() const (.481.496.519.534.557.572.595.610.633.648.671.686.709.724.747.762.785.800.823.838)' into 'FifoSaHls::dequeue()'">
+        <args Callee="FifoSaHls::isEmpty() const (.481.496.519.534.557.572.595.610.633.648.671.686.709.724.747.762.785.800.823.838)" Caller="FifoSaHls::dequeue()"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage0SaHls::Stage0SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage0SaHls::Stage0SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage1SaHls::Stage1SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage1SaHls::Stage1SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage2SaHls::Stage2SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage2SaHls::Stage2SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage3SaHls::Stage3SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage3SaHls::Stage3SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage4SaHls::Stage4SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage4SaHls::Stage4SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage5SaHls::Stage5SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage5SaHls::Stage5SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage6SaHls::Stage6SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage6SaHls::Stage6SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage7SaHls::Stage7SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage7SaHls::Stage7SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage8SaHls::Stage8SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage8SaHls::Stage8SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'Stage9SaHls::Stage9SaHls()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="Stage9SaHls::Stage9SaHls()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'FifoSaHls::enqueue(W)' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="FifoSaHls::enqueue(W)" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:14:0" msg_body="Inlining function 'FifoSaHls::dequeue()' into 'PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)'">
+        <args Callee="FifoSaHls::dequeue()" Caller="PipelineSaHls::exec_pipeline(ap_int&lt;8&gt;*, ap_int&lt;8&gt;*, ap_int&lt;8&gt;*)"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:14:12" msg_body="Applying array_reshape to 'n2c_l': Block reshaping with factor 100 on dimension 1.">
+        <args Dim="1" Factor="100" Mode="Block" UOName="n2c_l"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:15:15" msg_body="Applying array_reshape to 'c2n_l': Block reshaping with factor 100 on dimension 1.">
+        <args Dim="1" Factor="100" Mode="Block" UOName="c2n_l"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:16:15" msg_body="Applying array_reshape to 'n_l': Block reshaping with factor 4 on dimension 1.">
+        <args Dim="1" Factor="4" Mode="Block" UOName="n_l"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

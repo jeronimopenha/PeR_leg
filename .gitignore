@@ -164,7 +164,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-*.out
+
 *.vcd
 *.pyc
 *.pyd
@@ -221,7 +221,6 @@ coverage*.html
 *.bz2
 *.xz
 *~
-callgrind.out.*
 
 .ipynb_checkpoints
 docs/build
@@ -275,7 +274,7 @@ MANIFEST
 
 # Executables
 *.exe
-*.out
+*
 *.app
 
 # Prerequisites
@@ -310,7 +309,7 @@ MANIFEST
 
 # Executables
 *.exe
-*.out
+
 *.app
 *.i*86
 *.x86_64

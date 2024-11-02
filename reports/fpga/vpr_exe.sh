@@ -14,14 +14,14 @@ input_dir="$1"
 #mkdir -p "$output_dir"
 
 # Loop over all files in the input directory that contain "_k4" in their name
-for file in "$input_dir"/*; do
+for file in "$input_dir"/*_k3*; do
     # Check if the file exists to avoid issues when no matching files are found
     if [ -f "$file" ]; then
         # Get the file name without the path and extension
         filename=$(basename -- "$file")
         filename_no_ext="${filename%.*}"
 
-        bin/vpr "$file" "arch/k4-n1.xml" "vpr_reports/fast/${filename_no_ext}_place.out" "vpr_reports/fast/${filename_no_ext}_route.out" -nodisp -fast > "vpr_reports/fast/${filename_no_ext}.out"
+        bin/vpr "$file" "arch/k3-n1.xml" "vpr_reports/fast/${filename_no_ext}_place.out" "vpr_reports/fast/${filename_no_ext}_route.out" -nodisp -fast > "vpr_reports/fast/${filename_no_ext}.out"
 
         # Run the 'x' program on the file, assuming it generates two output files
         #./x "$file"

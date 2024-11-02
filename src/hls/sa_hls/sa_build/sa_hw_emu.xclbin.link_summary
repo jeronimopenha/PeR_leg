@@ -1,0 +1,884 @@
+<ENTRY>
+{
+ "thisFile": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.link_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:17 2024",
+ "timestampMillis": "1710894977529",
+ "buildStep": {
+  "cmdId": "a99e9cd2-e39d-454a-b6e2-6f10613ffa29",
+  "name": "v++",
+  "logFile": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/link.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -t hw_emu --platform /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm --save-temps --kernel_frequency 320 -l -o sa_hw_emu.xclbin xo/simulatedAnnealingTop.xo --config sa.hw_emu.ini -g ",
+  "args": [
+   "-t",
+   "hw_emu",
+   "--platform",
+   "/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm",
+   "--save-temps",
+   "--kernel_frequency",
+   "320",
+   "-l",
+   "-o",
+   "sa_hw_emu.xclbin",
+   "xo/simulatedAnnealingTop.xo",
+   "--config",
+   "sa.hw_emu.ini",
+   "-g"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa.hw_emu.ini",
+    "content": "[connectivity]\nnk=simulatedAnnealingTop:1:simulatedAnnealingTop_1\n\nsp=simulatedAnnealingTop_1.n2c:HOST[0]\nsp=simulatedAnnealingTop_1.c2n:HOST[0]\nsp=simulatedAnnealingTop_1.n:HOST[0]\n\n"
+   }
+  ],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:17 2024",
+ "timestampMillis": "1710894977530",
+ "status": {
+  "cmdId": "a99e9cd2-e39d-454a-b6e2-6f10613ffa29",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Tue Mar 19 21:36:23 2024",
+ "timestampMillis": "1710894983357",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm",
+  "hardwareDsa": "",
+  "platformDirectory": "/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_LINK",
+  "target": "TT_HW_EMU",
+  "binaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "sa_hw_emu",
+    "file": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin",
+    "reports": [],
+    "uuid": ""
+   },
+   "kernels": []
+  },
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "simulatedAnnealingTop",
+     "file": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/xo/simulatedAnnealingTop.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage8_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage7_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage5_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage1_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/pipeline_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage3_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage9_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage0_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage2_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/fifo_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage4_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/stage6_sa_hls.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/saTop.cpp",
+     "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/simulatedAnnealingTop/simulatedAnnealingTop/cpu_sources/util_sa_hls.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [
+     "simulatedAnnealingTop_1"
+    ],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2022.2. SW Build 3671529 on 2022-10-13-17:52:11"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:23 2024",
+ "timestampMillis": "1710894983662",
+ "buildStep": {
+  "cmdId": "07dc6110-74af-4662-958d-9bc9c13fe1a5",
+  "name": "system_link",
+  "logFile": "",
+  "commandLine": "system_link --xo /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/xo/simulatedAnnealingTop.xo -keep --config /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm --target emu --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link",
+  "args": [
+   "--xo",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/xo/simulatedAnnealingTop.xo",
+   "-keep",
+   "--config",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/syslinkConfig.ini",
+   "--xpfm",
+   "/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm",
+   "--target",
+   "emu",
+   "--output_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int",
+   "--temp_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/syslinkConfig.ini",
+    "content": "nk=simulatedAnnealingTop:1:simulatedAnnealingTop_1\nsp=simulatedAnnealingTop_1.n2c:HOST[0]\nsp=simulatedAnnealingTop_1.c2n:HOST[0]\nsp=simulatedAnnealingTop_1.n:HOST[0]\n\n"
+   }
+  ],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:23 2024",
+ "timestampMillis": "1710894983663",
+ "status": {
+  "cmdId": "07dc6110-74af-4662-958d-9bc9c13fe1a5",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:44 2024",
+ "timestampMillis": "1710895004335",
+ "status": {
+  "cmdId": "07dc6110-74af-4662-958d-9bc9c13fe1a5",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:44 2024",
+ "timestampMillis": "1710895004338",
+ "buildStep": {
+  "cmdId": "8e9804c2-171f-40b4-9df7-408ac89fb2e6",
+  "name": "cf2sw",
+  "logFile": "",
+  "commandLine": "cf2sw -sdsl /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat -rtd /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw.rtd -nofilter /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw_full.rtd -xclbin /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.1.xml",
+  "args": [
+   "-sdsl",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat",
+   "-rtd",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw.rtd",
+   "-nofilter",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw_full.rtd",
+   "-xclbin",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml",
+   "-o",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.1.xml"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:44 2024",
+ "timestampMillis": "1710895004338",
+ "status": {
+  "cmdId": "8e9804c2-171f-40b4-9df7-408ac89fb2e6",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009597",
+ "status": {
+  "cmdId": "8e9804c2-171f-40b4-9df7-408ac89fb2e6",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009599",
+ "buildStep": {
+  "cmdId": "037e1f65-d2dd-4278-bccf-ffcdaea3f5d1",
+  "name": "rtd2_system_diagram",
+  "logFile": "",
+  "commandLine": "rtd2SystemDiagram",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009599",
+ "status": {
+  "cmdId": "037e1f65-d2dd-4278-bccf-ffcdaea3f5d1",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009955",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModel.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "SYSTEM_DIAGRAM",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009956",
+ "status": {
+  "cmdId": "037e1f65-d2dd-4278-bccf-ffcdaea3f5d1",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009958",
+ "buildStep": {
+  "cmdId": "4e159125-54c6-4ddb-8e71-ae19337cbc91",
+  "name": "vpl",
+  "logFile": "",
+  "commandLine": "vpl -t hw_emu -f /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm -s -g --kernel_frequency 320 --remote_ip_cache /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/.ipcache --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int --log_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link --report_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link --config /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/vplConfig.ini -k /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link --emulation_mode debug_waveform --no-info --iprepo /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/ip_repo/xilinx_com_hls_simulatedAnnealingTop_1_0 --messageDb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link/vpl.pb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/dr.bd.tcl",
+  "args": [
+   "-t",
+   "hw_emu",
+   "-f",
+   "/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm",
+   "-s",
+   "-g",
+   "--kernel_frequency",
+   "320",
+   "--remote_ip_cache",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/.ipcache",
+   "--output_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int",
+   "--log_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link",
+   "--report_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link",
+   "--config",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/vplConfig.ini",
+   "-k",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/kernel_info.dat",
+   "--webtalk_flag",
+   "Vitis",
+   "--temp_dir",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link",
+   "--emulation_mode",
+   "debug_waveform",
+   "--no-info",
+   "--iprepo",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/ip_repo/xilinx_com_hls_simulatedAnnealingTop_1_0",
+   "--messageDb",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link/vpl.pb",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/dr.bd.tcl"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/vplConfig.ini",
+    "content": "[advanced]\nmisc=report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\nmisc=report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\nparam=compiler.enablePerformanceTrace=1\nparam=hw_emu.enableDebugWaveform=1\nparam=hw_emu.enableProfiling=1\nparam=compiler.vppCurrentWorkingDir=/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build\nmisc=BinaryName=sa_hw_emu\n\n[connectivity]\nnk=simulatedAnnealingTop:1:simulatedAnnealingTop_1\n\n[vivado]\nprop=run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\n\n"
+   }
+  ],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:49 2024",
+ "timestampMillis": "1710895009959",
+ "status": {
+  "cmdId": "4e159125-54c6-4ddb-8e71-ae19337cbc91",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:52 2024",
+ "timestampMillis": "1710895012093",
+ "buildStep": {
+  "cmdId": "8cc4e5be-5d49-452e-b5d2-7b57fcf03898",
+  "name": "vpl",
+  "logFile": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/link.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/vpl -t hw_emu -f /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm -s -g --kernel_frequency 320 --remote_ip_cache /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/.ipcache --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int --log_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link --report_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link --config /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/vplConfig.ini -k /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link --emulation_mode debug_waveform --no-info --iprepo /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/ip_repo/xilinx_com_hls_simulatedAnnealingTop_1_0 --messageDb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link/vpl.pb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/dr.bd.tcl ",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:52 2024",
+ "timestampMillis": "1710895012093",
+ "status": {
+  "cmdId": "8cc4e5be-5d49-452e-b5d2-7b57fcf03898",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_VivadoProject",
+ "dateTimestamp": "Tue Mar 19 21:36:59 2024",
+ "timestampMillis": "1710895019429",
+ "vivadoProject": {
+  "openDir": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/vivado/vpl",
+  "openScript": "openprj.tcl",
+  "relativeProject": "prj/prj.xpr"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:36:59 2024",
+ "timestampMillis": "1710895019430",
+ "buildStep": {
+  "cmdId": "a8db0579-5103-4a1a-88af-c015351b87e4",
+  "name": "vivado",
+  "logFile": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/vivado/vpl/vivado.log",
+  "commandLine": "vivado -log vivado.log -applog -m64 -messageDb vivado.pb -mode batch -source vpl.tcl -notrace",
+  "args": [
+   "-log",
+   "vivado.log",
+   "-applog",
+   " -m64",
+   "-messageDb",
+   "vivado.pb",
+   "-mode",
+   "batch",
+   "-source",
+   "vpl.tcl",
+   "-notrace"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:36:59 2024",
+ "timestampMillis": "1710895019431",
+ "status": {
+  "cmdId": "a8db0579-5103-4a1a-88af-c015351b87e4",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:37:54 2024",
+ "timestampMillis": "1710895074692",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/automation_summary_update_bd.txt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "VITIS_DESIGN_FLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273064",
+ "status": {
+  "cmdId": "a8db0579-5103-4a1a-88af-c015351b87e4",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273230",
+ "status": {
+  "cmdId": "8cc4e5be-5d49-452e-b5d2-7b57fcf03898",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273243",
+ "status": {
+  "cmdId": "4e159125-54c6-4ddb-8e71-ae19337cbc91",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273246",
+ "buildStep": {
+  "cmdId": "8f2439b4-d8cd-498d-b69d-301a07183e50",
+  "name": "rtdgen",
+  "logFile": "",
+  "commandLine": "rtdgen",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273246",
+ "status": {
+  "cmdId": "8f2439b4-d8cd-498d-b69d-301a07183e50",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273249",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_xml.rtd",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "XCLBIN_INFO",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273250",
+ "buildStep": {
+  "cmdId": "f470cff4-e82b-4208-8957-565d62f0aa8a",
+  "name": "cf2sw",
+  "logFile": "",
+  "commandLine": "cf2sw -a /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/address_map.xml -sdsl /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat -xclbin /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml -rtd /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml",
+  "args": [
+   "-a",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/address_map.xml",
+   "-sdsl",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat",
+   "-xclbin",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml",
+   "-rtd",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd",
+   "-o",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:13 2024",
+ "timestampMillis": "1710895273251",
+ "status": {
+  "cmdId": "f470cff4-e82b-4208-8957-565d62f0aa8a",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:17 2024",
+ "timestampMillis": "1710895277869",
+ "status": {
+  "cmdId": "f470cff4-e82b-4208-8957-565d62f0aa8a",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280932",
+ "buildStep": {
+  "cmdId": "c03f336f-3a4a-4c86-82b8-719d6be661fc",
+  "name": "rtdgen",
+  "logFile": "",
+  "commandLine": "writeSystemDiagram",
+  "args": [
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280932",
+ "status": {
+  "cmdId": "c03f336f-3a4a-4c86-82b8-719d6be661fc",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280936",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "SYSTEM_DIAGRAM_PLUS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280937",
+ "status": {
+  "cmdId": "c03f336f-3a4a-4c86-82b8-719d6be661fc",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280937",
+ "buildStep": {
+  "cmdId": "343dbaa6-4383-4978-9387-78f1be44428a",
+  "name": "rtdgen",
+  "logFile": "",
+  "commandLine": "writeAutomationSummary",
+  "args": [
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/automation_summary.txt"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280938",
+ "status": {
+  "cmdId": "343dbaa6-4383-4978-9387-78f1be44428a",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280939",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/automation_summary.txt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "VITIS_DESIGN_FLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280939",
+ "status": {
+  "cmdId": "343dbaa6-4383-4978-9387-78f1be44428a",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280940",
+ "status": {
+  "cmdId": "8f2439b4-d8cd-498d-b69d-301a07183e50",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280941",
+ "buildStep": {
+  "cmdId": "95767d3e-4a13-4a17-88c8-12b3e56fc782",
+  "name": "xclbinutil",
+  "logFile": "",
+  "commandLine": "xclbinutil --add-section BITSTREAM:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/behav.xse --force --target hw_emu --key-value SYS:dfx_enable:false --add-section :JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_xml.rtd --add-section BUILD_METADATA:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml --add-section SYSTEM_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u55c_gen3x16_xdma_3_202210_1 --output /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin",
+  "args": [
+   "--add-section",
+   "BITSTREAM:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/behav.xse",
+   "--force",
+   "--target",
+   "hw_emu",
+   "--key-value",
+   "SYS:dfx_enable:false",
+   "--add-section",
+   ":JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd",
+   "--add-section",
+   "CLOCK_FREQ_TOPOLOGY:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_xml.rtd",
+   "--add-section",
+   "BUILD_METADATA:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_build.rtd",
+   "--add-section",
+   "EMBEDDED_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml",
+   "--add-section",
+   "SYSTEM_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json",
+   "--key-value",
+   "SYS:PlatformVBNV:xilinx_u55c_gen3x16_xdma_3_202210_1",
+   "--output",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:20 2024",
+ "timestampMillis": "1710895280942",
+ "status": {
+  "cmdId": "95767d3e-4a13-4a17-88c8-12b3e56fc782",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:23 2024",
+ "timestampMillis": "1710895283070",
+ "status": {
+  "cmdId": "95767d3e-4a13-4a17-88c8-12b3e56fc782",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:23 2024",
+ "timestampMillis": "1710895283072",
+ "buildStep": {
+  "cmdId": "e14ee62c-b31f-4825-9994-299b388baf80",
+  "name": "xclbinutilinfo",
+  "logFile": "",
+  "commandLine": "xclbinutil --quiet --force --info /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.info --input /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin",
+  "args": [
+   "--quiet",
+   "--force",
+   "--info",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.info",
+   "--input",
+   "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:23 2024",
+ "timestampMillis": "1710895283072",
+ "status": {
+  "cmdId": "e14ee62c-b31f-4825-9994-299b388baf80",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285304",
+ "status": {
+  "cmdId": "e14ee62c-b31f-4825-9994-299b388baf80",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285306",
+ "buildStep": {
+  "cmdId": "a0ae89f5-23d4-47a2-9b8b-176b48ce6a2b",
+  "name": "generate_sc_driver",
+  "logFile": "",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285307",
+ "status": {
+  "cmdId": "a0ae89f5-23d4-47a2-9b8b-176b48ce6a2b",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285307",
+ "status": {
+  "cmdId": "a0ae89f5-23d4-47a2-9b8b-176b48ce6a2b",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285318",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link/system_estimate_sa_hw_emu.xtxt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "GLOBAL_SYSTEM_ESTIMATE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285321",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/optraceViewer.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "OPERATION_TRACE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285321",
+ "status": {
+  "cmdId": "a99e9cd2-e39d-454a-b6e2-6f10613ffa29",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285431",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link/v++_link_sa_hw_emu_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Mar 19 21:41:25 2024",
+ "timestampMillis": "1710895285432",
+ "report": {
+  "path": "/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/v++_link_sa_hw_emu_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
