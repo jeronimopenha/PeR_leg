@@ -1,12 +1,16 @@
+# cython: language_level=3
+
+
 import multiprocessing as mp
 import random
+import cython
 
 from math import exp
 from typing import List
 
 from src.py.graph.graph import Graph
 from src.py.per.base.per import PeR, EdAlgEnum, PeR_Enum
-from src.py.util.util import Util
+from src.py.util.util import verify_path
 
 
 class FPGAPeR(PeR):
@@ -72,7 +76,7 @@ class FPGAPeR(PeR):
         n_cells: int = cls.graph.n_cells
         n_cells_sqrt: int = cls.graph.n_cells_sqrt
         edges_idx: List = cls.graph.edges_idx
-        longest_path_edges = cls.graph.get_edges_idx(cls.graph.longest_path)
+        longest_path_edges: int = cls.graph.get_edges_idx(cls.graph.longest_path)
         longest_path_nodes = cls.graph.longest_path_nodes
 
         # First I will start the placement of matrix
@@ -182,9 +186,9 @@ class FPGAPeR(PeR):
         print(f"Starting YOTO {exec_id}_{cls.graph.dot_name}")
         edges_alg: EdAlgEnum = parameters[0]
         # Prepare the report
-        placement = [None for _ in range(cls.graph.n_cells)]
+        placement = [-1] * cls.graph.n_cells
         distances_cells = cls.graph.get_mesh_distances()
-        n2c = [None for _ in range(cls.graph.n_nodes)]
+        n2c = [-1] * cls.graph.n_nodes
 
         tries = 0
         swaps = 0
@@ -208,18 +212,24 @@ class FPGAPeR(PeR):
             nodes = [ed[0][0]]
         cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
 
+        # Prepare for faster access
+        n_cells_sqrt = cls.graph.n_cells_sqrt
+        possible_positions = set(cls.possible_pos_in_out)
+        input_nodes_idx = set(cls.graph.input_nodes_idx)
+        output_nodes_idx = set(cls.graph.output_nodes_idx)
+
         # Yoto algorithm logic
         for i, e in enumerate(ed):
             a = e[0]
             b = e[1]
-            if n2c[b] is not None:
+            if n2c[b] != 1:
                 continue
-            if n2c[a] is None:
+            if n2c[a] == -1:
                 nodes = [a]
-                cls.place_nodes(n2c, placement, cls.possible_pos_in_out, nodes)
+                cls.place_nodes(n2c, placement, possible_positions, nodes)
 
-            ia = n2c[a] // cls.graph.n_cells_sqrt
-            ja = n2c[a] % cls.graph.n_cells_sqrt
+            ia = n2c[a] // n_cells_sqrt
+            ja = n2c[a] % n_cells_sqrt
 
             for l_n, line in enumerate(distances_cells):
                 placed = False
@@ -229,23 +239,23 @@ class FPGAPeR(PeR):
                     jb = ja + ij[1]
                     if (
                             ib < 0 or
-                            ib >= cls.graph.n_cells_sqrt or
+                            ib >= n_cells_sqrt or
                             jb < 0 or
-                            jb >= cls.graph.n_cells_sqrt or
+                            jb >= n_cells_sqrt or
                             (ib == 0 and jb == 0) or
-                            (ib == (cls.graph.n_cells_sqrt - 1) and jb == (cls.graph.n_cells_sqrt - 1)) or
-                            (ib == (cls.graph.n_cells_sqrt - 1) and jb == 0) or
-                            (ib == 0 and jb >= (cls.graph.n_cells_sqrt - 1))
+                            (ib == (n_cells_sqrt - 1) and jb == (n_cells_sqrt - 1)) or
+                            (ib == (n_cells_sqrt - 1) and jb == 0) or
+                            (ib == 0 and jb >= (n_cells_sqrt - 1))
                     ):
                         continue
-                    ch = ib * cls.graph.n_cells_sqrt + jb
-                    if ch in cls.possible_pos_in_out:
-                        if b not in cls.graph.input_nodes_idx and b not in cls.graph.output_nodes_idx:
+                    ch = ib * n_cells_sqrt + jb
+                    if ch in possible_positions:
+                        if b not in input_nodes_idx and b not in output_nodes_idx:
                             continue
                     else:
-                        if b in cls.graph.input_nodes_idx or b in cls.graph.output_nodes_idx:
+                        if b in input_nodes_idx or b in output_nodes_idx:
                             continue
-                    if placement[ch] is None:
+                    if placement[ch] == -1:
                         placement[ch] = b
                         n2c[b] = ch
                         placed = True
@@ -254,13 +264,13 @@ class FPGAPeR(PeR):
                 if placed:
                     break
 
-        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, cls.graph.n_cells_sqrt, cls.graph.n_nodes)
+        h, tc = cls.calc_distance(n2c, cls.graph.edges_idx, n_cells_sqrt, cls.graph.n_nodes)
 
         tc += 0.1
 
         longest_path_cost = cls.calc_distance(n2c,
                                               cls.graph.get_edges_idx(cls.graph.longest_path),
-                                              cls.graph.n_cells_sqrt, cls.graph.n_nodes)[1]
+                                              n_cells_sqrt, cls.graph.n_nodes)[1]
 
         longest_path_cost += 0.1
 
@@ -279,14 +289,8 @@ class FPGAPeR(PeR):
                 'total_cost': tc,
                 'histogram': h,
                 'longest_path_cost': longest_path_cost,
-                # 'longest_path': cls.graph.longest_path,
-                # 'longest_path_idx': cls.graph.get_nodes_idx(cls.graph.longest_path_nodes),
-                # 'nodes_idx': cls.graph.nodes_to_idx,
-                # 'input_nodes': cls.graph.input_nodes_idx,
-                # 'output_nodes': cls.graph.output_nodes_idx,
                 'placement': placement,
                 'n2c': n2c,
-                # 'edges': cls.graph.edges_idx,
             }
 
     # Works only with one annotation
@@ -368,7 +372,7 @@ class FPGAPeR(PeR):
                                 placement[ch] = b
                                 n2c[b] = ch
                                 placed = True
-                                swaps+=1
+                                swaps += 1
                                 break
 
                         mod_dist = abs(annotation[0][1] + 1 - dist)
@@ -429,7 +433,7 @@ class FPGAPeR(PeR):
             }
 
     def write_dot(self, path, file_name, placement, n2c):
-        path = Util.verify_path(path)
+        path = verify_path(path)
         output_dot_file = path + file_name
         dot_head = 'digraph layout{\n rankdir=TB;\n splines=ortho;\n node [style=filled shape=square fixedsize=true width=0.6];\n'
         dot_foot = 'edge [constraint=true, style=invis];\n'
@@ -459,7 +463,7 @@ class FPGAPeR(PeR):
         output_nodes = [self.graph.nodes_to_idx[node] for node in self.graph.output_nodes_str]
 
         for i in range(self.graph.n_cells):
-            if placement[i] is None:
+            if placement[i] == -1:
                 str_out += '%d[label="%d", fontsize=8, fillcolor="%s"];\n' % (
                     i, i, '#ffffff')
             elif placement[i] in input_nodes:
@@ -491,7 +495,7 @@ class FPGAPeR(PeR):
                 n = nodes[i]
                 while True:
                     ch = self.choose_position(placement, possible_pos)
-                    if placement[ch] is None:
+                    if placement[ch] == -1:
                         placement[ch] = n
                         n2c[n] = ch
                         break
@@ -524,7 +528,7 @@ class FPGAPeR(PeR):
     def choose_position(placement, choices):
         while True:
             ch = random.choice(choices)
-            if placement[ch] is not None:
+            if placement[ch] != -1:
                 continue
             return ch
 

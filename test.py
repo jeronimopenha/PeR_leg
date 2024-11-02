@@ -1,13 +1,16 @@
 import networkx as nx
+import time
 from src.py.graph.graph import Graph
 from src.py.per.base.per import EdAlgEnum, PeR_Enum
 from src.py.per.fpga.fpga_per_sw import FPGAPeR
-from src.py.util.util import Util
+from src.py.util.util import get_project_root, get_files_list_by_extension, verify_path, save_reports, generate_pic
+
+
 
 if __name__ == '__main__':
     # Util.generate_pic()
-    root_path = Util.get_project_root()
-    files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
+    root_path = get_project_root()
+    files = get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
     # files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/xor5_K4.dot", "xor5_K4.dot"]]
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/z4ml_K4.dot", "z4ml_K4.dot"]]
@@ -19,7 +22,7 @@ if __name__ == '__main__':
 
         disconnected_components = list(nx.weakly_connected_components(g.g))
 
-        n_exec = 100
+        n_exec = 11
         base_folder = 'reports/fpga/outputs/'
         # placers = ['yoto','yott', ]
         placers = ['yoto']
@@ -32,19 +35,21 @@ if __name__ == '__main__':
         for placer in placers:
             reports = {}
             file_name_prefix = ""
+            start = time.time()
             if placer == 'yoto':
                 for alg in yoto_algs:
                     reports = per.per(PeR_Enum.YOTO, [alg], n_exec)
+                    print(f"tempo: {time.time() - start}")
                     file_name_prefix = f"yoto_{alg}"
-                    Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+                    save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'yott':
                 reports = per.per(PeR_Enum.YOTT, [], n_exec)
                 file_name_prefix = f"yott"
-                Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+                save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'sa':
                 reports = per.per(PeR_Enum.SA, [], n_exec)
                 file_name_prefix = f"sa"
-                Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
+                save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
 
-    Util.generate_pic()
+    generate_pic()
     # Util.generate_net_vpr()
