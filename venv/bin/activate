@@ -45,7 +45,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< Updated upstream
 VIRTUAL_ENV='/home/jeronimo/GIT/PeR/venv'
+=======
+VIRTUAL_ENV='/home/jeronimo/GIT/PeR_leg/venv'
+>>>>>>> Stashed changes
 if ([ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]) && $(command -v cygpath &> /dev/null) ; then
     VIRTUAL_ENV=$(cygpath -u "$VIRTUAL_ENV")
 fi

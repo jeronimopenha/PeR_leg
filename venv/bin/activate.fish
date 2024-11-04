@@ -58,7 +58,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< Updated upstream
 set -gx VIRTUAL_ENV '/home/jeronimo/GIT/PeR/venv'
+=======
+set -gx VIRTUAL_ENV '/home/jeronimo/GIT/PeR_leg/venv'
+>>>>>>> Stashed changes
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | head -c 1) -lt 3

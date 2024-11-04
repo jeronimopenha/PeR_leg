@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 #!/home/jeronimo/GIT/PeR/venv/bin/python
+=======
+#!/home/jeronimo/GIT/PeR_leg/venv/bin/python
+>>>>>>> Stashed changes
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -10,7 +10,11 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< Updated upstream
 setenv VIRTUAL_ENV '/home/jeronimo/GIT/PeR/venv'
+=======
+setenv VIRTUAL_ENV '/home/jeronimo/GIT/PeR_leg/venv'
+>>>>>>> Stashed changes
 
 set _OLD_VIRTUAL_PATH="$PATH:q"
 setenv PATH "$VIRTUAL_ENV:q/bin:$PATH:q"

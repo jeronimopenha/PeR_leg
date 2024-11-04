@@ -32,7 +32,11 @@ export-env {
       }
     }
 
+<<<<<<< Updated upstream
     let virtual_env = '/home/jeronimo/GIT/PeR/venv'
+=======
+    let virtual_env = '/home/jeronimo/GIT/PeR_leg/venv'
+>>>>>>> Stashed changes
     let bin = 'bin'
 
     let is_windows = ($nu.os-info.family) == 'windows'
