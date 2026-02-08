@@ -1,0 +1,50 @@
+In file included from /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:1:
+In file included from /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.hpp:6:
+In file included from /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int.h:12:
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=and_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=or_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=xor_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:6:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=inline_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=get_line_column_from_cell_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS inline
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:15:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=inline_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=dist_manhattan_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS inline
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:9: warning: absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value [-Wabsolute-value]
+ return abs(ia - ib) + abs(ja - jb);
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:9: note: use function 'std::abs' instead
+ return abs(ia - ib) + abs(ja - jb);
+        ^~~
+        std::abs
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:24: warning: absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value [-Wabsolute-value]
+ return abs(ia - ib) + abs(ja - jb);
+                       ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:17:24: note: use function 'std::abs' instead
+ return abs(ia - ib) + abs(ja - jb);
+                       ^~~
+                       std::abs
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:23:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=inline_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=dist_one_hop_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS inline
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:25:16: warning: absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value [-Wabsolute-value]
+ ap_int<8> i = abs(ia - ib);
+               ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:25:16: note: use function 'std::abs' instead
+ ap_int<8> i = abs(ia - ib);
+               ^~~
+               std::abs
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:26:19: warning: absolute value function 'abs' given an argument of type 'ap_int_base<9, true>::RetType' (aka 'long long') but has parameter of type 'int' which may cause truncation of value [-Wabsolute-value]
+    ap_int<8> j = abs(ja - jb);
+                  ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp:26:19: note: use function 'std::abs' instead
+    ap_int<8> j = abs(ja - jb);
+                  ^~~
+                  std::abs
+10 warnings generated.

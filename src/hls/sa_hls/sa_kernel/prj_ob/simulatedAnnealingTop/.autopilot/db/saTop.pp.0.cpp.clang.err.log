@@ -1,0 +1,37 @@
+In file included from /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:2:
+In file included from /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.hpp:5:
+In file included from /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int.h:12:
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:678:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=and_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:692:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=or_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h:706:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=xor_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS unroll
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/xo_generate.tcl:27:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=top_XLX_SEP_ PragmaContext=directive_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=name=simulatedAnnealingTop_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLSDIRECTIVE TOP name=simulatedAnnealingTop
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:7:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=interface_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=m_axi port = n2c offset = slave_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS INTERFACE m_axi port = n2c offset = slave
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:8:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=interface_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=m_axi port = c2n offset = slave_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS INTERFACE m_axi port = c2n offset = slave
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:9:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=interface_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=m_axi port = n offset = slave_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS INTERFACE m_axi port = n offset = slave
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:10:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=interface_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=s_axilite port = return_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma HLS INTERFACE s_axilite port = return
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:19:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=array_reshape_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=variable = n2c_l type = block factor = 100_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma hls ARRAY_RESHAPE variable = n2c_l type = block factor = 100
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:20:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=array_reshape_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=variable = c2n_l type = block factor = 100_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma hls ARRAY_RESHAPE variable = c2n_l type = block factor = 100
+        ^
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:21:9: warning: HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=array_reshape_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=simulatedAnnealingTop_XLX_SEP_ PragmaOptions=variable = n_l type = block factor = 4_XLX_SEP_ [-Wdump-hls-pragmas]
+#pragma hls ARRAY_RESHAPE variable = n_l type = block factor = 4
+        ^
+11 warnings generated.

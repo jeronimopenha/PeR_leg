@@ -1,0 +1,321 @@
+
+
+================================================================
+== Vitis HLS Report for 'exec_pipeline_Pipeline_VITIS_LOOP_6_1'
+================================================================
+* Date:           Tue Mar 19 21:35:20 2024
+
+* Version:        2022.2 (Build 3670227 on Oct 13 2022)
+* Project:        prj_ob
+* Solution:       simulatedAnnealingTop (Vitis Kernel Flow Target)
+* Product family: virtexuplus
+* Target device:  xcu55c-fsvh2892-2L-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.12 ns|  1.865 ns|     0.84 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |       51|       51|  0.159 us|  0.159 us|   51|   51|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                  |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |     Loop Name    |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_6_1  |       49|       49|        14|         12|          1|     4|       yes|
+        +------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 12, depth = 14
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 14
+* Pipeline : 1
+  Pipeline-0 : II = 12, D = 14, States = { 1 2 3 4 5 6 7 8 9 10 11 12 13 14 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 1.86>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%i_V = alloca i32 1"   --->   Operation 17 'alloca' 'i_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_size_V = alloca i32 1"   --->   Operation 18 'alloca' 'st1_m_fifo_b_m_size_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_size_V = alloca i32 1"   --->   Operation 19 'alloca' 'st1_m_fifo_a_m_size_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%lhs = alloca i32 1"   --->   Operation 20 'alloca' 'lhs' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%lhs_1 = alloca i32 1"   --->   Operation 21 'alloca' 'lhs_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.38ns)   --->   "%store_ln0 = store i8 255, i8 %lhs_1"   --->   Operation 22 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 23 [1/1] (0.38ns)   --->   "%store_ln0 = store i8 255, i8 %lhs"   --->   Operation 23 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 24 [1/1] (0.41ns)   --->   "%store_ln0 = store i8 0, i8 %st1_m_fifo_a_m_size_V"   --->   Operation 24 'store' 'store_ln0' <Predicate = true> <Delay = 0.41>
+ST_1 : Operation 25 [1/1] (0.41ns)   --->   "%store_ln0 = store i8 0, i8 %st1_m_fifo_b_m_size_V"   --->   Operation 25 'store' 'store_ln0' <Predicate = true> <Delay = 0.41>
+ST_1 : Operation 26 [1/1] (0.38ns)   --->   "%store_ln0 = store i3 0, i3 %i_V"   --->   Operation 26 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%br_ln0 = br void %for.inc.i"   --->   Operation 27 'br' 'br_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%i_V_1 = load i3 %i_V"   --->   Operation 28 'load' 'i_V_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_size_V_2 = load i8 %st1_m_fifo_a_m_size_V"   --->   Operation 29 'load' 'st1_m_fifo_a_m_size_V_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 30 [1/1] (0.49ns)   --->   "%icmp_ln1027 = icmp_eq  i3 %i_V_1, i3 4"   --->   Operation 30 'icmp' 'icmp_ln1027' <Predicate = true> <Delay = 0.49> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 31 [1/1] (0.57ns)   --->   "%i_V_2 = add i3 %i_V_1, i3 1"   --->   Operation 31 'add' 'i_V_2' <Predicate = true> <Delay = 0.57> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.57> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 32 [1/1] (0.00ns)   --->   "%br_ln6 = br i1 %icmp_ln1027, void %for.inc.i.split, void %for.body.preheader.exitStub" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:6]   --->   Operation 32 'br' 'br_ln6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 33 [1/1] (0.00ns)   --->   "%specloopname_ln17 = specloopname void @_ssdm_op_SpecLoopName, void @empty_2" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 33 'specloopname' 'specloopname_ln17' <Predicate = (!icmp_ln1027)> <Delay = 0.00>
+ST_1 : Operation 34 [1/1] (0.58ns)   --->   "%icmp_ln1019 = icmp_eq  i8 %st1_m_fifo_a_m_size_V_2, i8 10"   --->   Operation 34 'icmp' 'icmp_ln1019' <Predicate = (!icmp_ln1027)> <Delay = 0.58> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.58> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 35 [1/1] (0.00ns)   --->   "%br_ln12 = br i1 %icmp_ln1019, void %if.end.i.i, void %for.inc.i.split._ZN9FifoSaHls7enqueueE1W.exit.i_crit_edge" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 35 'br' 'br_ln12' <Predicate = (!icmp_ln1027)> <Delay = 0.00>
+ST_1 : Operation 36 [1/1] (0.00ns)   --->   "%lhs_1_load_1 = load i8 %lhs_1"   --->   Operation 36 'load' 'lhs_1_load_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 0.00>
+ST_1 : Operation 37 [1/1] (0.00ns)   --->   "%sext_ln1495 = sext i8 %lhs_1_load_1"   --->   Operation 37 'sext' 'sext_ln1495' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 0.00>
+ST_1 : Operation 38 [1/1] (0.70ns)   --->   "%ret_V = add i9 %sext_ln1495, i9 1"   --->   Operation 38 'add' 'ret_V' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 39 [13/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 39 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 40 [1/1] (0.41ns)   --->   "%store_ln12 = store i8 10, i8 %st1_m_fifo_a_m_size_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 40 'store' 'store_ln12' <Predicate = (!icmp_ln1027 & icmp_ln1019)> <Delay = 0.41>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%br_ln12 = br void %_ZN9FifoSaHls7enqueueE1W.exit.i" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 41 'br' 'br_ln12' <Predicate = (!icmp_ln1027 & icmp_ln1019)> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.38ns)   --->   "%store_ln6 = store i3 %i_V_2, i3 %i_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:6]   --->   Operation 42 'store' 'store_ln6' <Predicate = (!icmp_ln1027)> <Delay = 0.38>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%br_ln6 = br void %for.inc.i" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp:6]   --->   Operation 43 'br' 'br_ln6' <Predicate = (!icmp_ln1027)> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 1.86>
+ST_2 : Operation 44 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_size_V_1 = load i8 %st1_m_fifo_b_m_size_V"   --->   Operation 44 'load' 'st1_m_fifo_b_m_size_V_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 45 [1/1] (0.00ns)   --->   "%specpipeline_ln0 = specpipeline void @_ssdm_op_SpecPipeline, i32 4294967295, i32 0, i32 1, i32 0, void @p_str"   --->   Operation 45 'specpipeline' 'specpipeline_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 46 [1/1] (0.00ns)   --->   "%empty = speclooptripcount i32 @_ssdm_op_SpecLoopTripCount, i64 4, i64 4, i64 4"   --->   Operation 46 'speclooptripcount' 'empty' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 47 [12/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 47 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 48 [1/1] (0.58ns)   --->   "%icmp_ln1019_1 = icmp_eq  i8 %st1_m_fifo_b_m_size_V_1, i8 10"   --->   Operation 48 'icmp' 'icmp_ln1019_1' <Predicate = (!icmp_ln1027)> <Delay = 0.58> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.58> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 49 [1/1] (0.00ns)   --->   "%br_ln12 = br i1 %icmp_ln1019_1, void %if.end.i29.i, void %_ZN9FifoSaHls7enqueueE1W.exit.i._ZN9FifoSaHls7enqueueE1W.exit30.i_crit_edge" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 49 'br' 'br_ln12' <Predicate = (!icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 50 [1/1] (0.00ns)   --->   "%lhs_load_1 = load i8 %lhs"   --->   Operation 50 'load' 'lhs_load_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 0.00>
+ST_2 : Operation 51 [1/1] (0.00ns)   --->   "%sext_ln1495_1 = sext i8 %lhs_load_1"   --->   Operation 51 'sext' 'sext_ln1495_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 0.00>
+ST_2 : Operation 52 [1/1] (0.70ns)   --->   "%ret_V_1 = add i9 %sext_ln1495_1, i9 1"   --->   Operation 52 'add' 'ret_V_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 53 [13/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 53 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 54 [1/1] (0.41ns)   --->   "%store_ln12 = store i8 10, i8 %st1_m_fifo_b_m_size_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 54 'store' 'store_ln12' <Predicate = (!icmp_ln1027 & icmp_ln1019_1)> <Delay = 0.41>
+ST_2 : Operation 55 [1/1] (0.00ns)   --->   "%br_ln12 = br void %_ZN9FifoSaHls7enqueueE1W.exit30.i" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:12]   --->   Operation 55 'br' 'br_ln12' <Predicate = (!icmp_ln1027 & icmp_ln1019_1)> <Delay = 0.00>
+ST_2 : Operation 105 [1/1] (0.00ns)   --->   "%lhs_load = load i8 %lhs"   --->   Operation 105 'load' 'lhs_load' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 106 [1/1] (0.00ns)   --->   "%lhs_1_load = load i8 %lhs_1"   --->   Operation 106 'load' 'lhs_1_load' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 107 [1/1] (0.00ns)   --->   "%write_ln840 = write void @_ssdm_op_Write.ap_auto.i8P0A, i8 %st1_m_fifo_a_m_size_V_out, i8 %st1_m_fifo_a_m_size_V_2"   --->   Operation 107 'write' 'write_ln840' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 108 [1/1] (0.00ns)   --->   "%write_ln0 = write void @_ssdm_op_Write.ap_auto.i8P0A, i8 %st1_m_fifo_a_m_rear_V_7_out, i8 %lhs_1_load"   --->   Operation 108 'write' 'write_ln0' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 109 [1/1] (0.00ns)   --->   "%write_ln840 = write void @_ssdm_op_Write.ap_auto.i8P0A, i8 %st1_m_fifo_b_m_size_V_out, i8 %st1_m_fifo_b_m_size_V_1"   --->   Operation 109 'write' 'write_ln840' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 110 [1/1] (0.00ns)   --->   "%write_ln0 = write void @_ssdm_op_Write.ap_auto.i8P0A, i8 %st1_m_fifo_b_m_rear_V_7_out, i8 %lhs_load"   --->   Operation 110 'write' 'write_ln0' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+ST_2 : Operation 111 [1/1] (0.00ns)   --->   "%ret_ln0 = ret"   --->   Operation 111 'ret' 'ret_ln0' <Predicate = (icmp_ln1027)> <Delay = 0.00>
+
+State 3 <SV = 2> <Delay = 1.15>
+ST_3 : Operation 56 [11/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 56 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 57 [12/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 57 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 1.15>
+ST_4 : Operation 58 [10/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 58 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 59 [11/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 59 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 5 <SV = 4> <Delay = 1.15>
+ST_5 : Operation 60 [9/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 60 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 61 [10/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 61 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 6 <SV = 5> <Delay = 1.15>
+ST_6 : Operation 62 [8/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 62 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 63 [9/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 63 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 1.15>
+ST_7 : Operation 64 [7/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 64 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 65 [8/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 65 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 1.15>
+ST_8 : Operation 66 [6/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 66 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 67 [7/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 67 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 1.15>
+ST_9 : Operation 68 [5/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 68 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 69 [6/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 69 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 1.15>
+ST_10 : Operation 70 [4/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 70 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 71 [5/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 71 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 1.15>
+ST_11 : Operation 72 [3/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 72 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 73 [4/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 73 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 1.15>
+ST_12 : Operation 74 [2/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 74 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 75 [1/1] (0.70ns)   --->   "%st1_m_fifo_a_m_size_V_3 = add i8 %st1_m_fifo_a_m_size_V_2, i8 1"   --->   Operation 75 'add' 'st1_m_fifo_a_m_size_V_3' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 76 [1/1] (0.41ns)   --->   "%store_ln19 = store i8 %st1_m_fifo_a_m_size_V_3, i8 %st1_m_fifo_a_m_size_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 76 'store' 'store_ln19' <Predicate = (!icmp_ln1027 & !icmp_ln1019)> <Delay = 0.41>
+ST_12 : Operation 77 [3/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 77 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1027 & !icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+
+State 13 <SV = 12> <Delay = 1.82>
+ST_13 : Operation 78 [1/13] (1.15ns)   --->   "%srem_ln1514 = srem i9 %ret_V, i9 10"   --->   Operation 78 'srem' 'srem_ln1514' <Predicate = (!icmp_ln1019)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 79 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_rear_V = trunc i5 %srem_ln1514" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:16]   --->   Operation 79 'trunc' 'st1_m_fifo_a_m_rear_V' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 80 [1/1] (0.00ns)   --->   "%sext_ln16 = sext i5 %st1_m_fifo_a_m_rear_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:16]   --->   Operation 80 'sext' 'sext_ln16' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 81 [1/1] (0.00ns)   --->   "%zext_ln541 = zext i5 %st1_m_fifo_a_m_rear_V"   --->   Operation 81 'zext' 'zext_ln541' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 82 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_th_idx_V_addr = getelementptr i8 %st1_m_fifo_a_m_arr_th_idx_V, i64 0, i64 %zext_ln541" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 82 'getelementptr' 'st1_m_fifo_a_m_arr_th_idx_V_addr' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 83 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_cell_V_addr = getelementptr i8 %st1_m_fifo_a_m_arr_cell_V, i64 0, i64 %zext_ln541" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 83 'getelementptr' 'st1_m_fifo_a_m_arr_cell_V_addr' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 84 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_node_V_addr = getelementptr i8 %st1_m_fifo_a_m_arr_node_V, i64 0, i64 %zext_ln541" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 84 'getelementptr' 'st1_m_fifo_a_m_arr_node_V_addr' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 85 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 0, i4 %st1_m_fifo_a_m_arr_th_idx_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 85 'store' 'store_ln17' <Predicate = (!icmp_ln1019)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_13 : Operation 86 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 0, i4 %st1_m_fifo_a_m_arr_cell_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 86 'store' 'store_ln17' <Predicate = (!icmp_ln1019)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_13 : Operation 87 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 255, i4 %st1_m_fifo_a_m_arr_node_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 87 'store' 'store_ln17' <Predicate = (!icmp_ln1019)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_13 : Operation 88 [1/1] (0.38ns)   --->   "%store_ln19 = store i8 %sext_ln16, i8 %lhs_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 88 'store' 'store_ln19' <Predicate = (!icmp_ln1019)> <Delay = 0.38>
+ST_13 : Operation 89 [1/1] (0.00ns)   --->   "%br_ln19 = br void %_ZN9FifoSaHls7enqueueE1W.exit.i" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 89 'br' 'br_ln19' <Predicate = (!icmp_ln1019)> <Delay = 0.00>
+ST_13 : Operation 90 [2/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 90 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 91 [1/1] (0.70ns)   --->   "%st1_m_fifo_b_m_size_V_2 = add i8 %st1_m_fifo_b_m_size_V_1, i8 1"   --->   Operation 91 'add' 'st1_m_fifo_b_m_size_V_2' <Predicate = (!icmp_ln1019_1)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 92 [1/1] (0.41ns)   --->   "%store_ln19 = store i8 %st1_m_fifo_b_m_size_V_2, i8 %st1_m_fifo_b_m_size_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 92 'store' 'store_ln19' <Predicate = (!icmp_ln1019_1)> <Delay = 0.41>
+
+State 14 <SV = 13> <Delay = 1.82>
+ST_14 : Operation 93 [1/13] (1.15ns)   --->   "%srem_ln1514_1 = srem i9 %ret_V_1, i9 10"   --->   Operation 93 'srem' 'srem_ln1514_1' <Predicate = (!icmp_ln1019_1)> <Delay = 1.15> <CoreInst = "Divider">   --->   Core 6 'Divider' <Latency = 12> <II = 1> <Delay = 1.15> <FuncUnit> <Opcode : 'sdiv' 'srem' 'udiv' 'urem'> <InPorts = 2> <OutPorts = 1>
+ST_14 : Operation 94 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_rear_V = trunc i5 %srem_ln1514_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:16]   --->   Operation 94 'trunc' 'st1_m_fifo_b_m_rear_V' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 95 [1/1] (0.00ns)   --->   "%sext_ln16_1 = sext i5 %st1_m_fifo_b_m_rear_V" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:16]   --->   Operation 95 'sext' 'sext_ln16_1' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 96 [1/1] (0.00ns)   --->   "%zext_ln541_1 = zext i5 %st1_m_fifo_b_m_rear_V"   --->   Operation 96 'zext' 'zext_ln541_1' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 97 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_th_idx_V_addr = getelementptr i8 %st1_m_fifo_b_m_arr_th_idx_V, i64 0, i64 %zext_ln541_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 97 'getelementptr' 'st1_m_fifo_b_m_arr_th_idx_V_addr' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 98 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_cell_V_addr = getelementptr i8 %st1_m_fifo_b_m_arr_cell_V, i64 0, i64 %zext_ln541_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 98 'getelementptr' 'st1_m_fifo_b_m_arr_cell_V_addr' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 99 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_node_V_addr = getelementptr i8 %st1_m_fifo_b_m_arr_node_V, i64 0, i64 %zext_ln541_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 99 'getelementptr' 'st1_m_fifo_b_m_arr_node_V_addr' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+ST_14 : Operation 100 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 0, i4 %st1_m_fifo_b_m_arr_th_idx_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 100 'store' 'store_ln17' <Predicate = (!icmp_ln1019_1)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_14 : Operation 101 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 0, i4 %st1_m_fifo_b_m_arr_cell_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 101 'store' 'store_ln17' <Predicate = (!icmp_ln1019_1)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_14 : Operation 102 [1/1] (0.66ns)   --->   "%store_ln17 = store i8 255, i4 %st1_m_fifo_b_m_arr_node_V_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17]   --->   Operation 102 'store' 'store_ln17' <Predicate = (!icmp_ln1019_1)> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 10> <RAM>
+ST_14 : Operation 103 [1/1] (0.38ns)   --->   "%store_ln19 = store i8 %sext_ln16_1, i8 %lhs" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 103 'store' 'store_ln19' <Predicate = (!icmp_ln1019_1)> <Delay = 0.38>
+ST_14 : Operation 104 [1/1] (0.00ns)   --->   "%br_ln19 = br void %_ZN9FifoSaHls7enqueueE1W.exit30.i" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:19]   --->   Operation 104 'br' 'br_ln19' <Predicate = (!icmp_ln1019_1)> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.12ns, clock uncertainty: 0.844ns.
+
+ <State 1>: 1.86ns
+The critical path consists of the following:
+	'alloca' operation ('lhs') [15]  (0 ns)
+	'load' operation ('lhs_1_load_1') on local variable 'lhs' [36]  (0 ns)
+	'add' operation ('ret.V') [38]  (0.705 ns)
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 2>: 1.86ns
+The critical path consists of the following:
+	'load' operation ('lhs_load_1') on local variable 'lhs' [60]  (0 ns)
+	'add' operation ('ret.V') [62]  (0.705 ns)
+	'srem' operation ('srem_ln1514_1') [63]  (1.16 ns)
+
+ <State 3>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 4>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 5>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514_1') [63]  (1.16 ns)
+
+ <State 6>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 7>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 8>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 9>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 10>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 11>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+
+ <State 12>: 1.16ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514_1') [63]  (1.16 ns)
+
+ <State 13>: 1.83ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514') [39]  (1.16 ns)
+	'getelementptr' operation ('st1_m_fifo_a_m_arr_th_idx_V_addr', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17) [43]  (0 ns)
+	'store' operation ('store_ln17', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17) of constant 0 on array 'st1_m_fifo_a_m_arr_th_idx_V' [46]  (0.667 ns)
+
+ <State 14>: 1.83ns
+The critical path consists of the following:
+	'srem' operation ('srem_ln1514_1') [63]  (1.16 ns)
+	'getelementptr' operation ('st1_m_fifo_b_m_arr_th_idx_V_addr', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17) [67]  (0 ns)
+	'store' operation ('store_ln17', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp:17) of constant 0 on array 'st1_m_fifo_b_m_arr_th_idx_V' [70]  (0.667 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

@@ -1,0 +1,19 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Tue Mar 19 21:35:48 2024
+# Process ID: 2913809
+# Current directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip
+# Command line: vivado -notrace -mode batch -source run_ippack.tcl
+# Log file: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip/vivado.log
+# Journal file: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip/vivado.jou
+# Running On: k40, OS: Linux, CPU Frequency: 1300.000 MHz, CPU Physical cores: 8, Host memory: 67190 MB
+#-----------------------------------------------------------
+source run_ippack.tcl -notrace
+ipx::create_core: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1425.102 ; gain = 0.023 ; free physical = 20878 ; free virtual = 111583
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2022.2/data/ip'.
+Running package_xo -xo_path /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/simulatedAnnealingTop.xo -kernel_name simulatedAnnealingTop -kernel_xml /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip/../kernel/kernel.xml -kernel_files {/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage9_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage8_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage7_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp} -ip_directory /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip/ip_unzip_dir -design_xml /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/simulatedAnnealingTop.design.xml -debug_directory /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.debug -hls_directory /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/impl/ip/hls_files
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 19 21:36:01 2024...

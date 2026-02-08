@@ -1,0 +1,206 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link
+	Log files: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.link_summary, at Tue Mar 19 21:36:17 2024
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link/v++_link_sa_hw_emu_guidance.html', at Tue Mar 19 21:36:17 2024
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/hw_emu/hw_emu.xsa'
+INFO: [v++ 74-78] Compiler Version string: 2022.2
+INFO: [v++ 60-629] Linking for hardware emulation target
+INFO: [v++ 60-423]   Target device: xilinx_u55c_gen3x16_xdma_3_202210_1
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [21:36:23] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/xo/simulatedAnnealingTop.xo -keep --config /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm --target emu --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/system_link: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/lib/lnx64.o/libxml2.so.2)
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/xo/simulatedAnnealingTop.xo
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [21:36:26] build_xd_ip_db started: /tools/Xilinx/Vitis/2022.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/hw_emu.hpfm -clkid 0 -ip /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/iprepo/xilinx_com_hls_simulatedAnnealingTop_1_0,simulatedAnnealingTop -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [SYSTEM_LINK 82-37] [21:36:32] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 432.684 ; gain = 0.000 ; free physical = 22392 ; free virtual = 112388
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [21:36:32] cfgen started: /tools/Xilinx/Vitis/2022.2/bin/cfgen  -nk simulatedAnnealingTop:1:simulatedAnnealingTop_1 -sp simulatedAnnealingTop_1.n2c:HOST[0] -sp simulatedAnnealingTop_1.c2n:HOST[0] -sp simulatedAnnealingTop_1.n:HOST[0] -dpa_mem_offload false -dmclkid 0 -r /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/cfgen: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/lib/lnx64.o/libxml2.so.2)
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: simulatedAnnealingTop, num: 1  {simulatedAnnealingTop_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: simulatedAnnealingTop_1, k_port: n2c, sptag: HOST[0]
+INFO: [CFGEN 83-0]   kernel: simulatedAnnealingTop_1, k_port: c2n, sptag: HOST[0]
+INFO: [CFGEN 83-0]   kernel: simulatedAnnealingTop_1, k_port: n, sptag: HOST[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument simulatedAnnealingTop_1.n2c to HOST[0] for directive simulatedAnnealingTop_1.n2c:HOST[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument simulatedAnnealingTop_1.c2n to HOST[0] for directive simulatedAnnealingTop_1.c2n:HOST[0]
+INFO: [CFGEN 83-2228] Creating mapping for argument simulatedAnnealingTop_1.n to HOST[0] for directive simulatedAnnealingTop_1.n:HOST[0]
+INFO: [SYSTEM_LINK 82-37] [21:36:39] cfgen finished successfully
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 432.684 ; gain = 0.000 ; free physical = 22394 ; free virtual = 112390
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [21:36:39] cf2bd started: /tools/Xilinx/Vitis/2022.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.xsd --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/cf2xd: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -dn dr -dp /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/sys_link/_sysl/.xsd
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [21:36:44] cf2bd finished successfully
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 432.684 ; gain = 0.000 ; free physical = 22383 ; free virtual = 112384
+INFO: [v++ 60-1441] [21:36:44] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 22437 ; free virtual = 112437
+INFO: [v++ 60-1443] [21:36:44] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat -rtd /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw.rtd -nofilter /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/cf2sw_full.rtd -xclbin /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/cf2sw: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [v++ 60-1441] [21:36:49] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 22443 ; free virtual = 112444
+INFO: [v++ 60-1443] [21:36:49] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+INFO: [v++ 60-1441] [21:36:49] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.36 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 22429 ; free virtual = 112430
+INFO: [v++ 60-1443] [21:36:49] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw_emu -f /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm -s -g --kernel_frequency 320 --remote_ip_cache /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/.ipcache --output_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int --log_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link --report_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link --config /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/vplConfig.ini -k /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link --emulation_mode debug_waveform --no-info --iprepo /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xo/ip_repo/xilinx_com_hls_simulatedAnnealingTop_1_0 --messageDb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link/vpl.pb /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+
+****** vpl v2022.2 (64-bit)
+  **** SW Build 3671529 on 2022-10-13-17:52:11
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-78] Compiler Version string: 2022.2
+INFO: [VPL 60-423]   Target device: xilinx_u55c_gen3x16_xdma_3_202210_1
+INFO: [VPL 60-1032] Extracting hardware platform to /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/vivado/vpl/.local/hw_platform
+[21:37:08] Run vpl: Step create_project: Started
+Creating Vivado project.
+[21:37:41] Run vpl: Step create_project: Completed
+[21:37:41] Run vpl: Step create_bd: Started
+[21:37:51] Run vpl: Step create_bd: Completed
+[21:37:51] Run vpl: Step update_bd: Started
+[21:37:54] Run vpl: Step update_bd: Completed
+[21:37:54] Run vpl: Step generate_target: Started
+[21:39:10] Run vpl: Step generate_target: RUNNING...
+[21:39:16] Run vpl: Step generate_target: Completed
+[21:39:16] Run vpl: Step config_hw_emu.gen_scripts: Started
+[21:39:53] Run vpl: Step config_hw_emu.gen_scripts: Completed
+[21:39:53] Run vpl: Step config_hw_emu.compile: Started
+[21:40:41] Run vpl: Step config_hw_emu.compile: Completed
+[21:40:41] Run vpl: Step config_hw_emu.elaborate: Started
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP bd_387c_m01e_0 is locked. The IP is locked for the following reason - * IP definition 'SC EXIT (1.0)' for IP 'bd_387c_m01e_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP bd_387c_one_0 is locked. The IP is locked for the following reason - * The IP Data in the repository is incompatible with the current instance (despite having identical Version and Revision). You will need to upgrade the IP before viewing the customization and generating outputs.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP bd_387c_s00mmu_0 is locked. The IP is locked for the following reason - * IP definition 'SC MMU (1.0)' for IP 'bd_387c_s00mmu_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP bd_387c_s00sic_0 is locked. The IP is locked for the following reason - * IP definition 'SC SI_CONVERTER (1.0)' for IP 'bd_387c_s00sic_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP pfm_top_axi_vip_0_0 is locked. The IP is locked for the following reason - * IP definition 'AXI Verification IP (1.1)' for IP 'pfm_top_axi_vip_0_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP pfm_top_connect_to_es_cu_0 is locked. The IP is locked for the following reason - * IP definition 'AXI Interconnect (2.1)' for IP 'pfm_top_connect_to_es_cu_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP pfm_top_smartconnect_0_0 is locked. The IP is locked for the following reason - * IP definition 'AXI SmartConnect (1.0)' for IP 'pfm_top_smartconnect_0_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+ * IP 'pfm_top_smartconnect_0_0' contains one or more locked subcores.* Target IP definition 'AXI SmartConnect (1.0)' requires a revision change. Please review the change log before upgrading the IP.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP pfm_top_xbar_0 is locked. The IP is locked for the following reason - * IP definition 'AXI Crossbar (2.1)' for IP 'pfm_top_xbar_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+WARNING: [IP-LOCK-01] In your vivado project:prj for design:dr the IP bd_387c_m00e_0 is locked. The IP is locked for the following reason - * IP definition 'SC EXIT (1.0)' for IP 'bd_387c_m00e_0' (customized with software release 2022.1) has a different revision in the IP Catalog.
+.
+Check VPL, containing 2 checks, has run: 0 errors, 9 warning violations
+[21:41:12] Run vpl: Step config_hw_emu.elaborate: Completed
+[21:41:13] Run vpl: FINISHED. Run Status: config_hw_emu.elaborate Complete!
+INFO: [v++ 60-1441] [21:41:13] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:00:10 ; elapsed = 00:04:23 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 19824 ; free virtual = 110497
+INFO: [v++ 60-1443] [21:41:13] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+INFO: [v++ 60-991] clock name 'kernel_clk/clk' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): Kernel (DATA) clock: kernel_clk/clk = 320, Kernel (KERNEL) clock: kernel_clk/clk = 320
+INFO: [v++ 60-1453] Command Line: cf2sw -a /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/address_map.xml -sdsl /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sdsl.dat -xclbin /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/xclbin_orig.xml -rtd /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd -o /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/cf2sw: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/xsltproc: /tools/intelFPGA/16.0.0/quartus/linux64/liblzma.so.5: no version information available (required by /tools/Xilinx/Vitis/2022.2/bin/../lib/lnx64.o/libxml2.so.2)
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+WARNING: [v++ 60-1455] Debuggable symbols are not generated successfully, clean up /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/consolidated.cf
+INFO: [v++ 60-1441] [21:41:20] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 21584 ; free virtual = 112283
+INFO: [v++ 60-1443] [21:41:20] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/behav.xse --force --target hw_emu --key-value SYS:dfx_enable:false --add-section :JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_xml.rtd --add-section BUILD_METADATA:JSON:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml --add-section SYSTEM_METADATA:RAW:/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u55c_gen3x16_xdma_3_202210_1 --output /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+XRT Build Version: 2.14.0 (Vitis)
+       Build Date: 2022-07-07 16:55:20
+          Hash ID: b8ff81175d61a7e23a1a273613f410cc6fa37560
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 27435522 bytes
+Format : RAW
+File   : '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/behav.xse'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 274 bytes
+Format : JSON
+File   : '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 2286 bytes
+Format : JSON
+File   : '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 9460 bytes
+Format : RAW
+File   : '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/sa_hw_emu.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 18149 bytes
+Format : RAW
+File   : '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+Successfully wrote (27483312 bytes) to the output file: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [21:41:23] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 21624 ; free virtual = 112324
+INFO: [v++ 60-1443] [21:41:23] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.info --input /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+INFO: [v++ 60-1441] [21:41:25] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 21621 ; free virtual = 112320
+INFO: [v++ 60-1443] [21:41:25] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/link/run_link
+INFO: [v++ 60-1441] [21:41:25] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 459.043 ; gain = 0.000 ; free physical = 21621 ; free virtual = 112320
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link/system_estimate_sa_hw_emu.xtxt
+INFO: [v++ 60-586] Created sa_hw_emu.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/reports/link/v++_link_sa_hw_emu_guidance.html
+	Steps Log File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_build/sa_hw_emu.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 5m 17s
+INFO: [v++ 60-1653] Closing dispatch client.

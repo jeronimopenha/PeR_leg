@@ -1,0 +1,228 @@
+
+
+================================================================
+== Vitis HLS Report for 'exec_pipeline'
+================================================================
+* Date:           Tue Mar 19 21:35:26 2024
+
+* Version:        2022.2 (Build 3670227 on Oct 13 2022)
+* Project:        prj_ob
+* Solution:       simulatedAnnealingTop (Vitis Kernel Flow Target)
+* Product family: virtexuplus
+* Target device:  xcu55c-fsvh2892-2L-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.12 ns|  2.423 ns|     0.84 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +-----------+-----------+-----------+-----------+-----------+-----------+---------+
+    |    Latency (cycles)   |   Latency (absolute)  |        Interval       | Pipeline|
+    |    min    |    max    |    min    |    max    |    min    |    max    |   Type  |
+    +-----------+-----------+-----------+-----------+-----------+-----------+---------+
+    |  120000079|  120000079|  0.375 sec|  0.375 sec|  120000079|  120000079|       no|
+    +-----------+-----------+-----------+-----------+-----------+-----------+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 8
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 0.66>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_rear_V_7_loc = alloca i64 1"   --->   Operation 9 'alloca' 'st1_m_fifo_b_m_rear_V_7_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_size_V_loc = alloca i64 1"   --->   Operation 10 'alloca' 'st1_m_fifo_b_m_size_V_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_rear_V_7_loc = alloca i64 1"   --->   Operation 11 'alloca' 'st1_m_fifo_a_m_rear_V_7_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_size_V_loc = alloca i64 1"   --->   Operation 12 'alloca' 'st1_m_fifo_a_m_size_V_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%st0_m_cell_a_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16]   --->   Operation 13 'alloca' 'st0_m_cell_a_V' <Predicate = true> <Delay = 0.00> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%st0_m_cell_b_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16]   --->   Operation 14 'alloca' 'st0_m_cell_b_V' <Predicate = true> <Delay = 0.00> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%st0_m_th_valid = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16]   --->   Operation 15 'alloca' 'st0_m_th_valid' <Predicate = true> <Delay = 0.00> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_th_idx_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 16 'alloca' 'st1_m_fifo_a_m_arr_th_idx_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_cell_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 17 'alloca' 'st1_m_fifo_a_m_arr_cell_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_arr_node_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 18 'alloca' 'st1_m_fifo_a_m_arr_node_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_th_idx_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 19 'alloca' 'st1_m_fifo_b_m_arr_th_idx_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_cell_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 20 'alloca' 'st1_m_fifo_b_m_arr_cell_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_arr_node_V = alloca i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:17]   --->   Operation 21 'alloca' 'st1_m_fifo_b_m_arr_node_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 0"   --->   Operation 22 'getelementptr' 'this_m_cell_b_V_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr"   --->   Operation 23 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr = getelementptr i1 %st0_m_th_valid, i64 0, i64 0" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 24 'getelementptr' 'this_m_th_valid_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 25 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+
+State 2 <SV = 1> <Delay = 0.66>
+ST_2 : Operation 26 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr_1 = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 1"   --->   Operation 26 'getelementptr' 'this_m_cell_b_V_addr_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 27 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr_1"   --->   Operation 27 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_2 : Operation 28 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr_1 = getelementptr i1 %st0_m_th_valid, i64 0, i64 1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 28 'getelementptr' 'this_m_th_valid_addr_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 29 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr_1" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 29 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+
+State 3 <SV = 2> <Delay = 0.66>
+ST_3 : Operation 30 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr_2 = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 2"   --->   Operation 30 'getelementptr' 'this_m_cell_b_V_addr_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 31 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr_2"   --->   Operation 31 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_3 : Operation 32 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr_2 = getelementptr i1 %st0_m_th_valid, i64 0, i64 2" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 32 'getelementptr' 'this_m_th_valid_addr_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 33 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr_2" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 33 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+
+State 4 <SV = 3> <Delay = 0.66>
+ST_4 : Operation 34 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 0"   --->   Operation 34 'getelementptr' 'this_m_cell_a_V_addr' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 35 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr"   --->   Operation 35 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_4 : Operation 36 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr_1 = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 1"   --->   Operation 36 'getelementptr' 'this_m_cell_a_V_addr_1' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 37 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr_1"   --->   Operation 37 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_4 : Operation 38 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr_3 = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 3"   --->   Operation 38 'getelementptr' 'this_m_cell_b_V_addr_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 39 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr_3"   --->   Operation 39 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_4 : Operation 40 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr_3 = getelementptr i1 %st0_m_th_valid, i64 0, i64 3" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 40 'getelementptr' 'this_m_th_valid_addr_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 41 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr_3" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 41 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+
+State 5 <SV = 4> <Delay = 0.66>
+ST_5 : Operation 42 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr_2 = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 2"   --->   Operation 42 'getelementptr' 'this_m_cell_a_V_addr_2' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 43 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr_2"   --->   Operation 43 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_5 : Operation 44 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr_3 = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 3"   --->   Operation 44 'getelementptr' 'this_m_cell_a_V_addr_3' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 45 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr_3"   --->   Operation 45 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_5 : Operation 46 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr_4 = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 4"   --->   Operation 46 'getelementptr' 'this_m_cell_b_V_addr_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 47 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr_4"   --->   Operation 47 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_5 : Operation 48 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr_4 = getelementptr i1 %st0_m_th_valid, i64 0, i64 4" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 48 'getelementptr' 'this_m_th_valid_addr_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 49 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr_4" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 49 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+ST_5 : Operation 50 [2/2] (0.00ns)   --->   "%call_ln0 = call void @exec_pipeline_Pipeline_VITIS_LOOP_6_1, i8 %st1_m_fifo_a_m_arr_th_idx_V, i8 %st1_m_fifo_a_m_arr_cell_V, i8 %st1_m_fifo_a_m_arr_node_V, i8 %st1_m_fifo_b_m_arr_th_idx_V, i8 %st1_m_fifo_b_m_arr_cell_V, i8 %st1_m_fifo_b_m_arr_node_V, i8 %st1_m_fifo_a_m_size_V_loc, i8 %st1_m_fifo_a_m_rear_V_7_loc, i8 %st1_m_fifo_b_m_size_V_loc, i8 %st1_m_fifo_b_m_rear_V_7_loc"   --->   Operation 50 'call' 'call_ln0' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 6 <SV = 5> <Delay = 0.66>
+ST_6 : Operation 51 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr_4 = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 4"   --->   Operation 51 'getelementptr' 'this_m_cell_a_V_addr_4' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 52 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr_4"   --->   Operation 52 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_6 : Operation 53 [1/1] (0.00ns)   --->   "%this_m_cell_a_V_addr_5 = getelementptr i8 %st0_m_cell_a_V, i64 0, i64 5"   --->   Operation 53 'getelementptr' 'this_m_cell_a_V_addr_5' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 54 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_a_V_addr_5"   --->   Operation 54 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 8> <Depth = 6> <RAM>
+ST_6 : Operation 55 [1/1] (0.00ns)   --->   "%this_m_cell_b_V_addr_5 = getelementptr i8 %st0_m_cell_b_V, i64 0, i64 5"   --->   Operation 55 'getelementptr' 'this_m_cell_b_V_addr_5' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 56 [1/1] (0.66ns)   --->   "%store_ln214 = store i8 0, i3 %this_m_cell_b_V_addr_5"   --->   Operation 56 'store' 'store_ln214' <Predicate = true> <Delay = 0.66> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.66> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 8> <Depth = 6> <RAM>
+ST_6 : Operation 57 [1/1] (0.00ns)   --->   "%this_m_th_valid_addr_5 = getelementptr i1 %st0_m_th_valid, i64 0, i64 5" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 57 'getelementptr' 'this_m_th_valid_addr_5' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 58 [1/1] (0.63ns)   --->   "%store_ln12 = store i1 1, i3 %this_m_th_valid_addr_5" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp:12]   --->   Operation 58 'store' 'store_ln12' <Predicate = true> <Delay = 0.63> <CoreInst = "RAM_1WnR">   --->   Core 84 'RAM_1WnR' <Latency = 1> <II = 1> <Delay = 0.63> <Storage> <Opcode : 'load' 'store'> <Ports = 17> <Width = 1> <Depth = 6> <RAM>
+ST_6 : Operation 59 [1/2] (0.00ns)   --->   "%call_ln0 = call void @exec_pipeline_Pipeline_VITIS_LOOP_6_1, i8 %st1_m_fifo_a_m_arr_th_idx_V, i8 %st1_m_fifo_a_m_arr_cell_V, i8 %st1_m_fifo_a_m_arr_node_V, i8 %st1_m_fifo_b_m_arr_th_idx_V, i8 %st1_m_fifo_b_m_arr_cell_V, i8 %st1_m_fifo_b_m_arr_node_V, i8 %st1_m_fifo_a_m_size_V_loc, i8 %st1_m_fifo_a_m_rear_V_7_loc, i8 %st1_m_fifo_b_m_size_V_loc, i8 %st1_m_fifo_b_m_rear_V_7_loc"   --->   Operation 59 'call' 'call_ln0' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 7 <SV = 6> <Delay = 2.25>
+ST_7 : Operation 60 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_size_V_loc_load = load i8 %st1_m_fifo_a_m_size_V_loc"   --->   Operation 60 'load' 'st1_m_fifo_a_m_size_V_loc_load' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 61 [1/1] (0.00ns)   --->   "%st1_m_fifo_a_m_rear_V_7_loc_load = load i8 %st1_m_fifo_a_m_rear_V_7_loc"   --->   Operation 61 'load' 'st1_m_fifo_a_m_rear_V_7_loc_load' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 62 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_size_V_loc_load = load i8 %st1_m_fifo_b_m_size_V_loc"   --->   Operation 62 'load' 'st1_m_fifo_b_m_size_V_loc_load' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 63 [1/1] (0.00ns)   --->   "%st1_m_fifo_b_m_rear_V_7_loc_load = load i8 %st1_m_fifo_b_m_rear_V_7_loc"   --->   Operation 63 'load' 'st1_m_fifo_b_m_rear_V_7_loc_load' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 64 [2/2] (2.25ns)   --->   "%call_ln0 = call void @exec_pipeline_Pipeline_VITIS_LOOP_27_1, i8 %st1_m_fifo_a_m_size_V_loc_load, i8 %st1_m_fifo_a_m_rear_V_7_loc_load, i8 %st1_m_fifo_b_m_size_V_loc_load, i8 %st1_m_fifo_b_m_rear_V_7_loc_load, i800 %n2c, i800 %c2n, i32 %n, i1 %st0_m_th_valid, i8 %st0_m_cell_a_V, i8 %st0_m_cell_b_V, i8 %st1_m_fifo_a_m_arr_th_idx_V, i8 %st1_m_fifo_a_m_arr_cell_V, i8 %st1_m_fifo_a_m_arr_node_V, i8 %st1_m_fifo_b_m_arr_th_idx_V, i8 %st1_m_fifo_b_m_arr_cell_V, i8 %st1_m_fifo_b_m_arr_node_V, i8 %st3_m_th_idx_offset, i8 %st1_m_th_idx_offset"   --->   Operation 64 'call' 'call_ln0' <Predicate = true> <Delay = 2.25> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 8 <SV = 7> <Delay = 0.00>
+ST_8 : Operation 65 [1/1] (0.00ns)   --->   "%specbramwithbyteenable_ln0 = specbramwithbyteenable void @_ssdm_op_SpecBRAMWithByteEnable, i32 %n"   --->   Operation 65 'specbramwithbyteenable' 'specbramwithbyteenable_ln0' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 66 [1/1] (0.00ns)   --->   "%specbramwithbyteenable_ln0 = specbramwithbyteenable void @_ssdm_op_SpecBRAMWithByteEnable, i800 %c2n"   --->   Operation 66 'specbramwithbyteenable' 'specbramwithbyteenable_ln0' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 67 [1/1] (0.00ns)   --->   "%specbramwithbyteenable_ln0 = specbramwithbyteenable void @_ssdm_op_SpecBRAMWithByteEnable, i800 %n2c"   --->   Operation 67 'specbramwithbyteenable' 'specbramwithbyteenable_ln0' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 68 [1/2] (0.00ns)   --->   "%call_ln0 = call void @exec_pipeline_Pipeline_VITIS_LOOP_27_1, i8 %st1_m_fifo_a_m_size_V_loc_load, i8 %st1_m_fifo_a_m_rear_V_7_loc_load, i8 %st1_m_fifo_b_m_size_V_loc_load, i8 %st1_m_fifo_b_m_rear_V_7_loc_load, i800 %n2c, i800 %c2n, i32 %n, i1 %st0_m_th_valid, i8 %st0_m_cell_a_V, i8 %st0_m_cell_b_V, i8 %st1_m_fifo_a_m_arr_th_idx_V, i8 %st1_m_fifo_a_m_arr_cell_V, i8 %st1_m_fifo_a_m_arr_node_V, i8 %st1_m_fifo_b_m_arr_th_idx_V, i8 %st1_m_fifo_b_m_arr_cell_V, i8 %st1_m_fifo_b_m_arr_node_V, i8 %st3_m_th_idx_offset, i8 %st1_m_th_idx_offset"   --->   Operation 68 'call' 'call_ln0' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+ST_8 : Operation 69 [1/1] (0.00ns)   --->   "%ret_ln43 = ret" [/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:43]   --->   Operation 69 'ret' 'ret_ln43' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.12ns, clock uncertainty: 0.844ns.
+
+ <State 1>: 0.667ns
+The critical path consists of the following:
+	'alloca' operation ('st0.m_cell_b.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16) [14]  (0 ns)
+	'getelementptr' operation ('this_m_cell_b_V_addr') [34]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_b.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [35]  (0.667 ns)
+
+ <State 2>: 0.667ns
+The critical path consists of the following:
+	'getelementptr' operation ('this_m_cell_b_V_addr_1') [36]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_b.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [37]  (0.667 ns)
+
+ <State 3>: 0.667ns
+The critical path consists of the following:
+	'getelementptr' operation ('this_m_cell_b_V_addr_2') [38]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_b.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [39]  (0.667 ns)
+
+ <State 4>: 0.667ns
+The critical path consists of the following:
+	'getelementptr' operation ('this_m_cell_a_V_addr') [22]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_a.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [23]  (0.667 ns)
+
+ <State 5>: 0.667ns
+The critical path consists of the following:
+	'getelementptr' operation ('this_m_cell_a_V_addr_2') [26]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_a.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [27]  (0.667 ns)
+
+ <State 6>: 0.667ns
+The critical path consists of the following:
+	'getelementptr' operation ('this_m_cell_a_V_addr_4') [30]  (0 ns)
+	'store' operation ('store_ln214') of constant 0 on array 'st0.m_cell_a.V', /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp:16 [31]  (0.667 ns)
+
+ <State 7>: 2.25ns
+The critical path consists of the following:
+	'load' operation ('st1_m_fifo_a_m_size_V_loc_load') on local variable 'st1_m_fifo_a_m_size_V_loc' [59]  (0 ns)
+	'call' operation ('call_ln0') to 'exec_pipeline_Pipeline_VITIS_LOOP_27_1' [63]  (2.25 ns)
+
+ <State 8>: 0ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

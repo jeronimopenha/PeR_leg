@@ -1,0 +1,1604 @@
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 60, Column: 23 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'dist_manhattan(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 13, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 56, Column: 13 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 55, Column: 13 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 49, Column: 23 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'dist_manhattan(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 13, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 45, Column: 13 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 44, Column: 13 }
+Function:        _ZN11Stage4SaHls7computeE7ST3_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 78, Column: 23 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'dist_manhattan(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 13, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 73, Column: 17 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 69, Column: 17 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 66, Column: 13 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 60, Column: 23 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'dist_manhattan(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 13, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 55, Column: 17 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 51, Column: 17 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 48, Column: 13 }
+Function:        _ZN11Stage5SaHls7computeE7ST4_OUT
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'get_line_column_from_cell(ap_int<8>, ap_int<8>, ap_int<8>, ap_int<8>&, ap_int<8>&)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/util_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 32, Column: 6 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage0SaHls::compute()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 41, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage9SaHls::compute(ST8_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage9_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 40, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage8SaHls::compute(ST7_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage8_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 39, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage7SaHls::compute(ST6_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage7_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 38, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage6SaHls::compute(ST5_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 37, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage5SaHls::compute(ST4_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 33, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage1SaHls::compute(ST0_OUT, ST9_OUT, W, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                       Line: 26, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 34, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage2SaHls::compute(ST1_OUT, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp, 
+                       Line: 8, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 35, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage3SaHls::compute(ST2_OUT, W, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp, 
+                       Line: 19, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 36, Column: 13 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage4SaHls::compute(ST3_OUT)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp, 
+                   Line: 19, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_19_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp, 
+                   Line: 62, Column: 26 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_62_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp, 
+                   Line: 79, Column: 26 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_79_3
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp, 
+                   Line: 99, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_99_4
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp, 
+                   Line: 28, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_28_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp, 
+                   Line: 107, Column: 23 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_107_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp, 
+                   Line: 137, Column: 23 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_137_3
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 13, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 35, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_35_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp, 
+                   Line: 69, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_69_3
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 11, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_11_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 19, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_19_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 39, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_39_3
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 85, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_85_4
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp, 
+                   Line: 93, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_93_5
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp, 
+                   Line: 13, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp, 
+                   Line: 34, Column: 22 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_34_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_19_1
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:19:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_62_2
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:62:26'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_79_3
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:79:26'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_99_4
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.cpp:99:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_28_1
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:28:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_107_2
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:107:23'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_137_3
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp:137:23'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:13:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_35_2
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:35:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_69_3
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp:69:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_11_1
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:11:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '2'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_19_2
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:19:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_39_3
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:39:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_85_4
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:85:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '2'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_93_5
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.cpp:93:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '4'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:13:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '2'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_34_2
+  - String:          ''' ('
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.cpp:34:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          'PipelineSaHls::exec_pipeline'
+  - String:          ''' completely with a factor of '
+  - Factor:          '2'
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                   Line: 11, Column: 0 }
+Function:        _ZN9FifoSaHls7enqueueE1W
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::isFull() const (.472.490.510.528.548.566.586.604.624.642.662.680.700.718.738.756.776.794.814.832)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 48, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'FifoSaHls::enqueue(W)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 11, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                   Line: 4, Column: 0 }
+Function:        _ZN11Stage1SaHlsC2Ev
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::FifoSaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage1SaHls::Stage1SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                   Line: 4, Column: 0 }
+Function:        _ZN11Stage1SaHlsC2Ev
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::enqueue(W)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 11, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'Stage1SaHls::Stage1SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                   Line: 22, Column: 0 }
+Function:        _ZN9FifoSaHls7dequeueEv
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::isEmpty() const (.481.496.519.534.557.572.595.610.633.648.671.686.709.724.747.762.785.800.823.838)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 43, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'FifoSaHls::dequeue()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 22, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage0SaHls::Stage0SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage0_sa_hls.hpp, 
+                       Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage1SaHls::Stage1SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage1_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage2SaHls::Stage2SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage2_sa_hls.hpp, 
+                       Line: 6, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage3SaHls::Stage3SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage3_sa_hls.cpp, 
+                       Line: 4, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage4SaHls::Stage4SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.hpp, 
+                       Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage5SaHls::Stage5SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage5_sa_hls.hpp, 
+                       Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage6SaHls::Stage6SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage6_sa_hls.hpp, 
+                       Line: 6, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage7SaHls::Stage7SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage7_sa_hls.hpp, 
+                       Line: 6, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage8SaHls::Stage8SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage8_sa_hls.hpp, 
+                       Line: 6, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'Stage9SaHls::Stage9SaHls()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage9_sa_hls.hpp, 
+                       Line: 6, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::enqueue(W)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 11, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            AutoInline
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                   Line: 14, Column: 0 }
+Function:        _ZN13PipelineSaHls13exec_pipelineEP6ap_intILi8EES2_S2_
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'FifoSaHls::dequeue()'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/fifo_sa_hls.cpp, 
+                       Line: 22, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'PipelineSaHls::exec_pipeline(ap_int<8>*, ap_int<8>*, ap_int<8>*)'
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/pipeline_sa_hls.cpp, 
+                       Line: 14, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-array-reshape
+Name:            ArrayXform
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 14, Column: 12 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Applying '
+  - String:          array_reshape
+  - String:          ' to '''
+  - UOName:          n2c_l
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Block
+  - String:          ' reshaping'
+  - String:          ' with factor '
+  - Factor:          '100'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-reshape
+Name:            ArrayXform
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 15, Column: 15 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Applying '
+  - String:          array_reshape
+  - String:          ' to '''
+  - UOName:          c2n_l
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Block
+  - String:          ' reshaping'
+  - String:          ' with factor '
+  - Factor:          '100'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-reshape
+Name:            ArrayXform
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 16, Column: 15 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Applying '
+  - String:          array_reshape
+  - String:          ' to '''
+  - UOName:          n_l
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Block
+  - String:          ' reshaping'
+  - String:          ' with factor '
+  - Factor:          '4'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 24, Column: 2 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '600'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          load-store-loop8.load.3
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        n2cseq
+  - String:          ' '
+  - ArrayName:       n2c
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:24:2'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 25, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '600'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          load-store-loop5.load.3
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c2nseq
+  - String:          ' '
+  - ArrayName:       c2n
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:25:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 26, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '400'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          load-store-loop2.load.3
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        nseq
+  - String:          ' '
+  - ArrayName:       'n'
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:26:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 31, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '600'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          load-store-loop.store.9
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c2nseq10
+  - String:          ' '
+  - ArrayName:       c2n
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:31:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 31, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OldLength:       '600'
+  - String:          ' x '
+  - OldWords:        '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '8'
+  - String:          ': '
+  - Length:          '75'
+  - String:          ' x '
+  - Words:           '64'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          c2nseq10
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq
+  - String:          ' '
+  - ArrayName:       c2n
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:31:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 26, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OldLength:       '400'
+  - String:          ' x '
+  - OldWords:        '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '25'
+  - String:          ' x '
+  - Words:           '128'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          nseq
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq11
+  - String:          ' '
+  - ArrayName:       'n'
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:26:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 25, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OldLength:       '600'
+  - String:          ' x '
+  - OldWords:        '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '8'
+  - String:          ': '
+  - Length:          '75'
+  - String:          ' x '
+  - Words:           '64'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          c2nseq
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq13
+  - String:          ' '
+  - ArrayName:       c2n
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:25:5'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 24, Column: 2 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OldLength:       '600'
+  - String:          ' x '
+  - OldWords:        '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '8'
+  - String:          ': '
+  - Length:          '75'
+  - String:          ' x '
+  - Words:           '64'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ OldID='
+  - String:          n2cseq
+  - String:          ', '
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq15
+  - String:          ' '
+  - ArrayName:       n2c
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - LoopName:        anonymous
+  - String:          ' '
+  - LoopLoc:         '/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp:24:2'
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-supported-subset
+Name:            MismatchPortAndBurstAccessWidth
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 24, Column: 2 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          Inferred burst reverted due to burst accesses data width is different from m_axi port width
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq15
+  - String:          ' '
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      n2c
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-supported-subset
+Name:            MismatchPortAndBurstAccessWidth
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 25, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          Inferred burst reverted due to burst accesses data width is different from m_axi port width
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq13
+  - String:          ' '
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      c2n
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-supported-subset
+Name:            MismatchPortAndBurstAccessWidth
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 31, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          Inferred burst reverted due to burst accesses data width is different from m_axi port width
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq
+  - String:          ' '
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      c2n
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-summary
+Name:            BurstInferredVerboseSummary
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 26, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Multiple burst '
+  - Direction:       reads
+  - String:          ' of length '
+  - Length:          '25'
+  - String:          ' and bit width '
+  - Width:           '128'
+  - String:          ' has been inferred.'
+  - String:          ' These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        seq
+  - String:          ' '
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        simulatedAnnealingTop
+    DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                       Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-summary
+Name:            BurstInferredSummary
+DebugLoc:        { File: /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/saTop.cpp, 
+                   Line: 26, Column: 5 }
+Function:        simulatedAnnealingTop
+Args:            
+  - String:          'Multiple burst '
+  - Direction:       reads
+  - String:          ' of length '
+  - Length:          '25'
+  - String:          ' and bit width '
+  - Width:           '128'
+  - String:          ' has been inferred on bundle '''
+  - BundleName:      gmem
+  - String:          '''.'
+  - String:          ' These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.'
+...

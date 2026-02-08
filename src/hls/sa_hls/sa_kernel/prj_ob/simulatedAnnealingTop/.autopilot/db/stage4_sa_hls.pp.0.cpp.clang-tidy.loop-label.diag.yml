@@ -1,0 +1,76 @@
+---
+MainSourceFile:  /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1211_1:  '
+    FileOffset:      1211
+    FilePath:        /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_base.h
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          52364
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1211_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_676_1:  '
+    FileOffset:      676
+    FilePath:        /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          259884
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_676_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_690_1:  '
+    FileOffset:      690
+    FilePath:        /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          260327
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_690_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_704_1:  '
+    FileOffset:      704
+    FilePath:        /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          260771
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_704_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1245_1:  '
+    FileOffset:      1245
+    FilePath:        /tools/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_fixed_base.h
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          523169
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1245_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_13_1:  '
+    FileOffset:      13
+    FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          1034905
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_13_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_35_2:  '
+    FileOffset:      35
+    FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          1035498
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_35_2: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_69_3:  '
+    FileOffset:      69
+    FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/src/stage4_sa_hls.cpp
+    Replacements:    
+      - FilePath:        /home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage4_sa_hls.pp.0.cpp
+        Offset:          1036247
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_69_3: '
+...

@@ -1,40 +1,55 @@
 import networkx as nx
-from src.py.graph.graph_fpga import GraphFGA
-from src.py.per.base.per import EdgesAlgEnum
-from src.py.per.fpga.fpga_sw import FPGAPeR
-from src.py.util.util import Util
+import time
+from src.py.graph.graph import Graph
+from src.py.per.base.per import EdAlgEnum, PeR_Enum
+from src.py.per.fpga.fpga_per_sw import FPGAPeR
+from src.py.util.util import get_project_root, get_files_list_by_extension, verify_path, save_reports, generate_pic
+
+
 
 if __name__ == '__main__':
-    root_path = Util.get_project_root()
-    files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
+    # Util.generate_pic()
+    root_path = get_project_root()
+    files = get_files_list_by_extension(f"{root_path}/benchmarks/fpga/bench_test/", ".dot")
+    # files = Util.get_files_list_by_extension(f"{root_path}/benchmarks/fpga/dot_IWLS93/", ".dot")
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/xor5_K4.dot", "xor5_K4.dot"]]
     # files = [["/home/jeronimo/GIT/PeR/benchmarks/fpga/bench_test/z4ml_K4.dot", "z4ml_K4.dot"]]
     for file in files:
-        g = GraphFGA(file[0], file[1][:-4])
+        print(file[1])
+        g = Graph(file[0], file[1][:-4])
         # print(nx.is_directed_acyclic_graph(g.g)) is a DAG
         per = FPGAPeR(g)
 
-        n_exec = 1
-        base_folder = 'reports/fpga/'
-        placers = ['yoto', ]
-        yoto_algs = [EdgesAlgEnum.ZIG_ZAG_WITH_PRIORITY,
-                     EdgesAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
-                     EdgesAlgEnum.ZIG_ZAG_NO_PRIORITY,
-                     EdgesAlgEnum.DEPTH_FIRST_NO_PRIORITY
-                     ]
+        disconnected_components = list(nx.weakly_connected_components(g.g))
+
+        n_exec = 11
+        base_folder = 'reports/fpga/outputs/'
+        # placers = ['yoto','yott', ]
+        placers = ['yoto']
+        yoto_algs = [
+            EdAlgEnum.DEPTH_FIRST_WITH_PRIORITY,
+            # EdAlgEnum.ZIG_ZAG,
+            # EdAlgEnum.DEPTH_FIRST_NO_PRIORITY,
+        ]
 
         for placer in placers:
+            reports = {}
+            file_name_prefix = ""
+            start = time.time()
             if placer == 'yoto':
                 for alg in yoto_algs:
-                    reports = per.per_yoto(n_exec, alg)
+                    reports = per.per(PeR_Enum.YOTO, [alg], n_exec)
+                    print(f"tempo: {time.time() - start}")
                     file_name_prefix = f"yoto_{alg}"
-                    Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
-
+                    save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'yott':
-                pass
+                reports = per.per(PeR_Enum.YOTT, [], n_exec)
+                file_name_prefix = f"yott"
+                save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
             elif placer == 'sa':
-                reports = per.per_sa(n_exec)
+                reports = per.per(PeR_Enum.SA, [], n_exec)
                 file_name_prefix = f"sa"
-                Util.save_reports(per, Util.verify_path(root_path) + base_folder, file_name_prefix, reports)
-    Util.generate_pic()
-    Util.generate_blif_vpr()
+                save_reports(per, verify_path(root_path) + base_folder, file_name_prefix, reports)
+
+    generate_pic()
+    # Util.generate_net_vpr()

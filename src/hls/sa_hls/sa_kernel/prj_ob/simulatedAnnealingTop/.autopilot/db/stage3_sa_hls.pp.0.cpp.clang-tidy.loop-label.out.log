@@ -1,0 +1,45 @@
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:1328:7: warning: Added loop label VITIS_LOOP_1211_1:   [xilinx-label-all-loops]
+      for (i = 0; i < __N - 1; ++i) {
+      ^~~
+      VITIS_LOOP_1211_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:1328:7: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2302:5: warning: Added loop label VITIS_LOOP_676_1:   [xilinx-label-all-loops]
+    for (unsigned i = low; i != high; ++i) {
+    ^~~
+    VITIS_LOOP_676_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2302:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2316:5: warning: Added loop label VITIS_LOOP_690_1:   [xilinx-label-all-loops]
+    for (unsigned i = low; i != high; ++i) {
+    ^~~
+    VITIS_LOOP_690_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2316:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2330:5: warning: Added loop label VITIS_LOOP_704_1:   [xilinx-label-all-loops]
+    for (unsigned i = low; i != high; ++i) {
+    ^~~
+    VITIS_LOOP_704_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:2330:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:3941:7: warning: Added loop label VITIS_LOOP_1245_1:   [xilinx-label-all-loops]
+      for (i = 0; i < __N - 1; ++i) {
+      ^~~
+      VITIS_LOOP_1245_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:3941:7: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5858:5: warning: Added loop label VITIS_LOOP_7_1:   [xilinx-label-all-loops]
+    for (ap_int<8> i = 0; i < 6; i++)
+    ^~~
+    VITIS_LOOP_7_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5858:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5879:5: warning: Added loop label VITIS_LOOP_28_1:   [xilinx-label-all-loops]
+    for (ap_int<8> i = 0; i < 4; i++)
+    ^~~
+    VITIS_LOOP_28_1: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5879:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5958:5: warning: Added loop label VITIS_LOOP_107_2:   [xilinx-label-all-loops]
+    for (ap_int<8> n = 0; n < 4; ++n)
+    ^~~
+    VITIS_LOOP_107_2: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5958:5: note: FIX-IT applied suggested code changes
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5988:5: warning: Added loop label VITIS_LOOP_137_3:   [xilinx-label-all-loops]
+    for (ap_int<8> i = 0; i < 4; i++)
+    ^~~
+    VITIS_LOOP_137_3: 
+/home/jeronimocosta/Documentos/GIT/PeR/src/hls/sa_hls/sa_kernel/prj_ob/simulatedAnnealingTop/.autopilot/db/stage3_sa_hls.pp.0.cpp:5988:5: note: FIX-IT applied suggested code changes
